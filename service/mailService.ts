@@ -8,10 +8,10 @@ type sendMailProps = {
 
 export async function sendMail({ subject, email, html }: sendMailProps) {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: process.env.NODEMAILER_SERVICE,
     auth: {
       user: process.env.NODEMAILER_EMAIL,
-      pass: process.env.NODEMAILER_PW,
+      pass: process.env.NODEMAILER_PASSWORD,
     },
   });
 

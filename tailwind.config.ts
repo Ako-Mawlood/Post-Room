@@ -13,8 +13,21 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily:{
+        Oswald:["Oswald"," sans-serif"],
+        Satoshi:["Satoshi",'sans-serif'],
+        ClashDisplay:["Clash Display","sans-serif"]
+      },
+      colors:{
+        darkPurple:"#21222c",
+        lightPurple:"#98aef1",
+        purple:"#5a5eda",
+        white:"#faf9fb"
+      }
+
     },
   },
+  
   plugins: [],
 };
 export default config;
