@@ -1,7 +1,7 @@
-import React from "react";
 
-const Button = ({ type = "button" }: { type: "button" | "submit" | "reset" }) => {
-  return <button type={type}>SubmitButton</button>;
+const Button = ({ type,buttonText,style}: { type: "button" | "submit" | "reset",buttonText:string,style:string }) => {
+  
+  return <button className={style} type={type}>{buttonText}</button>;
 };
 
 export default Button;
