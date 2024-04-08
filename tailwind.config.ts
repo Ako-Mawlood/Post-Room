@@ -16,11 +16,12 @@ const config: Config = {
       fontFamily:{
         Oswald:["Oswald"," sans-serif"],
         Satoshi:["Satoshi",'sans-serif'],
-        ClashDisplay:["Clash Display","sans-serif"]
+        ClashDisplay:["Clash Display","sans-serif"],
+      
       },
       colors:{
-        darkPurple:"#21222c",
-        lightPurple:"#98aef1",
+        primary:"#1a1a1d",
+        secondery:"#71717a",
         purple:"#5a5eda",
         white:"#faf9fb"
       }
