@@ -13,22 +13,22 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      fontFamily:{
-        Oswald:["Oswald"," sans-serif"],
-        Satoshi:["Satoshi",'sans-serif'],
-        ClashDisplay:["Clash Display","sans-serif"],
-      
+      fontFamily: {
+        Oswald: ["Oswald", " sans-serif"],
+        Satoshi: ["Satoshi", 'sans-serif'],
+        ClashDisplay: ["Clash Display", "sans-serif"],
+
       },
-      colors:{
-        primary:"#1a1a1d",
-        secondery:"#71717a",
-        purple:"#5a5eda",
-        white:"#faf9fb"
+      colors: {
+        primary: "#1a1a1d",
+        secondery: "#71717a",
+        purple: "#5a5eda",
+        white: "#faf9fb"
       }
 
     },
   },
-  
+
   plugins: [],
 };
 export default config;
