@@ -1,4 +1,4 @@
 "use server"
-export async function handleSignIn(formData: FormData) {
+export async function handleSignUp(formData: FormData) {
     const email = Object.fromEntries(formData)
 }

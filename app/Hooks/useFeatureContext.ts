@@ -6,8 +6,8 @@ export const featureContext = createContext<sliderContextValuesType | undefined>
 const useFeatureContext = () => {
     const contextValues = useContext(featureContext)
 
-    if (!contextValues) throw new Error("something went wrong whle working with use context")
+    if (!contextValues) throw new Error("something went wrong while working with useContext")
     return contextValues
 }
 
-export default useFeatureContext
+export default useFeatureContext;

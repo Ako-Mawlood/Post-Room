@@ -2,7 +2,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { ImSpinner8 } from "react-icons/im";
 import { useFormStatus } from "react-dom";
-const AuthForm = ({ isLoginPage, actionFunc }: any) => {
+const AuthForm = ({ isLoginPage }: { isLoginPage: boolean }) => {
   const { pending } = useFormStatus();
 
   return (
@@ -15,14 +15,17 @@ const AuthForm = ({ isLoginPage, actionFunc }: any) => {
         disabled={pending}
         name="email"
       />
-      <input
-        className={`${pending ? "cursor-not-allowed " : ""}py-2 mb-3 text-sm bg-transparent border border-gray-300  rounded-md px-2  focus:shadow-inner focus:outline-none focus:border-gray-400`}
-        placeholder="Password"
-        type="password"
-        required
-        disabled={pending}
-        name="password"
-      />
+      {isLoginPage && (
+        <input
+          className={`${pending ? "cursor-not-allowed " : ""}py-2 mb-3 text-sm bg-transparent border border-gray-300  rounded-md px-2  focus:shadow-inner focus:outline-none focus:border-gray-400`}
+          placeholder="Password"
+          type="password"
+          required
+          disabled={pending}
+          name="password"
+        />
+      )}
+
       <button
         className="w-full bg-primary flex justify-center items-center text-center py-2 rounded-md text-white hover:opacity-90 "
         type="submit"

@@ -28,7 +28,7 @@ const AuthFeild = ({ isLoginPage, actionFunc }: authProps) => {
           action={actionFunc}
           className="flex flex-col w-full justify-between"
         >
-          <AuthForm isLoginPage={isLoginPage} actionFunc={actionFunc} />
+          <AuthForm isLoginPage={isLoginPage} />
         </form>
         <p className="text-center mt-4">
           By continuing, you will agree to our{" "}

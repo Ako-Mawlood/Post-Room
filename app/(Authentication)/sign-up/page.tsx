@@ -1,13 +1,13 @@
 import Link from "next/link";
 import AuthFeild from "@/app/Components/AuthFeild";
-import { handleSignIn } from "@/app/actions/sginInUser";
+import { handleSignUp } from "@/app/actions/sginUpUser";
 import FeaturesPreview from "@/app/Components/FeaturesPreview";
 import Slider from "@/app/Components/Slider";
 
 export const metadata = {
   title: "Post-Room | Create account ",
 };
-const signIn = () => {
+const signUp = () => {
   return (
     <div className="flex">
       <Link
@@ -26,10 +26,10 @@ const signIn = () => {
         </Slider>
       </aside>
       <aside className="w-screen md:w-4/6 lg:w-1/2 bg-[#EDEDED] h-screen flex justify-center items-center">
-        <AuthFeild isLoginPage={false} actionFunc={handleSignIn} />
+        <AuthFeild isLoginPage={false} actionFunc={handleSignUp} />
       </aside>
     </div>
   );
 };
 
-export default signIn;
+export default signUp;
