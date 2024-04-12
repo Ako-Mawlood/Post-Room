@@ -16,7 +16,7 @@ const Features = () => {
     >
       <div className="w-full flex flex-col justify-center items-center">
         <IoPerson className="text-center text-7xl" size={250} />
-        <p>Add you personal blog</p>
+        <p>Add your personal blog</p>
       </div>
       <div className="w-full flex flex-col justify-center items-center">
         <RiMacbookFill className="text-center text-7xl" size={250} />
@@ -28,7 +28,7 @@ const Features = () => {
       </div>
       <div className="w-full flex flex-col justify-center items-center ml-2">
         <AiFillLike className="text-center text-7xl" size={250} />
-        <p>Like to your favorate Blog</p>
+        <p>Like your favorate Blogs</p>
       </div>
     </div>
   );

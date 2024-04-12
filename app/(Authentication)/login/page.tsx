@@ -8,7 +8,7 @@ export const metadata = {
   title: "Post-Room | Login ",
 };
 
-const login = () => {
+const signIn = () => {
   return (
     <div className="flex">
       <Link
@@ -35,4 +35,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default signIn;

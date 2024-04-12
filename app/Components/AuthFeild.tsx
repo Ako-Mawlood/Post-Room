@@ -11,7 +11,7 @@ const AuthFeild = ({ isLoginPage, actionFunc }: authProps) => {
     <>
       <Link
         className="absolute text-primary underline top-8 right-4 hover:bg-[#ddddef] transition duration-100 rounded-md py-2 px-2"
-        href={isLoginPage ? "/sign-in" : "/login"}
+        href={isLoginPage ? "/sign-up" : "/login"}
       >
         {isLoginPage ? "Create new account" : "Login to your account"}
       </Link>
