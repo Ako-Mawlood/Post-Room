@@ -4,21 +4,32 @@ import prisma from "@/app/libs/prismadb";
 import { NextResponse } from "next/server";
 
 import { sendMail } from "@/service/mailService";
+import { generateToken } from "@/app/libs/auth";
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const Data = await request.json();
+    const { email, password } = Data;
 
     if (!email || !password) {
       return new NextResponse("Missing info", { status: 400 });
+    }
+
+    const doesUserExist = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (doesUserExist) {
+      return new NextResponse("User with this email already exists", { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await prisma.user.create({
       data: {
-        email: email,
-        isEmailVerified: true,
+        email,
         hashedPassword,
       },
     });
@@ -52,8 +63,23 @@ export async function POST(request: Request) {
       `,
     });
 
-    return NextResponse.json(user);
+    const session = await generateToken(user.id);
+
+    const response = NextResponse.json(
+      { id: user.id, email: user.email },
+      { status: 200 }
+    );
+
+    response.cookies.set({
+      name: "session",
+      value: session,
+      httpOnly: true,
+      maxAge: 30 * 86400,
+    });
+
+    return response;
   } catch (error: any) {
+    console.log(error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

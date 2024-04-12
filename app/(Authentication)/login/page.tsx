@@ -5,7 +5,7 @@ import FeaturesPreview from "@/app/Components/FeaturesPreview";
 import Slider from "@/app/Components/Slider";
 
 export const metadata = {
-  title: "Post-Room | Login ",
+  title: "Post-Room | Login",
 };
 
 const signIn = () => {
@@ -20,7 +20,7 @@ const signIn = () => {
 
       <aside className="hidden text-gray-200 md:flex justify-center flex-col items-center w-1/2 h-screen bg-primary border-r-[0.1px] border-r-gray-800 selection:bg-[#EDEDED] selection:text-primary">
         <h1 className="text-center text-slate-200 bold mb-10 font-Oswald text-2xl">
-          Acquire knowledge; it's an ornament among friends and armor against
+          Acquire knowledge; it&apos;s an ornament among friends and armor against
           enemies.
         </h1>
         <Slider>

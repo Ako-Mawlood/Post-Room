@@ -18,14 +18,14 @@ export default function Activate({ params }: { params: { activateToken: string }
         setUser(res.data);
         setStatus("success");
       })
-      .catch((err) => {
-        setStatus(err);
+      .catch((err: { response: { data: string } }) => {
+        setStatus(err.response.data);
       });
   }, []);
 
   return (
     <div className="flex justify-center items-center h-screen">
-      {status != "loading" && status !== "success" && <h1>{status.response.data}</h1>}
+      {status != "loading" && status !== "success" && <h1>{status}</h1>}
       {status == "success" && <h2>email verified for {user?.email}</h2>}
     </div>
   );

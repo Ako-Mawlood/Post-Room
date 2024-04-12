@@ -1,11 +1,15 @@
-import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { getSession } from "./app/libs/auth";
 
-export default withAuth({
-  pages: {
-    signIn: "/sign-in",
-  },
-});
+export async function middleware(request: NextRequest) {
+  const session = await getSession();
 
-export const config = {
-  matcher: ["/account"],
-};
+  const path = request.nextUrl.pathname;
+
+  const authRoutes = path == "/protected";
+
+  if (authRoutes && !session) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+}
