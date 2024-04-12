@@ -1,6 +1,7 @@
 "use client";
 import { GoDotFill } from "react-icons/go";
 import useFeatureContext from "../Hooks/useFeatureContext";
+import clsx from "clsx";
 
 const SwitchFeatureBtn = ({ switchIndex }: { switchIndex: number }) => {
   const { setIsOnHover, sliderIndex, setSliderIndex } = useFeatureContext();
@@ -15,7 +16,12 @@ const SwitchFeatureBtn = ({ switchIndex }: { switchIndex: number }) => {
         setIsOnHover(false);
       }}
     >
-      <GoDotFill size={sliderIndex === switchIndex ? 20 : 7} />
+      <GoDotFill
+        className={clsx("duration-200", {
+          "w-[20px] h-[20px]": sliderIndex == switchIndex,
+          "w-[7px] h-[7px]": sliderIndex != switchIndex,
+        })}
+      />
     </button>
   );
 };

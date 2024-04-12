@@ -1,6 +1,5 @@
 import Link from "next/link";
-import AuthFeild from "@/app/Components/AuthFeild";
-import { handleSignUp } from "@/app/actions/sginUpUser";
+import AuthField from "@/app/Components/AuthField";
 import FeaturesPreview from "@/app/Components/FeaturesPreview";
 import Slider from "@/app/Components/Slider";
 
@@ -27,7 +26,7 @@ const signUp = () => {
         </Slider>
       </aside>
       <aside className="w-screen md:w-4/6 lg:w-1/2 bg-[#EDEDED] h-screen flex justify-center items-center">
-        <AuthFeild isLoginPage={false} actionFunc={handleSignUp} />
+        <AuthField isLoginPage={false} />
       </aside>
     </div>
   );

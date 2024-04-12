@@ -63,15 +63,9 @@ export async function DELETE(
 ) {
   try {
     const currentUser = await getCurrentUser();
-    const Data = await request.json();
-    const { title, content } = Data;
 
     if (!currentUser) {
       return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    if (!title || !content) {
-      return new NextResponse("Missing info", { status: 400 });
     }
 
     const BlogIdNumber = parseInt(params.blogId);

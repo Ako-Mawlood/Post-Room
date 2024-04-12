@@ -1,9 +1,10 @@
 "use client";
-import React, { ReactNode } from "react";
+
 import { useState, useEffect } from "react";
 import { featureContext } from "../Hooks/useFeatureContext";
 import { sliderContextValuesType } from "../types/sliderContextValuesType";
-const Slider = ({ children }: { children: ReactNode }) => {
+
+const Slider = ({ children }: { children: React.ReactNode }) => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [isOnHover, setIsOnHover] = useState(false);
 
@@ -24,11 +25,9 @@ const Slider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <>
-      <featureContext.Provider value={sliderContextValues}>
-        {children}
-      </featureContext.Provider>
-    </>
+    <featureContext.Provider value={sliderContextValues}>
+      {children}
+    </featureContext.Provider>
   );
 };
 
