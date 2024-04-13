@@ -10,7 +10,7 @@ interface authProps {
   isLoginPage: boolean;
 }
 
-const AuthField = ({ isLoginPage }: authProps) => {
+const AuthField = ({ isLoginPage}: authProps) => {
   const [error, setError] = useState();
 
   const router = useRouter();
@@ -21,6 +21,7 @@ const AuthField = ({ isLoginPage }: authProps) => {
     const formData = new FormData(e.target as HTMLFormElement);
 
     await axios
+    
       .post("/api/register", {
         email: formData.get("email"),
         password: formData.get("password"),
@@ -47,9 +48,8 @@ const AuthField = ({ isLoginPage }: authProps) => {
             : "Enter your Email below to create new account"}
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col w-full justify-between">
           <AuthForm isLoginPage={isLoginPage} />
-        </form>
+        
         {error && (
           <p className="text-red-500 bg-red-500/20 p-2 rounded-lg font-medium mt-2">
             {error}

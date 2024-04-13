@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AuthField from "@/app/Components/AuthField";
+import AuthLayout from "@/app/Components/AuthLayout";
 import FeaturesPreview from "@/app/Components/FeaturesPreview";
 import Slider from "@/app/Components/Slider";
 
@@ -8,6 +8,9 @@ export const metadata = {
 };
 
 const signUp = () => {
+  function handleSignUp(){
+    console.log("hello")   
+  }
   return (
     <div className="flex">
       <Link
@@ -26,7 +29,7 @@ const signUp = () => {
         </Slider>
       </aside>
       <aside className="w-screen md:w-4/6 lg:w-1/2 bg-[#EDEDED] h-screen flex justify-center items-center">
-        <AuthField isLoginPage={false} />
+      <AuthLayout isLoginPage={false} />
       </aside>
     </div>
   );

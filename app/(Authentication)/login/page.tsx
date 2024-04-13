@@ -1,4 +1,4 @@
-import AuthField from "@/app/Components/AuthField";
+import AuthLayout from "@/app/Components/AuthLayout";
 import Link from "next/link";
 import FeaturesPreview from "@/app/Components/FeaturesPreview";
 import Slider from "@/app/Components/Slider";
@@ -28,7 +28,7 @@ const signIn = () => {
       </aside>
 
       <aside className="w-full md:w-4/6 lg:w-1/2 bg-[#EDEDED] h-screen flex justify-center items-center">
-        <AuthField isLoginPage={true} />
+        <AuthLayout isLoginPage={true} />
       </aside>
     </div>
   );

@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { sliderContextValuesType } from "../types/sliderContextValuesType";
-export const featureContext = createContext<sliderContextValuesType | undefined>(undefined)
 
+export const featureContext = createContext<sliderContextValuesType | undefined>(undefined)
 
 const useFeatureContext = () => {
     const contextValues = useContext(featureContext)

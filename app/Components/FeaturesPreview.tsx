@@ -1,5 +1,6 @@
 import SwitchFeatureBtn from "./SwitchFeatureBtn";
 import Features from "./Features";
+
 const FeaturesPreview = () => {
   return (
     <section className="flex  flex-col justify-between items-center w-60 overflow-hidden mb-12 ">
