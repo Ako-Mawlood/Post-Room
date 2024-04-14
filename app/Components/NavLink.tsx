@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,7 +13,8 @@ const NavLink = ({ href, LinkText }: LinkType) => {
   const pathname = usePathname();
 
   return (
-    <Link className={pathname === href ? "font-bold" : ""} href={href}>
+    <Link className={clsx({'font-bold':href == pathname})}
+     href={href}>
       {LinkText}
     </Link>
   );

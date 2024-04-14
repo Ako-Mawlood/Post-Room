@@ -1,34 +1,11 @@
-"use client";
-
-import { FormEvent, useState } from "react";
 import AuthForm from "./AuthForm";
 import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
 interface authProps {
   isLoginPage: boolean;
 }
 
-const AuthField = ({ isLoginPage}: authProps) => {
-  const [error, setError] = useState();
-
-  const router = useRouter();
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-
-    const formData = new FormData(e.target as HTMLFormElement);
-
-    await axios
-    
-      .post("/api/register", {
-        email: formData.get("email"),
-        password: formData.get("password"),
-      })
-      .then(() => router.push("/"))
-      .catch((error) => setError(error.response.data));
-  }
+const AuthField = ({isLoginPage}: authProps) => {
 
   return (
     <>
@@ -49,12 +26,7 @@ const AuthField = ({ isLoginPage}: authProps) => {
         </p>
 
           <AuthForm isLoginPage={isLoginPage} />
-        
-        {error && (
-          <p className="text-red-500 bg-red-500/20 p-2 rounded-lg font-medium mt-2">
-            {error}
-          </p>
-        )}
+
         <p className="text-center mt-4">
           By continuing, you will agree to our{" "}
           <span className="underline">Terms of services</span> and{" "}
