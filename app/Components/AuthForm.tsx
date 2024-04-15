@@ -21,12 +21,11 @@ const {register,handleSubmit,setError,formState:{errors,isSubmitting}} = useForm
  const onSubmit:SubmitHandler<formDataType>=async(data)=>{
   try{
    const res =await axios.post(url,data)
-   //router.push("/sign-up") should be changed in the fature
-    isLoginPage?router.push('/'):router.push("/sign-up")
+    isLoginPage?router.push('/'):router.push("/verify")
   }
-  catch(error){
+  catch(error:any){
     setError("root",{
-      message:"Email or Password is not valid"
+      message:error.response.data
     })
   }
 
@@ -88,7 +87,7 @@ const {register,handleSubmit,setError,formState:{errors,isSubmitting}} = useForm
       >
         <span className="flex justify-center items-center text-center">
           {isSubmitting && <ImSpinner8 className="animate-spin mr-3" size={15} />}
-          {isLoginPage ? "Login with Email" : "Sign up with Email"}
+          {isLoginPage ? "Sign in with Email" : "Sign up with Email"}
         </span>
       </button>
       <div className="w-full py-2 my-3 flex justify-center items-center">
@@ -100,7 +99,7 @@ const {register,handleSubmit,setError,formState:{errors,isSubmitting}} = useForm
       </div>
       <button
         disabled={isSubmitting}
-        className="flex justify-center items-center font-semibold w-full py-2 transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+        className="flex justify-center items-center font-bold w-full py-2 transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
       >
         {isSubmitting ? (
           <ImSpinner8 className="animate-spin" size={15} />
