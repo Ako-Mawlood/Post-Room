@@ -23,7 +23,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-Satoshi">{children}</body>
+      <body className="font-Satoshi overflow-x-hidden">{children}</body>
     </html>
   );
 }

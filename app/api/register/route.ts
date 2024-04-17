@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     });
 
     if (doesUserExist) {
-      return new NextResponse("User already exists. Please sign in.", { status: 400 });
+      return new NextResponse("User already exists. Please sign in instead.", { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);

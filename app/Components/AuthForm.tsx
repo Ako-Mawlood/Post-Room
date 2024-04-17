@@ -20,7 +20,7 @@ const {register,handleSubmit,setError,formState:{errors,isSubmitting}} = useForm
 
  const onSubmit:SubmitHandler<formDataType>=async(data)=>{
   try{
-   const res =await axios.post(url,data)
+     const res = await axios.post(url,data)
     isLoginPage?router.push('/'):router.push("/verify")
   }
   catch(error:any){

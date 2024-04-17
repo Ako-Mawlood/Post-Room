@@ -13,7 +13,7 @@ const Features = () => {
       style={{
         transform: `translateX(${-sliderIndex * 100}%)`,
       }}
-      className=" w-full h-full flex transition-transform justify-between duration-500 ease-in-out"
+      className="w-full h-full flex transition-transform justify-between duration-500 ease-in-out"
     >
       <div className="w-full flex flex-col justify-center items-center">
         <IoPerson className="text-center text-7xl" size={250} />

@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     const isCorrectPassword = await bcrypt.compare(password, user.hashedPassword);
 
     if (!isCorrectPassword) {
-      return new NextResponse("Invalid email or password", { status: 400 });
+      return new NextResponse("Incorrect email or password", { status: 400 });
     }
 
     const session = await generateToken(user.id);
@@ -45,7 +45,6 @@ export async function POST(request: Request) {
 
     return response;
   } catch (error: any) {
-    console.log(error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
