@@ -1,35 +1,31 @@
 import Link from "next/link";
-import AuthLayout from "@/app/Components/AuthLayout";
-import FeaturesPreview from "@/app/Components/FeaturesPreview";
-import Slider from "@/app/Components/Slider";
-import { CgEricsson } from "react-icons/cg";
+import AuthForm from "@/app/Components/AuthForm";
+
 export const metadata = {
   title: "Post-Room | Create account",
 };
 
 const signUp = () => {
- 
-  return (
-    <div className="flex">
-        <div className="flex absolute top-3 left-2 md:text-gray-200 text-blacfont-bold text-sm sm:text-base">
-            <CgEricsson size={20}/>
-            <Link href="/" className="font-bold">Post Room</Link>
-         </div>
- 
 
-      <aside className="hidden text-gray-200 md:flex justify-center flex-col items-center w-1/2 h-screen bg-black border-r-[0.1px] selection:bg-[#ffffff] selection:text-primary">
-        <h1 className="text-center text-slate-200 bold mb-10 font-Oswald text-2xl">
-          Acquire knowledge; it&apos;s an ornament among friends and armor against
-          enemies.
-        </h1>
-        <Slider>
-          <FeaturesPreview />
-        </Slider>
-      </aside>
-      <aside className="w-screen md:w-4/6 lg:w-1/2 bg-[#EDEDED] h-screen flex justify-center items-center">
-      <AuthLayout isLoginPage={false} />
-      </aside>
-    </div>
+  return (
+
+    <aside className="w-full md:w-4/6 lg:w-1/2 bg-[#EDEDED] h-screen flex justify-center items-center">
+      <Link className="absolute text-primary font-semibold top-8 right-4 hover:bg-[#ddddef] transition duration-100 rounded-md py-2 px-2" href="/sign-in">Sign in to your account</Link>
+      <section className="w-full p-4 sm:w-3/4 text-secondery flex flex-col items-center">
+        <h1 className="text-2xl font-bold text-[#09090b]">Create new account</h1>
+        <p className="text-sm font-semibold my-5 text-gray-400">Enter your Email and password below to sign up</p>
+
+        <AuthForm isSignInPage={false} />
+
+        <p className="text-center mt-4">
+          By continuing, you will agree to our{" "}
+          <span className="underline">Terms of services</span> and{" "}
+          <span className="underline"> Privacy Policy</span>
+        </p>
+
+      </section>
+    </aside>
+
   );
 };
 

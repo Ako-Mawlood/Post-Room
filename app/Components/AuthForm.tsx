@@ -4,80 +4,86 @@ import { FcGoogle } from "react-icons/fc";
 import { ImSpinner8 } from "react-icons/im";
 import clsx from "clsx";
 import axios from "axios";
-import {SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
-interface formDataType{
-  email:string;
-  password:string;
+interface formDataType {
+  email: string;
+  password: string;
 }
 
-const AuthForm = ({isLoginPage}: { isLoginPage: boolean }) => {
+const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
 
-const url = isLoginPage ?"/api/login":"/api/register"
-const router = useRouter()
-const {register,handleSubmit,setError,formState:{errors,isSubmitting}} = useForm<formDataType>()
+  const url = isSignInPage ? "/api/login" : "/api/register"
+  const router = useRouter()
+  const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<formDataType>()
 
- const onSubmit:SubmitHandler<formDataType>=async(data)=>{
-  try{
-     const res = await axios.post(url,data)
-    isLoginPage?router.push('/'):router.push("/verify")
+  const onSubmit: SubmitHandler<formDataType> = async (data) => {
+    try {
+      const res = await axios.post(url, data)
+
+      if (isSignInPage) {
+        router.push("/")
+      } else {
+        router.push('/verify')
+      }
+
+    }
+    catch (error: any) {
+      setError("root", {
+        message: error.response.data
+      })
+    }
+
   }
-  catch(error:any){
-    setError("root",{
-      message:error.response.data
-    })
-  }
-
- }
   return (
-    
-      <form 
-    onSubmit={handleSubmit(onSubmit)}
-        className={clsx("flex flex-col text-sm w-full", {
+
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={clsx("flex flex-col text-sm w-full", {
         "opacity-60": isSubmitting,
       })}>
 
-      {errors.root && <span className="text-red-500 bg-red-500/20 px-2 py-2 mb-2 rounded-sm font-semibold">{errors.root?.message}</span> }
-      {errors.email && <span className="text-red-500 pb-1 font-semibold">{errors.email?.message}</span> }
+      {errors.root && <span className="text-red-500 bg-red-500/20 px-2 py-2 mb-2 rounded-sm font-semibold">{errors.root?.message}</span>}
+      {errors.email && <span className="text-red-500 pb-1 font-semibold">{errors.email?.message}</span>}
       <input
-        className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none",{
-         "cursor-not-allowed":isSubmitting,
-         "border-red-300 focus:border-red-400":errors.email ,
-         "border-gray-300 focus:border-gray-400":!errors.email 
+        className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none", {
+          "cursor-not-allowed": isSubmitting,
+          "border-red-300 focus:border-red-400": errors.email,
+          "border-gray-300 focus:border-gray-400": !errors.email
         })}
         placeholder="Email"
         disabled={isSubmitting}
-        {...register("email",{
-          required:"Email is required",
+        {...register("email", {
+          required: "Email is required",
           pattern: {
             value: /^\S+@\S+$/i,
             message: "Invalid email address",
           },
         })
         }
-      
+
       />
       {
         errors.password && <span className="text-red-500 pb-1 font-semibold">{errors.password.message}</span>
       }
       <input
-        className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none ",{
-        "cursor-not-allowed":isSubmitting,
-        "border-red-300 focus:border-red-400":errors.email ,
-        "border-gray-300 focus:border-gray-400":!errors.email 
+        className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none ", {
+          "cursor-not-allowed": isSubmitting,
+          "border-red-300 focus:border-red-400": errors.email,
+          "border-gray-300 focus:border-gray-400": !errors.email
         })}
         placeholder="Password"
         type="password"
         disabled={isSubmitting}
-        {...register("password",{
-          required:"Password is required",
-          minLength:{
-            value:8,
-            message:"Password must be at least 8 characters long"
+        {...register("password", {
+          required: "Password is required",
+          minLength: {
+            value: 8,
+            message: "Password must be at least 8 characters long"
           }
-          })
-          
+        })
+
         }
       />
       <button
@@ -87,7 +93,7 @@ const {register,handleSubmit,setError,formState:{errors,isSubmitting}} = useForm
       >
         <span className="flex justify-center items-center text-center">
           {isSubmitting && <ImSpinner8 className="animate-spin mr-3" size={15} />}
-          {isLoginPage ? "Sign in with Email" : "Sign up with Email"}
+          {isSignInPage ? "Sign in with Email" : "Sign up with Email"}
         </span>
       </button>
       <div className="w-full py-2 my-3 flex justify-center items-center">
@@ -108,7 +114,7 @@ const {register,handleSubmit,setError,formState:{errors,isSubmitting}} = useForm
         )}
         <span className="text-primary px-2">Google</span>
       </button>
-      </form>
+    </form>
   );
 };
 
