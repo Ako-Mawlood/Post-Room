@@ -7,6 +7,7 @@ import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+
 interface formDataType {
   email: string;
   password: string;
@@ -14,11 +15,12 @@ interface formDataType {
 
 const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
 
+  const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<formDataType>()
   const url = isSignInPage ? "/api/login" : "/api/register"
   const router = useRouter()
-  const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<formDataType>()
 
   const onSubmit: SubmitHandler<formDataType> = async (data) => {
+
     try {
       const res = await axios.post(url, data)
 
@@ -44,7 +46,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
         "opacity-60": isSubmitting,
       })}>
 
-      {errors.root && <span className="text-red-500 bg-red-500/20 px-2 py-2 mb-2 rounded-sm font-semibold">{errors.root?.message}</span>}
+      {errors.root && <span className="text-red-500 bg-red-500/20 px-2 py-2 mb-2 rounded-sm font-semibold border border-red-300">{errors.root?.message}</span>}
       {errors.email && <span className="text-red-500 pb-1 font-semibold">{errors.email?.message}</span>}
       <input
         className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none", {
@@ -59,10 +61,9 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
           pattern: {
             value: /^\S+@\S+$/i,
             message: "Invalid email address",
-          },
-        })
+          }
         }
-
+        )}
       />
       {
         errors.password && <span className="text-red-500 pb-1 font-semibold">{errors.password.message}</span>
@@ -82,9 +83,8 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
             value: 8,
             message: "Password must be at least 8 characters long"
           }
-        })
-
         }
+        )}
       />
       <button
         className="w-full bg-primary flex justify-center font-semibold text-base items-center text-center py-2 rounded-md text-white hover:opacity-90"

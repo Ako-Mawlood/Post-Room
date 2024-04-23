@@ -13,8 +13,8 @@ const NavLink = ({ href, LinkText }: LinkType) => {
   const pathname = usePathname();
 
   return (
-    <Link className={clsx("ml-4 sm:ml-0",{'font-bold':href == pathname})}
-     href={href}>
+    <Link className={clsx("ml-4 sm:ml-0 hover:underline hover:underline-offset-4 duration-300", { 'font-bold': href == pathname })}
+      href={href}>
       {LinkText}
     </Link>
   );
