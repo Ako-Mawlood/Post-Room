@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
 
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 
 import { sendMail } from "@/service/mailService";
-import { generateToken } from "@/app/libs/auth";
+import { generateToken } from "@/libs/auth";
 
 export async function POST(request: Request) {
   try {
@@ -22,7 +22,9 @@ export async function POST(request: Request) {
     });
 
     if (doesUserExist) {
-      return new NextResponse("User already exists. Please sign in instead.", { status: 400 });
+      return new NextResponse("User already exists. Please sign in instead.", {
+        status: 400,
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);

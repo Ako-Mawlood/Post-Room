@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/libs/prismadb";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 

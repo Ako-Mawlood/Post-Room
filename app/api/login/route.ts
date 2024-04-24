@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
-import { generateToken } from "@/app/libs/auth";
+import { generateToken } from "@/libs/auth";
 
 export async function POST(request: Request) {
   try {
