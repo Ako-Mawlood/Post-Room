@@ -36,10 +36,10 @@ const FeaturesPreview = () => {
                 </div>
             </div>
             <div className="flex w-24 mt-3 h-4 justify-between items-center">
-                <SwitchFeatureBtn switchIndex={0} />
-                <SwitchFeatureBtn switchIndex={1} />{" "}
-                <SwitchFeatureBtn switchIndex={2} />{" "}
-                <SwitchFeatureBtn switchIndex={3} />
+                {[0, 1, 2, 3].map((index) => (
+                    <SwitchFeatureBtn switchIndex={index} />
+                )
+                )}
             </div>
         </section>
     );

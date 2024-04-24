@@ -9,7 +9,7 @@ export default function HomePage() {
           <p className="text-xl md:text-[1.5vw]">Post Room offers curated <span className="font-extrabold">articles</span>,<span className="font-extrabold">blogs</span>, and <span className="font-extrabold">quotes</span>, each contributing to a tapestry of discovery in a realm where storytelling intertwines with profound ideas.</p>
         </div>
         <Image
-          className="md:w-2/5 mt-2"
+          className="md:w-2/5 bg-gray-900"
           src={ArtImage}
           alt="art image"
           width={500}
