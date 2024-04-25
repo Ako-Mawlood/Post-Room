@@ -1,5 +1,5 @@
 import Slider from "../Components/Slider"
-import FeaturesPreview from "../Components/FeaturesPreview"
+import FeaturesPreview from "../Components/pages/Authentication/FeaturesPreview"
 import Link from "next/link"
 import { CgEricsson } from "react-icons/cg"
 
@@ -16,7 +16,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           Acquire knowledge; it&apos;s an ornament among friends and armor against
           enemies.
         </h1>
-        <Slider>
+        <Slider indexRange={4}>
           <FeaturesPreview />
         </Slider>
       </aside>

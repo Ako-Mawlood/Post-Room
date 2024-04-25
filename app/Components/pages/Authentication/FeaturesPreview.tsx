@@ -5,10 +5,10 @@ import { IoPerson } from "react-icons/io5";
 import { RiMacbookFill } from "react-icons/ri";
 import { FaLightbulb } from "react-icons/fa6";
 import { AiFillLike } from "react-icons/ai";
-import useFeatureContext from "../Hooks/useFeatureContext";
+import useSliderContext from "../../../Hooks/useSliderContext";
 
 const FeaturesPreview = () => {
-    const { sliderIndex } = useFeatureContext();
+    const { sliderIndex } = useSliderContext();
 
     return (
         <section className="flex flex-col justify-between items-center w-60 overflow-hidden mb-12">

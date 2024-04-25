@@ -87,7 +87,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
         )}
       />
       <button
-        className="w-full bg-primary flex justify-center font-semibold text-base items-center text-center py-2 rounded-md text-white hover:opacity-90"
+        className="w-full bg-black flex justify-center font-semibold text-base items-center text-center py-2 rounded-md text-white hover:opacity-90"
         type="submit"
         disabled={isSubmitting}
       >

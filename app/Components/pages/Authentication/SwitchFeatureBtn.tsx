@@ -1,11 +1,11 @@
 "use client";
 
 import { GoDotFill } from "react-icons/go";
-import useFeatureContext from "../Hooks/useFeatureContext";
+import useSliderContext from "../../../Hooks/useSliderContext";
 import clsx from "clsx";
 
 const SwitchFeatureBtn = ({ switchIndex }: { switchIndex: number }) => {
-  const { setIsOnHover, sliderIndex, setSliderIndex } = useFeatureContext();
+  const { setIsOnHover, sliderIndex, setSliderIndex } = useSliderContext();
 
   return (
     <button

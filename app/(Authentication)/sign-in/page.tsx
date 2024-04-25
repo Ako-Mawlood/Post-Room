@@ -1,7 +1,7 @@
 import Link from "next/link";
-import AuthForm from "@/app/Components/AuthForm";
+import AuthForm from "@/app/Components/pages/Authentication/AuthForm";
 export const metadata = {
-  title: "Post-Room | Login",
+  title: "Post-Room | Sign in",
 };
 
 const signIn = () => {
