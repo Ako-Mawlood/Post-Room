@@ -3,7 +3,7 @@ import NavLink from "./NavLink"
 import Link from "next/link"
 
 const Navbar = () => {
-    const isRegistered = false;
+    const isRegistered = true;
     return (
         <nav className="flex h-20 items-center px-1 md:px-4 text-xs sm:text-base border-b">
             <div className="flex text-sm sm:text-3xl">

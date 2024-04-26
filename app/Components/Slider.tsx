@@ -11,24 +11,24 @@ interface sliderProps {
 
 const Slider = ({ indexRange, children }: sliderProps) => {
   const [sliderIndex, setSliderIndex] = useState(0);
-  const [isOnHover, setIsOnHover] = useState(false);
+  const [isOnFocus, setIsOnFocus] = useState(false);
 
   //Changeing sliderIndex index every 3.5s. 
   useEffect(() => {
     const interval = setInterval(() => {
       setSliderIndex((prevIndex: number) => (prevIndex + 1) % indexRange);
     }, 3500);
-    if (isOnHover) {
+    if (isOnFocus) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isOnHover]);
+  }, [isOnFocus]);
 
   const sliderContextValues: sliderContextValuesType = {
-    isOnHover,
+    isOnFocus,
     sliderIndex,
     setSliderIndex,
-    setIsOnHover,
+    setIsOnFocus,
   };
 
   return (

@@ -1,7 +1,7 @@
 
 export interface sliderContextValuesType {
-    isOnHover: boolean;
-    setIsOnHover: React.Dispatch<React.SetStateAction<boolean>>
+    isOnFocus: boolean;
+    setIsOnFocus: React.Dispatch<React.SetStateAction<boolean>>
     sliderIndex: number,
     setSliderIndex: React.Dispatch<React.SetStateAction<number>>
 }

@@ -21,7 +21,7 @@ const SwitchSliderBtn = ({
   handleOnMouseLeave,
   children
 }: switchSliderBtnProps) => {
-  const { setIsOnHover, sliderIndex, setSliderIndex } = useSliderContext();
+  const { setIsOnFocus, sliderIndex, setSliderIndex } = useSliderContext();
 
   const onClick = () => {
     if (handleOnClick) {
@@ -34,7 +34,7 @@ const SwitchSliderBtn = ({
     if (handleOnMouseEnter) {
       handleOnMouseEnter()
     } else {
-      setIsOnHover(true)
+      setIsOnFocus(true)
       setSliderIndex(switchIndex)
     }
   }
@@ -42,7 +42,7 @@ const SwitchSliderBtn = ({
     if (handleOnMouseLeave) {
       handleOnMouseLeave()
     } else {
-      setIsOnHover(false)
+      setIsOnFocus(false)
     }
   }
 

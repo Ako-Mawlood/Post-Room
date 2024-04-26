@@ -6,6 +6,8 @@ import drowingImage from "../../../../public/drowing.png"
 import freindesImage from "../../../../public/freinds.jpg"
 import Image, { StaticImageData } from "next/image";
 import macbookImage from "../../../../public/macbook.jpg"
+import { IoPauseCircleOutline } from "react-icons/io5";
+import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link"
 import clsx from "clsx";
 
@@ -38,7 +40,7 @@ interface blogType {
 }
 
 const BlogsPreview = () => {
-    const { sliderIndex } = useSliderContext();
+    const { sliderIndex, isOnFocus, setIsOnFocus } = useSliderContext();
 
     return (
         <section className="flex flex-col md:flex-row items-center justify-start">
@@ -76,6 +78,12 @@ const BlogsPreview = () => {
                     </SwitchSliderBtn>
                 )
                 )}
+                {isOnFocus ?
+                    <IoPlayCircleOutline onClick={() => setIsOnFocus(false)} className="text-gray-600 size-[40px] cursor-pointer" size={40} /> :
+                    <IoPauseCircleOutline onClick={() => setIsOnFocus(true)} className="text-gray-600 size-[40px] cursor-pointer" size={40} />
+
+
+                }
             </div>
         </section>
 
