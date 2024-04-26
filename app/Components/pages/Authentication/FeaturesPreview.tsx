@@ -1,17 +1,18 @@
 "use client";
 
-import SwitchFeatureBtn from "./SwitchFeatureBtn";
+import SwitchSliderBtn from "./SwitchSliderBtn";
 import { IoPerson } from "react-icons/io5";
 import { RiMacbookFill } from "react-icons/ri";
 import { FaLightbulb } from "react-icons/fa6";
 import { AiFillLike } from "react-icons/ai";
 import useSliderContext from "../../../Hooks/useSliderContext";
+import { GoDotFill } from "react-icons/go";
+import clsx from "clsx";
 
 const FeaturesPreview = () => {
     const { sliderIndex } = useSliderContext();
-
     return (
-        <section className="flex flex-col justify-between items-center w-60 overflow-hidden mb-12">
+        <section className="flex flex-col justify-between items-center w-60 mb-12 overflow-hidden">
             <div
                 style={{
                     transform: `translateX(${-sliderIndex * 100}%)`,
@@ -35,9 +36,15 @@ const FeaturesPreview = () => {
                     <p>Like your favorate Blogs</p>
                 </div>
             </div>
+
             <div className="flex w-24 mt-3 h-4 justify-between items-center">
                 {[0, 1, 2, 3].map((index) => (
-                    <SwitchFeatureBtn switchIndex={index} />
+                    <SwitchSliderBtn key={index} switchIndex={index} >
+                        <GoDotFill className={clsx("duration-200", {
+                            "w-7 h-7": sliderIndex == index,
+                            "w-3 h-3": sliderIndex != index,
+                        })} />
+                    </SwitchSliderBtn>
                 )
                 )}
             </div>
@@ -45,4 +52,4 @@ const FeaturesPreview = () => {
     );
 };
 
-export default FeaturesPreview;
+export default FeaturesPreview; 

@@ -30,8 +30,8 @@ export default function HomePage() {
         <BlogsPreview />
       </Slider>
 
-      <section ref={introRef} className={clsx("flex flex-col justify-center mx-auto w-full md:w-3/5 text-center my-80", {
-        "opacity-100 duration-700": isVisable,
+      <section ref={introRef} className={clsx("flex flex-col justify-center mx-auto w-full md:w-3/5 text-center my-56", {
+        "opacity-100 duration-500": isVisable,
         "opacity-0": !isVisable
 
       })}>
@@ -39,7 +39,7 @@ export default function HomePage() {
           <CgEricsson className='text-blue-600 animate-pulse' size={40} />
           <h1>Post Room</h1>
         </div>
-        <p className="text-xl text-gray-800 leading-10 md:text-[2vw] font-semibold">Post Room offers curated <span className="underline underline-offset-2">articles</span>, <span className="underline underline-offset-2">blogs</span> and <span className="underline underline-offset-2">quotes</span>, each weaving into a realm where storytelling intertwines with profound ideas.
+        <p className="text-2xl text-gray-700 leading-10 md:text-[2vw] font-semibold">Post Room offers curated <span className="underline underline-offset-2">articles</span>, <span className="underline underline-offset-2">blogs</span> and <span className="underline underline-offset-2">quotes</span>, each weaving into a realm where storytelling intertwines with profound ideas.
         </p>
       </section >
       <section className="flex flex-col md:flex-row mt-10 px-2 justify-around items-center text-gray-800">

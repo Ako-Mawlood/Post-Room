@@ -76,7 +76,7 @@
   }
   
   
-  .animate-grow {
+  .animate-grow{
     animation: grow 3000ms ease-in-out forwards;
   }
   @keyframes grow {

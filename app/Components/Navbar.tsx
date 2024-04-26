@@ -6,6 +6,7 @@ const Navbar = () => {
     const isRegistered = false;
     return (
         <nav className="flex h-20 items-center px-1 md:px-4 text-xs sm:text-base border-b">
+            <div className="bg-green-300 sm:bg-black md:bg-red-500 lg:bg-fuchsia-600">ddddd</div>
             <div className="flex text-sm sm:text-3xl">
                 <CgEricsson className="text-blue-600" size={30} />
                 <h1 className="text-xs md:text-base font-bold sm:block text-center">Post Room</h1>

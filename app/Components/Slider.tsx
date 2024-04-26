@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { sliderContext } from "../Hooks/useSliderContext";
-import { sliderContextValuesType } from "../types/sliderContextValuesType";
+import { sliderContextValuesType } from "../Types/sliderContextValuesType";
 
 interface sliderProps {
   indexRange: number;
   children: React.ReactNode
 }
+
 const Slider = ({ indexRange, children }: sliderProps) => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [isOnHover, setIsOnHover] = useState(false);
-  //Changeing image index every 3.5s. 
+
+  //Changeing sliderIndex index every 3.5s. 
   useEffect(() => {
     const interval = setInterval(() => {
       setSliderIndex((prevIndex: number) => (prevIndex + 1) % indexRange);
@@ -23,6 +25,7 @@ const Slider = ({ indexRange, children }: sliderProps) => {
   }, [isOnHover]);
 
   const sliderContextValues: sliderContextValuesType = {
+    isOnHover,
     sliderIndex,
     setSliderIndex,
     setIsOnHover,
