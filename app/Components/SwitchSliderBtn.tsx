@@ -1,10 +1,12 @@
 "use client";
 
-import useSliderContext from "../../../Hooks/useSliderContext";
 import clsx from "clsx";
 
 interface switchSliderBtnProps {
   switchIndex: number;
+  sliderIndex: number;
+  setSliderIndex: React.Dispatch<React.SetStateAction<number>>
+  setIsOnFocus: React.Dispatch<React.SetStateAction<boolean>>
   defaultStyle?: string;
   onFocusStyle?: string;
   children?: React.ReactNode;
@@ -12,8 +14,12 @@ interface switchSliderBtnProps {
   handleOnMouseEnter?: () => void;
   handleOnMouseLeave?: () => void;
 }
+
 const SwitchSliderBtn = ({
   switchIndex,
+  sliderIndex,
+  setSliderIndex,
+  setIsOnFocus,
   defaultStyle = "",
   onFocusStyle = "",
   handleOnClick,
@@ -21,13 +27,15 @@ const SwitchSliderBtn = ({
   handleOnMouseLeave,
   children
 }: switchSliderBtnProps) => {
-  const { setIsOnFocus, sliderIndex, setSliderIndex } = useSliderContext();
+
+  //Checking if a function provided through props , if not excute a default function.
 
   const onClick = () => {
     if (handleOnClick) {
       handleOnClick()
     } else {
       setSliderIndex(switchIndex)
+      setIsOnFocus(true)
     }
   }
   const onMouseEnter = () => {

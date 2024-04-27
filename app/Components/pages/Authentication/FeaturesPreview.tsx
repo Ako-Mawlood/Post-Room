@@ -1,16 +1,16 @@
 "use client";
 
-import SwitchSliderBtn from "./SwitchSliderBtn";
+import SwitchSliderBtn from "../../SwitchSliderBtn";
 import { IoPerson } from "react-icons/io5";
 import { RiMacbookFill } from "react-icons/ri";
 import { FaLightbulb } from "react-icons/fa6";
 import { AiFillLike } from "react-icons/ai";
-import useSliderContext from "../../../Hooks/useSliderContext";
+import useSlider from "@/app/Hooks/useSlider";
 import { GoDotFill } from "react-icons/go";
 import clsx from "clsx";
 
 const FeaturesPreview = () => {
-    const { sliderIndex } = useSliderContext();
+    const { sliderIndex, setSliderIndex, setIsOnFocus } = useSlider(3);
     return (
         <section className="flex flex-col justify-between items-center w-60 mb-12 overflow-hidden">
             <div
@@ -39,7 +39,13 @@ const FeaturesPreview = () => {
 
             <div className="flex w-24 mt-3 h-4 justify-between items-center">
                 {[0, 1, 2, 3].map((index) => (
-                    <SwitchSliderBtn key={index} switchIndex={index} >
+                    <SwitchSliderBtn
+                        sliderIndex={sliderIndex}
+                        setSliderIndex={setSliderIndex}
+                        setIsOnFocus={setIsOnFocus}
+                        key={index}
+                        switchIndex={index}
+                    >
                         <GoDotFill className={clsx("duration-200", {
                             "w-7 h-7": sliderIndex == index,
                             "w-3 h-3": sliderIndex != index,

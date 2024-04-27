@@ -23,7 +23,6 @@ const Navbar = () => {
                         <Link className="bg-primary text-gray-100 mx-2 p-1 rounded hover:opacity-80" href="/sign-up" >Sign up</Link>
                         <Link className="bg-primary text-gray-100 p-1 rounded hover:opacity-80" href="/sign-in" >Sign in</Link>
                     </div>
-
             }
         </nav>
 

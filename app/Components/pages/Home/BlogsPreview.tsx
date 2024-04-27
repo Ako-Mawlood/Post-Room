@@ -1,7 +1,7 @@
 "use client"
 
-import useSliderContext from "@/app/Hooks/useSliderContext"
-import SwitchSliderBtn from "../Authentication/SwitchSliderBtn"
+
+import SwitchSliderBtn from "../../SwitchSliderBtn"
 import drowingImage from "../../../../public/drowing.png"
 import freindesImage from "../../../../public/freinds.jpg"
 import Image, { StaticImageData } from "next/image";
@@ -10,6 +10,7 @@ import { IoPauseCircleOutline } from "react-icons/io5";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link"
 import clsx from "clsx";
+import useSlider from "../../../Hooks/useSlider"
 
 const blogs = [
     {
@@ -40,7 +41,7 @@ interface blogType {
 }
 
 const BlogsPreview = () => {
-    const { sliderIndex, isOnFocus, setIsOnFocus } = useSliderContext();
+    const { sliderIndex, setSliderIndex, isOnFocus, setIsOnFocus } = useSlider(3);
 
     return (
         <section className="flex flex-col md:flex-row items-center justify-start">
@@ -58,7 +59,6 @@ const BlogsPreview = () => {
                                 <Link className="bg-blue-600 text-gray-200 w-36 py-2 text-center rounded-full font-semibold text-xl mt-4 hover:opacity-90" href='/'>Read blog</Link>
                             </div>
                         </div>
-
                     ))}
 
                 </div>
@@ -67,7 +67,10 @@ const BlogsPreview = () => {
                 {[0, 1, 2].map((index) => (
                     <SwitchSliderBtn
                         key={index}
-                        defaultStyle="w-full px-0 rounded-full h-1/3 bg-gray-300 duration-500"
+                        sliderIndex={sliderIndex}
+                        setSliderIndex={setSliderIndex}
+                        setIsOnFocus={setIsOnFocus}
+                        defaultStyle="w-full rounded-full h-1/3 bg-gray-300 duration-500"
                         onFocusStyle="w-full rounded-full h-1/3 bg-blue-600 duration-500"
                         switchIndex={index}
                         handleOnMouseEnter={() => { }}
@@ -81,8 +84,6 @@ const BlogsPreview = () => {
                 {isOnFocus ?
                     <IoPlayCircleOutline onClick={() => setIsOnFocus(false)} className="text-gray-600 size-[40px] cursor-pointer" size={40} /> :
                     <IoPauseCircleOutline onClick={() => setIsOnFocus(true)} className="text-gray-600 size-[40px] cursor-pointer" size={40} />
-
-
                 }
             </div>
         </section>

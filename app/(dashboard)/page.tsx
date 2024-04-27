@@ -5,9 +5,7 @@ import ArtImage from '../../public/ArtImage.jpg';
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import BlogsPreview from '../Components/pages/Home/BlogsPreview';
-import Slider from '../Components/Slider';
 import { CgEricsson } from "react-icons/cg";
-
 
 export default function HomePage() {
   const qouteRef = useRef(null)
@@ -19,16 +17,15 @@ export default function HomePage() {
       entries.forEach(entrie => {
         setIsVisable(entrie.isIntersecting)
       })
-    }, { threshold: 0.25 })
+    }, { threshold: 0.5 })
     if (qouteRef.current) observer.observe(qouteRef.current)
     if (introRef.current) observer.observe(introRef.current)
   }), [])
 
   return (
     <>
-      <Slider indexRange={3}>
-        <BlogsPreview />
-      </Slider>
+
+      <BlogsPreview />
 
       <section ref={introRef} className={clsx("flex flex-col justify-center mx-auto w-full md:w-3/5 text-center my-56", {
         "opacity-100 duration-500": isVisable,
