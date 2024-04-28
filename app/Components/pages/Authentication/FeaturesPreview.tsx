@@ -10,7 +10,7 @@ import { GoDotFill } from "react-icons/go";
 import clsx from "clsx";
 
 const FeaturesPreview = () => {
-    const { sliderIndex, setSliderIndex, setIsOnFocus } = useSlider(3);
+    const { sliderIndex, setSliderIndex, setIsOnFocus } = useSlider(4);
     return (
         <section className="flex flex-col justify-between items-center w-60 mb-12 overflow-hidden">
             <div
@@ -38,23 +38,23 @@ const FeaturesPreview = () => {
             </div>
 
             <div className="flex w-24 mt-3 h-4 justify-between items-center">
-                {[0, 1, 2, 3].map((index) => (
+                {[0, 1, 2, 3].map((id, index) => (
                     <SwitchSliderBtn
+                        key={id}
                         sliderIndex={sliderIndex}
-                        setSliderIndex={setSliderIndex}
-                        setIsOnFocus={setIsOnFocus}
-                        key={index}
                         switchIndex={index}
+                        handleMouseEnter={() => (setSliderIndex(index), setIsOnFocus(true))}
+                        handleMouseLeave={() => (setIsOnFocus(false))}
                     >
                         <GoDotFill className={clsx("duration-200", {
-                            "w-7 h-7": sliderIndex == index,
-                            "w-3 h-3": sliderIndex != index,
+                            "w-7 h-7": sliderIndex == id,
+                            "w-3 h-3": sliderIndex != id,
                         })} />
                     </SwitchSliderBtn>
                 )
                 )}
             </div>
-        </section>
+        </section >
     );
 };
 

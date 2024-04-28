@@ -27,18 +27,38 @@ export default function HomePage() {
 
       <BlogsPreview />
 
-      <section ref={introRef} className={clsx("flex flex-col justify-center mx-auto w-full md:w-3/5 text-center my-56", {
+      <section ref={introRef} className={clsx("flex flex-col justify-center mx-2 sm:mx-auto sm:w-4/5 md:w-3/5 text-center my-56", {
         "opacity-100 duration-500": isVisable,
         "opacity-0": !isVisable
-
       })}>
+
         <div className='flex self-center font-semibold text-4xl mb-4'>
           <CgEricsson className='text-blue-600 animate-pulse' size={40} />
           <h1>Post Room</h1>
         </div>
-        <p className="text-2xl text-gray-700 leading-10 md:text-[2vw] font-semibold">Post Room offers curated <span className="underline underline-offset-2">articles</span>, <span className="underline underline-offset-2">blogs</span> and <span className="underline underline-offset-2">quotes</span>, each weaving into a realm where storytelling intertwines with profound ideas.
-        </p>
+
+        <p className="text-xl text-gray-700 leading-10 md:text-[2vw] font-semibold">Post Room offers curated <span className="underline underline-offset-2">articles</span>, <span className="underline underline-offset-2">blogs</span> and <span className="underline underline-offset-2">quotes</span>, each weaving into a realm where storytelling intertwines with profound ideas.</p>
+
       </section >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <section className="flex flex-col md:flex-row mt-10 px-2 justify-around items-center text-gray-800">
         <div className="md:w-5/12 flex flex-col justify-center items-center gap-10 md:gap-20 text-center transition-opacity duration-500">
           <h1 className="font-semibold text-3xl md:text-[2.5vw] leading-none">Welcome to Post Room Where Words Weave the Fabric of Inspiration</h1>
