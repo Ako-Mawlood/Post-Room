@@ -41,24 +41,6 @@ export default function HomePage() {
 
       </section >
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <section className="flex flex-col md:flex-row mt-10 px-2 justify-around items-center text-gray-800">
         <div className="md:w-5/12 flex flex-col justify-center items-center gap-10 md:gap-20 text-center transition-opacity duration-500">
           <h1 className="font-semibold text-3xl md:text-[2.5vw] leading-none">Welcome to Post Room Where Words Weave the Fabric of Inspiration</h1>

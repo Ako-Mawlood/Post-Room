@@ -63,17 +63,20 @@ const BlogsPreview = () => {
             </div>
             <div className="flex md:flex-col gap-4 w-3/4 h-4 md:w-1 md:h-72 md:mr-auto mt-3 justify-between items-center">
                 {[0, 1, 2].map((id, index) => (
-                    <SwitchSliderBtn
+
+                    < button
                         key={id}
-                        sliderIndex={sliderIndex}
-                        defaultStyle="w-full rounded-full h-1/3 bg-gray-300 duration-500"
-                        onFocusStyle="w-full rounded-full h-1/3 bg-blue-600 duration-500"
-                        switchIndex={index}
-                        handleClick={() => (setIsOnFocus(true), setSliderIndex(index))}
+                        className={
+                            clsx("duration-200", {
+                                "w-full rounded-full h-1/3 bg-blue-600 duration-500": sliderIndex == index,
+                                "w-full rounded-full h-1/3 bg-gray-300 duration-500": sliderIndex != index,
+                            })}
+                        onClick={() => { setSliderIndex(index), setIsOnFocus(true) }}
                     >
-                        <div style={{}} className="animte-grow w-full h-0 bg-blue-600">
+                        <div className="animte-grow w-full h-0 bg-blue-600">
                         </div>
-                    </SwitchSliderBtn>
+                    </button >
+
                 )
                 )}
                 {isOnFocus ?

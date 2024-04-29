@@ -1,6 +1,5 @@
 "use client";
 
-import SwitchSliderBtn from "../../SwitchSliderBtn";
 import { IoPerson } from "react-icons/io5";
 import { RiMacbookFill } from "react-icons/ri";
 import { FaLightbulb } from "react-icons/fa6";
@@ -39,18 +38,16 @@ const FeaturesPreview = () => {
 
             <div className="flex w-24 mt-3 h-4 justify-between items-center">
                 {[0, 1, 2, 3].map((id, index) => (
-                    <SwitchSliderBtn
+                    <button
                         key={id}
-                        sliderIndex={sliderIndex}
-                        switchIndex={index}
-                        handleMouseEnter={() => (setSliderIndex(index), setIsOnFocus(true))}
-                        handleMouseLeave={() => (setIsOnFocus(false))}
+                        onMouseEnter={() => { setSliderIndex(index), setIsOnFocus(true) }}
+                        onMouseLeave={() => { setIsOnFocus(false) }}
                     >
                         <GoDotFill className={clsx("duration-200", {
-                            "w-7 h-7": sliderIndex == id,
-                            "w-3 h-3": sliderIndex != id,
+                            "w-7 h-7": sliderIndex == index,
+                            "w-3 h-3": sliderIndex != index,
                         })} />
-                    </SwitchSliderBtn>
+                    </button>
                 )
                 )}
             </div>

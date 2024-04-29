@@ -7,7 +7,6 @@ import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
-
 interface formDataType {
   email: string;
   password: string;
@@ -29,7 +28,6 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
       } else {
         router.push('/verify')
       }
-
     }
     catch (error: any) {
       setError("root", {
