@@ -42,8 +42,8 @@ export default function HomePage() {
       </section >
 
       <section className="w-screen h-screen bg-gray-500 relative text-gray-50">
-        <div className="absolute top-0 z-0 bg-black h-full w-full opacity-60"></div>
-        <video className="w-full h-full object-cover" src="/video.mp4" loop autoPlay muted ></video>
+        <div className="absolute top-0 z-10 bg-black h-full w-full opacity-60"></div>
+        <video className="w-full h-full object-cover blur z-0" src="/video.mp4" loop autoPlay muted ></video>
         <div className="flex flex-col w-3/4 sm:w-1/2 absolute top-1/2 left-[10%] -translate-y-1/2 z-50">
           <h1 className='text-3xl md:text-5xl font-semibold'>Recent Discoveries in Black Hole Physics</h1>
           <p className='my-4'>Explore recent revelations about black holes in this guide. From breakthroughs to simplified insights, understanding black holes is made easy for all.</p>

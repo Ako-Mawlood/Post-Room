@@ -1,8 +1,9 @@
-import React from 'react'
-
+import BlogList from "@/app/Components/pages/Explore/BlogList"
 const explorePage = () => {
     return (
-        <div>explorePage</div>
+        <div>
+            <BlogList />
+        </div>
     )
 }
 
