@@ -8,7 +8,6 @@ import { IoPauseCircleOutline, IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link"
 import clsx from "clsx";
 import useSlider from "../../../Hooks/useSlider"
-import SwitchSliderBtn from "../../SwitchSliderBtn";
 
 interface blogType {
     id: number;
