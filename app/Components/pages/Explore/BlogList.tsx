@@ -6,7 +6,7 @@ async function getBlogs() {
 }
 async function BlogList() {
     const blogs = await getBlogs()
-    console.log(blogs)
+
     return (
         <section className="w-full flex justify-center mt-4 gap-10 cursor-pointer flex-wrap">
             {blogs && (blogs.map((blog: any) => (
