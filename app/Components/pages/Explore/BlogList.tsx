@@ -11,7 +11,7 @@ async function BlogList() {
         <section className="w-full flex justify-center mt-4 gap-10 cursor-pointer flex-wrap">
             {blogs && (blogs.map((blog: any) => (
                 <div
-                    className="w-96 h-[27rem] shadow-lg hover:shadow-slate-400 hover:shadow-lg duration-150 rounded-3xl"
+                    className="w-96 h-[27rem] shadow-lg hover:shadow-slate-400 hover:shadow-lg duration-150 rounded-3xl hover:scale-[1.003]"
                     key={blog.id}>
                     <Image
                         className="w-full h-3/5 object-cover rounded-3xl"

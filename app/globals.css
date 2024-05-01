@@ -74,3 +74,33 @@
       @apply bg-background text-foreground;
     }
   }
+  .animate-grow{
+    animation-name: grow;
+    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  }
+
+  @keyframes grow {
+    0%{
+      width: 0;
+    }
+    100%{
+      border-radius: 0;
+      width:100vw;
+    }
+    
+  }
+  .animate-shrink{
+    animation-name: shrink;
+    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  }
+
+  @keyframes shrink {
+    0%{
+      width: 90vw;
+
+    }
+    100%{
+      width:0;
+    }
+    
+  }
