@@ -89,18 +89,20 @@
     }
     
   }
-  .animate-shrink{
-    animation-name: shrink;
+  .animate-show{
+    animation-name: show;
     animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    
   }
 
-  @keyframes shrink {
+  @keyframes show {
     0%{
-      width: 90vw;
-
+      transform: translateY(0);
+      opacity: 0;
     }
     100%{
-      width:0;
+      transform: translateY(15px);
+      opacity: 1;
     }
     
   }

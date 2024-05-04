@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     });
 
     if (doesUserExist) {
-      return new NextResponse("User already exists. Please sign in instead.", {
+      return new NextResponse("Account already exists. Please sign in instead.", {
         status: 400,
       });
     }

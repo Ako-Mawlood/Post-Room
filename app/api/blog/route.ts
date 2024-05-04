@@ -3,6 +3,28 @@ import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 import { getCurrentUser } from "@/libs/auth";
 
+export async function GET(request: Request) {
+  try {
+    const blogs = await prisma.blog.findMany({
+      include: {
+        user: {
+          select: {
+            email: true,
+            username: true,
+            fullname: true,
+            id: true
+          }
+        }
+      }
+    });
+
+    return NextResponse.json(blogs, { status: 200 });
+  } catch (error: any) {
+    console.log(error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const currentUser = await getCurrentUser();
@@ -19,6 +41,7 @@ export async function POST(request: Request) {
 
     const blog = await prisma.blog.create({
       data: {
+        userId: currentUser.id,
         title,
         content,
       },

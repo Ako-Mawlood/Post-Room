@@ -1,11 +1,10 @@
 
 import Image from "next/image"
-async function getBlogs() {
-    const res = await fetch("http://localhost:2000/blog")
-    return await res.json()
-}
+
 async function BlogList() {
-    const blogs = await getBlogs()
+    const res = await fetch("http://localhost:3000/api/blog/");
+    const blogs = await res.json();
+    console.log(blogs)
 
     return (
         <section className="w-full flex justify-center mt-4 gap-10 cursor-pointer flex-wrap">
@@ -23,8 +22,8 @@ async function BlogList() {
                     <div className="flex h-2/5 flex-col justify-between items-start ml-4 py-4">
                         <h2 className="text-gray-700 text-2xl font-bold line-clamp-4">{blog.title}</h2>
                         <div className="flex flex-col">
-                            <span className="font-semibold text-lg text-blue-600">{blog.author}</span>
-                            <time className="font-semibold" dateTime="2024-04-30T08:00">April 30, 2024</time>
+                            <span className="font-semibold text-lg text-blue-600">{blog.content}</span>
+                            <time className="font-semibold" dateTime="2024-04-30T08:00">{blog.createdAt}</time>
                         </div>
                     </div>
                 </div>

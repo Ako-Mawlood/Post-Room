@@ -7,7 +7,6 @@ import clsx from 'clsx';
 import BlogsPreview from '../Components/pages/Home/BlogsPreview';
 import { CgEricsson } from "react-icons/cg";
 import Link from 'next/link';
-
 export default function HomePage() {
   const qouteRef = useRef(null)
   const discriptionRef = useRef(null)
@@ -18,7 +17,7 @@ export default function HomePage() {
       entries.forEach(entrie => {
         setIsVisable(entrie.isIntersecting)
       })
-    }, { threshold: 0.5 })
+    }, { threshold: 0.75 })
     if (qouteRef.current) observer.observe(qouteRef.current)
     if (discriptionRef.current) observer.observe(discriptionRef.current)
   }), [])
@@ -28,8 +27,8 @@ export default function HomePage() {
 
       <BlogsPreview />
 
-      <section ref={discriptionRef} className={clsx("flex flex-col justify-center mx-2 sm:mx-auto sm:w-4/5 md:w-7/12 text-center my-56", {
-        "opacity-100 duration-500": isVisable,
+      <section ref={discriptionRef} className={clsx("flex flex-col justify-center mx-3 sm:mx-auto sm:w-4/5 md:w-7/12 text-center my-56", {
+        "opacity-100 duration-700": isVisable,
         "opacity-0": !isVisable
       })}>
         <div className='flex self-center font-semibold text-4xl mb-4'>
@@ -47,7 +46,7 @@ export default function HomePage() {
         <div className="flex flex-col w-3/4 sm:w-1/2 absolute top-1/2 left-[10%] -translate-y-1/2 z-30">
           <h1 className='text-3xl md:text-5xl font-semibold'>Recent Discoveries in Black Hole Physics</h1>
           <p className='my-4'>Explore recent revelations about black holes in this guide. From breakthroughs to simplified insights, understanding black holes is made easy for all.</p>
-          <Link className='w-36 text-center text-lg font-bold rounded-full text-gray-800 bg-gray-100 py-2' href="/">Read blog</Link>
+          <Link className='w-36 text-center text-lg font-bold rounded-full text-gray-800 bg-gray-100 py-2 hover:opacity-90' href="/">Read blog</Link>
         </div>
       </section>
 

@@ -8,7 +8,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 
@@ -24,7 +23,7 @@ model User {
   updatedAt       DateTime      @updatedAt
   activateTokens  ActivateToken[]
   comments        Comment[]
-  blogs           UserOnBlogs[]
+  blogs           Blog[]
   likes           LikeOnBlogs[]
   followers       Follows[] @relation("UserFollowers")
   followed        Follows[] @relation("UserFollowed")
@@ -46,22 +45,14 @@ model Blog {
   title       String
   content     String
   imageUrl    String?
-  users       UserOnBlogs[]
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)       
   comments    Comment[]
   likes       LikeOnBlogs[]
   tags        TagsOnBlogs[]
   
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-}
-
-model UserOnBlogs {
-  id          Int       @id @default(autoincrement())
-
-  blog        Blog      @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId      Int
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
 }
 
 model Follows {

@@ -1,5 +1,6 @@
 import BlogList from "@/app/Components/pages/Explore/BlogList"
-const explorePage = () => {
+async function explorePage() {
+
     return (
         <div>
             <BlogList />
