@@ -22,8 +22,8 @@ async function BlogList() {
                     <div className="flex h-2/5 flex-col justify-between items-start ml-4 py-4">
                         <h2 className="text-gray-700 text-2xl font-bold line-clamp-4">{blog.title}</h2>
                         <div className="flex flex-col">
-                            <span className="font-semibold text-lg text-blue-600">{blog.content}</span>
-                            <time className="font-semibold" dateTime="2024-04-30T08:00">{blog.createdAt}</time>
+                            <span className="font-semibold text-lg text-blue-700">{blog.content}</span>
+                            <time className="font-bold text-gray-700">{blog.createdAt.slice(0, 10)}</time>
                         </div>
                     </div>
                 </div>

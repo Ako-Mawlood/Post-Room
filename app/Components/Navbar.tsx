@@ -7,11 +7,10 @@ import { useState, useContext } from "react";
 import { FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import clsx from "clsx";
-import { CurrentUserContex } from "./CurrentUserContext";
-
+import { currentUserContext } from "./CurrentUserContextProvider";
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
-    const currentUser = useContext(CurrentUserContex)
+    const currentUser = useContext(currentUserContext)
     const toggleMenu = () => {
         setShowMenu(prevShowMenu => !prevShowMenu);
     };
@@ -52,10 +51,10 @@ const Navbar = () => {
                 <CgEricsson className="text-blue-600" size={30} />
                 <h1 className="text-base font-bold text-center">Post Room</h1>
             </div>
-            <div className="hidden md:flex justify-between mx-auto w-3/12">
+            <div className="hidden md:flex mx-auto">
                 <NavLink href="/" LinkText="Home" />
                 <NavLink href="/explore" LinkText="Explore" />
-                <NavLink href="/ebout" LinkText="About" />
+                {currentUser && <NavLink href="/add" LinkText="Add" />}
             </div>
             {currentUser ? (
                 <Link href="/profile" className="bg-black text-white size-10 flex justify-center items-center rounded-full text-center font-semibold text-lg cursor-poiner">
