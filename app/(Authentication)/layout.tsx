@@ -1,4 +1,4 @@
-import Slider from "../Hooks/useSlider"
+
 import FeaturesPreview from "../Components/pages/Authentication/FeaturesPreview"
 import Link from "next/link"
 import { CgEricsson } from "react-icons/cg"

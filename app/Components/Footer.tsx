@@ -9,22 +9,22 @@ const Footer = () => {
     const currentUser = useContext(currentUserContext)
 
     return (
-        <div className="flex justify-around items-center h-80 bg-black text-gray-100">
-            <div className="w-1/3 md:w-fit">
+        <footer className="flex justify-around items-center h-80 border border-t-gray-300 text-gray-800">
+            <div className="w-1/3 sm:w-fit">
 
                 <div className="flex md:text-3xl">
                     <CgEricsson className="text-blue-600" size={30} />
                     <h1 className="ml-2 font-bold">Post Room</h1>
                 </div>
-                <p className="font-semibold text-xs text-gray-300 mt-2">&copy; 2024 Post Room. All Rights Reserved.</p>
+                <p className="font-semibold text-xs text-gray-600 mt-2">&copy; 2024 Post Room. All Rights Reserved.</p>
 
             </div>
 
             <div className="flex flex-col text-xl md:text-2xl">
-                <Link href="/" >Home </Link>
-                <Link href="/explore" >Explore </Link>
-                <Link href="/add" >Add </Link>
-                {currentUser &&
+                <Link href="/">Home</Link>
+                <Link href="/explore">Explore</Link>
+                <Link href="/add" >Add</Link>
+                {!currentUser &&
                     <>
                         <Link href="/sign-up" >Sign up </Link>
                         <Link href="/sign-in" >Sign in </Link>
@@ -38,7 +38,7 @@ const Footer = () => {
                 <CgMail className="" size={40} />
                 <FaLinkedin className="" size={40} />
             </div>
-        </div>
+        </footer>
     )
 }
 

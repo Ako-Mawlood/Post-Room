@@ -6,6 +6,7 @@ import clsx from "clsx";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 
 interface formDataType {
   email: string;
@@ -19,25 +20,26 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
   const router = useRouter()
 
   const onSubmit: SubmitHandler<formDataType> = async (data) => {
-
     try {
       const res = await axios.post(url, data)
-
+      console.log(res)
+      console.log(Cookies.get("session"))
       if (isSignInPage) {
         router.push("/")
       } else {
         router.push('/verify')
       }
     }
-    catch (error: any) {
-      setError("root", {
-        message: error.response.data
-      })
+    catch (err: any) {
+      if (err.response) {
+        setError("root", {
+          message: err.response.data,
+        });
+      }
     }
-
   }
-  return (
 
+  return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx("flex flex-col text-sm w-full", {
