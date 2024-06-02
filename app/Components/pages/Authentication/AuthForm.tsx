@@ -6,7 +6,10 @@ import clsx from "clsx";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie';
+import { FaApple } from "react-icons/fa6";
+import { IoLogoFacebook } from "react-icons/io";
+import { FaSquareXTwitter } from "react-icons/fa6";
+
 
 interface formDataType {
   email: string;
@@ -22,8 +25,6 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
   const onSubmit: SubmitHandler<formDataType> = async (data) => {
     try {
       const res = await axios.post(url, data)
-      console.log(res)
-      console.log(Cookies.get("session"))
       if (isSignInPage) {
         router.push("/")
       } else {
@@ -47,9 +48,31 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
       })}>
 
       {errors.root && <span className="text-red-500 bg-red-500/20 px-2 py-2 mb-2 rounded-sm font-semibold border border-red-300">{errors.root?.message}</span>}
+      {!isSignInPage &&
+        <div className="flex w-full">
+          <input
+            className={clsx("py-3 mb-3 bg-transparent border w-1/2 rounded-md px-2 focus:shadow-inner focus:outline-none", {
+              "cursor-not-allowed": isSubmitting,
+              "border-red-300 focus:border-red-400": errors.email,
+              "border-gray-300 focus:border-gray-400": !errors.email
+            })}
+            placeholder="Name"
+            disabled={isSubmitting}
+          />
+          <input
+            className={clsx("py-3 mb-3 bg-transparent border w-1/2 ml-3 rounded-md px-2 focus:shadow-inner focus:outline-none", {
+              "cursor-not-allowed": isSubmitting,
+              "border-red-300 focus:border-red-400": errors.email,
+              "border-gray-300 focus:border-gray-400": !errors.email
+            })}
+            placeholder="*User name"
+            disabled={isSubmitting}
+          />
+        </div>
+      }
       {errors.email && <span className="text-red-500 pb-1 font-semibold">{errors.email?.message}</span>}
       <input
-        className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none", {
+        className={clsx("py-3 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none", {
           "cursor-not-allowed": isSubmitting,
           "border-red-300 focus:border-red-400": errors.email,
           "border-gray-300 focus:border-gray-400": !errors.email
@@ -69,7 +92,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
         errors.password && <span className="text-red-500 pb-1 font-semibold">{errors.password.message}</span>
       }
       <input
-        className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none ", {
+        className={clsx("py-3 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none ", {
           "cursor-not-allowed": isSubmitting,
           "border-red-300 focus:border-red-400": errors.email,
           "border-gray-300 focus:border-gray-400": !errors.email
@@ -87,7 +110,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
         )}
       />
       <button
-        className="w-full bg-black flex justify-center font-semibold text-base items-center text-center py-2 rounded-md text-white hover:opacity-90"
+        className="w-full bg-slate-950 flex justify-center font-semibold text-base items-center text-center py-3 rounded-md text-white hover:opacity-90"
         type="submit"
         disabled={isSubmitting}
       >
@@ -103,17 +126,53 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
         </span>
         <span className="border-b border-gray-300 w-full"></span>
       </div>
-      <button
-        disabled={isSubmitting}
-        className="flex justify-center items-center font-bold w-full py-2 transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
-      >
-        {isSubmitting ? (
-          <ImSpinner8 className="animate-spin" size={15} />
-        ) : (
-          <FcGoogle size={25} />
-        )}
-        <span className="text-primary px-2">Google</span>
-      </button>
+
+      <section className="flex flex-col items-center text-lg text-gray-700 justify-between h-64">
+        <button
+          disabled={isSubmitting}
+          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+        >
+          {isSubmitting ? (
+            <ImSpinner8 className="animate-spin" size={25} />
+          ) : (
+            <FaApple className="mr-auto text-black" size={35} />
+          )}
+          <span className="px-2 mr-auto">Apple</span>
+        </button>
+        <button
+          disabled={isSubmitting}
+          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+        >
+          {isSubmitting ? (
+            <ImSpinner8 className="animate-spin" size={25} />
+          ) : (
+            <FcGoogle className="mr-auto" size={35} />
+          )}
+          <span className="px-2 mr-auto">Google</span>
+        </button>
+        <button
+          disabled={isSubmitting}
+          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+        >
+          {isSubmitting ? (
+            <ImSpinner8 className="animate-spin" size={25} />
+          ) : (
+            <IoLogoFacebook className="mr-auto text-blue-500" size={35} />
+          )}
+          <span className="px-2 mr-auto">Facebook</span>
+        </button>
+        <button
+          disabled={isSubmitting}
+          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+        >
+          {isSubmitting ? (
+            <ImSpinner8 className="animate-spin" size={25} />
+          ) : (
+            <FaSquareXTwitter className="mr-auto text-black" size={35} />
+          )}
+          <span className="px-2 mr-auto">X</span>
+        </button>
+      </section>
     </form>
   );
 };

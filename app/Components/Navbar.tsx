@@ -65,7 +65,7 @@ const Navbar = () => {
                 <CgEricsson className="text-blue-600" size={30} />
                 <h1 className="text-base font-bold text-center">Post Room</h1>
             </div>
-            <div className="hidden md:flex mx-auto">
+            <div className="hidden md:flex mx-auto gap-3 font-semibold text-gray-500">
                 <NavLink href="/" LinkText="Home" />
                 <NavLink href="/explore" LinkText="Explore" />
                 {currentUser && <NavLink href="/add" LinkText="Add" />}
@@ -82,8 +82,8 @@ const Navbar = () => {
                         <Link className="text-gray-500 text-center md:mr-2" href="/sign-in">
                             Sign in
                         </Link>
-                        <Link className="text-blue-500 mx-2 p-2 border-2 border-blue-500 rounded duration-100 hover:bg-blue-500 hover:text-gray-50" href="/sign-up">
-                            Create account
+                        <Link className="text-gray-100 mx-2 py-1 px-3 border-2 bg-blue-500 hover:bg-blue-500 rounded-full hover:opacity-90" href="/sign-up">
+                            Get started
                         </Link>
                     </div>
                 )

@@ -11,10 +11,9 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         <Link href="/" className="font-bold">Post Room</Link>
       </div>
 
-      <aside className="hidden text-gray-200 md:flex justify-center flex-col items-center w-1/2 h-screen bg-black border-r-[0.1px] border-r-gray-800 selection:bg-[#EDEDED] selection:text-primary">
-        <h1 className="text-center text-slate-200 bold mb-10 font-Oswald text-2xl">
-          Acquire knowledge; it&apos;s an ornament among friends and armor against
-          enemies.
+      <aside className="hidden text-slate-200 md:flex justify-center flex-col items-center w-1/2 h-screen bg-gray-950 selection:bg-[#EDEDED] selection:text-primary">
+        <h1 className="text-center font-bold mb-10 w-3/4 font-Oswald text-3xl">
+          &quot;The strongest among you is the one who controls his anger.&quot; - Prophet Muhammad
         </h1>
 
         <FeaturesPreview />

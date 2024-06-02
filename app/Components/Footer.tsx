@@ -9,9 +9,8 @@ const Footer = () => {
     const currentUser = useContext(currentUserContext)
 
     return (
-        <footer className="flex justify-around items-center h-80 border border-t-gray-300 text-gray-800">
+        <footer className="flex justify-around items-center h-20 border border-t-2 text-gray-800">
             <div className="w-1/3 sm:w-fit">
-
                 <div className="flex md:text-3xl">
                     <CgEricsson className="text-blue-600" size={30} />
                     <h1 className="ml-2 font-bold">Post Room</h1>
@@ -20,7 +19,7 @@ const Footer = () => {
 
             </div>
 
-            <div className="flex flex-col text-xl md:text-2xl">
+            <div className="flex gap-3 text-xl md:text-2xl">
                 <Link href="/">Home</Link>
                 <Link href="/explore">Explore</Link>
                 <Link href="/add" >Add</Link>

@@ -11,7 +11,7 @@ import clsx from "clsx";
 const FeaturesPreview = () => {
     const { sliderIndex, setSliderIndex, setIsOnFocus } = useSlider(4);
     return (
-        <section className="flex flex-col justify-between items-center w-60 mb-12 overflow-hidden">
+        <section className="flex flex-col justify-between items-center text-lg w-60 mb-12 overflow-hidden">
             <div
                 style={{
                     transform: `translateX(${-sliderIndex * 100}%)`,
@@ -20,7 +20,7 @@ const FeaturesPreview = () => {
             >
                 <div className="w-full flex flex-col justify-center items-center">
                     <IoPerson className="text-center text-7xl" size={250} />
-                    <p>Add your personal blog</p>
+                    <h1>Add your personal blog</h1>
                 </div>
                 <div className="w-full flex flex-col justify-center items-center">
                     <RiMacbookFill className="text-center text-7xl" size={250} />
