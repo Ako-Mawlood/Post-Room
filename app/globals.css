@@ -74,35 +74,3 @@
       @apply bg-background text-foreground;
     }
   }
-  .animate-grow{
-    animation-name: grow;
-    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-  }
-
-  @keyframes grow {
-    0%{
-      width: 0;
-    }
-    100%{
-      border-radius: 0;
-      width:100vw;
-    }
-    
-  }
-  .animate-show{
-    animation-name: show;
-    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    
-  }
-
-  @keyframes show {
-    0%{
-      transform: translateY(0);
-      opacity: 0;
-    }
-    100%{
-      transform: translateY(15px);
-      opacity: 1;
-    }
-    
-  }

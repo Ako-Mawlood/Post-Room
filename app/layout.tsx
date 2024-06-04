@@ -1,4 +1,3 @@
-import CurrentUserContext from "./Components/CurrentUserContextProvider";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -28,10 +27,7 @@ export default function RootLayout({
       </head>
 
       <body className="font-Satoshi overflow-x-hidden">
-        <CurrentUserContext>
-          {children}
-        </CurrentUserContext>
-
+        {children}
       </body>
     </html >
   );
