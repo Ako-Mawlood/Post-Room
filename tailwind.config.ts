@@ -18,6 +18,13 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        Bodoni: ["Bodoni Moda", "serif"],
+        Lora: ["Lora", "serif"],
+        Pt: ["PT Serif", "serif"],
+        Zilla: ["Zilla Slab", "serif"],
+        Abril: ["Abril Fatface", "serif"]
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
