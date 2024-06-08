@@ -7,7 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-  ],
+	],
   prefix: "",
   theme: {
     container: {
@@ -18,12 +18,8 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        Bodoni: ["Bodoni Moda", "serif"],
-        Lora: ["Lora", "serif"],
-        Pt: ["PT Serif", "serif"],
-        Zilla: ["Zilla Slab", "serif"],
-        Abril: ["Abril Fatface", "serif"]
+      fontFamily:{
+        PT:[ "PT Serif", "serif"]
       },
       colors: {
         border: "hsl(var(--border))",

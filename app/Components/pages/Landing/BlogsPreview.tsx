@@ -25,7 +25,7 @@ const BlogsPreview = ({ sliderIndex, backgroundColor }: BlogsPreviewPropsType) =
                                 className="w-full h-full relative bottom-[-2px] left-0 z-10">
                                 <Badge
                                     variant="secondary"
-                                    className="flex items-center gap-3 absolute md:bottom-[-15px] left-4 mt-8 rounded-none md:rounded-full text-xs opacity-85  z-20">
+                                    className="flex items-center gap-3 absolute md:bottom-[-15px] left-4 mt-8 rounded-none md:rounded-full text-xs opacity-85 z-20 shadow-md">
                                     <Image
                                         className="size-6"
                                         src={starIcon}
@@ -42,7 +42,7 @@ const BlogsPreview = ({ sliderIndex, backgroundColor }: BlogsPreviewPropsType) =
                             />
                         </div>
                         <div className="md:px-5 md:py-7 lg:py-10">
-                            <div style={{ backgroundColor: `rgb(${backgroundColor})` }} className="flex flex-col gap-2 w-full md:h-2/5 absolute md:relative bottom-0 left-0 p-4 mb-8 md:m-0 md:p-0 font-semibold z-2Ppage0">
+                            <div style={{ backgroundColor: `rgb(${backgroundColor})` }} className="flex flex-col gap-2 w-full md:h-2/5 absolute md:relative bottom-0 left-0 p-4 mb-5 md:m-0 md:p-0 font-semibold z-20">
                                 <h1 className="text-2xl md:line-clamp-2 opacity-75">{blog.title}</h1>
                                 <p className="text-base opacity-70 md:line-clamp-2">{blog.description}</p>
                                 <div className="flex items-center gap-3">

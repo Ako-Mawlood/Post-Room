@@ -1,54 +1,91 @@
-"use client";
-
 import { FcGoogle } from "react-icons/fc";
-import { ImSpinner8 } from "react-icons/im";
-import clsx from "clsx";
-import axios from "axios";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from  "next/navigation";
-import { FaApple } from "react-icons/fa6";
+import { FaApple} from "react-icons/fa6";
 import { IoLogoFacebook } from "react-icons/io";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import { Button } from "@/app/Components/ui/button";
+import { CiMail } from "react-icons/ci";
+
+const AuthForm = ({ isSignInPage}: { isSignInPage: boolean }) => {
+
+  return (    
+      <section className="flex flex-col gap-4 items-center w-full text-md p-4 text-gray-700 font-semibold">
+      <Button variant="outline" className="w-full flex justify-center"> <FcGoogle className="mr-auto" size={30}/> <span className="mr-auto">{isSignInPage ? "Sign in with Google":"Sign up with Google"}</span></Button>
+      <Button variant="outline" className="w-full flex justify-center"> <FaApple className="mr-auto text-slate-900" size={30}/> <span className="mr-auto">{isSignInPage ? "Sign in with Apple":"Sign up with Apple"}</span></Button>
+      <Button variant="outline" className="w-full flex justify-center"> <IoLogoFacebook className="mr-auto text-blue-500" size={30}/> <span className="mr-auto">{isSignInPage ? "Sign in with Facebook":"Sign up with Facebook"}</span></Button>
+      <Button variant="outline" className="w-full flex justify-center"> <FaSquareXTwitter className="mr-auto text-slate-900" size={30}/> <span className="mr-auto">{isSignInPage ? "Sign in with X":"Sign up with X"}</span></Button>
+      <Button variant="outline" className="w-full flex justify-center"> <CiMail className="mr-auto" size={30}/> <span className="mr-auto">{isSignInPage ? "Sign in with Email":"Sign up with Email"}</span></Button>
+      </section>
+  );
+};
+
+export default AuthForm;
 
 
-interface formDataType {
-  email: string;
-  password: string;
-}
 
-const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
 
-  const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<formDataType>()
-  const url = isSignInPage ? "/api/login" : "/api/register"
-  const router = useRouter()
 
-  const onSubmit: SubmitHandler<formDataType> = async (data) => {
-    try {
-      const res = await axios.post(url, data)
-      if (isSignInPage) {
-        router.push("/")
-      } else {
-        router.push('/verify')
-      }
-    }
-    catch (err: any) {
-      if (err.response) {
-        setError("root", {
-          message: err.response.data,
-        });
-      }
-    }
-  }
 
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={clsx("flex flex-col text-sm w-full p-4 md:w-2/3", {
-        "opacity-60": isSubmitting,
-      })}>
 
-      {errors.root && <span className="text-red-500 bg-red-500/20 px-2 py-2 mb-2 rounded-sm font-semibold border border-red-300">{errors.root?.message}</span>}
-      {!isSignInPage &&
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* {!isSignInPage &&
         <div className="flex w-full">
           <input
             className={clsx("py-2 mb-3 bg-transparent border w-1/2 rounded-md px-2 focus:shadow-inner focus:outline-none", {
@@ -118,63 +155,4 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
           {isSubmitting && <ImSpinner8 className="animate-spin mr-3" size={15} />}
           {isSignInPage ? "Sign in with Email" : "Sign up with Email"}
         </span>
-      </button>
-      <div className="w-full py-2 my-3 flex justify-center items-center">
-        <span className="w-full border-b border-gray-300"></span>
-        <span className="w-[33rem] text-xs font-semibold uppercase text-center">
-          Or countinue with
-        </span>
-        <span className="border-b border-gray-300 w-full"></span>
-      </div>
-
-      <section className="flex flex-col gap-4 items-center text-md text-gray-700 font-semibold">
-        <button
-          disabled={isSubmitting}
-          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
-        >
-          {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={20} />
-          ) : (
-            <FaApple className="mr-auto text-black" size={30} />
-          )}
-          <span className="px-2 mr-auto">Apple</span>
-        </button>
-        <button
-          disabled={isSubmitting}
-          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
-        >
-          {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={20} />
-          ) : (
-            <FcGoogle className="mr-auto" size={30} />
-          )}
-          <span className="px-2 mr-auto">Google</span>
-        </button>
-        <button
-          disabled={isSubmitting}
-          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
-        >
-          {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={20} />
-          ) : (
-            <IoLogoFacebook className="mr-auto text-blue-500" size={30} />
-          )}
-          <span className="px-2 mr-auto">Facebook</span>
-        </button>
-        <button
-          disabled={isSubmitting}
-          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
-        >
-          {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={20} />
-          ) : (
-            <FaSquareXTwitter className="mr-auto text-black" size={30} />
-          )}
-          <span className="px-2 mr-auto">X</span>
-        </button>
-      </section>
-    </form>
-  );
-};
-
-export default AuthForm;
+      </button> */}
