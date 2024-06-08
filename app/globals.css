@@ -79,3 +79,27 @@
       @apply bg-background text-foreground;
     }
   }
+
+  .modal-open-animation{
+    animation: fadeIn 0.4s ;
+   }
+   .modal-close-animation{
+    animation: fadeOut 0.3s ;
+   }
+   @keyframes fadeIn{
+    0%{
+      opacity: 0;
+      scale: 0.99;
+    }
+    100%{
+      opacity: 1;
+      scale: 1;
+    }
+  }  @keyframes fadeOut{
+    0%{
+      opacity:1;
+    }
+    100%{
+      opacity: 0;
+    }
+  }

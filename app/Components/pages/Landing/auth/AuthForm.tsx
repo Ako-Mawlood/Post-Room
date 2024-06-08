@@ -5,7 +5,7 @@ import { ImSpinner8 } from "react-icons/im";
 import clsx from "clsx";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter } from  "next/navigation";
 import { FaApple } from "react-icons/fa6";
 import { IoLogoFacebook } from "react-icons/io";
 import { FaSquareXTwitter } from "react-icons/fa6";
@@ -43,7 +43,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={clsx("flex flex-col text-sm w-full", {
+      className={clsx("flex flex-col text-sm w-full p-4 md:w-2/3", {
         "opacity-60": isSubmitting,
       })}>
 
@@ -51,7 +51,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
       {!isSignInPage &&
         <div className="flex w-full">
           <input
-            className={clsx("py-3 mb-3 bg-transparent border w-1/2 rounded-md px-2 focus:shadow-inner focus:outline-none", {
+            className={clsx("py-2 mb-3 bg-transparent border w-1/2 rounded-md px-2 focus:shadow-inner focus:outline-none", {
               "cursor-not-allowed": isSubmitting,
               "border-red-300 focus:border-red-400": errors.email,
               "border-gray-300 focus:border-gray-400": !errors.email
@@ -60,7 +60,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
             disabled={isSubmitting}
           />
           <input
-            className={clsx("py-3 mb-3 bg-transparent border w-1/2 ml-3 rounded-md px-2 focus:shadow-inner focus:outline-none", {
+            className={clsx("py-2 mb-3 bg-transparent border w-1/2 ml-3 rounded-md px-2 focus:shadow-inner focus:outline-none", {
               "cursor-not-allowed": isSubmitting,
               "border-red-300 focus:border-red-400": errors.email,
               "border-gray-300 focus:border-gray-400": !errors.email
@@ -72,7 +72,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
       }
       {errors.email && <span className="text-red-500 pb-1 font-semibold">{errors.email?.message}</span>}
       <input
-        className={clsx("py-3 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none", {
+        className={clsx("py-2 mb-3 bg-transparent border rounded-md px-2 focus:shadow-inner focus:outline-none", {
           "cursor-not-allowed": isSubmitting,
           "border-red-300 focus:border-red-400": errors.email,
           "border-gray-300 focus:border-gray-400": !errors.email
@@ -110,7 +110,7 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
         )}
       />
       <button
-        className="w-full bg-slate-950 flex justify-center font-semibold text-base items-center text-center py-3 rounded-md text-white hover:opacity-90"
+        className="w-full bg-slate-950 flex justify-center font-semibold text-base items-center text-center py-2 rounded-md text-white hover:opacity-90"
         type="submit"
         disabled={isSubmitting}
       >
@@ -127,48 +127,48 @@ const AuthForm = ({ isSignInPage }: { isSignInPage: boolean }) => {
         <span className="border-b border-gray-300 w-full"></span>
       </div>
 
-      <section className="flex flex-col items-center text-lg text-gray-700 justify-between h-64">
+      <section className="flex flex-col gap-4 items-center text-md text-gray-700 font-semibold">
         <button
           disabled={isSubmitting}
-          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
         >
           {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={25} />
+            <ImSpinner8 className="animate-spin" size={20} />
           ) : (
-            <FaApple className="mr-auto text-black" size={35} />
+            <FaApple className="mr-auto text-black" size={30} />
           )}
           <span className="px-2 mr-auto">Apple</span>
         </button>
         <button
           disabled={isSubmitting}
-          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
         >
           {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={25} />
+            <ImSpinner8 className="animate-spin" size={20} />
           ) : (
-            <FcGoogle className="mr-auto" size={35} />
+            <FcGoogle className="mr-auto" size={30} />
           )}
           <span className="px-2 mr-auto">Google</span>
         </button>
         <button
           disabled={isSubmitting}
-          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
         >
           {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={25} />
+            <ImSpinner8 className="animate-spin" size={20} />
           ) : (
-            <IoLogoFacebook className="mr-auto text-blue-500" size={35} />
+            <IoLogoFacebook className="mr-auto text-blue-500" size={30} />
           )}
           <span className="px-2 mr-auto">Facebook</span>
         </button>
         <button
           disabled={isSubmitting}
-          className="flex justify-center p-2 items-center font-bold w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
+          className="flex justify-center p-1 items-center w-full transition duration-100 hover:bg-[#ddddef] rounded-md border border-gray-300"
         >
           {isSubmitting ? (
-            <ImSpinner8 className="animate-spin" size={25} />
+            <ImSpinner8 className="animate-spin" size={20} />
           ) : (
-            <FaSquareXTwitter className="mr-auto text-black" size={35} />
+            <FaSquareXTwitter className="mr-auto text-black" size={30} />
           )}
           <span className="px-2 mr-auto">X</span>
         </button>
