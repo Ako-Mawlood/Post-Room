@@ -71,7 +71,7 @@ export default function LandingPage() {
           <div onClick={handleCloseAuthModal} className="w-screen h-screen fixed top-0 left-0 bg-gray-50 opacity-95 z-30"></div>
           <main className={clsx("flex justify-center items-center w-full md:w-[678px] h-full fixed md:absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white shadow-md shadow-gray-300 border-x z-40", { "modal-open-animation": isAuthModalOpen, "modal-close-animation": !isAuthModalOpen, })}>
             <CloseIcon className="size-12 absolute top-2 right-2 p-2 cursor-pointer text-gray-500 hover:text-gray-950" onClick={handleCloseAuthModal}/>
-            {isNewUser ? <SignupModal setIsNewUser={setIsNewUser} handleCloseAuthModal={handleCloseAuthModal}  /> : <SigninModal setIsNewUser={setIsNewUser} />}
+            {isNewUser ? <SignupModal isNewUser={isNewUser} setIsNewUser={setIsNewUser} handleCloseAuthModal={handleCloseAuthModal}  /> : <SigninModal isNewUser={isNewUser} setIsNewUser={setIsNewUser} />}
           </main>
         </>
       }
