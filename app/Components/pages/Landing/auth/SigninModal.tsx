@@ -1,5 +1,3 @@
-"use clinet"
-
 import { Button } from "@/app/Components/ui/button";
 import { CiMail as MailIcon } from "react-icons/ci";
 import { useState, Dispatch, SetStateAction} from 'react'
