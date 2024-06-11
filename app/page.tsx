@@ -2,23 +2,22 @@
 
 import SigninModal from "./Components/pages/Landing/auth/SigninModal"
 import SignupModal from "./Components/pages/Landing/auth/SignupModal"
-import {backgroundColors} from "@/StaticData/backgroundColors"
-import {useState} from "react"
+import { backgroundColors } from "@/StaticData/backgroundColors"
+import { useState } from "react"
 import logo from "../public/Icons/logo.svg"
 import Image from "next/image"
-import {Button} from "./Components/ui/button"
+import { Button } from "./Components/ui/button"
 import BlogsPreview from "./Components/pages/Landing/BlogsPreview"
 import useSlider from "./Hooks/useSlider"
 import Link from "next/link"
-import {IoIosClose as CloseIcon} from "react-icons/io"
-
+import { IoIosClose as CloseIcon } from "react-icons/io"
 import clsx from "clsx"
 
 export default function LandingPage() {
   const [isNewUser, setIsNewUser] = useState(true)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [isAuthModalVisable, setIsAuthModalVisable] = useState(false)
-  const {sliderIndex} = useSlider(6)
+  const { sliderIndex } = useSlider(6)
   const backgroundColor = backgroundColors[sliderIndex]
 
   function handleOpenAuthModal(isNewUser: boolean) {
@@ -56,7 +55,7 @@ export default function LandingPage() {
       </nav>
       <main className="flex flex-col md:flex-row justify-start w-full md:h-[84vh] relative border-y-[1px] border-black duration-700 font-PT selection:text-gray-200 selection:bg-gray-800">
         <div
-          style={{backgroundColor: `rgb(${backgroundColor},0.3)`}}
+          style={{ backgroundColor: `rgb(${backgroundColor},0.3)` }}
           className="flex flex-col gap-6 justify-center items-start p-4 py-10 md:px-24 md:border-r-[1px] md:border-black">
           <h1 className="text-5xl md:text-[7vw] leading-tight">Your story matters</h1>
           <p className="text-xl opacity-80">
@@ -93,7 +92,7 @@ export default function LandingPage() {
           <main
             className={clsx(
               "flex justify-center items-center w-full md:w-[678px] h-full fixed md:absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white shadow-md shadow-gray-300 border-x z-40",
-              {"modal-open-animation": isAuthModalOpen, "modal-close-animation": !isAuthModalOpen}
+              { "modal-open-animation": isAuthModalOpen, "modal-close-animation": !isAuthModalOpen }
             )}>
             <CloseIcon
               className="size-12 absolute top-2 right-2 p-2 cursor-pointer text-gray-500 hover:text-gray-950"

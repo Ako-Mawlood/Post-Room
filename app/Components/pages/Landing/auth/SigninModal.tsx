@@ -1,6 +1,6 @@
-import {Button} from "@/app/Components/ui/button"
-import {CiMail as MailIcon} from "react-icons/ci"
-import {useState, Dispatch, SetStateAction} from "react"
+import { Button } from "@/app/Components/ui/button"
+import { CiMail as MailIcon } from "react-icons/ci"
+import { useState, Dispatch, SetStateAction } from "react"
 import Link from "next/link"
 import AuthOptions from "./AuthOptions"
 import EmailSigninForm from "./EmailSigninForm"
@@ -10,16 +10,17 @@ interface signinModalPropsType {
   setIsNewUser: Dispatch<SetStateAction<boolean>>
 }
 
-const SigninModal = ({isNewUser, setIsNewUser}: signinModalPropsType) => {
+const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
   const [isSigninFormVisable, setIsSigninFormVisable] = useState(false)
 
   if (isSigninFormVisable) {
     return <EmailSigninForm setIsSigninFormVisable={setIsSigninFormVisable} />
   }
+
   return (
-    <div className="flex flex-col justify-between items-center gap-10 w-full md:w-2/3 p-4">
-      <h1 className="text-4xl font-semibold">Welcome Back!</h1>
-      <main className="flex flex-col gap-4 items-center w-full text-md p-4 text-gray-700 font-semibold">
+    <div className="flex flex-col justify-between items-center w-full md:w-2/3 p-4">
+      <h1 className="text-4xl font-semibold">Welcome back.</h1>
+      <main className="flex flex-col items-center w-full text-md p-4 text-gray-700 font-semibold">
         <AuthOptions isNewUser={isNewUser}>
           <Button
             onClick={() => setIsSigninFormVisable(true)}
@@ -29,6 +30,7 @@ const SigninModal = ({isNewUser, setIsNewUser}: signinModalPropsType) => {
             <MailIcon className="mr-auto" size={30} /> <span className="mr-auto">Sign in with Email</span>
           </Button>
         </AuthOptions>
+
         <p className="text-gray-500 text-md">
           Don&#8217;t have an account?
           <Button onClick={() => setIsNewUser(true)} variant="link" className="px-1 text-md">

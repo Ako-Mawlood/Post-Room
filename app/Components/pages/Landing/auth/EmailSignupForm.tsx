@@ -1,11 +1,13 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react"
-import {Input} from "../../../ui/input"
-import {Button} from "../../../ui/button"
-import {IoIosArrowRoundBack as ArrowIcon} from "react-icons/io"
-import {useForm} from "react-hook-form"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Input } from "../../../ui/input"
+import { Button } from "../../../ui/button"
+import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io"
+import { useForm } from "react-hook-form"
 import clsx from "clsx"
-import {ImSpinner8} from "react-icons/im"
-import {CgDanger} from "react-icons/cg"
+import { ImSpinner8 } from "react-icons/im"
+import { CgDanger } from "react-icons/cg"
+import axios from "axios"
+import AuthInputField from "@/app/Components/ui/AuthInputField"
 
 interface EmailSignupFormPropsType {
   setUserEmail: Dispatch<SetStateAction<string>>
@@ -20,30 +22,32 @@ const EmailSignupForm = ({
   setIsSignupFormVisable,
   setIsVerifyMessageVisable,
 }: EmailSignupFormPropsType) => {
+
+  const form = useForm<{ email: string }>({ defaultValues: { email: "" } })
   const {
-    register,
     handleSubmit,
     getValues,
     setFocus,
-    formState: {errors, isDirty},
-  } = useForm<{email: string}>({defaultValues: {email: ""}})
-  const emailRegisteration = register("email", {
-    required: "Please enter your email address.",
-    pattern: {
-      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: "Invalid email address",
-    },
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+    setError,
+    formState,
+    formState: { isSubmitting, errors, isDirty },
+  } = form
 
-  async function handleSignup(data: {email: string}) {
-    setUserEmail(getValues("email"))
-    setIsSubmitting(true)
-    setTimeout(() => {
-      setIsSignupFormVisable(false)
-      setIsVerifyMessageVisable(true)
-    }, 3000)
+  async function handleSignup(data: { email: string }) {
+    try {
+      const res = await axios.post("http://localhost:3000/api/register", { data })
+
+      if (res.status === 200) {
+        setUserEmail(getValues("email"))
+        setIsSignupFormVisable(false)
+        setIsVerifyMessageVisable(true)
+      }
+
+    } catch (err: any) {
+      setError("root", err.message)
+    }
   }
+
   useEffect(() => {
     setFocus("email")
   }, [isSignupFormVisable])
@@ -58,26 +62,9 @@ const EmailSignupForm = ({
         {errors.root?.message && (
           <p className="w-full text-red-500 text-sm text-center font-semibold">{errors.root?.message}</p>
         )}
-        <label className="flex flex-col items-center gap-2 w-full">
-          <p>Your email</p>
-          <div className="w-full relative">
-            <Input
-              disabled={isSubmitting}
-              {...emailRegisteration}
-              autoComplete="off"
-              className={clsx("w-full bg-slate-100 text-center", {
-                "border-gray-300 focus:border-gray-400": errors.email?.message == undefined,
-                "border-red-500": errors.email?.message !== undefined,
-              })}
-            />
-            {errors.email?.message && <CgDanger className="size-5 absolute right-2 top-3 text-red-400" />}
-          </div>
-          {errors.email?.message && (
-            <p className="w-full text-red-500 text-sm text-center font-semibold">{errors.email?.message}</p>
-          )}
-        </label>
+        <AuthInputField type="email" form={form} isInputTextCentered={true} />
         <Button
-          disabled={!isDirty || errors.email?.message !== undefined || isSubmitting}
+          disabled={!formState.dirtyFields.email || errors.email?.message !== undefined || isSubmitting}
           className="w-3/4 mt-4"
           type="submit">
           {isSubmitting ? <ImSpinner8 className="animate-spin" size={25} /> : "Continue"}
