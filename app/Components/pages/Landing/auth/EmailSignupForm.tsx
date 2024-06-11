@@ -1,13 +1,19 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { Input } from "../../../ui/input"
+import React, { Dispatch, SetStateAction, useEffect } from "react"
 import { Button } from "../../../ui/button"
 import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io"
 import { useForm } from "react-hook-form"
-import clsx from "clsx"
 import { ImSpinner8 } from "react-icons/im"
-import { CgDanger } from "react-icons/cg"
 import axios from "axios"
-import AuthInputField from "@/app/Components/ui/AuthInputField"
+import { Input } from "@/app/Components/ui/input"
+import clsx from "clsx"
+import z from "zod"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CgDanger } from "react-icons/cg"
+
+const signupSchema = z.object({
+  email: z.string().min(1, "Please provide your eamil address").email("Invalid email address"),
+})
+type formDataType = z.infer<typeof signupSchema>
 
 interface EmailSignupFormPropsType {
   setUserEmail: Dispatch<SetStateAction<string>>
@@ -23,17 +29,17 @@ const EmailSignupForm = ({
   setIsVerifyMessageVisable,
 }: EmailSignupFormPropsType) => {
 
-  const form = useForm<{ email: string }>({ defaultValues: { email: "" } })
   const {
     handleSubmit,
     getValues,
+    register,
     setFocus,
     setError,
     formState,
-    formState: { isSubmitting, errors, isDirty },
-  } = form
+    formState: { isSubmitting, errors },
+  } = useForm<formDataType>({ defaultValues: { email: "" }, resolver: zodResolver(signupSchema) })
 
-  async function handleSignup(data: { email: string }) {
+  async function handleSignup(data: formDataType) {
     try {
       const res = await axios.post("http://localhost:3000/api/register", { data })
 
@@ -62,7 +68,23 @@ const EmailSignupForm = ({
         {errors.root?.message && (
           <p className="w-full text-red-500 text-sm text-center font-semibold">{errors.root?.message}</p>
         )}
-        <AuthInputField type="email" form={form} isInputTextCentered={true} />
+        <label className="flex flex-col gap-2 items-center w-full">
+          <span>Your email</span>
+          {errors.email && <p className="text-red-500 text-xs font-semibold">{errors.email?.message}</p>}
+          <div className="w-full relative">
+            <Input
+              {...register("email")}
+              disabled={isSubmitting}
+              autoComplete="off"
+              type="text"
+              className={clsx('w-full text-center bg-slate-100', {
+                'border-gray-300 focus:border-gray-400': !errors.email,
+                'border-red-400': errors.email,
+              })}
+            />
+            {errors.email && <CgDanger className="size-5 absolute right-2 top-3 text-red-400" />}
+          </div>
+        </label>
         <Button
           disabled={!formState.dirtyFields.email || errors.email?.message !== undefined || isSubmitting}
           className="w-3/4 mt-4"
