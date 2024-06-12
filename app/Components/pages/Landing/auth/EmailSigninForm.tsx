@@ -7,12 +7,11 @@ import axios from "axios"
 import { CgDanger } from "react-icons/cg";
 import clsx from "clsx"
 import { Input } from "@/app/Components/ui/input"
-
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 const signinSchema = z.object({
-  email: z.string().min(1, "Please provide your email").email(),
+  email: z.string().min(1, "Please provide your eamil address").email("Invalid email address"),
   password: z.string().min(8, "Password should be at least 8 charecters")
 })
 type formDataType = z.infer<typeof signinSchema>
@@ -22,7 +21,7 @@ interface emailSigninFormPropsType {
 }
 
 const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) => {
-  const { register, handleSubmit, setError, setFocus, formState: { isSubmitting, errors } } = useForm<formDataType>({ defaultValues: { email: "", password: "" }, resolver: zodResolver(signinSchema) })
+  const { register, handleSubmit, setFocus, setError, formState: { isSubmitting, errors } } = useForm<formDataType>({ defaultValues: { email: "", password: "" }, resolver: zodResolver(signinSchema) })
 
   function handleSignin(data: formDataType) {
     try {
@@ -34,10 +33,11 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
       setError("root", err.message)
     }
 
-    useEffect(() => {
-      setFocus("email")
-    }, [])
+
   }
+  useEffect(() => {
+    setFocus("email")
+  }, [])
   return (
     <main className="flex flex-col items-center gap-12 w-full sm:w-1/2">
       <div className="flex flex-col gap-6 text-center x-4">
@@ -51,8 +51,8 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
             {errors.root.message}
           </p>
         )}
-        <label className="flex flex-col gap-2 items-start w-full">
-          <span>Email</span>
+        <label className="flex flex-col gap-2 item-start w-full">
+          <span>Your email</span>
           {errors.email && <p className="text-red-500 text-xs font-semibold">{errors.email?.message}</p>}
           <div className="w-full relative">
             <Input
@@ -60,7 +60,7 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
               disabled={isSubmitting}
               autoComplete="off"
               type="text"
-              className={clsx('w-full bg-slate-100', {
+              className={clsx('w-full text-start bg-slate-100', {
                 'border-gray-300 focus:border-gray-400': !errors.email,
                 'border-red-400': errors.email,
               })}
@@ -73,10 +73,9 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
           {errors.password && <p className="text-red-500 text-xs font-semibold">{errors.password?.message}</p>}
           <div className="w-full relative">
             <Input
-              {...register("email")}
+              {...register("password")}
               disabled={isSubmitting}
-              autoComplete="off"
-              type="text"
+              type="password"
               className={clsx('w-full bg-slate-100', {
                 'border-gray-300 focus:border-gray-400': !errors.password,
                 'border-red-400': errors.password,
@@ -94,7 +93,7 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
       </form>
 
       <Button disabled={isSubmitting} onClick={() => setIsSigninFormVisable(false)} variant={"ghost"}>
-        <ArrowIcon className="mr-2 size-8" />
+        <ArrowIcon className="size-8 mr-2" />
         All sign in options
       </Button>
     </main>
