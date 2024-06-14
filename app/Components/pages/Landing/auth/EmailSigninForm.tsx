@@ -1,18 +1,18 @@
-import { Button } from "@/app/Components/ui/button"
-import { Dispatch, SetStateAction, useEffect } from "react"
-import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io"
-import { useForm } from "react-hook-form"
-import { ImSpinner8 } from "react-icons/im"
+import {Button} from "@/app/Components/ui/button"
+import {Dispatch, SetStateAction, useEffect} from "react"
+import {IoIosArrowRoundBack as ArrowIcon} from "react-icons/io"
+import {useForm} from "react-hook-form"
+import {ImSpinner8} from "react-icons/im"
 import axios from "axios"
-import { CgDanger } from "react-icons/cg";
+import {CgDanger} from "react-icons/cg"
 import clsx from "clsx"
-import { Input } from "@/app/Components/ui/input"
+import {Input} from "@/app/Components/ui/input"
 import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import {zodResolver} from "@hookform/resolvers/zod"
 
 const signinSchema = z.object({
   email: z.string().min(1, "Please provide your eamil address").email("Invalid email address"),
-  password: z.string().min(8, "Password should be at least 8 charecters")
+  password: z.string().min(8, "Password should be at least 8 charecters"),
 })
 type formDataType = z.infer<typeof signinSchema>
 
@@ -20,20 +20,23 @@ interface emailSigninFormPropsType {
   setIsSigninFormVisable: Dispatch<SetStateAction<boolean>>
 }
 
-const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) => {
-  const { register, handleSubmit, setFocus, setError, formState: { isSubmitting, errors } } = useForm<formDataType>({ defaultValues: { email: "", password: "" }, resolver: zodResolver(signinSchema) })
+const EmailSigninForm = ({setIsSigninFormVisable}: emailSigninFormPropsType) => {
+  const {
+    register,
+    handleSubmit,
+    setFocus,
+    setError,
+    formState: {isSubmitting, errors},
+  } = useForm<formDataType>({defaultValues: {email: "", password: ""}, resolver: zodResolver(signinSchema)})
 
   function handleSignin(data: formDataType) {
     try {
-      axios.post("http://localhost:3000/api/login", { data })
-        .then(res => {
-          console.log(res)
-        })
+      axios.post("http://localhost:3000/api/login", {data}).then((res) => {
+        console.log(res)
+      })
     } catch (err: any) {
       setError("root", err.message)
     }
-
-
   }
   useEffect(() => {
     setFocus("email")
@@ -60,9 +63,9 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
               disabled={isSubmitting}
               autoComplete="off"
               type="text"
-              className={clsx('w-full text-start bg-slate-100', {
-                'border-gray-300 focus:border-gray-400': !errors.email,
-                'border-red-400': errors.email,
+              className={clsx("w-full text-start bg-slate-100", {
+                "border-gray-300 focus:border-gray-400": !errors.email,
+                "border-red-400": errors.email,
               })}
             />
             {errors.email && <CgDanger className="size-5 absolute right-2 top-3 text-red-400" />}
@@ -70,15 +73,17 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
         </label>
         <label className="flex flex-col gap-2 items-start w-full">
           <span>Password</span>
-          {errors.password && <p className="text-red-500 text-xs font-semibold">{errors.password?.message}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-xs font-semibold">{errors.password?.message}</p>
+          )}
           <div className="w-full relative">
             <Input
               {...register("password")}
               disabled={isSubmitting}
               type="password"
-              className={clsx('w-full bg-slate-100', {
-                'border-gray-300 focus:border-gray-400': !errors.password,
-                'border-red-400': errors.password,
+              className={clsx("w-full bg-slate-100", {
+                "border-gray-300 focus:border-gray-400": !errors.password,
+                "border-red-400": errors.password,
               })}
             />
             {errors.password && <CgDanger className="size-5 absolute right-2 top-3 text-red-400" />}
@@ -86,8 +91,11 @@ const EmailSigninForm = ({ setIsSigninFormVisable }: emailSigninFormPropsType) =
         </label>
 
         <Button
-          disabled={isSubmitting || errors.password?.message !== undefined || errors.email?.message !== undefined}
-          className="w-3/4 mt-4">
+          disabled={
+            isSubmitting || errors.password?.message !== undefined || errors.email?.message !== undefined
+          }
+          className="w-3/4 mt-4"
+        >
           {isSubmitting ? <ImSpinner8 className="animate-spin" size={25} /> : "Sign in"}
         </Button>
       </form>

@@ -77,7 +77,7 @@ export default function LandingPage() {
         <Button variant="ghost">Terms</Button>
         <Button variant="ghost">Polices</Button>
         <Button variant="ghost" onClick={() => handleOpenAuthModal(false)}>
-          SignIn
+          Signin
         </Button>
         <Button variant="ghost" onClick={() => handleOpenAuthModal(true)}>
           Signup
