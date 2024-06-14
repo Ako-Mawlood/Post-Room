@@ -1,14 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect } from "react"
-import { Button } from "../../../ui/button"
-import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io"
-import { useForm } from "react-hook-form"
-import { ImSpinner8 } from "react-icons/im"
+import React, {Dispatch, SetStateAction, useEffect} from "react"
+import {IoIosArrowRoundBack as ArrowIcon} from "react-icons/io"
+import {useForm} from "react-hook-form"
+import {ImSpinner8} from "react-icons/im"
 import axios from "axios"
-import { Input } from "@/app/Components/ui/input"
+import {Input} from "@/app/Components/ui/input"
 import clsx from "clsx"
 import z from "zod"
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CgDanger } from "react-icons/cg"
+import {zodResolver} from "@hookform/resolvers/zod"
+import {CgDanger} from "react-icons/cg"
 
 const signupSchema = z.object({
   email: z.string().min(1, "Please provide your eamil address").email("Invalid email address"),
@@ -28,7 +27,6 @@ const EmailSignupForm = ({
   setIsSignupFormVisable,
   setIsVerifyMessageVisable,
 }: EmailSignupFormPropsType) => {
-
   const {
     handleSubmit,
     getValues,
@@ -36,19 +34,18 @@ const EmailSignupForm = ({
     setFocus,
     setError,
     formState,
-    formState: { isSubmitting, errors },
-  } = useForm<formDataType>({ defaultValues: { email: "" }, resolver: zodResolver(signupSchema) })
+    formState: {isSubmitting, errors},
+  } = useForm<formDataType>({defaultValues: {email: ""}, resolver: zodResolver(signupSchema)})
 
   async function handleSignup(data: formDataType) {
     try {
-      const res = await axios.post("http://localhost:3000/api/register", { data })
+      const res = await axios.post("http://localhost:3000/api/register", {data})
 
       if (res.status === 200) {
         setUserEmail(getValues("email"))
         setIsSignupFormVisable(false)
         setIsVerifyMessageVisable(true)
       }
-
     } catch (err: any) {
       setError("root", err.message)
     }
@@ -77,25 +74,30 @@ const EmailSignupForm = ({
               disabled={isSubmitting}
               autoComplete="off"
               type="text"
-              className={clsx('w-full text-center bg-slate-100', {
-                'border-gray-300 focus:border-gray-400': !errors.email,
-                'border-red-400': errors.email,
+              className={clsx("w-full text-center bg-slate-100", {
+                "border-gray-300 focus:border-gray-400": !errors.email,
+                "border-red-400": errors.email,
               })}
             />
             {errors.email && <CgDanger className="size-5 absolute right-2 top-3 text-red-400" />}
           </div>
         </label>
-        <Button
+        <button
           disabled={!formState.dirtyFields.email || errors.email?.message !== undefined || isSubmitting}
-          className="w-3/4 mt-4"
-          type="submit">
-          {isSubmitting ? <ImSpinner8 className="animate-spin" size={25} /> : "Continue"}
-        </Button>
+          className="flex justify-center w-3/4 mt-4 py-2 font-semibold bg-black text-gray-100 rounded-full hover:opacity-80 duration-75 cursor-pointer"
+          type="submit"
+        >
+          {isSubmitting ? <ImSpinner8 className="animate-spin" size={24} /> : "Continue"}
+        </button>
       </form>
-      <Button disabled={isSubmitting} onClick={() => setIsSignupFormVisable(false)} variant={"ghost"}>
+      <button
+        className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-full duration-150"
+        disabled={isSubmitting}
+        onClick={() => setIsSignupFormVisable(false)}
+      >
         <ArrowIcon className="mr-2 size-8" />
         All sign in options
-      </Button>
+      </button>
     </main>
   )
 }

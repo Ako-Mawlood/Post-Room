@@ -1,4 +1,5 @@
-import type { Metadata } from "next"
+import {ThemeProvider} from "./Components/ThemeProvider"
+import type {Metadata} from "next"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -13,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 overflow-x-hidden">{children}</body>
+      <body className="bg-background text-foreground">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

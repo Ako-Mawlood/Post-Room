@@ -1,8 +1,7 @@
 import Link from "next/link"
 import AuthOptions from "./AuthOptions"
-import { CiMail as MailIcon } from "react-icons/ci"
-import { Button } from "@/app/Components/ui/button"
-import { Dispatch, SetStateAction, useRef, useState } from "react"
+import {CiMail as MailIcon} from "react-icons/ci"
+import {Dispatch, SetStateAction, useRef, useState} from "react"
 import EmailSignupForm from "./EmailSignupForm"
 
 interface signupModalPropsType {
@@ -10,7 +9,7 @@ interface signupModalPropsType {
   isNewUser: boolean
   setIsNewUser: Dispatch<SetStateAction<boolean>>
 }
-const SignupModal = ({ isNewUser, setIsNewUser, handleCloseAuthModal }: signupModalPropsType) => {
+const SignupModal = ({isNewUser, setIsNewUser, handleCloseAuthModal}: signupModalPropsType) => {
   const [userEmail, setUserEmail] = useState("")
   const [isSignupFormVisable, setIsSignupFormVisable] = useState(false)
   const [isVerifyMessageVisable, setIsVerifyMessageVisable] = useState(false)
@@ -33,7 +32,12 @@ const SignupModal = ({ isNewUser, setIsNewUser, handleCloseAuthModal }: signupMo
           <h1 className="text-4xl">Check your inbox.</h1>
           <p>{`Click the link we sent to ${userEmail} to complete your account set-up.`}</p>
         </div>
-        <Button onClick={handleCloseAuthModal}>Ok</Button>
+        <button
+          className="px-4 py-2 rounded-full text-gray-100 bg-black hover:opacity-80"
+          onClick={handleCloseAuthModal}
+        >
+          Ok
+        </button>
       </main>
     )
   }
@@ -43,20 +47,23 @@ const SignupModal = ({ isNewUser, setIsNewUser, handleCloseAuthModal }: signupMo
       <h1 className="text-4xl font-semibold">Join Post-Room.</h1>
       <main className="flex flex-col items-center w-full text-md p-4 text-gray-700 font-semibold">
         <AuthOptions isNewUser={isNewUser}>
-          <Button
+          <button
             onClick={() => setIsSignupFormVisable(true)}
-            variant="outline"
-            className="w-full flex justify-center">
+            className="flex justify-center w-full px-4 py-2 rounded-full bg-transparent border border-gray-200 hover:bg-gray-100 duration-150"
+          >
             {" "}
             <MailIcon className="mr-auto" size={30} /> <span className="mr-auto">Sign up with Email</span>
-          </Button>
+          </button>
         </AuthOptions>
-        <p className="text-gray-500 text-md">
+        <span className="text-gray-500 text-md">
           Aready have an account?
-          <Button onClick={() => setIsNewUser(false)} variant="link" className="px-1 text-md">
+          <button
+            onClick={() => setIsNewUser(false)}
+            className="text-gray-900 px-1 text-md hover:underline underline-offset-4 decoration-black"
+          >
             Sign in
-          </Button>
-        </p>
+          </button>
+        </span>
         <p className="pt-10 text-gray-500 text-sm text-center font-normal">
           Click &#8220;Sign up&#8221; to agree to Post-Rooms&#8217;s{" "}
           <Link href="/" className="underline underline-offset-2">

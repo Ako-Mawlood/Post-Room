@@ -1,4 +1,3 @@
-import {Button} from "@/app/Components/ui/button"
 import {Dispatch, SetStateAction, useEffect} from "react"
 import {IoIosArrowRoundBack as ArrowIcon} from "react-icons/io"
 import {useForm} from "react-hook-form"
@@ -90,20 +89,24 @@ const EmailSigninForm = ({setIsSigninFormVisable}: emailSigninFormPropsType) => 
           </div>
         </label>
 
-        <Button
+        <button
           disabled={
             isSubmitting || errors.password?.message !== undefined || errors.email?.message !== undefined
           }
-          className="w-3/4 mt-4"
+          className="flex justify-center py-2  w-3/4 mt-4 bg-black text-gray-100 rounded-full hover:opacity-80 duration-75 cursor-pointer"
         >
-          {isSubmitting ? <ImSpinner8 className="animate-spin" size={25} /> : "Sign in"}
-        </Button>
+          {isSubmitting ? <ImSpinner8 className="animate-spin" size={24} /> : "Sign in"}
+        </button>
       </form>
 
-      <Button disabled={isSubmitting} onClick={() => setIsSigninFormVisable(false)} variant={"ghost"}>
+      <button
+        disabled={isSubmitting}
+        onClick={() => setIsSigninFormVisable(false)}
+        className="flex items-center p-2 px-4 hover:bg-gray-100 rounded-full duration-75"
+      >
         <ArrowIcon className="size-8 mr-2" />
         All sign in options
-      </Button>
+      </button>
     </main>
   )
 }
