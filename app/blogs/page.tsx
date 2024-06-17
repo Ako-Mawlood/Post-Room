@@ -1,6 +1,6 @@
-import Navbar from "../Components/blogs/Navbar"
+import Navbar from "../Components/Navbar"
 
-const BlogsPage = () => {
+const BlogsPage = async () => {
   return (
     <div>
       <Navbar />

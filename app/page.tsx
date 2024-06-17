@@ -1,7 +1,7 @@
 "use client"
 
-import SigninModal from "./Components/pages/Landing/auth/SigninModal"
-import SignupModal from "./Components/pages/Landing/auth/SignupModal"
+import SigninModal from "./Components/pages/Landing/SigninModal"
+import SignupModal from "./Components/pages/Landing/SignupModal"
 import {backgroundColors} from "@/StaticData/backgroundColors"
 import {useState} from "react"
 import BlogsPreview from "./Components/pages/Landing/BlogsPreview"
@@ -32,7 +32,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="bg-gray-50 text-gray-900 selection:text-gray-200 selection:bg-gray-800">
+    <div className="bg-gray-50 text-gray-900">
       <nav className="flex justify-between items-center w-screen h-[8vh] px-4 md:px-24 py-1">
         <Link href="/" className="flex items-center font-bold text-lg sm:text-2xl">
           <CgEricsson size={25} />

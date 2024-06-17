@@ -3,7 +3,6 @@ import {FcGoogle as Google} from "react-icons/fc"
 import {FaApple as Apple} from "react-icons/fa6"
 import Facebook from "@/public/Icons/Facebook"
 import {FaSquareXTwitter as X} from "react-icons/fa6"
-import {Button} from "@/app/Components/ui/button"
 
 const authOptions = {
   Google,

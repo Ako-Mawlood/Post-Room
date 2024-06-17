@@ -1,15 +1,15 @@
 "use client"
 
-import Search from "./Search"
+import Search from "./pages/blogs/Search"
 import Link from "next/link"
-import {Avatar, AvatarFallback, AvatarImage} from "../ui/avatar"
+import {Avatar, AvatarFallback, AvatarImage} from "./ui/avatar"
 import {CgEricsson} from "react-icons/cg"
-import {Button} from "../ui/button"
+import {Button} from "./ui/button"
 import {PiNotePencilLight as WriteIcon} from "react-icons/pi"
 import {IoIosLogOut as LogoutIcon} from "react-icons/io"
 import {IoPersonOutline as ProfileIcon} from "react-icons/io5"
 import {IoBookmarkOutline as BookmarkIcon, IoSettingsOutline as SettingsIcon} from "react-icons/io5"
-import {ModeToggle} from "../ui/ModeToggle"
+import {ModeToggle} from "./ui/ModeToggle"
 import {DropdownMenuGroup} from "@radix-ui/react-dropdown-menu"
 import {
   DropdownMenu,
@@ -18,13 +18,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+} from "./ui/dropdown-menu"
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center h-14 text-foreground font-PT px-6 border-b border-border">
+    <nav className="flex justify-between items-center h-14 text-foreground px-2 md:px-6 border-b border-border">
       <div className="flex items-center gap-4">
-        <Link href="/blogs" className="flex items-center text-primary font-bold text-md sm:text-2xl">
+        <Link href="/blogs" className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl">
           <CgEricsson size={25} />
           <h1>Post-Room</h1>
         </Link>
@@ -32,10 +32,9 @@ const Navbar = () => {
       </div>
       <div className="flex gap-4 items-center">
         <ModeToggle />
-        <Button variant="ghost">
-          <Link className="flex gap-2 items-center font-normal" href="/">
-            <WriteIcon size={20} />
-            Write
+        <Button>
+          <Link className="flex gap-2 px-1 items-center font-semibold" href="/write">
+            Create
           </Link>
         </Button>
         <DropdownMenu>
@@ -53,25 +52,25 @@ const Navbar = () => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link href="profile" className="flex items-center">
+                <Link href="/profile" className="flex items-center">
                   <ProfileIcon className="size-6 mr-2" /> <span>Profile</span>
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link href="write" className="flex items-center">
+                <Link href="/write" className="flex items-center">
                   <WriteIcon className="size-6 mr-2" /> <span>Write blog</span>
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link href="profile" className="flex items-center">
+                <Link href="/profile?tab=saved-stories" className="flex items-center">
                   <BookmarkIcon className="size-6 mr-2" /> <span>Saved blogs</span>
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link href="settings" className="flex items-center">
+                <Link href="/settings" className="flex items-center">
                   <SettingsIcon className="size-6 mr-2" /> <span>Settings</span>
                 </Link>
               </DropdownMenuItem>
