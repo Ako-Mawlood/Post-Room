@@ -1,17 +1,16 @@
-import {useQuery} from "@tanstack/react-query"
-import axios from "../../../../libs/axios"
-import {useEffect, useState} from "react"
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from "../../ui/card"
+import SaveBlogBtn from "../../SaveBlogBtn"
 
-const StoriesList = ({user}: {user: any}) => {
+const UserBlogsList = ({user}: {user: any}) => {
   return (
-    <div className="flex justify-center gap-10 w-full p-6 mx-auto flex-wrap">
+    <div className="flex justify-center flex-wrap gap-10 w-full p-6 mx-auto">
       {user?.blogs.map((blog: any) => {
         return (
-          <Card className="flex flex-col gap-4 w-[30%] p-3">
+          <Card key={blog.id} className="flex flex-col gap-4 w-[30%] p-3">
             <CardContent>
               <CardTitle>{blog.title}</CardTitle>
               <CardDescription>{blog.content}</CardDescription>
+              <SaveBlogBtn blogId={blog.id} />
             </CardContent>
           </Card>
         )
@@ -20,4 +19,4 @@ const StoriesList = ({user}: {user: any}) => {
   )
 }
 
-export default StoriesList
+export default UserBlogsList

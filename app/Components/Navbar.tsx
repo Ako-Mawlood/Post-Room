@@ -27,10 +27,9 @@ import {useEffect, useState} from "react"
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useState<currentUserType>()
-  const token = localStorage.getItem("token")
   const router = useRouter()
   useEffect(() => {
-    axios("/api/me", {headers: {Authorization: token}}).then((res) => {
+    axios("/api/me", {headers: {Authorization: localStorage.getItem("token")}}).then((res) => {
       setCurrentUser(res.data)
     })
   }, [])
