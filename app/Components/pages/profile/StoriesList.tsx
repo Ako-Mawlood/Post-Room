@@ -1,8 +1,8 @@
-import {useQuery} from "@tanstack/react-query"
-import axios from "axios"
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const StoriesList = () => {
-  return <div>StoriesList</div>
-}
+  return <div></div>;
+};
 
-export default StoriesList
+export default StoriesList;

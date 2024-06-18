@@ -1,5 +1,6 @@
-import {CiSearch as SearchIcon} from "react-icons/ci"
-import {Sheet, SheetContent, SheetTrigger} from "../../ui/sheet"
+"use client";
+import { CiSearch as SearchIcon } from "react-icons/ci";
+import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
 
 const Search = () => {
   return (
@@ -7,7 +8,10 @@ const Search = () => {
       <SheetTrigger>
         <SearchIcon className="size-7 cursor-pointer" />
       </SheetTrigger>
-      <SheetContent className="flex justify-start items-start gap-4 h-[100px] py-2" side="top">
+      <SheetContent
+        className="flex justify-start items-start gap-4 h-[100px] py-2"
+        side="top"
+      >
         <div className="flex justify-start items-center h-20 mx-auto">
           <SearchIcon className="size-10 cursor-pointer text-foreground" />
           <input
@@ -18,7 +22,7 @@ const Search = () => {
         </div>
       </SheetContent>
     </Sheet>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
