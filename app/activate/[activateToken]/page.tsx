@@ -1,32 +1,15 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-type User = {
-  email: string;
-};
-
-export default function Activate({ params }: { params: { activateToken: string } }) {
-  const [status, setStatus] = useState("loading");
-  const [user, setUser] = useState<User>();
-
+"use client"
+import {useEffect} from "react"
+import axios from "../../../libs/axios"
+import {useRouter} from "next/navigation"
+const page = ({params: {activateToken}}: {params: {activateToken: string}}) => {
+  const router = useRouter()
   useEffect(() => {
-    axios
-      .post(`/api/activate/${params.activateToken}`)
-      .then((res) => {
-        setUser(res.data);
-        setStatus("success");
-      })
-      .catch((err: { response: { data: string } }) => {
-        setStatus(err.response.data);
-      });
-  }, []);
-
-  return (
-    <div className="flex justify-center items-center h-screen">
-      {status != "loading" && status !== "success" && <h1>{status}</h1>}
-      {status == "success" && <h2>email verified for {user?.email}</h2>}
-    </div>
-  );
+    axios.post(`/api/activate/${activateToken}`, {headers: {authorization: activateToken}}).then((res) => {
+      router.push("/account-setup")
+    })
+  }, [])
+  return <div className="flex justify-center items-center w-full h-screen text-3xl">Verifing...</div>
 }
+
+export default page

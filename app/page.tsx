@@ -10,11 +10,12 @@ import Link from "next/link"
 import {IoIosClose as CloseIcon} from "react-icons/io"
 import clsx from "clsx"
 import {CgEricsson} from "react-icons/cg"
-
+import {useRouter} from "next/navigation"
 export default function LandingPage() {
   const [isNewUser, setIsNewUser] = useState(true)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [isAuthModalVisable, setIsAuthModalVisable] = useState(false)
+  const router = useRouter()
   const {sliderIndex} = useSlider(6)
   const backgroundColor = backgroundColors[sliderIndex]
 
@@ -29,6 +30,9 @@ export default function LandingPage() {
     setTimeout(() => {
       setIsAuthModalVisable(false)
     }, 190)
+  }
+  if (localStorage.getItem("token")) {
+    router.push("/blogs")
   }
 
   return (
@@ -65,7 +69,7 @@ export default function LandingPage() {
             words.
           </p>
           <button
-            className="w-36 bg-gray-900 px-4 py-2 rounded-full text-gray-100 "
+            className="w-36 bg-black px-4 py-2 rounded-full text-gray-100 "
             onClick={() => handleOpenAuthModal(true)}
           >
             Start Reading

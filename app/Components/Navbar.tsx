@@ -10,7 +10,11 @@ import {IoIosLogOut as LogoutIcon} from "react-icons/io"
 import {IoPersonOutline as ProfileIcon} from "react-icons/io5"
 import {IoBookmarkOutline as BookmarkIcon, IoSettingsOutline as SettingsIcon} from "react-icons/io5"
 import {ModeToggle} from "./ui/ModeToggle"
+import axios from "../../libs/axios"
 import {DropdownMenuGroup} from "@radix-ui/react-dropdown-menu"
+import {currentUserType} from "../types/currentUserType"
+import {useRouter} from "next/navigation"
+import {Skeleton} from "../Components/ui/skeleton"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,8 +23,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
+import {useEffect, useState} from "react"
 
 const Navbar = () => {
+  const [currentUser, setCurrentUser] = useState<currentUserType>()
+  const token = localStorage.getItem("token")
+  const router = useRouter()
+  useEffect(() => {
+    axios("/api/me", {headers: {Authorization: token}}).then((res) => {
+      setCurrentUser(res.data)
+    })
+  }, [])
+
   return (
     <nav className="flex justify-between items-center h-14 text-foreground px-2 md:px-6 border-b border-border">
       <div className="flex items-center gap-4">
@@ -39,34 +53,42 @@ const Navbar = () => {
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Avatar className=" cursor-pointer">
-              <AvatarImage src="https://scontent.febl5-2.fna.fbcdn.net/v/t39.30808-6/274879156_2177696605718753_4655404325092292858_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=LDZ-1TfT64AQ7kNvgEPvJNF&_nc_ht=scontent.febl5-2.fna&oh=00_AYCJP1XZLdZ3WLgvJJ4sm0igh_QZOpCnJE2osYXn1CL2FA&oe=66666DAA" />
-              <AvatarFallback>SM</AvatarFallback>
-            </Avatar>
+            {currentUser ? (
+              <Avatar className=" cursor-pointer">
+                <AvatarFallback>
+                  {currentUser?.fullname
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((word) => {
+                      return word[0]
+                    })
+                    .join("")
+                    .toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            ) : (
+              <Skeleton className="size-10 rounded-full" />
+            )}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 mr-6">
-            <DropdownMenuLabel className="text-center text-lg pb-0">Sangar Mawlood</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-center text-lg pb-0">
+              {currentUser?.fullname}
+            </DropdownMenuLabel>
             <DropdownMenuLabel className="text-xs truncate py-0 font-normal text-center">
-              Sangar.mawlood@gmail.com
+              {currentUser?.email}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link href="/profile" className="flex items-center">
-                  <ProfileIcon className="size-6 mr-2" /> <span>Profile</span>
-                </Link>
+              <DropdownMenuItem onClick={() => router.push(`/@${currentUser?.username}`)}>
+                <ProfileIcon className="size-6 mr-2" /> <span>Profile</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
-                <Link href="/write" className="flex items-center">
-                  <WriteIcon className="size-6 mr-2" /> <span>Write blog</span>
-                </Link>
+              <DropdownMenuItem onClick={() => router.push("/write")}>
+                <WriteIcon className="size-6 mr-2" /> <span>Write blog</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
-                <Link href="/profile?tab=saved-stories" className="flex items-center">
-                  <BookmarkIcon className="size-6 mr-2" /> <span>Saved blogs</span>
-                </Link>
+              <DropdownMenuItem onClick={() => router.push(`/@${currentUser?.username}?tab=saved-blogs`)}>
+                <BookmarkIcon className="size-6 mr-2" /> <span>Saved blogs</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
@@ -77,7 +99,12 @@ const Navbar = () => {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                localStorage.clear()
+                router.push("/")
+              }}
+            >
               <LogoutIcon className="size-6 mr-2" />
               <span>Log Out</span>
             </DropdownMenuItem>
