@@ -31,10 +31,6 @@ export default function LandingPage() {
       setIsAuthModalVisable(false)
     }, 190)
   }
-  if (localStorage.getItem("token")) {
-    router.push("/blogs")
-  }
-
   return (
     <div className="bg-gray-50 text-gray-900">
       <nav className="flex justify-between items-center w-screen h-[8vh] px-4 md:px-24 py-1">

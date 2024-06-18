@@ -32,7 +32,7 @@ const ProfilePage = ({params}: {params: {username: string}}) => {
       {user ? (
         <>
           <section className="flex items-center w-screen h-[40vh] relative px-6 border-b border-border">
-            <h1 className="text-7xl md:text-[8.5vw] font-PT">{user && user.fullname}</h1>
+            <h1 className="text-7xl md:text-[8.5vw] font-PT">{user.fullname}</h1>
             <div className="flex items-center gap-2 absolute left-6 bottom-4">
               <Avatar className="flex justify-center items-center gap-2 font-semibold">
                 <AvatarImage src={user.imageUrl} />
@@ -67,7 +67,6 @@ const ProfilePage = ({params}: {params: {username: string}}) => {
               {user.bio}
             </div>
           </section>
-          <section></section>
         </>
       ) : (
         <ProfileSkeleton />
@@ -82,7 +81,6 @@ const ProfilePage = ({params}: {params: {username: string}}) => {
           >
             Blogs
           </li>
-
           <li
             onClick={() => router.push(`/@${user.username}?tab=saved-blogs`, {scroll: false})}
             className={clsx("cursor-pointer", {

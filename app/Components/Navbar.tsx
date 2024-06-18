@@ -51,7 +51,7 @@ const Navbar = () => {
           </Link>
         </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             {currentUser ? (
               <Avatar className=" cursor-pointer">
                 <AvatarFallback>
