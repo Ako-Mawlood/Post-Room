@@ -72,7 +72,7 @@ const ProfilePage = ({params}: {params: {username: string}}) => {
         <ProfileSkeleton />
       )}
       <section>
-        <ul className="flex justify-start gap-8 w-full h-7 font-semibold px-6 mt-5 md:mt-20 text-sm text-foreground border-b border-border">
+        <ul className="flex justify-start gap-8 w-full h-7 font-semibold px-6 mt-5 md:mt-20 text-xs sm:text-sm text-foreground border-b border-border">
           <li
             onClick={() => router.push(`/@${user.username}?tab=blogs`, {scroll: false})}
             className={clsx("cursor-pointer", {
@@ -80,6 +80,14 @@ const ProfilePage = ({params}: {params: {username: string}}) => {
             })}
           >
             Blogs
+          </li>
+          <li
+            onClick={() => router.push(`/@${user.username}?tab=stared-blogs`, {scroll: false})}
+            className={clsx("cursor-pointer", {
+              "text-primary border-b-2 border-primary": tab === "stared-blogs",
+            })}
+          >
+            Stared Blogs
           </li>
           <li
             onClick={() => router.push(`/@${user.username}?tab=saved-blogs`, {scroll: false})}
@@ -100,7 +108,8 @@ const ProfilePage = ({params}: {params: {username: string}}) => {
         </ul>
         {tab === "blogs" && <UserBlogsList user={user} />}
         {tab === "saved-blogs" && <SavedBlogsList />}
-        {tab === "drafts" && <h1>This is drafts tap</h1>}
+        {tab === "stared-blogs" && <h1>Stared blogs</h1>}
+        {tab === "drafts" && <h1>drafts</h1>}
       </section>
     </>
   )

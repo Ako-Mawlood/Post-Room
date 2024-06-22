@@ -51,7 +51,6 @@ const SignupModal = ({isNewUser, setIsNewUser, handleCloseAuthModal}: signupModa
             onClick={() => setIsSignupFormVisable(true)}
             className="flex justify-center w-full px-4 py-2 rounded-full bg-transparent border border-gray-200 hover:bg-gray-100 duration-150"
           >
-            {" "}
             <MailIcon className="mr-auto" size={30} /> <span className="mr-auto">Sign up with Email</span>
           </button>
         </AuthOptions>
@@ -65,11 +64,11 @@ const SignupModal = ({isNewUser, setIsNewUser, handleCloseAuthModal}: signupModa
           </button>
         </span>
         <p className="pt-10 text-gray-500 text-sm text-center font-normal">
-          Click &#8220;Sign up&#8221; to agree to Post-Rooms&#8217;s{" "}
+          Click &#8220;Sign up&#8221; to agree to Post-Rooms&#8217;s
           <Link href="/" className="underline underline-offset-2">
             Terms of Service
           </Link>
-          &#44; and acknowledge that Post-Room&#8217;s{" "}
+          &#44; and acknowledge that Post-Room&#8217;s
           <Link href="/" className="underline underline-offset-2">
             Privacy Policy
           </Link>

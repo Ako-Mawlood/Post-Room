@@ -1,4 +1,5 @@
 "use client"
+
 import {Dispatch, SetStateAction, useEffect} from "react"
 import {IoIosArrowRoundBack as ArrowIcon} from "react-icons/io"
 import {useForm} from "react-hook-form"
@@ -10,7 +11,6 @@ import {Input} from "@/app/Components/ui/input"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useRouter} from "next/navigation"
-import {useState} from "react"
 
 const signinSchema = z.object({
   email: z.string().min(1, "Please provide your email address").email("Invalid email address"),
@@ -25,7 +25,6 @@ interface emailSigninFormPropsType {
 
 const EmailSigninForm = ({setIsSigninFormVisable}: emailSigninFormPropsType) => {
   const router = useRouter()
-
   const {
     register,
     handleSubmit,
@@ -45,7 +44,11 @@ const EmailSigninForm = ({setIsSigninFormVisable}: emailSigninFormPropsType) => 
         router.push("/blogs")
       })
       .catch((err: any) => {
-        setError("root", {type: "manual", message: err.response.data})
+        if (err.message === "Network Error") {
+          setError("root", {message: "You probably disconnected, Please check your internet connection"})
+        } else {
+          setError("root", {message: err.response?.data})
+        }
       })
   }
 
@@ -76,7 +79,7 @@ const EmailSigninForm = ({setIsSigninFormVisable}: emailSigninFormPropsType) => 
               disabled={isSubmitting}
               autoComplete="off"
               type="text"
-              onChangeCapture={() => setError("root", {type: "manual", message: ""})}
+              onChangeCapture={() => setError("root", {message: ""})}
               className={clsx("w-full text-start bg-slate-100", {
                 "border-gray-300 focus:border-gray-400": !errors.email?.message,
                 "border-red-400": errors.email?.message || errors.root?.message,
@@ -95,7 +98,7 @@ const EmailSigninForm = ({setIsSigninFormVisable}: emailSigninFormPropsType) => 
               {...register("password")}
               disabled={isSubmitting}
               type="password"
-              onChangeCapture={() => setError("root", {type: "manual", message: ""})}
+              onChangeCapture={() => setError("root", {message: ""})}
               className={clsx("w-full bg-slate-100", {
                 "border-gray-300 focus:border-gray-400": !errors.password?.message,
                 "border-red-400": errors.password?.message || errors.root?.message,

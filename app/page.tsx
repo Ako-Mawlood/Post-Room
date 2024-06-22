@@ -10,12 +10,11 @@ import Link from "next/link"
 import {IoIosClose as CloseIcon} from "react-icons/io"
 import clsx from "clsx"
 import {CgEricsson} from "react-icons/cg"
-import {useRouter} from "next/navigation"
+
 export default function LandingPage() {
   const [isNewUser, setIsNewUser] = useState(true)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [isAuthModalVisable, setIsAuthModalVisable] = useState(false)
-  const router = useRouter()
   const {sliderIndex} = useSlider(6)
   const backgroundColor = backgroundColors[sliderIndex]
 
@@ -31,6 +30,7 @@ export default function LandingPage() {
       setIsAuthModalVisable(false)
     }, 190)
   }
+
   return (
     <div className="bg-gray-50 text-gray-900">
       <nav className="flex justify-between items-center w-screen h-[8vh] px-4 md:px-24 py-1">

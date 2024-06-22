@@ -3,7 +3,7 @@
 import Search from "./pages/blogs/Search"
 import Link from "next/link"
 import {Avatar, AvatarFallback, AvatarImage} from "./ui/avatar"
-import {CgEricsson} from "react-icons/cg"
+import {CgEricsson as Logo} from "react-icons/cg"
 import {Button} from "./ui/button"
 import {PiNotePencilLight as WriteIcon} from "react-icons/pi"
 import {IoIosLogOut as LogoutIcon} from "react-icons/io"
@@ -38,7 +38,7 @@ const Navbar = () => {
     <nav className="flex justify-between items-center h-14 text-foreground px-2 md:px-6 border-b border-border">
       <div className="flex items-center gap-4">
         <Link href="/blogs" className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl">
-          <CgEricsson size={25} />
+          <Logo size={25} />
           <h1>Post-Room</h1>
         </Link>
         <Search />
@@ -54,6 +54,7 @@ const Navbar = () => {
           <DropdownMenuTrigger>
             {currentUser ? (
               <Avatar className=" cursor-pointer">
+                <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>
                   {currentUser?.fullname
                     .split(" ")
