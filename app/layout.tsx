@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-background text-foreground selection:text-background selection:bg-foreground overflow-x-hidden">
+      <body className="bg-background text-foreground selection:text-background selection:bg-foreground">
         <TanstackProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             {children}

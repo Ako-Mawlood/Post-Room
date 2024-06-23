@@ -52,7 +52,7 @@ const EmailSignupForm = ({
         if (err.message === "Network Error") {
           setError("root", {message: "You probably disconnected, Please check your internet connection"})
         } else {
-          setError("root", {message: err.message})
+          setError("root", {message: err.response?.data})
         }
       })
   }

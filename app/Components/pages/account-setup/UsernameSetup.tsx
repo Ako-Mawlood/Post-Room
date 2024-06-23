@@ -32,7 +32,7 @@ const UsernameSetup = () => {
     await axios
       .put("/api/user", data, {headers: {Authorization: token}})
       .then((_res) => {
-        router.push("/account-setup?setupStep=catagory")
+        router.push("/account-setup?setupStep=category")
       })
       .catch((err: any) => {
         if (err.message === "Network Error") {
@@ -50,8 +50,8 @@ const UsernameSetup = () => {
       onSubmit={handleSubmit(handeSetupUsername)}
       className="flex flex-col items-center justify-center gap-4 w-full sm:w-[30rem] p-6 text-center"
     >
-      <h1 className="text-primary text-4xl font-PT">setup your account.</h1>
-      <p className="text-lg">Let's set up your account by creating a username.</p>
+      <h1 className="text-primary text-4xl font-PT">Almost there!</h1>
+      <p className="text-lg">Let's create a username for your account.</p>
       {errors.root && (
         <span className="bg-red-500/15 p-2 text-red-500 text-sm w-full font-semibold border border-red-400">
           {errors?.root?.message}

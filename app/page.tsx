@@ -33,7 +33,7 @@ export default function LandingPage() {
 
   return (
     <div className="bg-gray-50 text-gray-900">
-      <nav className="flex justify-between items-center w-screen h-[8vh] px-4 md:px-24 py-1">
+      <nav className="flex justify-between items-center w-full h-[8vh] px-4 md:px-24 py-1">
         <Link href="/" className="flex items-center font-bold text-lg sm:text-2xl">
           <CgEricsson size={25} />
           <h1>Post-Room</h1>
@@ -73,7 +73,7 @@ export default function LandingPage() {
         </div>
         <BlogsPreview sliderIndex={sliderIndex} backgroundColor={backgroundColor} />
       </main>
-      <footer className="flex justify-center items-center gap-6 h-[8vh] w-screen px-4 font-semibold border-y-[1px] border-black md:border-none bg-gray-100 overflow-hidden">
+      <footer className="flex justify-center items-center gap-6 h-[8vh] w-full px-4 font-semibold border-y-[1px] border-black md:border-none bg-gray-100 overflow-hidden">
         <button onClick={() => handleOpenAuthModal(true)}>Blog</button>
         <button onClick={() => handleOpenAuthModal(true)} className="hidden md:block">
           Write
