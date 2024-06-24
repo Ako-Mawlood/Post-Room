@@ -10,9 +10,8 @@ import {IoIosLogOut as LogoutIcon} from "react-icons/io"
 import {IoPersonOutline as ProfileIcon} from "react-icons/io5"
 import {IoBookmarkOutline as BookmarkIcon, IoSettingsOutline as SettingsIcon} from "react-icons/io5"
 import {ModeToggle} from "./ui/ModeToggle"
-import axios from "../../libs/axios"
 import {DropdownMenuGroup} from "@radix-ui/react-dropdown-menu"
-import {currentUserType} from "../types/currentUserType"
+import {CurrentUserContext} from "../providers/CurrentUserProvider"
 import {useRouter} from "next/navigation"
 import {Skeleton} from "../Components/ui/skeleton"
 import {
@@ -23,19 +22,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
-import {useEffect, useState} from "react"
+import {useContext} from "react"
 
 const Navbar = () => {
-  const [currentUser, setCurrentUser] = useState<currentUserType>()
+  const currentUser = useContext(CurrentUserContext)
+  console.log(currentUser)
   const router = useRouter()
-  useEffect(() => {
-    axios("/api/me", {headers: {Authorization: localStorage.getItem("token")}}).then((res) => {
-      setCurrentUser(res.data)
-    })
-  }, [])
 
   return (
-    <nav className="flex justify-between items-center h-14 text-foreground px-2 md:px-6 border-b border-border">
+    <nav className="flex justify-between items-center w-full h-14 text-foreground px-2 md:px-6 border-b border-border">
       <div className="flex items-center gap-4">
         <Link href="/blogs" className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl">
           <Logo size={25} />

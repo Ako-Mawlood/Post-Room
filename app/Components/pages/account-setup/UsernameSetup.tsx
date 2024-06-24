@@ -4,11 +4,13 @@ import {Button} from "../../ui/button"
 import {useForm} from "react-hook-form"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useEffect} from "react"
+import {useContext, useEffect} from "react"
 import axios from "../../../../libs/axios"
 import {useRouter} from "next/navigation"
 import {ImSpinner8 as Spinner} from "react-icons/im"
 import clsx from "clsx"
+import {CurrentUserContext} from "@/app/providers/CurrentUserProvider"
+import {Skeleton} from "../../ui/skeleton"
 const usernameSchema = z.object({
   username: z
     .string()
@@ -18,7 +20,7 @@ const usernameSchema = z.object({
 type usernameType = z.infer<typeof usernameSchema>
 const UsernameSetup = () => {
   const token = localStorage.getItem("token")
-  console.log(token)
+  const currentUser = useContext(CurrentUserContext)
   const router = useRouter()
   const {
     register,
@@ -28,7 +30,6 @@ const UsernameSetup = () => {
     formState: {isSubmitting, errors},
   } = useForm({defaultValues: {username: ""}, resolver: zodResolver(usernameSchema)})
   async function handeSetupUsername(data: usernameType) {
-    console.log({username: data.username, fullname: "Sangar"})
     await axios
       .put("/api/user", data, {headers: {Authorization: token}})
       .then((_res) => {
@@ -73,7 +74,7 @@ const UsernameSetup = () => {
         />
       </label>
       <span className="text-gray-600 dark:text-gray-200">Your email</span>
-      <span>ako.mawlood01@gmail.com</span>
+      {currentUser ? <span>{currentUser.email}</span> : <Skeleton className="w-52 h-4 rounded-full" />}
       <Button className="w-24">
         {isSubmitting ? <Spinner className="size-5 animate-spin" /> : "Continue"}
       </Button>

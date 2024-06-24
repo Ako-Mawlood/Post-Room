@@ -39,7 +39,9 @@ const CategorySetup = () => {
               return (
                 <Button
                   key={index}
-                  onClick={() => router.push(pathname + "?" + handleAddRemoveCategory(category))}
+                  onClick={() =>
+                    router.push(pathname + "?" + handleAddRemoveCategory(category), {scroll: false})
+                  }
                   variant={selectedCategories.includes(category) ? "default" : "secondary"}
                   className="m-1 rounded-full"
                 >

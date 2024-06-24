@@ -4,11 +4,13 @@ import {Button} from "../../ui/button"
 import {useForm} from "react-hook-form"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useEffect} from "react"
+import {useContext, useEffect} from "react"
 import axios from "../../../../libs/axios"
 import {useRouter} from "next/navigation"
 import {ImSpinner8 as Spinner} from "react-icons/im"
 import clsx from "clsx"
+import {CurrentUserContext} from "@/app/providers/CurrentUserProvider"
+import {Skeleton} from "../../ui/skeleton"
 
 const fullNameSchema = z.object({
   fullName: z.string().regex(/^[A-Za-z]+(?:[ \-'][A-Za-z]+)*$/, "Invalid full name format"),
@@ -18,6 +20,7 @@ type FullNameType = z.infer<typeof fullNameSchema>
 
 const FullNameSetup = () => {
   const token = localStorage.getItem("token")
+  const currentUser = useContext(CurrentUserContext)
   const router = useRouter()
   const {
     register,
@@ -31,21 +34,22 @@ const FullNameSetup = () => {
   })
 
   async function handleSetupFullName(data: FullNameType) {
-    try {
-      console.log({fullName: data.fullName})
-      await axios.put("/api/user", data, {
+    await axios
+      .put("/api/user", data, {
         headers: {Authorization: token},
       })
-      router.push("/account-setup?setupStep=username")
-    } catch (err: any) {
-      if (err.message === "Network Error") {
-        setError("root", {
-          message: "You probably disconnected. Please check your internet connection.",
-        })
-      } else {
-        setError("root", {message: err.response?.data})
-      }
-    }
+      .then(() => {
+        router.push("/account-setup?setupStep=username")
+      })
+      .catch((err) => {
+        if (err.message === "Network Error") {
+          setError("root", {
+            message: "You probably disconnected. Please check your internet connection.",
+          })
+        } else {
+          setError("root", {message: err.response?.data})
+        }
+      })
   }
 
   useEffect(() => {
@@ -80,7 +84,8 @@ const FullNameSetup = () => {
         />
       </label>
       <span className="text-gray-600 dark:text-gray-200">Your email</span>
-      <span>ako.mawlood01@gmail.com</span>
+      {currentUser ? <span>{currentUser.email}</span> : <Skeleton className="w-52 h-4 rounded-full" />}
+
       <Button className="w-24">
         {isSubmitting ? <Spinner className="size-5 animate-spin" /> : "Continue"}
       </Button>
