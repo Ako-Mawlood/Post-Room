@@ -4,7 +4,7 @@ import CategorySetup from "../Components/pages/account-setup/CategorySetup"
 import {CgEricsson as Logo} from "react-icons/cg"
 
 const CreateAcount = ({searchParams}: {searchParams: any}) => {
-  const setupStep = searchParams.setupStep || "username"
+  const setupStep = searchParams.setupStep || "fullname"
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">

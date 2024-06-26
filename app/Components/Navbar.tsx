@@ -26,7 +26,6 @@ import {useContext} from "react"
 
 const Navbar = () => {
   const currentUser = useContext(CurrentUserContext)
-  console.log(currentUser)
   const router = useRouter()
 
   return (

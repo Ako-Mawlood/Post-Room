@@ -2,7 +2,7 @@ import {useMutation} from "@tanstack/react-query"
 import axios from "../../libs/axios"
 import {IoBookmarkOutline as BookmarkIcon} from "react-icons/io5"
 import {useEffect, useState} from "react"
-const SaveBlogBtn = ({blogId}: {blogId: number}) => {
+const SaveBlogBtn = ({blogId}: {blogId: string}) => {
   const [token, setToken] = useState<string | null>(null)
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const SaveBlogBtn = ({blogId}: {blogId: number}) => {
       onClick={() => {
         addToSavedBlogs()
       }}
-      className="size-4 mr-2 cursor-pointer"
+      className="size-5 mr-2 cursor-pointer"
     />
   )
 }

@@ -47,9 +47,9 @@ const CategorySetup = () => {
                 >
                   <span>{category}</span>
                   {selectedCategories.includes(category) ? (
-                    <TrueIcon className="ml-1 duration-150" size={15} />
+                    <TrueIcon className="ml-1 duration-300" size={15} />
                   ) : (
-                    <AddIcon className="ml-1 duration-150" size={15} />
+                    <AddIcon className="ml-1 duration-300" size={15} />
                   )}
                 </Button>
               )

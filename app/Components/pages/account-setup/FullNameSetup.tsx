@@ -84,7 +84,7 @@ const FullNameSetup = () => {
         />
       </label>
       <span className="text-gray-600 dark:text-gray-200">Your email</span>
-      {currentUser ? <span>{currentUser.email}</span> : <Skeleton className="w-52 h-4 rounded-full" />}
+      {currentUser ? <span>{currentUser.email}</span> : <Skeleton className="w-52 h-6 rounded-full" />}
 
       <Button className="w-24">
         {isSubmitting ? <Spinner className="size-5 animate-spin" /> : "Continue"}

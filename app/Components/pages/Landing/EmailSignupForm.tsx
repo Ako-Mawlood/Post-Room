@@ -50,9 +50,9 @@ const EmailSignupForm = ({
       })
       .catch((err: any) => {
         if (err.message === "Network Error") {
-          setError("root", {message: "You probably disconnected, Please check your internet connection"})
+          setError("root", {message: "You are probably disconnected, Please check your internet connection"})
         } else {
-          setError("root", {message: err.response?.data})
+          setError("root", {message: err?.response?.data})
         }
       })
   }
