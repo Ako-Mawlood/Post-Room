@@ -22,7 +22,7 @@ const SavedBlogsList = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-start w-full h-[30rem] mt-8">
-        <Spinner className="size-10 animate-spin" />
+        <Spinner className="size-10 text-slate-300 font-extrathin animate-spin" />
       </div>
     )
   }
@@ -39,14 +39,13 @@ const SavedBlogsList = () => {
       </div>
     )
   }
-  console.log("savedBlogs", savedBlogs)
 
   return (
     <>
       {savedBlogs.data && (
         <div className="flex justify-center flex-wrap gap-10 w-full p-6 mx-auto">
           {savedBlogs.data.map((blog: {blog: blogType}) => {
-            return <ProfileBlogCard blog={blog.blog} />
+            return <ProfileBlogCard key={blog.blog.id} blog={blog.blog} />
           })}
         </div>
       )}

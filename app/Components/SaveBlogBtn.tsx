@@ -2,9 +2,11 @@ import {useMutation} from "@tanstack/react-query"
 import axios from "../../libs/axios"
 import {IoBookmarkOutline as BookmarkIcon} from "react-icons/io5"
 import {useEffect, useState} from "react"
+import useCheckIsBlogSaved from "../Hooks/useCheckIsBlogSaved"
 const SaveBlogBtn = ({blogId}: {blogId: string}) => {
   const [token, setToken] = useState<string | null>(null)
-
+  const {data} = useCheckIsBlogSaved()
+  console.log({data})
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"))

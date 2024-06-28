@@ -5,14 +5,14 @@ import {Button} from "../ui/button"
 import SaveBlogBtn from "../SaveBlogBtn"
 import {formatDate} from "@/libs/utils"
 import Link from "next/link"
-import {BookMarked} from "lucide-react"
+import SigninModal from "../pages/Landing/SigninModal"
 
-const ProfileBlogCard = ({blog}: {blog: blogType}) => (
+export const ProfileBlogCard = ({blog}: {blog: blogType}) => (
   <>
     {blog && (
       <Card
         key={blog.id}
-        className="flex flex-col items-center flex-wrap w-full sm:w-[400px] border-none shadow-md hover:shadow-lg rounded-3xl p-4"
+        className="flex flex-col items-center flex-wrap w-[400px] border-none shadow-md hover:shadow-lg rounded-3xl p-4"
       >
         <div className="relative w-full h-60 rounded-3xl">
           <Image
@@ -22,7 +22,7 @@ const ProfileBlogCard = ({blog}: {blog: blogType}) => (
               "https://as1.ftcdn.net/v2/jpg/06/34/27/22/1000_F_634272206_DUqxTFpMbqXaKd9ybufi43Dp53nLoy1u.jpg"
             }
             sizes="400px"
-            fill={true}
+            layout="fill"
             alt="Blog image"
           />
         </div>
@@ -33,7 +33,7 @@ const ProfileBlogCard = ({blog}: {blog: blogType}) => (
             </span>
             <span className="font-semibold text-base">Published {formatDate(blog.createdAt)}</span>
           </div>
-          <BookMarked size={20} />
+          <SaveBlogBtn blogId={blog.blogId} />
         </div>
         <CardHeader className="gap-2 px-0">
           <CardTitle>{blog.title}</CardTitle>
@@ -46,5 +46,3 @@ const ProfileBlogCard = ({blog}: {blog: blogType}) => (
     )}
   </>
 )
-
-export default ProfileBlogCard
