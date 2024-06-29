@@ -5,7 +5,6 @@ import {Button} from "../ui/button"
 import SaveBlogBtn from "../SaveBlogBtn"
 import {formatDate} from "@/libs/utils"
 import Link from "next/link"
-import SigninModal from "../pages/Landing/SigninModal"
 
 export const ProfileBlogCard = ({blog}: {blog: blogType}) => (
   <>

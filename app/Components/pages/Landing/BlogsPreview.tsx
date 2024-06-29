@@ -36,7 +36,7 @@ const BlogsPreview = ({sliderIndex, backgroundColor}: BlogsPreviewPropsType) => 
                 variant="secondary"
                 className="flex items-center gap-3 absolute md:bottom-[-15px] left-4 mt-8 rounded-none md:rounded-full text-xs opacity-85 z-20 shadow-md"
               >
-                <Image className="size-6" src="/Icons/star.svg" width={20} height={20} alt="Star icon" />
+                <Image className="size-6" src="/assets/star.svg" width={20} height={20} alt="Star icon" />
                 Get this & many more
               </Badge>
             </div>

@@ -4,14 +4,14 @@ import {Dispatch, SetStateAction, useEffect} from "react"
 import {IoIosArrowRoundBack as ArrowIcon} from "react-icons/io"
 import {useForm} from "react-hook-form"
 import {ImSpinner8} from "react-icons/im"
-import axios from "@/libs/axios"
+import axios from "@/libs/axiosInstance"
 import {CgDanger} from "react-icons/cg"
 import clsx from "clsx"
 import {Input} from "@/app/Components/ui/input"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useRouter} from "next/navigation"
-
+import {setCookie} from "cookies-next"
 const signinSchema = z.object({
   email: z.string().min(1, "Please provide your email address").email("Invalid email address"),
   password: z.string().min(8, "Password should be at least 8 charecters"),
@@ -40,7 +40,7 @@ const EmailSigninForm = ({setIsSigninFormVisable}: emailSigninFormPropsType) => 
     await axios
       .post("/api/login", data)
       .then((res) => {
-        localStorage.setItem("token", res.headers.authorization)
+        setCookie("token", res.headers.authorization)
         router.push("/blogs")
       })
       .catch((err: any) => {

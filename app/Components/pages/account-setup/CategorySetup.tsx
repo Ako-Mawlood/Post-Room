@@ -8,7 +8,7 @@ import CategorySkeleton from "./CategorySkeleton"
 import {Suspense, useCallback, useEffect, useState} from "react"
 import {useSearchParams, useRouter, usePathname} from "next/navigation"
 import {Skeleton} from "../../ui/skeleton"
-import axios from "../../../../libs/axios"
+import axios from "../../../../libs/axiosInstance"
 import {useQuery} from "@tanstack/react-query"
 const CategorySetup = () => {
   const searchParams = useSearchParams()

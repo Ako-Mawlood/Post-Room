@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useContext, useEffect} from "react"
-import axios from "../../../../libs/axios"
+import axios from "../../../../libs/axiosInstance"
 import {useRouter} from "next/navigation"
 import {ImSpinner8 as Spinner} from "react-icons/im"
 import clsx from "clsx"
@@ -19,7 +19,6 @@ const usernameSchema = z.object({
 })
 type usernameType = z.infer<typeof usernameSchema>
 const UsernameSetup = () => {
-  const token = localStorage.getItem("token")
   const currentUser = useContext(CurrentUserContext)
   const router = useRouter()
   const {
@@ -31,7 +30,7 @@ const UsernameSetup = () => {
   } = useForm({defaultValues: {username: ""}, resolver: zodResolver(usernameSchema)})
   async function handeSetupUsername(data: usernameType) {
     await axios
-      .put("/api/user", data, {headers: {Authorization: token}})
+      .put("/api/user", {data})
       .then((_res) => {
         router.push("/account-setup?setupStep=category")
       })

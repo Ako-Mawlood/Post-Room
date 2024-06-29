@@ -1,25 +1,21 @@
 import {useQuery} from "@tanstack/react-query"
-import axios from "../../../../libs/axios"
+import axios from "../../../../libs/axiosInstance"
 import ProfileBlogCard from "../../ui/ProfileBlogCard"
 import Image from "next/image"
 import noBlogVector from "../../../../public/no blog.png"
 import {blogType} from "@/app/types/blogType"
 import {ImSpinner2 as Spinner} from "react-icons/im"
+import axiosInstance from "../../../../libs/axiosInstance"
+import {getCookie} from "cookies-next"
+import {cookies} from "next/headers"
 
-const SavedBlogsList = () => {
-  const {
-    data: savedBlogs,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["savedBlogs"],
-    queryFn: () => {
-      return axios.get("/api/list", {headers: {Authorization: localStorage.getItem("token")}})
-    },
-  })
-
-  if (isLoading) {
+async function getSavedBlogs() {
+  const res = await axiosInstance("/api/list", {headers: {Authorization: getCookie("token", {cookies})}})
+  return res.data
+}
+const SavedBlogsList = async () => {
+  const savedBlogs = await getSavedBlogs()
+  if (!savedBlogs) {
     return (
       <div className="flex justify-center items-start w-full h-[30rem] mt-8">
         <Spinner className="size-10 text-slate-300 font-extrathin animate-spin" />
@@ -27,11 +23,7 @@ const SavedBlogsList = () => {
     )
   }
 
-  if (isError) {
-    return <span>{error.message}</span>
-  }
-
-  if (!savedBlogs?.data || savedBlogs.data.length === 0) {
+  if (!savedBlogs || savedBlogs.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center mb-7 opacity-85 dark:opacity-70">
         <Image src={noBlogVector} width={250} height={250} alt="No blog vector" />
@@ -42,9 +34,9 @@ const SavedBlogsList = () => {
 
   return (
     <>
-      {savedBlogs.data && (
+      {savedBlogs && (
         <div className="flex justify-center flex-wrap gap-10 w-full p-6 mx-auto">
-          {savedBlogs.data.map((blog: {blog: blogType}) => {
+          {savedBlogs.map((blog: {blog: blogType}) => {
             return <ProfileBlogCard key={blog.blog.id} blog={blog.blog} />
           })}
         </div>

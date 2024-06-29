@@ -1,39 +1,43 @@
-"use client"
-
 import Navbar from "../Components/Navbar"
 import {Button} from "../Components/ui/button"
 import {Avatar, AvatarFallback, AvatarImage} from "../Components/ui/avatar"
 import {IoSettingsOutline as SettingsIcon} from "react-icons/io5"
-import clsx from "clsx"
 import UserBlogsList from "../Components/pages/profile/UserBlogsList"
 import SavedBlogsList from "../Components/pages/profile/SavedBlogsList"
-import axios from "@/libs/axios"
-import {useRouter, useSearchParams} from "next/navigation"
-import {useContext} from "react"
+import axios from "@/libs/axiosInstance"
 import ProfileSkeleton from "../Components/pages/profile/ProfileSkeleton"
-import {CurrentUserContext} from "../providers/CurrentUserProvider"
-import {useQuery} from "@tanstack/react-query"
-import {IoBookmarkOutline as BookmarkIcon} from "react-icons/io5"
+import axiosInstance from "@/libs/axiosInstance"
+import {getCookie} from "cookies-next"
+import {cookies} from "next/headers"
+import ProfileTabs from "../Components/pages/profile/ProfileTabs"
 
-const ProfilePage = ({params}: {params: {username: string}}) => {
-  const currentUser = useContext(CurrentUserContext)
-  const {data: profileUser, error} = useQuery({
-    queryKey: ["user", params.username],
-    queryFn: async () => {
-      const res = await axios(`/api/user/${params.username.substring(3)}`, {
-        headers: {Authorization: localStorage.getItem("token")},
-      })
-      return res.data
-    },
+async function getCurrentUser() {
+  const res = await axiosInstance("/api/me", {headers: {Authorization: getCookie("token", {cookies})}})
+  return res.data
+}
+
+async function getProfileUser(username: string) {
+  const res = await axios(`/api/user/${username.substring(3)}`, {
+    headers: {Authorization: getCookie("token", {cookies})},
   })
+  return res.data
+}
 
-  const searchParams = useSearchParams()
+const ProfilePage = async ({
+  searchParams,
+  params,
+}: {
+  searchParams?: {[key: string]: string | string[] | undefined}
+  params: {username: string}
+}) => {
+  const currentUser = await getCurrentUser()
+  const profileUser = await getProfileUser(params.username)
+
   const validTaps = ["blogs", "saved-blogs", "drafts"]
   const tab =
-    validTaps.includes(searchParams.get("tab") as string) && currentUser?.username === profileUser?.username
-      ? searchParams.get("tab")
+    validTaps.includes(searchParams?.tab as string) && currentUser?.username === profileUser?.username
+      ? searchParams?.tab
       : "blogs"
-  const router = useRouter()
   return (
     <>
       <Navbar />
@@ -83,40 +87,8 @@ const ProfilePage = ({params}: {params: {username: string}}) => {
       ) : (
         <ProfileSkeleton />
       )}
-      <section className="">
-        <ul className="flex justify-start items-center gap-8 w-full h-7 px-6 mt-5 md:mt-20 font-semibold max-sm:text-sm text-foreground border-b border-border">
-          <li
-            onClick={() => router.push(`/@${profileUser?.username}?tab=blogs`, {scroll: false})}
-            className={clsx("cursor-pointer", {
-              "text-primary border-b-2 border-primary": tab === "blogs",
-            })}
-          >
-            Blogs
-          </li>
-          {currentUser?.username === profileUser?.username && (
-            <div className="flex items-center gap-8">
-              <li
-                onClick={() => router.push(`/@${profileUser.username}?tab=saved-blogs`, {scroll: false})}
-                className={clsx("flex items-center gap-1 cursor-pointer", {
-                  "text-primary border-b-2 border-primary": tab === "saved-blogs",
-                })}
-              >
-                <BookmarkIcon size={18} />
-                <span>Saved Blogs</span>
-              </li>
-              <li
-                onClick={() => router.push(`/@${profileUser.username}?tab=drafts`, {scroll: false})}
-                className={clsx("cursor-pointer", {
-                  "text-primary border-b-2 border-primary": tab === "drafts",
-                })}
-              >
-                My Drafts
-              </li>
-            </div>
-          )}
-        </ul>
-      </section>
-      {tab === "blogs" && profileUser && <UserBlogsList profileUserBlogs={profileUser.blogs} error={error} />}
+      <ProfileTabs tab={tab} profileUser={profileUser} currentUser={currentUser} />
+      {tab === "blogs" && profileUser && <UserBlogsList profileUserBlogs={profileUser.blogs} />}
       {tab === "saved-blogs" && currentUser?.username === profileUser?.username && <SavedBlogsList />}
       {tab === "drafts" && currentUser?.username === profileUser?.username && <h1>drafts</h1>}
     </>

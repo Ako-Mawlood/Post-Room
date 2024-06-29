@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useContext, useEffect} from "react"
-import axios from "../../../../libs/axios"
+import axios from "../../../../libs/axiosInstance"
 import {useRouter} from "next/navigation"
 import {ImSpinner8 as Spinner} from "react-icons/im"
 import clsx from "clsx"
@@ -19,7 +19,6 @@ const fullNameSchema = z.object({
 type FullNameType = z.infer<typeof fullNameSchema>
 
 const FullNameSetup = () => {
-  const token = localStorage.getItem("token")
   const currentUser = useContext(CurrentUserContext)
   const router = useRouter()
   const {
@@ -35,9 +34,7 @@ const FullNameSetup = () => {
 
   async function handleSetupFullName(data: FullNameType) {
     await axios
-      .put("/api/user", data, {
-        headers: {Authorization: token},
-      })
+      .put("/api/user", data)
       .then(() => {
         router.push("/account-setup?setupStep=username")
       })

@@ -2,21 +2,11 @@ import ProfileBlogCard from "../../ui/ProfileBlogCard"
 import noBlogVector from "../../../../public/no blog.png"
 import Image from "next/image"
 import {blogType} from "@/app/types/blogType"
-import {ImSpinner2 as Spinner} from "react-icons/im"
 
 type profileUserBlogsListType = {
   profileUserBlogs: blogType[]
-  error: Error | null
 }
-const ProfileUserBlogsList = ({profileUserBlogs, error}: profileUserBlogsListType) => {
-  if (error) {
-    return (
-      <div className="flex justify-center items-start w-full bg-red-500 h-96 mt-8">
-        <span className="text-red-500 font-semibold">{error.message}</span>
-      </div>
-    )
-  }
-
+const ProfileUserBlogsList = ({profileUserBlogs}: profileUserBlogsListType) => {
   if (!profileUserBlogs || profileUserBlogs.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center mb-7 opacity-85 dark:opacity-70">
