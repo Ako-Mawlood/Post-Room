@@ -58,6 +58,15 @@
   body {
     @apply bg-background text-foreground;
   }
+  .text-gray-0 {
+    @apply text-gray-400;
+  }
+  .text-gray-1 {
+    @apply text-gray-500;
+  }
+  .text-gray-2 {
+    @apply text-gray-600;
+  }
 }
 .modal-open-animation {
   animation: fadeIn 0.4s;
@@ -82,4 +91,10 @@
   100% {
     opacity: 0;
   }
+}
+/* Custom styles for Cloudinary overlay with higher specificity */
+.cloudinary-overlay {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  margin-top: 50px;
+  padding: 888888px;
 }

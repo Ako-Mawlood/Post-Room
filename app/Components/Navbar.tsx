@@ -48,7 +48,7 @@ const Navbar = async () => {
           <DropdownMenuTrigger>
             {currentUser ? (
               <Avatar className=" cursor-pointer">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src="/assets/profile-image.svg" />
                 <AvatarFallback>
                   {currentUser?.fullname
                     .split(" ")
@@ -64,7 +64,7 @@ const Navbar = async () => {
               <Skeleton className="size-10 rounded-full" />
             )}
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="mr-6">
             <DropdownMenuLabel className="text-center text-lg pb-0">
               {currentUser?.fullname}
             </DropdownMenuLabel>
@@ -91,7 +91,7 @@ const Navbar = async () => {
                 </DropdownMenuItem>
               </Link>
 
-              <Link href="/settings" className="flex items-center">
+              <Link href="/settings">
                 <DropdownMenuItem>
                   <SettingsIcon className="size-6 mr-2" /> <span>Settings</span>
                 </DropdownMenuItem>

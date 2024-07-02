@@ -15,7 +15,7 @@ const BlogsPreview = ({sliderIndex, backgroundColor}: BlogsPreviewPropsType) => 
   return (
     <div
       style={{backgroundColor: `rgb(${backgroundColor})`}}
-      className="w-full  md:w-[720px] h-[70vh] md:h-auto relative border-y-[1px] text-gray-900 border-black md:border-none"
+      className="w-full  md:w-[520px] h-[70vh] md:h-auto relative border-y-[1px] text-gray-900 border-black md:border-none"
     >
       {previewBlogs.map((blog, index) => (
         <div

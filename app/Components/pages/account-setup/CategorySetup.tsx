@@ -4,12 +4,10 @@ import {categories} from "@/StaticData/categories"
 import {Button} from "../../ui/button"
 import {IoAddOutline as AddIcon} from "react-icons/io5"
 import {IoCheckmarkSharp as TrueIcon} from "react-icons/io5"
-import CategorySkeleton from "./CategorySkeleton"
-import {Suspense, useCallback, useEffect, useState} from "react"
+import {Suspense, useCallback} from "react"
 import {useSearchParams, useRouter, usePathname} from "next/navigation"
 import {Skeleton} from "../../ui/skeleton"
-import axios from "../../../../libs/axiosInstance"
-import {useQuery} from "@tanstack/react-query"
+
 const CategorySetup = () => {
   const searchParams = useSearchParams()
   const router = useRouter()

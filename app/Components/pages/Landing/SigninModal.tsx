@@ -1,35 +1,36 @@
-import { CiMail as MailIcon } from "react-icons/ci";
-import { useState, Dispatch, SetStateAction } from "react";
-import Link from "next/link";
-import AuthOptions from "./AuthOptions";
-import EmailSigninForm from "./EmailSigninForm";
+import {CiMail as MailIcon} from "react-icons/ci"
+import {useState, Dispatch, SetStateAction} from "react"
+import Link from "next/link"
+import AuthOptions from "./AuthOptions"
+import EmailSigninForm from "./EmailSigninForm"
+import GoogleOAuth from "./GoogleOAuth"
 
 interface signinModalPropsType {
-  isNewUser: boolean;
-  setIsNewUser: Dispatch<SetStateAction<boolean>>;
+  isNewUser: boolean
+  setIsNewUser: Dispatch<SetStateAction<boolean>>
 }
 
-const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
-  const [isSigninFormVisable, setIsSigninFormVisable] = useState(false);
+const SigninModal = ({isNewUser, setIsNewUser}: signinModalPropsType) => {
+  const [isSigninFormVisable, setIsSigninFormVisable] = useState(false)
 
   if (isSigninFormVisable) {
-    return <EmailSigninForm setIsSigninFormVisable={setIsSigninFormVisable} />;
+    return <EmailSigninForm setIsSigninFormVisable={setIsSigninFormVisable} />
   }
 
   return (
     <div className="flex flex-col justify-between items-center w-full md:w-2/3 p-4">
       <h1 className="text-4xl font-semibold">Welcome back.</h1>
       <main className="flex flex-col items-center w-full text-md p-4 text-gray-700 font-semibold">
-        <AuthOptions isNewUser={isNewUser}>
+        <section className="flex flex-col gap-3 w-full">
+          <GoogleOAuth />
           <button
             onClick={() => setIsSigninFormVisable(true)}
             className="flex justify-center w-full px-4 py-2 rounded-full bg-transparent border border-gray-200 hover:bg-gray-100 duration-150"
           >
             {" "}
-            <MailIcon className="mr-auto" size={30} />{" "}
-            <span className="mr-auto">Sign in with Email</span>
+            <MailIcon className="mr-auto" size={30} /> <span className="mr-auto">Sign in with Email</span>
           </button>
-        </AuthOptions>
+        </section>
 
         <p className="text-gray-500 text-md">
           Don&#8217;t have an account?
@@ -53,7 +54,7 @@ const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
         </p>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default SigninModal;
+export default SigninModal
