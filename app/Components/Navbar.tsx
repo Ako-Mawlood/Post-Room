@@ -11,6 +11,7 @@ import axiosInstance from "@/libs/axiosInstance"
 import {Skeleton} from "../Components/ui/skeleton"
 import {getCookie} from "cookies-next"
 import {cookies} from "next/headers"
+import Image from "next/image"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,14 +21,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
-import LogoutBtn from "./pages/LogoutBtn"
+import LogoutBtn from "./LogoutBtn"
+import {getMenuItems} from "@/constants/menuItems"
+import {currentUserType} from "../types/currentUserType"
 
 async function getCurrentUser() {
   const res = await axiosInstance("/api/me", {headers: {Authorization: getCookie("token", {cookies})}})
   return res.data
 }
 const Navbar = async () => {
-  const currentUser = await getCurrentUser()
+  const currentUser: currentUserType = await getCurrentUser()
+  const menuItems = getMenuItems(currentUser)
   return (
     <nav className="flex justify-between items-center w-full h-14 text-foreground px-2 md:px-6 border-b border-border">
       <div className="flex items-center gap-4">
@@ -48,12 +52,12 @@ const Navbar = async () => {
           <DropdownMenuTrigger>
             {currentUser ? (
               <Avatar className=" cursor-pointer">
-                <AvatarImage src="/assets/profile-image.svg" />
+                <AvatarImage src="/" />
                 <AvatarFallback>
                   {currentUser?.fullname
                     .split(" ")
                     .slice(0, 2)
-                    .map((word: string[]) => {
+                    .map((word) => {
                       return word[0]
                     })
                     .join("")
@@ -74,29 +78,16 @@ const Navbar = async () => {
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
+            {/*Todo:Make drop down menu items constant */}
             <DropdownMenuGroup>
-              <Link href={`/@${currentUser?.username}`}>
-                <DropdownMenuItem>
-                  <ProfileIcon className="size-6 mr-2" /> <span>Profile</span>
-                </DropdownMenuItem>
-              </Link>
-              <Link href="/write">
-                <DropdownMenuItem>
-                  <WriteIcon className="size-6 mr-2" /> <span>Write blog</span>
-                </DropdownMenuItem>
-              </Link>
-              <Link href={`/@${currentUser?.username}?tab=saved-blogs`}>
-                <DropdownMenuItem>
-                  <BookmarkIcon className="size-6 mr-2" /> <span>Saved blogs</span>
-                </DropdownMenuItem>
-              </Link>
-
-              <Link href="/settings">
-                <DropdownMenuItem>
-                  <SettingsIcon className="size-6 mr-2" /> <span>Settings</span>
-                </DropdownMenuItem>
-              </Link>
-
+              {menuItems.map((item) => (
+                <Link href={item.href}>
+                  <DropdownMenuItem>
+                    <Image src={item.icon} width={25} height={25} alt="Icon" />
+                    <span className="ml-2">{item.label}</span>
+                  </DropdownMenuItem>
+                </Link>
+              ))}
               <DropdownMenuSeparator />
 
               <LogoutBtn />

@@ -1,11 +1,9 @@
-import {useQuery} from "@tanstack/react-query"
-import axios from "../../../../libs/axiosInstance"
 import ProfileBlogCard from "../../ui/ProfileBlogCard"
 import Image from "next/image"
-import noBlogVector from "../../../../public/no blog.png"
+import noBlogVector from "@/public/assets/no-blog.png"
 import {blogType} from "@/app/types/blogType"
 import {ImSpinner2 as Spinner} from "react-icons/im"
-import axiosInstance from "../../../../libs/axiosInstance"
+import axiosInstance from "@/libs/axiosInstance"
 import {getCookie} from "cookies-next"
 import {cookies} from "next/headers"
 

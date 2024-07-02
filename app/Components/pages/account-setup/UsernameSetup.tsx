@@ -4,13 +4,14 @@ import {Button} from "../../ui/button"
 import {useForm} from "react-hook-form"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useContext, useEffect} from "react"
+import {useEffect} from "react"
 import axios from "../../../../libs/axiosInstance"
 import {useRouter} from "next/navigation"
 import {ImSpinner8 as Spinner} from "react-icons/im"
 import clsx from "clsx"
-import {CurrentUserContext} from "@/app/providers/CurrentUserProvider"
 import {Skeleton} from "../../ui/skeleton"
+import {currentUserType} from "@/app/types/currentUserType"
+import {getCookie} from "cookies-next"
 const usernameSchema = z.object({
   username: z
     .string()
@@ -18,8 +19,7 @@ const usernameSchema = z.object({
     .regex(/^[a-zA-Z0-9_-]+$/, "Username can only contain letters, numbers, hyphens, and underscores"),
 })
 type usernameType = z.infer<typeof usernameSchema>
-const UsernameSetup = () => {
-  const currentUser = useContext(CurrentUserContext)
+const UsernameSetup = ({currentUser}: {currentUser: currentUserType}) => {
   const router = useRouter()
   const {
     register,
@@ -28,9 +28,19 @@ const UsernameSetup = () => {
     setFocus,
     formState: {isSubmitting, errors},
   } = useForm({defaultValues: {username: ""}, resolver: zodResolver(usernameSchema)})
+
   async function handeSetupUsername(data: usernameType) {
     await axios
-      .put("/api/user", {data})
+      .put(
+        "/api/user",
+        {
+          fullname: currentUser.fullname,
+          username: data.username,
+          bio: "Making the Worl a better place",
+          imageUrl: "lsjdf",
+        },
+        {headers: {Authorization: getCookie("token")}}
+      )
       .then((_res) => {
         router.push("/account-setup?setupStep=category")
       })
@@ -73,7 +83,7 @@ const UsernameSetup = () => {
         />
       </label>
       <span className="text-gray-600 dark:text-gray-200">Your email</span>
-      {currentUser ? <span>{currentUser.email}</span> : <Skeleton className="w-52 h-6 rounded-full" />}
+      {currentUser.email ? <span>{currentUser.email}</span> : <Skeleton className="w-52 h-6 rounded-full" />}
       <Button className="w-24">
         {isSubmitting ? <Spinner className="size-5 animate-spin" /> : "Continue"}
       </Button>

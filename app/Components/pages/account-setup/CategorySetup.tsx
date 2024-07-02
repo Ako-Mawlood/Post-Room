@@ -1,18 +1,44 @@
 "use client"
 
-import {categories} from "@/StaticData/categories"
 import {Button} from "../../ui/button"
 import {IoAddOutline as AddIcon} from "react-icons/io5"
 import {IoCheckmarkSharp as TrueIcon} from "react-icons/io5"
-import {Suspense, useCallback} from "react"
+import {Suspense, useCallback, useEffect, useState} from "react"
 import {useSearchParams, useRouter, usePathname} from "next/navigation"
 import {Skeleton} from "../../ui/skeleton"
+import {useMutation} from "@tanstack/react-query"
+import axiosInstance from "@/libs/axiosInstance"
+import {getCookie} from "cookies-next"
+import {ImSpinner8 as Spinner} from "react-icons/im"
 
 const CategorySetup = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
   const selectedCategories = searchParams.getAll("category")
+  const token = getCookie("token")
+  const [categories, setCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    axiosInstance("api/category", {headers: {Authorization: getCookie("token")}}).then((res) => {
+      setCategories(res.data)
+    })
+  }, [])
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: async () => {
+      await axiosInstance.post("/api/user/category", selectedCategories, {
+        headers: {Authorization: token},
+      })
+    },
+    onSuccess: () => {
+      router.push("/blogs")
+    },
+    onError: (err) => {
+      console.log(err.response.data)
+    },
+  })
+
   const handleAddRemoveCategory = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams)
@@ -33,7 +59,7 @@ const CategorySetup = () => {
         <p className="text-lg">Choose three or more.</p>
         <Suspense fallback={<Skeleton />}>
           <section className="w-full mb-20">
-            {categories.map((category, index) => {
+            {categories.map((category: string, index: number) => {
               return (
                 <Button
                   key={index}
@@ -55,8 +81,8 @@ const CategorySetup = () => {
           </section>
         </Suspense>
         <div className="flex justify-center items-center w-screen fixed bottom-0 left-0 bg-background h-20">
-          <Button className=" w-64" disabled={searchParams.size < 4}>
-            Continue
+          <Button className="w-64" disabled={searchParams.size < 4} onClick={() => mutate()}>
+            {isPending ? <Spinner className="animate-spin" /> : <span>Continue</span>}
           </Button>
         </div>
       </div>

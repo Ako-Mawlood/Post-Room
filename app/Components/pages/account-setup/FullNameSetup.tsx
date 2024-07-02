@@ -4,89 +4,105 @@ import {Button} from "../../ui/button"
 import {useForm} from "react-hook-form"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useContext, useEffect} from "react"
-import axios from "../../../../libs/axiosInstance"
+import {useEffect} from "react"
 import {useRouter} from "next/navigation"
 import {ImSpinner8 as Spinner} from "react-icons/im"
-import clsx from "clsx"
-import {CurrentUserContext} from "@/app/providers/CurrentUserProvider"
-import {Skeleton} from "../../ui/skeleton"
-
-const fullNameSchema = z.object({
-  fullName: z.string().regex(/^[A-Za-z]+(?:[ \-'][A-Za-z]+)*$/, "Invalid full name format"),
+import {getCookie} from "cookies-next"
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "../../ui/form"
+import axios from "axios"
+import {currentUserType} from "@/app/types/currentUserType"
+const fullnameSchema = z.object({
+  fullname: z
+    .string()
+    .regex(/^[A-Za-z]+(?:[ \-'][A-Za-z]+)*$/, "Invalid full name format")
+    .min(2, "Full name may not be less that 2 characters")
+    .max(20, "Full anme may not be more than 20 characters"),
 })
 
-type FullNameType = z.infer<typeof fullNameSchema>
+type fullnameType = z.infer<typeof fullnameSchema>
 
-const FullNameSetup = () => {
-  const currentUser = useContext(CurrentUserContext)
+const FullNameSetup = ({currentUser}: {currentUser: currentUserType}) => {
   const router = useRouter()
-  const {
-    register,
-    handleSubmit,
-    setError,
-    setFocus,
-    formState: {isSubmitting, errors},
-  } = useForm({
-    defaultValues: {fullName: ""},
-    resolver: zodResolver(fullNameSchema),
+  const form = useForm<fullnameType>({
+    defaultValues: {fullname: ""},
+    resolver: zodResolver(fullnameSchema),
   })
 
-  async function handleSetupFullName(data: FullNameType) {
+  async function handleSetupFullname(data: fullnameType) {
+    console.log(data)
+
     await axios
-      .put("/api/user", data)
+      .put(
+        "https://post-room-backend.vercel.app/api/user",
+        {
+          fullname: data.fullname,
+          username: currentUser.fullname,
+          bio: "Making the world a better place",
+          imageUrl: "ljdalfj",
+        },
+        {
+          headers: {Authorization: getCookie("token")},
+        }
+      )
       .then(() => {
         router.push("/account-setup?setupStep=username")
       })
       .catch((err) => {
         if (err.message === "Network Error") {
-          setError("root", {
+          form.setError("root", {
             message: "You probably disconnected. Please check your internet connection.",
           })
         } else {
-          setError("root", {message: err.response?.data})
+          console.log(err.response.data)
+          form.setError("root", err.response.data)
         }
       })
   }
 
   useEffect(() => {
-    setFocus("fullName")
-  }, [setFocus])
+    form.setFocus("fullname")
+  }, [])
 
   return (
-    <form
-      onSubmit={handleSubmit(handleSetupFullName)}
-      className="flex flex-col items-center justify-center gap-4 w-full sm:w-[30rem] p-6 text-center"
-    >
-      <h1 className="text-primary text-4xl font-PT">Set up your account.</h1>
-      <p className="text-lg">Let's set up your account by creating a full name.</p>
-      {errors.root && (
-        <span className="bg-red-500/15 p-2 text-red-500 text-sm w-full font-semibold border border-red-400">
-          {errors.root.message}
-        </span>
-      )}
-      <label className="flex flex-col w-full mt-4">
-        <span className="text-gray-600 dark:text-gray-200">Full name</span>
-        {errors.fullName && (
-          <span className="text-red-500 text-xs text-start">{errors.fullName.message}</span>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSetupFullname)}
+        className="flex flex-col items-center justify-center gap-4 w-full sm:w-[30rem] p-6 text-center"
+      >
+        <h1 className="text-primary text-4xl font-PT">Set up your account.</h1>
+        <p className="text-lg">Let's set up your account by creating a full name.</p>
+        {form.formState.errors.root && (
+          <span className="bg-red-500/15 p-2 text-red-500 text-sm w-full font-semibold border border-red-400">
+            {form.formState.errors.root.message}
+          </span>
         )}
-        <input
-          {...register("fullName")}
-          className={clsx("p-2 outline-none bg-transparent border-b duration-100", {
-            "border-red-600 focus:border-red-500": errors.fullName,
-            "border-border focus:border-primary": !errors.fullName,
-          })}
-          autoComplete="off"
-          placeholder="Full name"
+        <FormField
+          name="fullname"
+          control={form.control}
+          render={({field}) => (
+            <FormItem className="flex flex-col w-full">
+              <FormLabel>Full Name</FormLabel>
+              <FormMessage />
+              <FormControl>
+                <input
+                  {...field}
+                  className="p-2 text-center outline-none bg-transparent border-b duration-100"
+                  autoComplete="off"
+                />
+              </FormControl>
+              <FormDescription className="flex flex-col">
+                <span className="text-primary">Your email</span>
+                <span className="text-muted-foreground">{currentUser.email}</span>
+              </FormDescription>
+            </FormItem>
+          )}
         />
-      </label>
-      <span className="text-gray-600 dark:text-gray-200">Your email</span>
-      {currentUser ? <span>{currentUser.email}</span> : <Skeleton className="w-52 h-6 rounded-full" />}
 
-      <Button className="w-24">
-        {isSubmitting ? <Spinner className="size-5 animate-spin" /> : "Continue"}
-      </Button>
-    </form>
+        <Button className="w-24">
+          {form.formState.isSubmitting ? <Spinner className="size-5 animate-spin" /> : "Continue"}
+        </Button>
+      </form>
+    </Form>
   )
 }
 

@@ -1,5 +1,5 @@
 import ProfileBlogCard from "../../ui/ProfileBlogCard"
-import noBlogVector from "../../../../public/no blog.png"
+import noBlogVector from "@/public/assets/no-blog.png"
 import Image from "next/image"
 import {blogType} from "@/app/types/blogType"
 
@@ -17,7 +17,7 @@ const ProfileUserBlogsList = ({profileUserBlogs}: profileUserBlogsListType) => {
   }
 
   return (
-    <div className="flex justify-center flex-wrap gap-10 w-full p-6 mx-auto">
+    <div className="flex justify-center flex-wrap gap-4 w-full p-6 mx-auto">
       {profileUserBlogs.map((blog: blogType) => (
         <ProfileBlogCard key={blog.id} blog={blog} />
       ))}

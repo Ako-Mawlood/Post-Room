@@ -1,9 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import {usePathname, useRouter} from "next/navigation"
-const GoogleOAuth = () => {
-  const pathname = usePathname()
+import {useRouter} from "next/navigation"
+const GoogleOAuth = ({isNewUser}: {isNewUser: boolean}) => {
   const router = useRouter()
   function handleClick() {
     router.push(
@@ -22,7 +21,11 @@ const GoogleOAuth = () => {
         alt={"icon"}
         className="size-7 mr-auto text-black"
       />
-      <span className="mr-auto">Sign in with Google</span>
+      {isNewUser ? (
+        <span className="mr-auto">Sign up with Google</span>
+      ) : (
+        <span className="mr-auto">Sign in with Google</span>
+      )}
     </button>
   )
 }

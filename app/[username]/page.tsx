@@ -49,7 +49,7 @@ const ProfilePage = async ({
         <Navbar />
         {profileOwner ? (
           <>
-            <section className="flex items-center w-full h-[40vh] relative px-6 bordPer-b border-border">
+            <section className="flex items-center w-full h-[40vh] relative px-6 border-b border-border">
               <h1 className="text-7xl md:text-[8.5vw] font-PT">{profileOwner.fullname}</h1>
               <div className="flex items-center gap-2 absolute left-6 bottom-4">
                 <Avatar className="flex justify-center items-center gap-2 font-semibold">
@@ -63,28 +63,30 @@ const ProfilePage = async ({
                       .toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <span className="flex items-center text-sm text-gray-2 font-semibold">
-                  @ {profileOwner.username}
-                </span>
+                <span className="flex items-center text-sm font-semibold">@ {profileOwner.username}</span>
               </div>
               {currentUser?.username === profileOwner.username && (
                 <>
                   <EditProfileBtn searchParams={searchParams} />
-                  <Link href={`/@${params?.username}/settings`}>
+                  <Link href={`/@${currentUser?.username}/settings`}>
                     <SettingsIcon className="absolute right-6 top-4 cursor-pointer" size={20} />
                   </Link>
                 </>
               )}
             </section>
-            <section className="flex flex-col md:flex-row w-full font-semibold text-xs text-gray-700 dark:text-gray-200">
+            <section className="flex flex-col md:flex-row w-full font-semibold text-xs">
               <ul className="flex gap-3 items-start w-full md:w-1/3 px-6 py-4 border-b md:border-none border-border">
                 <li>
                   <span className="font-semibold text-primary">{profileOwner.blogs.length}</span>
-                  <span className="text-gray-2 ml-1">Blogs</span>
+                  <span className="ml-1">Blogs</span>
                 </li>
                 <li>
                   <span className="font-semibold text-primary">{profileOwner._count.followers}</span>
-                  <span className="text-gray-2 ml-1">Followers</span>
+                  <span className="ml-1">Followers</span>
+                </li>
+                <li>
+                  <span className="font-semibold text-primary">{profileOwner._count.followers}</span>
+                  <span className="ml-1">Folloings</span>
                 </li>
                 {/* <li>
                 <span className="font-semibold text-primary">{profileOwner._count.following}</span>{" "}                
@@ -92,7 +94,7 @@ const ProfilePage = async ({
 
               </li> */}
               </ul>
-              <div className="flex justify-start items-start md:w-2/3 leading-7 text-2xl font-semibold px-6 py-4 border-b md:border-none border-border">
+              <div className="flex justify-start items-start md:w-2/3 leading-7 text-2xl px-6 py-4 border-b md:border-none border-border font-semibold">
                 {profileOwner.bio}
               </div>
             </section>
@@ -110,7 +112,11 @@ const ProfilePage = async ({
         {tab === "drafts" && currentUser?.username === profileOwner?.username && <h1>drafts</h1>}
       </div>
       {edit === "t" && (
-        <EditProfileModal profileOwner={profileOwner} searchParams={searchParams} params={params} />
+        <EditProfileModal
+          profileOwner={profileOwner}
+          searchParams={searchParams}
+          currentUserUsername={currentUser?.username}
+        />
       )}
     </>
   )

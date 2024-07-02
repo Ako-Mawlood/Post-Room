@@ -11,10 +11,10 @@ import z from "zod"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "../../ui/form"
 import axiosInstance from "@/libs/axiosInstance"
 import {getCookie} from "cookies-next"
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import clsx from "clsx"
 import Link from "next/link"
-import UploadWidget from "./UploadWidget"
+import UploadWidget from "../../UploadWidget"
 import {profileOwnerType} from "@/app/types/profileOwnerType"
 import {Avatar, AvatarImage, AvatarFallback} from "../../ui/avatar"
 
@@ -22,23 +22,21 @@ const formSchema = z.object({
   imageUrl: z.string(),
   fullname: z
     .string()
-    .min(2, "Too short")
-    .max(20, "Too long")
+    .min(2, "Full name may not be less that 2 characters")
+    .max(20, "Full name may not be more than 20 characters")
     .regex(/^[A-Za-z\s]+$/, "Full name must contain only letters"),
-  bio: z.string().min(5, "Too short").max(230, "Too long"),
+  bio: z.string().max(230, "Too long"),
 })
 
 type EditProfileModalType = {
   profileOwner: profileOwnerType
+  currentUserUsername: string
   searchParams?: {[key: string]: string | string[] | undefined}
-  params: {username: string}
 }
 
 type FormDataType = z.infer<typeof formSchema>
 
-// ...rest of your imports
-
-const EditProfileModal = ({profileOwner, searchParams, params}: EditProfileModalType) => {
+const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: EditProfileModalType) => {
   const [fullnameCharacters, setFullnameCharacters] = useState(profileOwner.fullname.length)
   const [bioCharacters, setBioCharacters] = useState(profileOwner.bio.length)
   const [uploadedProfileImageUrl, setUploadedProfileImageUrl] = useState<string | undefined>(undefined)
@@ -54,29 +52,12 @@ const EditProfileModal = ({profileOwner, searchParams, params}: EditProfileModal
     resolver: zodResolver(formSchema),
   })
 
-  useEffect(() => {
-    const trapScroll = (event: any) => {
-      const modal = document.querySelector(".modal")
-      if (!modal?.contains(event.target)) {
-        event.preventDefault()
-      }
-    }
-
-    document.addEventListener("wheel", trapScroll, {passive: false})
-    document.addEventListener("touchmove", trapScroll, {passive: false})
-
-    return () => {
-      document.removeEventListener("wheel", trapScroll)
-      document.removeEventListener("touchmove", trapScroll)
-    }
-  }, [])
-
   const handleModalToggle = () => {
     const params = new URLSearchParams(searchParams as any)
-    if (params.get("edit") === "true") {
+    if (params.get("edit") === "t") {
       params.delete("edit")
     } else {
-      params.append("edit", "true")
+      params.append("edit", "t")
     }
     router.push(pathname + "?" + params.toString(), {scroll: false})
   }
@@ -146,7 +127,7 @@ const EditProfileModal = ({profileOwner, searchParams, params}: EditProfileModal
               render={({field}) => (
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
-                  <FormMessage className="text-xs" />
+                  <FormMessage />
                   <FormControl>
                     <Input
                       {...field}
@@ -193,7 +174,7 @@ const EditProfileModal = ({profileOwner, searchParams, params}: EditProfileModal
               )}
             />
             <Link
-              href={`/@${params?.username}/settings`}
+              href={`/@${currentUserUsername}/settings`}
               className="flex flex-col items-start gap-2 relative p-2 rounded-md duration-150 hover:bg-muted"
             >
               <h2 className="font-semibold">Manage Account Settings</h2>

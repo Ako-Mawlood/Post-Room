@@ -1,4 +1,4 @@
-import {categories} from "@/StaticData/categories"
+import {categories} from "@/constants/categories"
 import {Button} from "../../ui/button"
 import {Skeleton} from "../../ui/skeleton"
 

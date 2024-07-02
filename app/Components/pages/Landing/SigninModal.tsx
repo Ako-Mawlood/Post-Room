@@ -1,9 +1,8 @@
 import {CiMail as MailIcon} from "react-icons/ci"
 import {useState, Dispatch, SetStateAction} from "react"
 import Link from "next/link"
-import AuthOptions from "./AuthOptions"
 import EmailSigninForm from "./EmailSigninForm"
-import GoogleOAuth from "./GoogleOAuth"
+import GoogleOAuth from "./GoogleOAuthBtn"
 
 interface signinModalPropsType {
   isNewUser: boolean
@@ -21,8 +20,8 @@ const SigninModal = ({isNewUser, setIsNewUser}: signinModalPropsType) => {
     <div className="flex flex-col justify-between items-center w-full md:w-2/3 p-4">
       <h1 className="text-4xl font-semibold">Welcome back.</h1>
       <main className="flex flex-col items-center w-full text-md p-4 text-gray-700 font-semibold">
-        <section className="flex flex-col gap-3 w-full">
-          <GoogleOAuth />
+        <section className="flex flex-col gap-3 items-center w-full">
+          <GoogleOAuth isNewUser={isNewUser} />
           <button
             onClick={() => setIsSigninFormVisable(true)}
             className="flex justify-center w-full px-4 py-2 rounded-full bg-transparent border border-gray-200 hover:bg-gray-100 duration-150"

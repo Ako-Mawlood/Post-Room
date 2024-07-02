@@ -8,6 +8,7 @@ import clsx from "clsx"
 import z from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {CgDanger} from "react-icons/cg"
+import {setCookie} from "cookies-next"
 
 const signupSchema = z.object({
   email: z.string().min(1, "Please provide your email address").email("Invalid email address"),
@@ -43,10 +44,11 @@ const EmailSignupForm = ({
   async function handleSignup(data: formDataType) {
     await axios
       .post("/api/register", data)
-      .then(() => {
+      .then((res) => {
         setUserEmail(getValues("email"))
         setIsSignupFormVisable(false)
         setIsVerifyMessageVisable(true)
+        setCookie("token", res.headers.authorization)
       })
       .catch((err: any) => {
         if (err.message === "Network Error") {

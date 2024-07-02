@@ -1,10 +1,10 @@
 "use client"
-import {previewBlogs} from "@/StaticData/previewBlogs"
+
 import Image from "next/image"
 import clsx from "clsx"
-import starIcon from "@/public/Icons/star.svg"
 import {Avatar, AvatarImage, AvatarFallback} from "../../ui/avatar"
 import {Badge} from "../../ui/badge"
+import {previewBlogs} from "@/constants/previewBlogs"
 
 interface BlogsPreviewPropsType {
   sliderIndex: number
