@@ -17,6 +17,7 @@ import Link from "next/link"
 import UploadWidget from "../../UploadWidget"
 import {profileOwnerType} from "@/app/types/profileOwnerType"
 import {Avatar, AvatarImage, AvatarFallback} from "../../ui/avatar"
+import {revalidatePath} from "next/cache"
 
 const formSchema = z.object({
   imageUrl: z.string(),
@@ -64,8 +65,13 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
 
   async function handleSave(data: FormDataType) {
     try {
-      await axiosInstance.put("/api/user", {...data}, {headers: {Authorization: getCookie("token")}})
+      await axiosInstance.put(
+        "/api/user",
+        {...data, imageUrl: uploadedProfileImageUrl},
+        {headers: {Authorization: getCookie("token")}}
+      )
       handleModalToggle()
+      router.refresh()
     } catch (error) {
       console.error("Failed to save profile:", error)
     }
@@ -73,7 +79,7 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
 
   return (
     <>
-      <section className="flex flex-col items-center gap-5 w-full md:w-[30rem] absolute top-6 left-1/2 -translate-x-1/2 p-6 bg-card text-card-foreground shadow-md rounded-md z-10 modal">
+      <section className="flex flex-col items-center gap-5 w-full md:w-[30rem] absolute top- md:top-6 left-1/2 -translate-x-1/2 p-6 bg-card text-card-foreground shadow-md rounded-md z-10 modal">
         <Image
           onClick={handleModalToggle}
           className="absolute top-3 right-3 cursor-pointer"
@@ -82,7 +88,7 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
           height={20}
           alt="close"
         />
-        <h1 className="font-semibold text-xl">Profile information</h1>
+        <h1 className="font-semibold text-2xl">Profile information</h1>
         <div className="flex gap-8 w-full my-5">
           <UploadWidget setUploadedProfileImageUrl={setUploadedProfileImageUrl}>
             <Avatar className="size-16 cursor-pointer">
@@ -96,7 +102,7 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
                   .join("")
                   .toUpperCase()}
               </AvatarFallback>
-              <AvatarImage src={uploadedProfileImageUrl} />
+              <AvatarImage src={profileOwner.imageUrl || uploadedProfileImageUrl} />
             </Avatar>
           </UploadWidget>
 
@@ -157,11 +163,12 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
                   <FormControl>
                     <Textarea
                       {...field}
+                      className="text-muted-foreground bg-muted"
+                      rows={5}
                       onChange={(e) => {
                         field.onChange(e)
                         setBioCharacters(e.target.value.length)
                       }}
-                      className="text-muted-foreground bg-muted"
                     />
                   </FormControl>
                   <FormDescription className="w-fit ml-auto">
@@ -193,7 +200,7 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
               <Button
                 onClick={handleModalToggle}
                 variant="outline"
-                type="submit"
+                type="button"
                 className="w-20 border-green-500 text-green-500 hover:text-green-500 hover:bg-green-500/15"
               >
                 Cancel

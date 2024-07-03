@@ -10,6 +10,7 @@ import {useMutation} from "@tanstack/react-query"
 import axiosInstance from "@/libs/axiosInstance"
 import {getCookie} from "cookies-next"
 import {ImSpinner8 as Spinner} from "react-icons/im"
+import {categories} from "@/constants/categories"
 
 const CategorySetup = () => {
   const searchParams = useSearchParams()
@@ -17,24 +18,21 @@ const CategorySetup = () => {
   const pathname = usePathname()
   const selectedCategories = searchParams.getAll("category")
   const token = getCookie("token")
-  const [categories, setCategories] = useState<string[]>([])
-
-  useEffect(() => {
-    axiosInstance("api/category", {headers: {Authorization: getCookie("token")}}).then((res) => {
-      setCategories(res.data)
-    })
-  }, [])
 
   const {mutate, isPending} = useMutation({
     mutationFn: async () => {
-      await axiosInstance.post("/api/user/category", selectedCategories, {
-        headers: {Authorization: token},
-      })
+      await axiosInstance.post(
+        "/api/user/category",
+        {categories: selectedCategories},
+        {
+          headers: {Authorization: token},
+        }
+      )
     },
     onSuccess: () => {
       router.push("/blogs")
     },
-    onError: (err) => {
+    onError: (err: any) => {
       console.log(err.response.data)
     },
   })

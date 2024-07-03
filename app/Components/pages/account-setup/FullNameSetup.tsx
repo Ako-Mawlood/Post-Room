@@ -32,18 +32,9 @@ const FullNameSetup = ({currentUser}: {currentUser: currentUserType}) => {
     console.log(data)
 
     await axios
-      .put(
-        "https://post-room-backend.vercel.app/api/user",
-        {
-          fullname: data.fullname,
-          username: currentUser.fullname,
-          bio: "Making the world a better place",
-          imageUrl: "ljdalfj",
-        },
-        {
-          headers: {Authorization: getCookie("token")},
-        }
-      )
+      .put("https://post-room-backend.vercel.app/api/user", data, {
+        headers: {Authorization: getCookie("token")},
+      })
       .then(() => {
         router.push("/account-setup?setupStep=username")
       })

@@ -34,14 +34,12 @@ const Navbar = async () => {
   const menuItems = getMenuItems(currentUser)
   return (
     <nav className="flex justify-between items-center w-full h-14 text-foreground px-2 md:px-6 border-b border-border">
-      <div className="flex items-center gap-4">
-        <Link href="/blogs" className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl">
-          <Logo size={25} />
-          <h1>Post-Room</h1>
-        </Link>
-        <Search />
-      </div>
+      <Link href="/blogs" className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl">
+        <Logo size={25} />
+        <h1>Post-Room</h1>
+      </Link>
       <div className="flex gap-4 items-center">
+        <Search />
         <ModeToggle />
         <Button>
           <Link className="flex gap-2 px-1 items-center font-semibold" href="/write">
@@ -68,7 +66,7 @@ const Navbar = async () => {
               <Skeleton className="size-10 rounded-full" />
             )}
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mr-6">
+          <DropdownMenuContent className="mr-6 w-56">
             <DropdownMenuLabel className="text-center text-lg pb-0">
               {currentUser?.fullname}
             </DropdownMenuLabel>

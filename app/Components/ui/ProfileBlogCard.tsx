@@ -8,7 +8,10 @@ const ProfileBlogCard = ({blog}: {blog: blogType}) => (
   <>
     {blog && (
       <Link href={`/blogs/${blog.blogId}`}>
-        <Card key={blog.id} className="flex flex-col items-start gap-1 w-full sm:w-[400px] rounded-xl pb-2">
+        <Card
+          key={blog.id}
+          className="flex flex-col items-start gap-1 w-full sm:w-[400px] rounded-xl pb-2 hover:scale-[1.003] modal-open-animation"
+        >
           <div className="relative w-full h-80 rounded-xl">
             <Image
               className="rounded-t-xl object-cover"

@@ -31,16 +31,7 @@ const UsernameSetup = ({currentUser}: {currentUser: currentUserType}) => {
 
   async function handeSetupUsername(data: usernameType) {
     await axios
-      .put(
-        "/api/user",
-        {
-          fullname: currentUser.fullname,
-          username: data.username,
-          bio: "Making the Worl a better place",
-          imageUrl: "lsjdf",
-        },
-        {headers: {Authorization: getCookie("token")}}
-      )
+      .put("/api/user", data, {headers: {Authorization: getCookie("token")}})
       .then((_res) => {
         router.push("/account-setup?setupStep=category")
       })
@@ -48,7 +39,7 @@ const UsernameSetup = ({currentUser}: {currentUser: currentUserType}) => {
         if (err.message === "Network Error") {
           setError("root", {message: "You probably disconnected, Please check your internet connection"})
         } else {
-          setError("root", {message: err.response?.data})
+          setError("root", {message: err.message})
         }
       })
   }
@@ -74,12 +65,11 @@ const UsernameSetup = ({currentUser}: {currentUser: currentUserType}) => {
         )}
         <input
           {...register("username")}
-          className={clsx("p-2 outline-none bg-transparent border-b duration-100", {
+          className={clsx("p-2 text-center outline-none bg-transparent border-b duration-100", {
             "border-red-600 focus:border-red-500": errors?.username,
             "border-border focus:border-primary": !errors?.username,
           })}
           autoComplete="off"
-          placeholder="Username"
         />
       </label>
       <span className="text-gray-600 dark:text-gray-200">Your email</span>

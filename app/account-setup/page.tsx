@@ -16,7 +16,6 @@ const CreateAcount = async ({
   searchParams: {[key: string]: string | string[] | undefined}
 }) => {
   const currentUser: currentUserType = await getCurrentUser()
-
   const setupStep = searchParams.setupStep || "fullname"
 
   return (

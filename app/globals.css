@@ -92,9 +92,3 @@
     opacity: 0;
   }
 }
-/* Custom styles for Cloudinary overlay with higher specificity */
-.cloudinary-overlay {
-  background-color: rgba(0, 0, 0, 0.9) !important;
-  margin-top: 50px;
-  padding: 888888px;
-}

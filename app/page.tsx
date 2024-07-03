@@ -2,7 +2,7 @@
 
 import SigninModal from "./Components/pages/Landing/SigninModal"
 import SignupModal from "./Components/pages/Landing/SignupModal"
-import {backgroundColors} from "@/StaticData/backgroundColors"
+import {backgroundColors} from "@/constants/backgroundColors"
 import {useState} from "react"
 import BlogsPreview from "./Components/pages/Landing/BlogsPreview"
 import useSlider from "./Hooks/useSlider"
