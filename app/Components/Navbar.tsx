@@ -7,10 +7,7 @@ import {PiNotePencilLight as WriteIcon} from "react-icons/pi"
 import {IoPersonOutline as ProfileIcon} from "react-icons/io5"
 import {IoBookmarkOutline as BookmarkIcon, IoSettingsOutline as SettingsIcon} from "react-icons/io5"
 import {ModeToggle} from "./ui/ModeToggle"
-import axiosInstance from "@/libs/axiosInstance"
 import {Skeleton} from "../Components/ui/skeleton"
-import {getCookie} from "cookies-next"
-import {cookies} from "next/headers"
 import Image from "next/image"
 import {
   DropdownMenu,
@@ -24,14 +21,16 @@ import {
 import LogoutBtn from "./LogoutBtn"
 import {getMenuItems} from "@/constants/menuItems"
 import {currentUserType} from "../types/currentUserType"
+import {getInitials} from "@/libs/utils"
+import {getCurrentUser} from "@/libs/getCurrentUser"
+import {profileOwnerType} from "../types/profileOwnerType"
+import {getProfileOwner} from "@/libs/getProfileOwner"
 
-async function getCurrentUser() {
-  const res = await axiosInstance("/api/me", {headers: {Authorization: getCookie("token", {cookies})}})
-  return res.data
-}
 const Navbar = async () => {
   const currentUser: currentUserType = await getCurrentUser()
+  const profileOwner: profileOwnerType = await getProfileOwner(currentUser.username)
   const menuItems = getMenuItems(currentUser)
+
   return (
     <nav className="flex justify-between items-center w-full h-14 text-foreground px-2 md:px-6 border-b border-border">
       <Link href="/blogs" className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl">
@@ -50,17 +49,8 @@ const Navbar = async () => {
           <DropdownMenuTrigger>
             {currentUser ? (
               <Avatar className=" cursor-pointer">
-                <AvatarImage src="/" />
-                <AvatarFallback>
-                  {currentUser?.fullname
-                    .split(" ")
-                    .slice(0, 2)
-                    .map((word) => {
-                      return word[0]
-                    })
-                    .join("")
-                    .toUpperCase()}
-                </AvatarFallback>
+                <AvatarImage src={profileOwner.imageUrl} />
+                <AvatarFallback>{getInitials(currentUser.fullname)}</AvatarFallback>
               </Avatar>
             ) : (
               <Skeleton className="size-10 rounded-full" />

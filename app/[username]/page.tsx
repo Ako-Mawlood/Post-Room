@@ -3,11 +3,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "../Components/ui/avatar"
 import {IoSettingsOutline as SettingsIcon} from "react-icons/io5"
 import UserBlogsList from "../Components/pages/profile/UserBlogsList"
 import SavedBlogsList from "../Components/pages/profile/SavedBlogsList"
-import axios from "@/libs/axiosInstance"
 import ProfileSkeleton from "../Components/pages/profile/ProfileSkeleton"
-import axiosInstance from "@/libs/axiosInstance"
-import {getCookie} from "cookies-next"
-import {cookies} from "next/headers"
 import ProfileTabs from "../Components/pages/profile/ProfileTabs"
 import {currentUserType} from "../types/currentUserType"
 import EditProfileModal from "../Components/pages/profile/EditProfileModal"
@@ -15,18 +11,9 @@ import EditProfileBtn from "../Components/pages/profile/EditProfileBtn"
 import Link from "next/link"
 import {profileOwnerType} from "../types/profileOwnerType"
 import clsx from "clsx"
-
-async function getCurrentUser() {
-  const res = await axiosInstance("/api/me", {headers: {Authorization: getCookie("token", {cookies})}})
-  return res.data
-}
-
-async function getProfileOwner(username: string) {
-  const res = await axios(`/api/user/${username.substring(3)}`, {
-    headers: {Authorization: getCookie("token", {cookies})},
-  })
-  return res.data
-}
+import {getInitials} from "@/libs/utils"
+import {getProfileOwner} from "@/libs/getProfileOwner"
+import {getCurrentUser} from "@/libs/getCurrentUser"
 
 const ProfilePage = async ({
   searchParams,
@@ -36,7 +23,7 @@ const ProfilePage = async ({
   params: {username: string}
 }) => {
   const currentUser: currentUserType = await getCurrentUser()
-  const profileOwner: profileOwnerType = await getProfileOwner(params.username)
+  const profileOwner: profileOwnerType = await getProfileOwner(params.username.substring(3))
   const validTabs = ["blogs", "saved-blogs", "drafts"]
   const tab =
     validTabs.includes(searchParams?.tab as string) && currentUser?.username === profileOwner?.username
@@ -54,14 +41,7 @@ const ProfilePage = async ({
               <div className="flex items-center gap-2 absolute left-6 bottom-4">
                 <Avatar className="flex justify-center items-center gap-2 font-semibold">
                   <AvatarImage src={profileOwner.imageUrl} />
-                  <AvatarFallback>
-                    {profileOwner?.fullname
-                      .split(" ")
-                      .slice(0, 2)
-                      .map((word: string) => word[0])
-                      .join("")
-                      .toUpperCase()}
-                  </AvatarFallback>
+                  <AvatarFallback>{getInitials(profileOwner?.fullname)}</AvatarFallback>
                 </Avatar>
                 <span className="flex items-center text-sm font-semibold">@ {profileOwner.username}</span>
               </div>
@@ -69,7 +49,10 @@ const ProfilePage = async ({
                 <>
                   <EditProfileBtn searchParams={searchParams} />
                   <Link href={`/@${currentUser?.username}/settings`}>
-                    <SettingsIcon className="absolute right-6 top-4 cursor-pointer" size={20} />
+                    <SettingsIcon
+                      className="absolute right-6 top-4 cursor-pointer focus:animate-spin"
+                      size={20}
+                    />
                   </Link>
                 </>
               )}
@@ -84,15 +67,11 @@ const ProfilePage = async ({
                   <span className="font-semibold text-primary">{profileOwner._count.followers}</span>
                   <span className="ml-1">Followers</span>
                 </li>
-                <li>
-                  <span className="font-semibold text-primary">{profileOwner._count.followers}</span>
-                  <span className="ml-1">Folloings</span>
-                </li>
-                {/* <li>
-                <span className="font-semibold text-primary">{profileOwner._count.following}</span>{" "}                
-                <span className="text-gray-2 ml-1">Following</span>
 
-              </li> */}
+                <li>
+                  <span className="font-semibold text-primary">{profileOwner._count.followed}</span>{" "}
+                  <span className="text-gray-2 ml-1">Following</span>
+                </li>
               </ul>
               <div className="flex justify-start items-start md:w-2/3 leading-7 text-2xl px-6 py-4 border-b md:border-none border-border font-semibold">
                 {profileOwner.bio}

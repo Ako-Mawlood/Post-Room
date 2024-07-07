@@ -12,13 +12,16 @@ import clsx from "clsx"
 import {Skeleton} from "../../ui/skeleton"
 import {currentUserType} from "@/app/types/currentUserType"
 import {getCookie} from "cookies-next"
+
 const usernameSchema = z.object({
   username: z
     .string()
     .min(3, "Username should be atleast 3 characters long")
     .regex(/^[a-zA-Z0-9_-]+$/, "Username can only contain letters, numbers, hyphens, and underscores"),
 })
+
 type usernameType = z.infer<typeof usernameSchema>
+
 const UsernameSetup = ({currentUser}: {currentUser: currentUserType}) => {
   const router = useRouter()
   const {

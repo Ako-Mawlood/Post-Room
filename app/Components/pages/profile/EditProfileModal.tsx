@@ -14,19 +14,14 @@ import {getCookie} from "cookies-next"
 import {useState} from "react"
 import clsx from "clsx"
 import Link from "next/link"
-import UploadWidget from "../../UploadWidget"
 import {profileOwnerType} from "@/app/types/profileOwnerType"
-import {Avatar, AvatarImage, AvatarFallback} from "../../ui/avatar"
-import {revalidatePath} from "next/cache"
+import ProfileImageEditer from "../../ProfileImageUpdater"
+import {bioValidation, fullnameValidation} from "@/libs/validations"
 
 const formSchema = z.object({
-  imageUrl: z.string(),
-  fullname: z
-    .string()
-    .min(2, "Full name may not be less that 2 characters")
-    .max(20, "Full name may not be more than 20 characters")
-    .regex(/^[A-Za-z\s]+$/, "Full name must contain only letters"),
-  bio: z.string().max(230, "Too long"),
+  imageUrl: z.string().nullable(),
+  fullname: fullnameValidation,
+  bio: bioValidation,
 })
 
 type EditProfileModalType = {
@@ -40,13 +35,12 @@ type FormDataType = z.infer<typeof formSchema>
 const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: EditProfileModalType) => {
   const [fullnameCharacters, setFullnameCharacters] = useState(profileOwner.fullname.length)
   const [bioCharacters, setBioCharacters] = useState(profileOwner.bio.length)
-  const [uploadedProfileImageUrl, setUploadedProfileImageUrl] = useState<string | undefined>(undefined)
   const router = useRouter()
   const pathname = usePathname()
 
   const form = useForm<FormDataType>({
     defaultValues: {
-      imageUrl: uploadedProfileImageUrl || profileOwner.imageUrl,
+      imageUrl: profileOwner.imageUrl,
       fullname: profileOwner.fullname || "",
       bio: profileOwner.bio || "",
     },
@@ -64,12 +58,9 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
   }
 
   async function handleSave(data: FormDataType) {
+    console.log(data)
     try {
-      await axiosInstance.put(
-        "/api/user",
-        {...data, imageUrl: uploadedProfileImageUrl},
-        {headers: {Authorization: getCookie("token")}}
-      )
+      await axiosInstance.put("/api/user", data, {headers: {Authorization: getCookie("token")}})
       handleModalToggle()
       router.refresh()
     } catch (error) {
@@ -89,44 +80,10 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
           alt="close"
         />
         <h1 className="font-semibold text-2xl">Profile information</h1>
-        <div className="flex gap-8 w-full my-5">
-          <UploadWidget setUploadedProfileImageUrl={setUploadedProfileImageUrl}>
-            <Avatar className="size-16 cursor-pointer">
-              <AvatarFallback>
-                {profileOwner?.fullname
-                  .split(" ")
-                  .slice(0, 2)
-                  .map((word) => {
-                    return word[0]
-                  })
-                  .join("")
-                  .toUpperCase()}
-              </AvatarFallback>
-              <AvatarImage src={profileOwner.imageUrl || uploadedProfileImageUrl} />
-            </Avatar>
-          </UploadWidget>
 
-          <div className="flex flex-col justify-between">
-            <div className="flex gap-4 text-xs font-semibold">
-              <UploadWidget setUploadedProfileImageUrl={setUploadedProfileImageUrl}>
-                <button className="text-green-600">Update</button>
-              </UploadWidget>
-              <button
-                onClick={() => {
-                  setUploadedProfileImageUrl(undefined)
-                }}
-                className="text-destructive"
-              >
-                Remove
-              </button>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Recommended: Square JPG, PNG, or GIF, at least 1,000 pixels per side.
-            </p>
-          </div>
-        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSave)} className="flex flex-col gap-5 w-full text-sm">
+            <ProfileImageEditer form={form} profileOwner={profileOwner} />
             <FormField
               name="fullname"
               control={form.control}

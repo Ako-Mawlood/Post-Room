@@ -2,14 +2,9 @@ import UsernameSetup from "../Components/pages/account-setup/UsernameSetup"
 import FullNameSetup from "../Components/pages/account-setup/FullNameSetup"
 import CategorySetup from "../Components/pages/account-setup/CategorySetup"
 import {CgEricsson as Logo} from "react-icons/cg"
-import axiosInstance from "@/libs/axiosInstance"
-import {getCookie} from "cookies-next"
-import {cookies} from "next/headers"
 import {currentUserType} from "../types/currentUserType"
-async function getCurrentUser() {
-  const res = await axiosInstance("/api/me", {headers: {Authorization: getCookie("token", {cookies})}})
-  return res.data
-}
+import {getCurrentUser} from "@/libs/getCurrentUser"
+
 const CreateAcount = async ({
   searchParams,
 }: {

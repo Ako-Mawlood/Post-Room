@@ -5,15 +5,18 @@ import {Dispatch, ReactNode, SetStateAction} from "react"
 
 const UploadWidget = ({
   children,
-  setUploadedProfileImageUrl,
+  form,
+  setProfileImage,
 }: {
   children: ReactNode
-  setUploadedProfileImageUrl: Dispatch<SetStateAction<string | undefined>>
+  form: any
+  setProfileImage: Dispatch<SetStateAction<string | null>>
 }) => {
   return (
     <CldUploadWidget
       onSuccess={(result: any) => {
-        setUploadedProfileImageUrl(result.info.url)
+        setProfileImage(result.info.url)
+        form.setValue("imageUrl", result.info.url)
       }}
       options={{
         multiple: false,

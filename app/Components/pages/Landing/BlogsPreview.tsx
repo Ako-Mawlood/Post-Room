@@ -5,6 +5,7 @@ import clsx from "clsx"
 import {Avatar, AvatarImage, AvatarFallback} from "../../ui/avatar"
 import {Badge} from "../../ui/badge"
 import {previewBlogs} from "@/constants/previewBlogs"
+import {getInitials} from "@/libs/utils"
 
 interface BlogsPreviewPropsType {
   sliderIndex: number
@@ -60,13 +61,7 @@ const BlogsPreview = ({sliderIndex, backgroundColor}: BlogsPreviewPropsType) => 
               <div className="flex items-center gap-3">
                 <Avatar>
                   <AvatarImage src={blog.authorImage} />
-                  <AvatarFallback>
-                    {" "}
-                    {blog.fullName
-                      .split(" ")
-                      .slice(0, 2)
-                      .map((word) => word[0].toUpperCase())}
-                  </AvatarFallback>
+                  <AvatarFallback>{getInitials(blog.fullName)}</AvatarFallback>
                 </Avatar>
                 <div className="text-base font-sans">
                   <h2 className="opacity-75">{blog.fullName}</h2>

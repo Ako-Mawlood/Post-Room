@@ -11,6 +11,7 @@ import {getCookie} from "cookies-next"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "../../ui/form"
 import axios from "axios"
 import {currentUserType} from "@/app/types/currentUserType"
+
 const fullnameSchema = z.object({
   fullname: z
     .string()

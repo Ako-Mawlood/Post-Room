@@ -58,16 +58,8 @@
   body {
     @apply bg-background text-foreground;
   }
-  .text-gray-0 {
-    @apply text-gray-400;
-  }
-  .text-gray-1 {
-    @apply text-gray-500;
-  }
-  .text-gray-2 {
-    @apply text-gray-600;
-  }
 }
+
 .modal-open-animation {
   animation: fadeIn 0.4s;
 }

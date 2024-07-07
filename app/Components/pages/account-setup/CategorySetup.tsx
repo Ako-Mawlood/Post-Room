@@ -3,7 +3,7 @@
 import {Button} from "../../ui/button"
 import {IoAddOutline as AddIcon} from "react-icons/io5"
 import {IoCheckmarkSharp as TrueIcon} from "react-icons/io5"
-import {Suspense, useCallback, useEffect, useState} from "react"
+import {Suspense, useCallback} from "react"
 import {useSearchParams, useRouter, usePathname} from "next/navigation"
 import {Skeleton} from "../../ui/skeleton"
 import {useMutation} from "@tanstack/react-query"
