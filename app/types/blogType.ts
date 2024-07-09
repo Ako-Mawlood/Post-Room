@@ -3,10 +3,15 @@ export type blogType = {
   blogId: string
   title: string
   content: string
-  imageUrl: string
+  imageUrl: string | null
   createdAt: string
   updatedAt: string
-  categories: string[]
+  categories: {
+    id: number
+    categoryId: number
+    blogId: number
+    category: {id: number; name: string; createdAt: string}
+  }[]
   _count: {
     stars: number
   }

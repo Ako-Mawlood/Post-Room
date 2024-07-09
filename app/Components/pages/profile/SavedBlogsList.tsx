@@ -1,11 +1,20 @@
-import ProfileBlogCard from "../../ui/ProfileBlogCard"
 import Image from "next/image"
 import noBlogVector from "@/public/assets/no-blog.png"
 import {blogType} from "@/app/types/blogType"
 import {ImSpinner2 as Spinner} from "react-icons/im"
 import axiosInstance from "@/libs/axiosInstance"
 import {getCookie} from "cookies-next"
+import BlogCard from "../../ui/BlogCard"
 import {cookies} from "next/headers"
+
+interface savedBlogType extends blogType {
+  author: {
+    id: number
+    imageUrl: string
+    fullname: string
+    username: string
+  }
+}
 
 async function getSavedBlogs() {
   const res = await axiosInstance("/api/list", {headers: {Authorization: getCookie("token", {cookies})}})
@@ -13,6 +22,7 @@ async function getSavedBlogs() {
 }
 const SavedBlogsList = async () => {
   const savedBlogs = await getSavedBlogs()
+
   if (!savedBlogs) {
     return (
       <div className="flex justify-center items-start w-full h-[30rem] mt-8">
@@ -20,7 +30,6 @@ const SavedBlogsList = async () => {
       </div>
     )
   }
-
   if (!savedBlogs || savedBlogs.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center mb-7 opacity-85 dark:opacity-70">
@@ -34,8 +43,22 @@ const SavedBlogsList = async () => {
     <>
       {savedBlogs && (
         <div className="flex justify-center flex-wrap gap-10 w-full p-6 mx-auto">
-          {savedBlogs.map((blog: {blog: blogType}) => {
-            return <ProfileBlogCard key={blog.blog.id} blog={blog.blog} />
+          {savedBlogs.map((blog: {blog: savedBlogType}) => {
+            return (
+              <div className="w-full md:w-4/5 lg:w-[47%] h-56">
+                <BlogCard
+                  author={blog.blog.author?.fullname}
+                  authorImageUrl={blog.blog.author?.imageUrl}
+                  blogId={blog.blog.blogId}
+                  blogImageUrl={blog.blog.imageUrl}
+                  categories={blog.blog.categories}
+                  title={blog.blog.title}
+                  content={blog.blog.content}
+                  createdAt={blog.blog.createdAt}
+                  stars={blog.blog._count.stars}
+                />
+              </div>
+            )
           })}
         </div>
       )}

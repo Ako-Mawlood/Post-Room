@@ -1,7 +1,6 @@
 import Navbar from "../Components/Navbar"
 import {Avatar, AvatarFallback, AvatarImage} from "../Components/ui/avatar"
 import {IoSettingsOutline as SettingsIcon} from "react-icons/io5"
-import UserBlogsList from "../Components/pages/profile/UserBlogsList"
 import SavedBlogsList from "../Components/pages/profile/SavedBlogsList"
 import ProfileSkeleton from "../Components/pages/profile/ProfileSkeleton"
 import ProfileTabs from "../Components/pages/profile/ProfileTabs"
@@ -14,6 +13,7 @@ import clsx from "clsx"
 import {getInitials} from "@/libs/utils"
 import {getProfileOwner} from "@/libs/getProfileOwner"
 import {getCurrentUser} from "@/libs/getCurrentUser"
+import ProfileOwnerBlogsList from "../Components/pages/profile/ProfileOwnerBlogsList"
 
 const ProfilePage = async ({
   searchParams,
@@ -86,7 +86,8 @@ const ProfilePage = async ({
           profileOwnerUsername={profileOwner.username}
           currentUserUsername={currentUser.username}
         />
-        {tab === "blogs" && profileOwner && <UserBlogsList profileUserBlogs={profileOwner.blogs} />}
+
+        {tab === "blogs" && profileOwner && <ProfileOwnerBlogsList profileOwner={profileOwner} />}
         {tab === "saved-blogs" && currentUser?.username === profileOwner?.username && <SavedBlogsList />}
         {tab === "drafts" && currentUser?.username === profileOwner?.username && <h1>drafts</h1>}
       </div>

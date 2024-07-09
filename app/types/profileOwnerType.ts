@@ -1,9 +1,15 @@
 import {blogType} from "./blogType"
 import {currentUserType} from "./currentUserType"
 
-export interface profileOwnerType extends currentUserType {
-  imageUrl: string
+export interface profileOwnerType {
+  id: number
+  fullname: string
   bio: string
-  _count: {followers: number; following: number}
+  username: string
+  imageUrl: string
+  _count: {
+    followers: number
+    followed: number
+  }
   blogs: blogType[]
 }
