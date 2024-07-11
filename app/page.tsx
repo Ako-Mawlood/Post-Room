@@ -32,7 +32,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="bg-gray-50 text-gray-900">
+    <div>
       <nav className="flex justify-between items-center w-full h-[8vh] px-4 md:px-24 py-1">
         <Link href="/" className="flex items-center font-bold text-lg sm:text-2xl">
           <CgEricsson size={25} />

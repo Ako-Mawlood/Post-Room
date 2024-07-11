@@ -29,18 +29,20 @@ const BlogCard = ({
   stars,
 }: BlogCardPropsType) => (
   <Link key={blogId} href={`/blogs/${blogId}`}>
-    <Card className="flex items-start gap-1 w-full h-full rounded-md">
+    <Card className="flex items-start gap-1 w-full h-full rounded-lg hover:bg-accent duration-150">
       <div className="flex flex-col justify-between h-full w-4/6 p-2 font-semibold">
         <CardHeader className="flex flex-row gap-1 w-full p-0 space-y-0">
           {categories.map((category: {category: {name: string}}) => (
-            <span key={category.category.name} className="w-fit p-1 rounded-md text-xs">
+            <span key={category.category.name} className="w-fit p-1 rounded-lg text-xs">
               #{category.category.name}
             </span>
           ))}
         </CardHeader>{" "}
         <CardContent className="flex flex-col gap-2 p-0 overflow-hidden">
           <CardTitle className="text-xl md:text-2xl font-PT line-clamp-2">{title}</CardTitle>
-          <CardDescription className="text-sm line-clamp-2 text-muted-foreground">{content} </CardDescription>
+          <CardDescription className="text-sm line-clamp-2 text-accent-foreground">
+            {content}{" "}
+          </CardDescription>
         </CardContent>
         <CardFooter className="flex items-cente justify-between gap-2 w-full p-0 text-xs">
           <div className="flex items-center">
@@ -60,7 +62,7 @@ const BlogCard = ({
           </div>
         </CardFooter>
       </div>
-      <div className="relative w-2/6 h-full rounded-md">
+      <div className="relative w-2/6 h-full rounded-lg">
         <Image
           className="rounded-r-md object-cover"
           src={

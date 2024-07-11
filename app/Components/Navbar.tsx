@@ -69,7 +69,7 @@ const Navbar = async () => {
             {/*Todo:Make drop down menu items constant */}
             <DropdownMenuGroup>
               {menuItems.map((item) => (
-                <Link href={item.href}>
+                <Link key={item.label} href={item.href}>
                   <DropdownMenuItem>
                     <Image src={item.icon} width={25} height={25} alt="Icon" />
                     <span className="ml-2">{item.label}</span>

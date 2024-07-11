@@ -42,10 +42,10 @@ const SavedBlogsList = async () => {
   return (
     <>
       {savedBlogs && (
-        <div className="flex justify-center flex-wrap gap-10 w-full p-6 mx-auto">
+        <div className="flex justify-start flex-wrap gap-10 w-full p-6 mx-auto">
           {savedBlogs.map((blog: {blog: savedBlogType}) => {
             return (
-              <div className="w-full md:w-4/5 lg:w-[47%] h-56">
+              <div className="w-full md:w-4/5 lg:w-[47%] h-52">
                 <BlogCard
                   author={blog.blog.author?.fullname}
                   authorImageUrl={blog.blog.author?.imageUrl}

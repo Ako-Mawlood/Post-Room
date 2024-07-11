@@ -16,13 +16,7 @@ import clsx from "clsx"
 import Link from "next/link"
 import {profileOwnerType} from "@/app/types/profileOwnerType"
 import ProfileImageEditer from "../../ProfileImageUpdater"
-import {bioValidation, fullnameValidation} from "@/libs/validations"
-
-const formSchema = z.object({
-  imageUrl: z.string().nullable(),
-  fullname: fullnameValidation,
-  bio: bioValidation,
-})
+import {editProfileSchema} from "@/libs/validations"
 
 type EditProfileModalType = {
   profileOwner: profileOwnerType
@@ -30,7 +24,7 @@ type EditProfileModalType = {
   searchParams?: {[key: string]: string | string[] | undefined}
 }
 
-type FormDataType = z.infer<typeof formSchema>
+type FormDataType = z.infer<typeof editProfileSchema>
 
 const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: EditProfileModalType) => {
   const [fullnameCharacters, setFullnameCharacters] = useState(profileOwner.fullname.length)
@@ -44,7 +38,7 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
       fullname: profileOwner.fullname || "",
       bio: profileOwner.bio || "",
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(editProfileSchema),
   })
 
   const handleModalToggle = () => {
@@ -58,7 +52,6 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
   }
 
   async function handleSave(data: FormDataType) {
-    console.log(data)
     try {
       await axiosInstance.put("/api/user", data, {headers: {Authorization: getCookie("token")}})
       handleModalToggle()
@@ -70,7 +63,7 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
 
   return (
     <>
-      <section className="flex flex-col items-center gap-5 w-full md:w-[30rem] absolute top- md:top-6 left-1/2 -translate-x-1/2 p-6 bg-card text-card-foreground shadow-md rounded-md z-10 modal">
+      <section className="flex flex-col items-center gap-5 w-full md:w-[30rem] absolute md:top-6 left-1/2 -translate-x-1/2 p-6 bg-card text-card-foreground shadow-md rounded-md z-10 modal">
         <Image
           onClick={handleModalToggle}
           className="absolute top-3 right-3 cursor-pointer"
@@ -94,18 +87,15 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
                   <FormControl>
                     <Input
                       {...field}
-                      onChange={(e) => {
-                        field.onChange(e)
-                        setFullnameCharacters(e.target.value.length)
-                      }}
+                      onChangeCapture={() => setFullnameCharacters(field.value.length)}
                       className="text-muted-foreground bg-muted h-8"
                     />
                   </FormControl>
                   <FormDescription className="w-fit ml-auto">
-                    <span className={clsx({"text-destructive": field.value.length > 20})}>
+                    <span className={clsx({"text-destructive": field.value.length > 50})}>
                       {fullnameCharacters}
                     </span>
-                    /20
+                    /50
                   </FormDescription>
                 </FormItem>
               )}
@@ -122,17 +112,14 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
                       {...field}
                       className="text-muted-foreground bg-muted"
                       rows={5}
-                      onChange={(e) => {
-                        field.onChange(e)
-                        setBioCharacters(e.target.value.length)
-                      }}
+                      onChangeCapture={() => setBioCharacters(field.value.length)}
                     />
                   </FormControl>
                   <FormDescription className="w-fit ml-auto">
-                    <span className={clsx({"text-destructive": field.value.length > 230})}>
+                    <span className={clsx({"text-destructive": field.value.length > 250})}>
                       {bioCharacters}
                     </span>
-                    /230
+                    /250
                   </FormDescription>
                 </FormItem>
               )}
