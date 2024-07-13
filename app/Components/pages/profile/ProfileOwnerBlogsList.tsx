@@ -19,7 +19,7 @@ const ProfileUserBlogsList = ({profileOwner}: profileOwnerBlogsListType) => {
   }
 
   return (
-    <div className="flex justify-start flex-wrap gap-4 w-full p-6">
+    <div className="flex justify-center md:justify-start flex-wrap gap-4 w-full p-6">
       {profileOwner.blogs.map((blog: blogType) => (
         <div className="w-full md:w-4/5 lg:w-[47%] h-52">
           <BlogCard

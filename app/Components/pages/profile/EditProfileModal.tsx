@@ -28,7 +28,7 @@ type FormDataType = z.infer<typeof editProfileSchema>
 
 const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: EditProfileModalType) => {
   const [fullnameCharacters, setFullnameCharacters] = useState(profileOwner.fullname.length)
-  const [bioCharacters, setBioCharacters] = useState(profileOwner.bio.length)
+  const [bioCharacters, setBioCharacters] = useState(profileOwner.bio ? profileOwner.bio.length : 0)
   const router = useRouter()
   const pathname = usePathname()
 

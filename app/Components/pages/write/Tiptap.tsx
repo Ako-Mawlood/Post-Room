@@ -32,7 +32,7 @@ const Tiptap = ({content, setContent}: {content: string; setContent: Dispatch<Se
     <>
       <ToolBar editor={editor} />
       <div className="prose">
-        <EditorContent editor={editor} />
+        <EditorContent className="text-accent-foreground" editor={editor} />
       </div>
     </>
   )
