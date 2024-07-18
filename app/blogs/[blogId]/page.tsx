@@ -5,11 +5,12 @@ import {cookies} from "next/headers"
 import Image from "next/image"
 import parse from "html-react-parser"
 import InteractionBar from "@/app/Components/pages/blogs/InteractionBar"
-import {isMe} from "@/libs/IsMe"
+import {isMe} from "@/libs/isMe"
 
 type blogPageTypes = {
   params: {blogId: string}
 }
+
 async function getBlog(blogId: string) {
   try {
     const res = await axiosInstance(`/api/blog/${blogId}`, {
@@ -23,9 +24,7 @@ async function getBlog(blogId: string) {
 
 const BlogPage = async ({params}: blogPageTypes) => {
   const blog = await getBlog(params.blogId)
-  console.log(blog.author.id)
   const isMyBlog = await isMe(blog.author.id)
-  console.log(isMyBlog)
   return (
     <>
       <Navbar />

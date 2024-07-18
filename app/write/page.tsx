@@ -1,23 +1,28 @@
-import Sheet from "../Components/pages/write/Sheet"
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/app/Components/ui/tabs"
-
-const WritePage = () => {
+import axiosInstance from "@/libs/axiosInstance"
+import {getCookie} from "cookies-next"
+import {cookies} from "next/headers"
+import {redirect} from "next/navigation"
+const page = async () => {
+  // Todo:handling error state.
+  await axiosInstance
+    .post(
+      "/api/blog",
+      {
+        title: "Title",
+        content: "Content",
+        imageUrl: "/ImageUrl",
+        categories: ["Categoires"],
+      },
+      {headers: {Authorization: getCookie("token", {cookies})}}
+    )
+    .then((res) => {
+      redirect(`/write/${res.data.blogId}`)
+    })
   return (
-    <>
-      <div className="w-8/12 mx-auto mt-10">
-        <Tabs defaultValue="write">
-          <TabsList className="bg-transparent">
-            <TabsTrigger value="write">Write</TabsTrigger>
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-          </TabsList>
-          <TabsContent value="write">
-            <Sheet />
-          </TabsContent>
-          <TabsContent value="preview">content</TabsContent>
-        </Tabs>
-      </div>
-    </>
+    <div className="flex justify-center items-center w-screen h-screen">
+      Creating blog...
+    </div>
   )
 }
 
-export default WritePage
+export default page

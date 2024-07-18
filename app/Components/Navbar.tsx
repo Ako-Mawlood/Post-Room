@@ -5,7 +5,10 @@ import {CgEricsson as Logo} from "react-icons/cg"
 import {Button} from "./ui/button"
 import {PiNotePencilLight as WriteIcon} from "react-icons/pi"
 import {IoPersonOutline as ProfileIcon} from "react-icons/io5"
-import {IoBookmarkOutline as BookmarkIcon, IoSettingsOutline as SettingsIcon} from "react-icons/io5"
+import {
+  IoBookmarkOutline as BookmarkIcon,
+  IoSettingsOutline as SettingsIcon,
+} from "react-icons/io5"
 import {ModeToggle} from "./ui/ModeToggle"
 import {Skeleton} from "../Components/ui/skeleton"
 import Image from "next/image"
@@ -33,7 +36,10 @@ const Navbar = async () => {
 
   return (
     <nav className="flex justify-between items-center w-full h-14 text-foreground px-2 md:px-6 border-b border-border">
-      <Link href="/blogs" className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl">
+      <Link
+        href="/blogs"
+        className="flex items-center text-primary font-bold font-PT text-md sm:text-2xl"
+      >
         <Logo size={25} />
         <h1>Post-Room</h1>
       </Link>

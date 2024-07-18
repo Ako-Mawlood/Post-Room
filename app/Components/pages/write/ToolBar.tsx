@@ -26,7 +26,7 @@ function ToolBar({editor}: {editor: Editor | null}) {
   }
 
   return (
-    <ToggleGroup type="multiple" className="flex justify-start w-full p-1 rounded-lg">
+    <ToggleGroup type="multiple" className="flex justify-start w-fit p-1 rounded-lg">
       <ToggleGroupItem
         variant={editor.isActive("bold") ? "outline" : "default"}
         onClick={(e) => {
@@ -153,7 +153,9 @@ function ToolBar({editor}: {editor: Editor | null}) {
           e.preventDefault()
           editor.chain().focus().toggleLink({href: "www.google.com"}).run()
         }}
-        disabled={!editor.can().chain().focus().toggleLink({href: "www.google.com"}).run()}
+        disabled={
+          !editor.can().chain().focus().toggleLink({href: "www.google.com"}).run()
+        }
         value="link"
         aria-label="Toggle link"
       >

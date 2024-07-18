@@ -8,7 +8,15 @@ import {usePathname, useRouter} from "next/navigation"
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import z from "zod"
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "../../ui/form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../ui/form"
 import axiosInstance from "@/libs/axiosInstance"
 import {getCookie} from "cookies-next"
 import {useState} from "react"
@@ -17,7 +25,7 @@ import Link from "next/link"
 import {profileOwnerType} from "@/app/types/profileOwnerType"
 import ProfileImageEditer from "../../ProfileImageUpdater"
 import {editProfileSchema} from "@/libs/validations"
-
+import {X as Close} from "lucide-react"
 type EditProfileModalType = {
   profileOwner: profileOwnerType
   currentUserUsername: string
@@ -26,9 +34,17 @@ type EditProfileModalType = {
 
 type FormDataType = z.infer<typeof editProfileSchema>
 
-const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: EditProfileModalType) => {
-  const [fullnameCharacters, setFullnameCharacters] = useState(profileOwner.fullname.length)
-  const [bioCharacters, setBioCharacters] = useState(profileOwner.bio ? profileOwner.bio.length : 0)
+const EditProfileModal = ({
+  profileOwner,
+  currentUserUsername,
+  searchParams,
+}: EditProfileModalType) => {
+  const [fullnameCharacters, setFullnameCharacters] = useState(
+    profileOwner.fullname.length
+  )
+  const [bioCharacters, setBioCharacters] = useState(
+    profileOwner.bio ? profileOwner.bio.length : 0
+  )
   const router = useRouter()
   const pathname = usePathname()
 
@@ -53,7 +69,9 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
 
   async function handleSave(data: FormDataType) {
     try {
-      await axiosInstance.put("/api/user", data, {headers: {Authorization: getCookie("token")}})
+      await axiosInstance.put("/api/user", data, {
+        headers: {Authorization: getCookie("token")},
+      })
       handleModalToggle()
       router.refresh()
     } catch (error) {
@@ -64,18 +82,17 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
   return (
     <>
       <section className="flex flex-col items-center gap-5 w-full md:w-[30rem] absolute md:top-6 left-1/2 -translate-x-1/2 p-6 bg-card text-card-foreground shadow-md rounded-md z-10 modal">
-        <Image
+        <Close
           onClick={handleModalToggle}
-          className="absolute top-3 right-3 cursor-pointer"
-          src="/assets/close.svg"
-          width={20}
-          height={20}
-          alt="close"
+          className="size-5 absolute top-3 right-3 cursor-pointer"
         />
         <h1 className="font-semibold text-2xl">Profile information</h1>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSave)} className="flex flex-col gap-5 w-full text-sm">
+          <form
+            onSubmit={form.handleSubmit(handleSave)}
+            className="flex flex-col gap-5 w-full text-sm"
+          >
             <ProfileImageEditer form={form} profileOwner={profileOwner} />
             <FormField
               name="fullname"
@@ -116,7 +133,9 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
                     />
                   </FormControl>
                   <FormDescription className="w-fit ml-auto">
-                    <span className={clsx({"text-destructive": field.value.length > 250})}>
+                    <span
+                      className={clsx({"text-destructive": field.value.length > 250})}
+                    >
                       {bioCharacters}
                     </span>
                     /250
@@ -149,7 +168,10 @@ const EditProfileModal = ({profileOwner, currentUserUsername, searchParams}: Edi
               >
                 Cancel
               </Button>
-              <Button type="submit" className="w-20 bg-green-500 hover:bg-green-600 hover:opacity-90">
+              <Button
+                type="submit"
+                className="w-20 bg-green-500 hover:bg-green-600 hover:opacity-90"
+              >
                 {form.formState.isSubmitting ? "Saving..." : "Save"}
               </Button>
             </div>

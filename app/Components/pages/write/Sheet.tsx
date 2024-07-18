@@ -2,7 +2,8 @@
 
 import {createBlogSchema} from "@/libs/validations"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useEffect, useState} from "react"
+import {useState, useEffect} from "react"
+import {useRouter} from "next/navigation"
 import {useForm} from "react-hook-form"
 import z from "zod"
 import {Button} from "@/app/Components/ui/button"
@@ -15,42 +16,47 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/Components/ui/form"
-import {Input} from "@/app/Components/ui/input"
 import Tiptap from "./Tiptap"
 import axiosInstance from "@/libs/axiosInstance"
 import {getCookie} from "cookies-next"
 import UploadWidget from "../../UploadWidget"
 import useDebounce from "@/app/Hooks/useDebounce"
+import AddCategory from "./AddCategory"
 
-const Sheet = () => {
+const Sheet = ({params, blog}: {params: {blogId: string}; blog: any}) => {
   const [profileImage, setProfileImage] = useState<string | null>("")
-  const [title, setTitle] = useState<string | null>(null)
-  const [content, setContent] = useState("")
-  const [categories, setCategories] = useState([""])
-  const deboundedContent = useDebounce(content, 1000)
+  const initalCategories = blog.categories.map((category: any) => {
+    return category.category.name
+  })
+  const [selectedCategories, setSelectedCategories] = useState(initalCategories)
+  const router = useRouter()
   type dataType = z.infer<typeof createBlogSchema>
+
   const form = useForm<dataType>({
     defaultValues: {
-      imageUrl: "",
-      title: "",
-      content: "",
+      imageUrl: blog?.imageUrl || "",
+      title: blog?.title || "",
+      content: blog?.content || "",
+      categories: selectedCategories,
     },
     resolver: zodResolver(createBlogSchema),
   })
-  useEffect(() => {
-    console.log(content)
-  }, [deboundedContent])
-  function handleAddBlog(data: dataType) {
-    axiosInstance.patch("/api/blog/", {data}, {headers: {Authorization: getCookie("token")}})
-  }
 
+  function handleAddBlog(data: dataType) {
+    console.log(data)
+  }
   return (
-    <section className="w-full min-h-[30rem] rounded-lg">
+    <section className="w-full min-h-[30rem] bg-white rounded-lg">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleAddBlog)}>
           <UploadWidget form={form} setProfileImage={setProfileImage}>
-            <Button className="m-3">Upload Cover</Button>
+            <Button className="m-3 rounded-md" variant="outline" type="button">
+              Add a cover image
+            </Button>
           </UploadWidget>
+          <Button type="submit" className="hidden">
+            Publish
+          </Button>
           <FormField
             control={form.control}
             name="title"
@@ -58,16 +64,21 @@ const Sheet = () => {
               <FormItem>
                 <FormLabel />
                 <FormControl>
-                  <Input
-                    onChangeCapture={() => setTitle(field.value)}
+                  <input
+                    {...field}
                     placeholder="New post title here..."
-                    className="text-4xl py-10 bg-transparent border-none font-semibold font-PT"
+                    className="w-full text-4xl mx-10 bg-transparent outline-none font-semibold font-PT"
                   />
                 </FormControl>
                 <FormDescription />
                 <FormMessage />
               </FormItem>
             )}
+          />
+          <AddCategory
+            form={form}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
           />
           <FormField
             control={form.control}
@@ -76,7 +87,7 @@ const Sheet = () => {
               <FormItem>
                 <FormLabel />
                 <FormControl>
-                  <Tiptap content={content} setContent={setContent} />
+                  <Tiptap content={blog.content} />
                 </FormControl>
                 <FormDescription />
                 <FormMessage />

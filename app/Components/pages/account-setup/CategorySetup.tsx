@@ -51,9 +51,11 @@ const CategorySetup = () => {
   )
 
   useEffect(() => {
-    axiosInstance("/api/category", {headers: {Authorization: getCookie("token")}}).then((res) => {
-      setCategories(res.data)
-    })
+    axiosInstance("/api/category", {headers: {Authorization: getCookie("token")}}).then(
+      (res) => {
+        setCategories(res.data)
+      }
+    )
   }, [])
 
   if (!categories) {
@@ -63,7 +65,9 @@ const CategorySetup = () => {
   return (
     <main className="flex flex-col h-full w-full md:w-7/12">
       <div className="flex flex-col gap-4 text-center">
-        <h1 className="text-primary text-2xl font-PT">Witch category are you intrested in ?</h1>
+        <h1 className="text-primary text-2xl font-PT">
+          Witch category are you intrested in ?
+        </h1>
         <p className="text-lg">Choose three or more.</p>
         <section className="w-full mb-20">
           {categories?.map((category: any, index: number) => {
@@ -71,9 +75,13 @@ const CategorySetup = () => {
               <Button
                 key={index}
                 onClick={() =>
-                  router.push(pathname + "?" + handleAddRemoveCategory(category.name), {scroll: false})
+                  router.push(pathname + "?" + handleAddRemoveCategory(category.name), {
+                    scroll: false,
+                  })
                 }
-                variant={selectedCategories.includes(category.name) ? "default" : "secondary"}
+                variant={
+                  selectedCategories.includes(category.name) ? "default" : "secondary"
+                }
                 className="m-1 rounded-full"
               >
                 <span>{category.name}</span>
@@ -87,7 +95,11 @@ const CategorySetup = () => {
           })}
         </section>
         <div className="flex justify-center items-center w-screen fixed bottom-0 left-0 bg-background h-20">
-          <Button className="w-64" disabled={searchParams.size < 4} onClick={() => mutate()}>
+          <Button
+            className="w-64"
+            disabled={searchParams.size < 4}
+            onClick={() => mutate()}
+          >
             {isPending ? <Spinner className="animate-spin" /> : <span>Continue</span>}
           </Button>
         </div>

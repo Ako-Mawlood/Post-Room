@@ -61,8 +61,8 @@ export default function LandingPage() {
         >
           <h1 className="text-5xl md:text-[7vw] leading-tight">Your story matters</h1>
           <p className="text-xl opacity-80">
-            Share your unique stories with a global audience. Join us today and make an impact with your
-            words.
+            Share your unique stories with a global audience. Join us today and make an
+            impact with your words.
           </p>
           <button
             className="w-36 bg-black px-4 py-2 rounded-full text-gray-100 "
@@ -93,7 +93,10 @@ export default function LandingPage() {
           <main
             className={clsx(
               "flex justify-center items-center w-full md:w-[678px] h-full fixed md:absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white shadow-md shadow-gray-400  z-40",
-              {"modal-open-animation": isAuthModalOpen, "modal-close-animation": !isAuthModalOpen}
+              {
+                "modal-open-animation": isAuthModalOpen,
+                "modal-close-animation": !isAuthModalOpen,
+              }
             )}
           >
             <CloseIcon
