@@ -59,12 +59,18 @@
     @apply bg-background text-foreground;
   }
 }
-
+p{
+  margin: 0;
+}
 .modal-open-animation {
   animation: fadeIn 0.4s;
 }
 .modal-close-animation {
   animation: fadeOut 0.2s;
+}
+.prose{
+  max-width:100%;
+  color: var(--muted-foreground)
 }
 @keyframes fadeIn {
   0% {

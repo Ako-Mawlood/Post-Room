@@ -1,51 +1,65 @@
-import Navbar from "../Components/Navbar"
-import {Avatar, AvatarFallback, AvatarImage} from "../Components/ui/avatar"
-import {IoSettingsOutline as SettingsIcon} from "react-icons/io5"
-import SavedBlogsList from "../Components/pages/profile/SavedBlogsList"
-import ProfileSkeleton from "../Components/pages/profile/ProfileSkeleton"
-import ProfileTabs from "../Components/pages/profile/ProfileTabs"
-import {currentUserType} from "../types/currentUserType"
-import EditProfileModal from "../Components/pages/profile/EditProfileModal"
-import EditProfileBtn from "../Components/pages/profile/EditProfileBtn"
-import Link from "next/link"
-import {profileOwnerType} from "../types/profileOwnerType"
-import clsx from "clsx"
-import {getInitials} from "@/libs/utils"
-import {getProfileOwner} from "@/libs/getProfileOwner"
-import {getCurrentUser} from "@/libs/getCurrentUser"
-import ProfileOwnerBlogsList from "../Components/pages/profile/ProfileOwnerBlogsList"
+import Navbar from "../Components/Navbar";
+import { Avatar, AvatarFallback, AvatarImage } from "../Components/ui/avatar";
+import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
+import SavedBlogsList from "../Components/pages/profile/SavedBlogsList";
+import ProfileSkeleton from "../Components/pages/profile/ProfileSkeleton";
+import ProfileTabs from "../Components/pages/profile/ProfileTabs";
+import { currentUserType } from "../types/currentUserType";
+import EditProfileModal from "../Components/pages/profile/EditProfileModal";
+import EditProfileBtn from "../Components/pages/profile/EditProfileBtn";
+import Link from "next/link";
+import { profileOwnerType } from "../types/profileOwnerType";
+import clsx from "clsx";
+import { getInitials } from "@/libs/utils";
+import { getProfileOwner } from "@/libs/getProfileOwner";
+import { getCurrentUser } from "@/libs/getCurrentUser";
+import ProfileOwnerBlogsList from "../Components/pages/profile/ProfileOwnerBlogsList";
 
 const ProfilePage = async ({
   searchParams,
   params,
 }: {
-  searchParams?: {[key: string]: string | string[] | undefined}
-  params: {username: string}
+  searchParams?: { [key: string]: string | string[] | undefined };
+  params: { username: string };
 }) => {
-  const currentUser: currentUserType = await getCurrentUser()
-  const profileOwner: profileOwnerType = await getProfileOwner(params.username.substring(3))
-  const validTabs = ["blogs", "saved-blogs", "drafts"]
-  const tab =
-    validTabs.includes(searchParams?.tab as string) && currentUser?.username === profileOwner?.username
+  const currentUser: currentUserType = await getCurrentUser();
+  const profileOwner: profileOwnerType = await getProfileOwner(
+    params.username.substring(3),
+  );
+  const isCurrentUserProfile = currentUser.id === profileOwner.id;
+  const validTabs = ["blogs", "saved-blogs", "drafts"];
+  const tabQueryParam =
+    validTabs.includes(searchParams?.tab as string) && isCurrentUserProfile
       ? searchParams?.tab
-      : "blogs"
-  const edit = currentUser?.username === profileOwner?.username ? searchParams?.edit : ""
+      : "blogs";
+  const editQueryParam = isCurrentUserProfile ? searchParams?.edit : "";
   return (
     <>
-      <div className={clsx({"h-screen overflow-hidden fixed top-0 left-0 -z-10": edit === "t"})}>
+      <div
+        className={clsx({
+          "fixed left-0 top-0 -z-10 h-screen overflow-hidden":
+            editQueryParam === "t",
+        })}
+      >
         <Navbar />
         {profileOwner ? (
           <>
-            <section className="flex items-center w-full h-[40vh] relative px-6 border-b border-border">
-              <h1 className="text-7xl md:text-[8.5vw] font-PT">{profileOwner.fullname}</h1>
-              <div className="flex items-center gap-2 absolute left-6 bottom-4">
-                <Avatar className="flex justify-center items-center gap-2 font-semibold">
+            <section className="relative flex h-[40vh] w-full items-center border-b border-border px-6">
+              <h1 className="font-PT text-7xl md:text-[8.5vw]">
+                {profileOwner.fullname}
+              </h1>
+              <div className="absolute bottom-4 left-6 flex items-center gap-2">
+                <Avatar className="flex items-center justify-center gap-2 font-semibold">
                   <AvatarImage src={profileOwner.imageUrl} />
-                  <AvatarFallback>{getInitials(profileOwner?.fullname)}</AvatarFallback>
+                  <AvatarFallback>
+                    {getInitials(profileOwner?.fullname)}
+                  </AvatarFallback>
                 </Avatar>
-                <span className="flex items-center text-sm font-semibold">@ {profileOwner.username}</span>
+                <span className="flex items-center text-sm font-semibold">
+                  @ {profileOwner.username}
+                </span>
               </div>
-              {currentUser?.username === profileOwner.username && (
+              {isCurrentUserProfile && (
                 <>
                   <EditProfileBtn searchParams={searchParams} />
                   <Link href={`/@${currentUser?.username}/settings`}>
@@ -57,23 +71,29 @@ const ProfilePage = async ({
                 </>
               )}
             </section>
-            <section className="flex flex-col md:flex-row w-full font-semibold text-xs">
-              <ul className="flex gap-3 items-start w-full md:w-1/3 px-6 py-4 border-b md:border-none border-border">
+            <section className="flex w-full flex-col text-xs font-semibold md:flex-row">
+              <ul className="flex w-full items-start gap-3 border-b border-border px-6 py-4 md:w-1/3 md:border-none">
                 <li>
-                  <span className="font-semibold text-primary">{profileOwner.blogs.length}</span>
+                  <span className="font-semibold text-primary">
+                    {profileOwner.blogs.length}
+                  </span>
                   <span className="ml-1">Blogs</span>
                 </li>
                 <li>
-                  <span className="font-semibold text-primary">{profileOwner._count.followers}</span>
+                  <span className="font-semibold text-primary">
+                    {profileOwner._count.followers}
+                  </span>
                   <span className="ml-1">Followers</span>
                 </li>
 
                 <li>
-                  <span className="font-semibold text-primary">{profileOwner._count.followed}</span>{" "}
+                  <span className="font-semibold text-primary">
+                    {profileOwner._count.followed}
+                  </span>{" "}
                   <span className="text-gray-2 ml-1">Following</span>
                 </li>
               </ul>
-              <div className="flex justify-start items-start md:w-2/3 leading-7 text-2xl px-6 py-4 border-b md:border-none border-border font-semibold">
+              <div className="flex items-start justify-start border-b border-border px-6 py-4 text-2xl font-semibold leading-7 md:w-2/3 md:border-none">
                 {profileOwner.bio}
               </div>
             </section>
@@ -82,16 +102,20 @@ const ProfilePage = async ({
           <ProfileSkeleton />
         )}
         <ProfileTabs
-          tab={tab}
+          tabQueryParam={tabQueryParam}
           profileOwnerUsername={profileOwner.username}
-          currentUserUsername={currentUser.username}
+          isCurrentUserProfile={isCurrentUserProfile}
         />
 
-        {tab === "blogs" && profileOwner && <ProfileOwnerBlogsList profileOwner={profileOwner} />}
-        {tab === "saved-blogs" && currentUser?.username === profileOwner?.username && <SavedBlogsList />}
-        {tab === "drafts" && currentUser?.username === profileOwner?.username && <h1>drafts</h1>}
+        {tabQueryParam === "blogs" && profileOwner && (
+          <ProfileOwnerBlogsList profileOwner={profileOwner} />
+        )}
+        {tabQueryParam === "saved-blogs" && isCurrentUserProfile && (
+          <SavedBlogsList />
+        )}
+        {tabQueryParam === "drafts" && isCurrentUserProfile && <h1>drafts</h1>}
       </div>
-      {edit === "t" && (
+      {editQueryParam === "t" && (
         <EditProfileModal
           profileOwner={profileOwner}
           searchParams={searchParams}
@@ -99,7 +123,7 @@ const ProfilePage = async ({
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

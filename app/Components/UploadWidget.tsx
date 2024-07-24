@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import {CldUploadWidget} from "next-cloudinary"
-import {Dispatch, ReactNode, SetStateAction} from "react"
+import { CldUploadWidget } from "next-cloudinary";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 const UploadWidget = ({
   children,
   form,
-  setProfileImage,
+  setImageUrl,
 }: {
-  children: ReactNode
-  form: any
-  setProfileImage: Dispatch<SetStateAction<string | null>>
+  children: ReactNode;
+  form: any;
+  setImageUrl: Dispatch<SetStateAction<string>>;
 }) => {
   return (
     <CldUploadWidget
       onSuccess={(result: any) => {
-        setProfileImage(result.info.url)
-        form.setValue("imageUrl", result.info.url)
+        setImageUrl(result.info.url);
+        form.setValue("imageUrl", result.info.url);
       }}
       options={{
         multiple: false,
@@ -41,11 +41,11 @@ const UploadWidget = ({
       }}
       uploadPreset="ebh5pne5"
     >
-      {({open}) => {
-        return <div onClick={() => open()}>{children}</div>
+      {({ open }) => {
+        return <div onClick={() => open()}>{children}</div>;
       }}
     </CldUploadWidget>
-  )
-}
+  );
+};
 
-export default UploadWidget
+export default UploadWidget;

@@ -26,8 +26,17 @@ export const editProfileSchema = z.object({
 })
 
 export const createBlogSchema = z.object({
-  imageUrl: imageUrlValidation,
-  title: z.string(),
-  content: z.string(),
+  title: z.string().min(1, "Title is can not be empty"),
+  content: z
+    .string()
+    .refine(
+      (content) => {
+        const text = content.replace(/<[^>]*>?/gm, '');
+        const wordCount = text.trim().split(/\s+/).length;
+        return wordCount >= 100;
+      },
+      { message: "Content must be at least 100 words" }
+    ),
+  imageUrl: z.string().optional(),
   categories: z.array(z.string()).optional(),
-})
+});
