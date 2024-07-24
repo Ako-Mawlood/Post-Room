@@ -1,6 +1,6 @@
-<<h1 align="center">Post Frontend</h1>
+<h1 align="center">Post-Room Frontend</h1>
 
-Blog website built with Next.js,Typescript,Zod, and ShadCn/ui.
+Blog platform built with Next.js,Typescript,Zod, and ShadCn/ui.
 feel free to check this project's [back-end](https://github.com/Abdullah-988/Post-Room-backend)
 
 ## Getting started
