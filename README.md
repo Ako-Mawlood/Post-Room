@@ -8,14 +8,17 @@ feel free to check this project's [back-end](https://github.com/Abdullah-988/Pos
 To get started with this project, run:
 
 ```bash
-git clone https://github.com/Ako-Mawlood/WeDecide-frontend.git
+git clone https://github.com/Ako-Mawlood/Post-Room.git
 ```
 
 Setup `.env` file:
 
 ```
 NEXT_PUBLIC_BACKEND_URL=""
-NEXT_PUBLIC_PUSHER_APP_KEY=""
+GOOGLE_CLIENT_ID=""
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=""
+NEXT_PUBLIC_CLOUDINARY_API_KEY=""
+CLOUDINARY_API_SECRET=""
 ```
 
 then run:
