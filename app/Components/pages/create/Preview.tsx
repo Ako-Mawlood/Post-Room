@@ -1,7 +1,7 @@
 import Image from "next/image";
 import parse from "html-react-parser";
 import { backgroundColors } from "@/constants/backgroundColors";
-
+import { marked } from "marked";
 type previewPropsType = {
   content: string;
   title: string;
@@ -14,6 +14,7 @@ const Preview = ({
   imageUrl,
   selectedCategories,
 }: previewPropsType) => {
+  const htmlContent = marked(content) as string;
   return (
     <section className="relative min-h-[80vh] rounded-lg bg-gray-100 p-6 dark:bg-muted">
       <h1 className="w-full border-b-2 py-4 font-PT text-3xl text-accent-foreground">
@@ -35,10 +36,10 @@ const Preview = ({
       {selectedCategories && (
         <ul className="mt-2 flex gap-3">
           {selectedCategories.map((category, index) => (
-            <div className="flex gap-1">
+            <div key={index} className="flex gap-1">
               <span
                 style={{
-                  color: `rgb(${backgroundColors[index + 1]},0.9)`,
+                  color: `rgb(${backgroundColors[index]},0.9)`,
                 }}
               >
                 #
@@ -48,7 +49,7 @@ const Preview = ({
           ))}
         </ul>
       )}
-      <p className="prose my-10 w-full">{parse(content)}</p>
+      <div className="prose my-10 w-full">{parse(htmlContent)}</div>
     </section>
   );
 };

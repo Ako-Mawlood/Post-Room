@@ -3,10 +3,11 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import Image from "next/image";
-import parse from "html-react-parser";
 import InteractionBar from "@/app/Components/pages/blogs/InteractionBar";
 import { isMe } from "@/libs/isMe";
 import { backgroundColors } from "@/constants/backgroundColors";
+import { marked } from "marked";
+import parse from "html-react-parser";
 
 type blogPageTypes = {
   params: { blogId: string };
@@ -26,11 +27,13 @@ async function getBlog(blogId: string) {
 const BlogPage = async ({ params }: blogPageTypes) => {
   const blog = await getBlog(params.blogId);
   const isMyBlog = await isMe(blog.author.id);
+  const htmlContent = marked(blog.content) as string;
+
   return (
     <>
       <Navbar />
       {blog && (
-        <div className="mx-auto w-full p-6 md:w-10/12">
+        <div className="mx-auto w-full p-6 lg:w-10/12">
           <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
             {blog.title}
             {blog.categories && (
@@ -67,10 +70,12 @@ const BlogPage = async ({ params }: blogPageTypes) => {
                 alt="Blog image"
               />
             </div>
-            <h1 className="mx-32 mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
-              {blog.title}
-            </h1>
-            <p className="prose mx-32 my-10">{parse(blog.content)}</p>
+            <div className="lg:mx-32">
+              <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
+                {blog.title}
+              </h1>
+              <div className="prose my-10">{parse(htmlContent)}</div>
+            </div>
           </section>
           <InteractionBar blog={blog} isMyBlog={isMyBlog} />
         </div>

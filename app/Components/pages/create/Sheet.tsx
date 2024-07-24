@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/app/Components/ui/button";
-
+import TurndownService from "turndown";
 import Tiptap from "./Tiptap";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
@@ -17,6 +17,7 @@ import { Suspense } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import z from "zod";
+import { marked } from "marked";
 import {
   Form,
   FormControl,
@@ -65,7 +66,7 @@ const Sheet = ({
   const [isSaved, setIsSaved] = useState(false);
   const debouncedContent = useDebounce(content, 500);
   const debouncedTitle = useDebounce(title, 500);
-
+  const contentHTML = marked(content);
   const form = useForm<formDataType>({
     defaultValues: {
       imageUrl: blog?.imageUrl || "",
@@ -95,16 +96,18 @@ const Sheet = ({
         },
       )
       .then(() => {
-        router.push("/blogs");
+        router.push(`/blogs/${blog.blogId}`);
       });
   }
 
   useEffect(() => {
+    const turndownService = new TurndownService();
+    const markdownContent = turndownService.turndown(content);
     axiosInstance
       .put(
         `/api/blog/${blog.blogId}`,
         {
-          content,
+          content: markdownContent,
           title,
           categories: selectedCategories,
           imageUrl,
@@ -158,7 +161,7 @@ const Sheet = ({
                 name="title"
                 render={({ field }) => (
                   <FormItem className="relative">
-                    <FormMessage className="absolute -top-1 left-4 bg-muted p-1" />
+                    <FormMessage className="absolute -top-1 left-4 bg-muted p-1 dark:text-red-500" />
                     <FormLabel />
                     <FormControl>
                       <textarea
@@ -190,7 +193,7 @@ const Sheet = ({
                     <FormControl>
                       <Tiptap
                         form={form}
-                        content={content}
+                        content={contentHTML}
                         setContent={setContent}
                       />
                     </FormControl>

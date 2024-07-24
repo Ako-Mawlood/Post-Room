@@ -24,10 +24,6 @@ interface Blog {
   draft: boolean;
 }
 
-interface CreatePageProps {
-  params: { blogId: string };
-}
-
 async function fetchBlog(blogId: string): Promise<Blog | null> {
   try {
     const res = await axiosInstance(`/api/blog/${blogId}`, {

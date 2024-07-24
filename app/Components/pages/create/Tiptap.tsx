@@ -7,6 +7,8 @@ import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
+import Youtube from "@tiptap/extension-youtube";
+
 const Tiptap = ({ content, setContent, form }: any) => {
   const editor = useEditor({
     content,
@@ -16,6 +18,10 @@ const Tiptap = ({ content, setContent, form }: any) => {
       Link.configure({
         openOnClick: true,
         autolink: true,
+      }),
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
       }),
     ],
     editorProps: {
@@ -30,7 +36,9 @@ const Tiptap = ({ content, setContent, form }: any) => {
       form.setValue("content", contentHTML);
     },
   });
-
+  if (!editor) {
+    return;
+  }
   return (
     <div className="flex w-full flex-col">
       <ToolBar editor={editor} />
@@ -41,7 +49,7 @@ const Tiptap = ({ content, setContent, form }: any) => {
         })}
       >
         {form.formState.errors.content && (
-          <FormMessage className="absolute -top-3 left-4 bg-muted p-1">
+          <FormMessage className="absolute -top-3 left-4 bg-muted p-1 dark:text-red-500">
             {form.formState.errors.content.message}
           </FormMessage>
         )}

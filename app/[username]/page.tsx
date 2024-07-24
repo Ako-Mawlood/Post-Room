@@ -14,6 +14,8 @@ import { getInitials } from "@/libs/utils";
 import { getProfileOwner } from "@/libs/getProfileOwner";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import ProfileOwnerBlogsList from "../Components/pages/profile/ProfileOwnerBlogsList";
+import { profile } from "console";
+import { notFound } from "next/navigation";
 
 const ProfilePage = async ({
   searchParams,
@@ -26,6 +28,7 @@ const ProfilePage = async ({
   const profileOwner: profileOwnerType = await getProfileOwner(
     params.username.substring(3),
   );
+  if (!profileOwner) notFound();
   const isCurrentUserProfile = currentUser.id === profileOwner.id;
   const validTabs = ["blogs", "saved-blogs", "drafts"];
   const tabQueryParam =

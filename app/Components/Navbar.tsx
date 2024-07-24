@@ -50,7 +50,7 @@ const Navbar = async () => {
         <Button>
           <Link
             className="flex items-center gap-2 px-1 font-semibold"
-            href="/write"
+            href="/create"
           >
             Create
           </Link>

@@ -7,14 +7,14 @@ export const getMenuItems = (currentUser: currentUserType) => [
     label: "Profile",
   },
   {
-    href: "/write",
+    href: "/create",
     icon: "/assets/write.svg",
-    label: "Write blog",
+    label: "Create Blog",
   },
   {
     href: `/@${currentUser?.username}?tab=saved-blogs`,
     icon: "/assets/save.svg",
-    label: "Saved blogs",
+    label: "Saved Blogs",
   },
   {
     href: `/@${currentUser?.username}?tab=drafts`,

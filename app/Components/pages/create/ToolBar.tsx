@@ -14,6 +14,7 @@ import {
   ListOrdered,
   QuoteIcon,
   Link,
+  Video,
 } from "lucide-react";
 
 import { ToggleGroupItem } from "@/app/Components/ui/toggle-group";

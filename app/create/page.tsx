@@ -17,7 +17,7 @@ const page = async () => {
       { headers: { Authorization: getCookie("token", { cookies }) } },
     )
     .then((res) => {
-      redirect(`/write/${res.data.blogId}`);
+      redirect(`/create/${res.data.blogId}`);
     });
 };
 
