@@ -6,6 +6,10 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
 import Link from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
+import Highlight from "@tiptap/extension-highlight";
+import TextAlign from "@tiptap/extension-text-align";
+import Image from "@tiptap/extension-image";
 
 const Tiptap = ({ content, setContent, form }: any) => {
   const editor = useEditor({
@@ -13,6 +17,27 @@ const Tiptap = ({ content, setContent, form }: any) => {
     extensions: [
       StarterKit.configure({
         codeBlock: false,
+      }),
+      Underline,
+      TextAlign.configure({
+        types: [
+          "heading",
+          "paragraph",
+          "image",
+          "list_item",
+          "code_block",
+          "blockquote",
+        ],
+      }),
+      Image.configure({
+        HTMLAttributes: {
+          class: "my-10",
+        },
+      }),
+      Highlight.configure({
+        HTMLAttributes: {
+          class: "bg-purple-200",
+        },
       }),
       Link.configure({
         openOnClick: true,

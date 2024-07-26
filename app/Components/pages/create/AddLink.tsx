@@ -7,7 +7,6 @@ import {
 import { Button } from "../../ui/button";
 import { Input } from "@/app/components/ui/input";
 import { useEffect, useState } from "react";
-import { ToggleGroupItem } from "../../ui/toggle-group";
 const AddLink = ({ editor }: { editor: any }) => {
   const [linkUrl, setLinkUrl] = useState("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -26,19 +25,12 @@ const AddLink = ({ editor }: { editor: any }) => {
     <>
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger>
-          {/* <Button
-            variant={editor.isActive("link") ? "outline" : "default"}
-            onClick={(e) => {
-              e.preventDefault();
-              editor.chain().focus().toggleLink({ href: linkUrl }).run();
-            }}
-            disabled={
+          <Link
+            className="size-5"
+            aria-disabled={
               !editor.can().chain().focus().toggleLink({ href: linkUrl }).run()
             }
-            value="link"
-            aria-label="Toggle link"
-          ></Button> */}
-          <Link />
+          />
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-2">
           <h1>Link Url</h1>

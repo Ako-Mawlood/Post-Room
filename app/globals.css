@@ -92,9 +92,12 @@ p{
 }
 iframe{
   width: 100%;
-  margin:2rem 0;
+  margin:3rem 0;
+  height:70vh;
 }
-
+img{
+  width: 100%;
+}
 pre {
   background: #1e1e1e;
   color: #dcdcdc;

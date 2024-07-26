@@ -13,14 +13,18 @@ import {
   Strikethrough,
   ListOrdered,
   QuoteIcon,
-  Link,
+  Underline,
+  Highlighter,
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
 } from "lucide-react";
-
 import { ToggleGroupItem } from "@/app/components/ui/toggle-group";
 import { ToggleGroup } from "@/app/components/ui/toggle-group";
 import { Editor } from "@tiptap/react";
 import AddVideo from "./AddVideo";
 import AddLink from "./AddLink";
+import AddImage from "./AddImage";
 
 function ToolBar({ editor }: { editor: Editor | null }) {
   if (!editor) {
@@ -57,6 +61,18 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         <Italic className="h-6 w-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
+        variant={editor.isActive("underline") ? "outline" : "default"}
+        onClick={(e) => {
+          e.preventDefault();
+          editor.chain().focus().toggleUnderline().run();
+        }}
+        disabled={!editor.can().chain().focus().toggleUnderline().run()}
+        value="underline"
+        aria-label="Toggle underlines"
+      >
+        <Underline className="h-6 w-6" />
+      </ToggleGroupItem>
+      <ToggleGroupItem
         variant={editor.isActive("strike") ? "outline" : "default"}
         onClick={(e) => {
           e.preventDefault();
@@ -67,6 +83,45 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         aria-label="Toggle blockquote"
       >
         <Strikethrough className="h-6 w-6" />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        variant={editor.isActive("highlight") ? "outline" : "default"}
+        onClick={(e) => {
+          e.preventDefault();
+          editor.chain().focus().toggleHighlight().run();
+        }}
+        disabled={!editor.can().chain().focus().toggleHighlight().run()}
+        value="highlight"
+        aria-label="Toggle highlight"
+      >
+        <Highlighter className="h-6 w-6" />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        variant={editor.isActive("left") ? "outline" : "default"}
+        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
+        value="left"
+        aria-label="Toggle align left"
+      >
+        <AlignLeft className="h-6 w-6" />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        variant={editor.isActive("center") ? "outline" : "default"}
+        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        className={editor.isActive({ textAlign: "center" }) ? "is-active" : ""}
+        value="center"
+        aria-label="Toggle align center"
+      >
+        <AlignCenter className="h-6 w-6" />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        variant={editor.isActive("right") ? "outline" : "default"}
+        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}
+        value="center"
+        aria-label="Toggle align right"
+      >
+        <AlignRight className="h-6 w-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         variant={
@@ -164,6 +219,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
       >
         <QuoteIcon className="h-6 w-6" />
       </ToggleGroupItem>
+      <AddImage editor={editor} />
       <AddLink editor={editor} />
       <AddVideo editor={editor} />
       <ToggleGroupItem
