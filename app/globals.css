@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
+@import '~highlight.js/styles/github.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -89,4 +89,76 @@ p{
   100% {
     opacity: 0;
   }
+}
+iframe{
+  width: 100%;
+  margin:2rem 0;
+}
+
+pre {
+  background: #1e1e1e;
+  color: #dcdcdc;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  line-height: 1.4;
+  font-size: 0.8rem;
+}
+
+code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #6a737d;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-name,
+.hljs-regexp,
+.hljs-link,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #dc9839;
+}
+
+.hljs-number,
+.hljs-meta,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params {
+  color: #76b7ec;
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet {
+  color: #79c38a;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #e5c07b;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #c15353;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
 }

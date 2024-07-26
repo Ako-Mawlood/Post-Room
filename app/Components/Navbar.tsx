@@ -10,7 +10,7 @@ import {
   IoSettingsOutline as SettingsIcon,
 } from "react-icons/io5";
 import { ModeToggle } from "./ui/ModeToggle";
-import { Skeleton } from "../Components/ui/skeleton";
+import { Skeleton } from "./ui/skeleton";
 import Image from "next/image";
 import {
   DropdownMenu,

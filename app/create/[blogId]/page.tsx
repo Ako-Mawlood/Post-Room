@@ -6,14 +6,14 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/app/Components/ui/tabs";
-import Sheet from "../../Components/pages/create/Sheet";
+} from "@/app/components/ui/tabs";
+import Sheet from "../../components/pages/create/Sheet";
 import axiosInstance from "@/libs/axiosInstance";
 import Link from "next/link";
 import { CgEricsson as Logo } from "react-icons/cg";
 import { getCookie } from "cookies-next";
-import Preview from "@/app/Components/pages/create/Preview";
-import SheetSkeleton from "@/app/Components/pages/create/SheetSkeleton";
+import Preview from "@/app/components/pages/create/Preview";
+import SheetSkeleton from "@/app/components/pages/create/SheetSkeleton";
 
 interface Blog {
   blogId: string;

@@ -4,8 +4,7 @@ import { createBlogSchema } from "@/libs/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button } from "@/app/Components/ui/button";
-import TurndownService from "turndown";
+import { Button } from "@/app/components/ui/button";
 import Tiptap from "./Tiptap";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
@@ -17,7 +16,6 @@ import { Suspense } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import z from "zod";
-import { marked } from "marked";
 import {
   Form,
   FormControl,
@@ -25,7 +23,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/Components/ui/form";
+} from "@/app/components/ui/form";
 import clsx from "clsx";
 
 type Blog = {
@@ -66,7 +64,6 @@ const Sheet = ({
   const [isSaved, setIsSaved] = useState(false);
   const debouncedContent = useDebounce(content, 500);
   const debouncedTitle = useDebounce(title, 500);
-  const contentHTML = marked(content);
   const form = useForm<formDataType>({
     defaultValues: {
       imageUrl: blog?.imageUrl || "",
@@ -101,13 +98,11 @@ const Sheet = ({
   }
 
   useEffect(() => {
-    const turndownService = new TurndownService();
-    const markdownContent = turndownService.turndown(content);
     axiosInstance
       .put(
         `/api/blog/${blog.blogId}`,
         {
-          content: markdownContent,
+          content,
           title,
           categories: selectedCategories,
           imageUrl,
@@ -193,7 +188,7 @@ const Sheet = ({
                     <FormControl>
                       <Tiptap
                         form={form}
-                        content={contentHTML}
+                        content={content}
                         setContent={setContent}
                       />
                     </FormControl>

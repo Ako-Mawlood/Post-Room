@@ -1,10 +1,10 @@
 "use client";
 
-import SigninModal from "./Components/pages/Landing/SigninModal";
-import SignupModal from "./Components/pages/Landing/SignupModal";
+import SigninModal from "./components/pages/Landing/SigninModal";
+import SignupModal from "./components/pages/Landing/SignupModal";
 import { backgroundColors } from "@/constants/backgroundColors";
 import { useState } from "react";
-import BlogsPreview from "./Components/pages/Landing/BlogsPreview";
+import BlogsPreview from "./components/pages/Landing/BlogsPreview";
 import useSlider from "./Hooks/useSlider";
 import Link from "next/link";
 import { IoIosClose as CloseIcon } from "react-icons/io";

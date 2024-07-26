@@ -1,4 +1,4 @@
-import Navbar from "../Components/Navbar";
+import Navbar from "../components/Navbar";
 export const dynamic = "force-dynamic";
 
 const BlogsPage = () => {

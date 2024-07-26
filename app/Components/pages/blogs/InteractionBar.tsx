@@ -4,13 +4,13 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/app/Components/ui/avatar";
-import { Button } from "@/app/Components/ui/button";
+} from "@/app/components/ui/avatar";
+import { Button } from "@/app/components/ui/button";
 import { LuMessageCircle as CommentIcon, LuDot as Dot } from "react-icons/lu";
-import FollowBtn from "@/app/Components/pages/blogs/FollowBtn";
-import StarBtn from "@/app/Components/pages/blogs/StarBtn";
-import SaveBtn from "@/app/Components/pages/blogs/SaveBtn";
-import ShareBtn from "@/app/Components/pages/blogs/ShareBtn";
+import FollowBtn from "@/app/components/pages/blogs/FollowBtn";
+import StarBtn from "@/app/components/pages/blogs/StarBtn";
+import SaveBtn from "@/app/components/pages/blogs/SaveBtn";
+import ShareBtn from "@/app/components/pages/blogs/ShareBtn";
 import { formatDate, getInitials } from "@/libs/utils";
 import { calculateReadingTime } from "@/libs/utils";
 import { useState } from "react";

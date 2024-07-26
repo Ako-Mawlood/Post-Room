@@ -1,19 +1,19 @@
-import Navbar from "../Components/Navbar";
-import { Avatar, AvatarFallback, AvatarImage } from "../Components/ui/avatar";
+import Navbar from "../components/Navbar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
-import SavedBlogsList from "../Components/pages/profile/SavedBlogsList";
-import ProfileSkeleton from "../Components/pages/profile/ProfileSkeleton";
-import ProfileTabs from "../Components/pages/profile/ProfileTabs";
+import SavedBlogsList from "../components/pages/profile/SavedBlogsList";
+import ProfileSkeleton from "../components/pages/profile/ProfileSkeleton";
+import ProfileTabs from "../components/pages/profile/ProfileTabs";
 import { currentUserType } from "../types/currentUserType";
-import EditProfileModal from "../Components/pages/profile/EditProfileModal";
-import EditProfileBtn from "../Components/pages/profile/EditProfileBtn";
+import EditProfileModal from "../components/pages/profile/EditProfileModal";
+import EditProfileBtn from "../components/pages/profile/EditProfileBtn";
 import Link from "next/link";
 import { profileOwnerType } from "../types/profileOwnerType";
 import clsx from "clsx";
 import { getInitials } from "@/libs/utils";
 import { getProfileOwner } from "@/libs/getProfileOwner";
 import { getCurrentUser } from "@/libs/getCurrentUser";
-import ProfileOwnerBlogsList from "../Components/pages/profile/ProfileOwnerBlogsList";
+import ProfileOwnerBlogsList from "../components/pages/profile/ProfileOwnerBlogsList";
 import { profile } from "console";
 import { notFound } from "next/navigation";
 

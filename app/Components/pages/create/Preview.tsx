@@ -1,7 +1,7 @@
 import Image from "next/image";
 import parse from "html-react-parser";
 import { backgroundColors } from "@/constants/backgroundColors";
-import { marked } from "marked";
+
 type previewPropsType = {
   content: string;
   title: string;
@@ -14,7 +14,6 @@ const Preview = ({
   imageUrl,
   selectedCategories,
 }: previewPropsType) => {
-  const htmlContent = marked(content) as string;
   return (
     <section className="relative min-h-[80vh] rounded-lg bg-gray-100 p-6 dark:bg-muted">
       <h1 className="w-full border-b-2 py-4 font-PT text-3xl text-accent-foreground">
@@ -49,7 +48,7 @@ const Preview = ({
           ))}
         </ul>
       )}
-      <div className="prose my-10 w-full">{parse(htmlContent)}</div>
+      <div className="prose">{parse(content)}</div>
     </section>
   );
 };

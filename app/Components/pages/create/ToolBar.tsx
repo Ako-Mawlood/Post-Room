@@ -14,12 +14,13 @@ import {
   ListOrdered,
   QuoteIcon,
   Link,
-  Video,
 } from "lucide-react";
 
-import { ToggleGroupItem } from "@/app/Components/ui/toggle-group";
-import { ToggleGroup } from "@/app/Components/ui/toggle-group";
+import { ToggleGroupItem } from "@/app/components/ui/toggle-group";
+import { ToggleGroup } from "@/app/components/ui/toggle-group";
 import { Editor } from "@tiptap/react";
+import AddVideo from "./AddVideo";
+import AddLink from "./AddLink";
 
 function ToolBar({ editor }: { editor: Editor | null }) {
   if (!editor) {
@@ -29,7 +30,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
   return (
     <ToggleGroup
       type="multiple"
-      className="flex w-full flex-wrap justify-start bg-neutral-200 p-2 text-black dark:bg-neutral-100"
+      className="fixed top-2 z-50 mx-8 flex w-fit flex-wrap justify-start bg-card p-2 text-black dark:bg-neutral-100"
     >
       <ToggleGroupItem
         variant={editor.isActive("bold") ? "outline" : "default"}
@@ -71,7 +72,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         variant={
           editor.isActive("heading", { level: 1 }) ? "outline" : "default"
         }
-        onClick={(e) => {
+        onClick={(e: any) => {
           e.preventDefault();
           editor.chain().focus().toggleHeading({ level: 1 }).run();
         }}
@@ -163,25 +164,8 @@ function ToolBar({ editor }: { editor: Editor | null }) {
       >
         <QuoteIcon className="h-6 w-6" />
       </ToggleGroupItem>
-      <ToggleGroupItem
-        variant={editor.isActive("blockquote") ? "outline" : "default"}
-        onClick={(e) => {
-          e.preventDefault();
-          editor.chain().focus().toggleLink({ href: "www.google.com" }).run();
-        }}
-        disabled={
-          !editor
-            .can()
-            .chain()
-            .focus()
-            .toggleLink({ href: "www.google.com" })
-            .run()
-        }
-        value="link"
-        aria-label="Toggle link"
-      >
-        <Link className="h-6 w-6" />
-      </ToggleGroupItem>
+      <AddLink editor={editor} />
+      <AddVideo editor={editor} />
       <ToggleGroupItem
         onClick={(e) => {
           e.preventDefault();

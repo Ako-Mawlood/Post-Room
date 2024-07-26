@@ -1,27 +1,27 @@
-"use client";
-
-import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import ToolBar from "./ToolBar";
-import Link from "@tiptap/extension-link";
-import Underline from "@tiptap/extension-underline";
+import Youtube from "@tiptap/extension-youtube";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { EditorContent, useEditor } from "@tiptap/react";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
-import Youtube from "@tiptap/extension-youtube";
+import Link from "@tiptap/extension-link";
 
 const Tiptap = ({ content, setContent, form }: any) => {
   const editor = useEditor({
     content,
     extensions: [
-      StarterKit,
-      Underline,
+      StarterKit.configure({
+        codeBlock: false,
+      }),
       Link.configure({
         openOnClick: true,
         autolink: true,
+        defaultProtocol: "https",
       }),
       Youtube.configure({
-        controls: false,
         nocookie: true,
+        ccLanguage: "en",
       }),
     ],
     editorProps: {
@@ -36,13 +36,14 @@ const Tiptap = ({ content, setContent, form }: any) => {
       form.setValue("content", contentHTML);
     },
   });
+
   if (!editor) {
-    return;
+    return null;
   }
+
   return (
     <div className="flex w-full flex-col">
       <ToolBar editor={editor} />
-
       <div
         className={clsx("dark:prose-dark prose relative", {
           "mt-4 border border-red-500": form.formState.errors.content,
@@ -64,3 +65,11 @@ const Tiptap = ({ content, setContent, form }: any) => {
 };
 
 export default Tiptap;
+function ReactNodeViewRenderer(
+  CodeBlockComponent: ({
+    node,
+    updateAttributes,
+  }: any) => import("react").JSX.Element,
+): import("@tiptap/react").NodeViewRenderer {
+  throw new Error("Function not implemented.");
+}

@@ -1,12 +1,11 @@
-import Navbar from "@/app/Components/Navbar";
+import Navbar from "@/app/components/Navbar";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import Image from "next/image";
-import InteractionBar from "@/app/Components/pages/blogs/InteractionBar";
+import InteractionBar from "@/app/components/pages/blogs/InteractionBar";
 import { isMe } from "@/libs/isMe";
 import { backgroundColors } from "@/constants/backgroundColors";
-import { marked } from "marked";
 import parse from "html-react-parser";
 
 type blogPageTypes = {
@@ -27,7 +26,6 @@ async function getBlog(blogId: string) {
 const BlogPage = async ({ params }: blogPageTypes) => {
   const blog = await getBlog(params.blogId);
   const isMyBlog = await isMe(blog.author.id);
-  const htmlContent = marked(blog.content) as string;
 
   return (
     <>
@@ -74,7 +72,7 @@ const BlogPage = async ({ params }: blogPageTypes) => {
               <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
                 {blog.title}
               </h1>
-              <div className="prose my-10">{parse(htmlContent)}</div>
+              <div className="prose my-10">{parse(blog.content)}</div>
             </div>
           </section>
           <InteractionBar blog={blog} isMyBlog={isMyBlog} />

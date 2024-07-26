@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./Components/ui/button";
+import { Button } from "./components/ui/button";
 const NotFound = () => {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center bg-background p-5 md:flex-row md:justify-between">
