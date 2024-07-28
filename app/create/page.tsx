@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const page = async () => {
-  // Todo:handling error state.
   await axiosInstance
     .post(
       "/api/blog",

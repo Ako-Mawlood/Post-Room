@@ -1,6 +1,6 @@
-import type {Config} from "tailwindcss"
+import type { Config } from "tailwindcss";
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -18,6 +18,10 @@ const config = {
       },
     },
     extend: {
+    screens:{
+      "lg":"1130px"
+    }
+      ,
       fontFamily: {
         PT: ["PT Serif", "serif"],
       },
@@ -63,21 +67,187 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: {height: "0"},
-          to: {height: "var(--radix-accordion-content-height)"},
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {height: "var(--radix-accordion-content-height)"},
-          to: {height: "0"},
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "hsl(var(--foreground))",
+            h1: {
+              fontWeight: "700",
+              marginBottom: "0.5rem",
+              fontFamily: "PT Serif",
+            },
+            h2: {
+              fontWeight: "600",
+              marginBottom: "0.5rem",
+              fontFamily: "PT Serif",
+            },
+            h3: {
+              fontWeight: "500",
+              marginBottom: "0.5rem",
+              fontFamily: "PT Serif",
+            },
+            p: {
+              marginBottom: "1.5rem",
+              marginTop: "0",
+            },
+            'ul li::marker': {
+              color: "#8025f7", 
+            },
+            'ol li::marker': {
+              color: "#8025f7",  
+            },
+            blockquote: {
+              borderLeftColor: "#8025f7",  
+              borderLeftWidth: "4px",
+              paddingLeft: "1rem",
+              fontStyle: "italic",
+              fontSize:"2rem"
+            },
+            code: {
+              backgroundColor: "hsl(var(--background))",
+              padding: "0.2rem 0.4rem",
+              borderRadius: "0.2rem",
+            },
+            pre: {
+              backgroundColor: "hsl(var(--background))",
+              padding: "1rem",
+              borderRadius: "0.5rem",
+              overflowX: "auto",
+              code: {
+                color: "hsl(var(--primary))",
+              },
+            },
+            hr: {
+              borderColor: "hsl(var(--border))",
+            },
+            img: {
+              borderRadius: "0.5rem",
+            },
+            'ul': {
+              marginTop: "0",
+              marginBottom: "1rem",
+              paddingLeft: "1.5rem",
+            },
+            'ol': {
+              marginTop: "0",
+              marginBottom: "1rem",
+              paddingLeft: "1.5rem",
+            },
+            'ul li': {
+              marginBottom: "0.25rem",
+            },
+            'ol li': {
+              marginBottom: "0.25rem",
+            },
+            strong: {
+              color: "#8025f7",
+            },
+            'a': {
+              color: "#8025f7",
+              textDecoration: "underline",
+              '&:hover': {
+                color: "#7f5bd3",  
+              },
+            },
+          },
+        },
+        dark: {
+          css: {
+            color: "hsl(var(--foreground))",
+            h1: {
+              color: "hsl(var(--foreground))",
+              marginBottom: "0.5rem",
+              fontFamily: "PT Serif",
+            },
+            h2: {
+              color: "hsl(var(--foreground))",
+
+              marginBottom: "0.5rem",
+              fontFamily: "PT Serif",
+            },
+            h3: {
+              color: "hsl(var(--foreground))",
+              marginBottom: "0.5rem",
+              fontFamily: "PT Serif",
+            },
+            p: {
+              marginBottom: "1.5rem",
+              marginTop: "0",
+            },
+            'a': {
+              color: "#ed8aff", 
+              "&:hover": {
+                color: "#ed8aff", 
+              },
+              textDecorationColor: "#ed8aff", 
+            },
+            blockquote: {
+              borderLeftColor: "#ed8aff",
+              color: "hsl(var(--foreground-dark))",
+              fontStyle: "italic",
+              fontFamily: "PT Serif",
+              fontSize: "2rem",
+            },
+            'ul li::marker': {
+              color: "#ed8aff",
+            },
+            'ol li::marker': {
+              color: "#ed8aff",
+            },
+            code: {
+              backgroundColor: "hsl(var(--background-dark))",
+              color: "hsl(var(--primary-dark))",
+            },
+            pre: {
+              backgroundColor: "hsl(var(--background-dark))",
+              color: "hsl(var(--primary-dark))",
+            },
+            hr: {
+              borderColor: "hsl(var(--border-dark))",
+            },
+            img: {
+              borderRadius: "0.5rem",
+            },
+            'ul': {
+              marginTop: "0",
+              marginBottom: "1rem",
+              paddingLeft: "1.5rem",
+            },
+            'ol': {
+              marginTop: "0",
+              marginBottom: "1rem",
+              paddingLeft: "1.5rem",
+            },
+            'ul li': {
+              marginBottom: "0rem",
+            },
+            'ol li': {
+              marginBottom: "0rem",
+            },
+            strong: {
+              color: "#ed8aff",
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-} satisfies Config
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+  ],
+};
 
-export default config
+export default config;

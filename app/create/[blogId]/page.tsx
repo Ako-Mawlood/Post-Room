@@ -1,12 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/components/ui/tabs";
 import Sheet from "../../components/pages/create/Sheet";
 import axiosInstance from "@/libs/axiosInstance";
 import Link from "next/link";
@@ -14,55 +8,63 @@ import { CgEricsson as Logo } from "react-icons/cg";
 import { getCookie } from "cookies-next";
 import Preview from "@/app/components/pages/create/Preview";
 import SheetSkeleton from "@/app/components/pages/create/SheetSkeleton";
+import { AxiosError } from "axios";
+import Error from "@/app/components/Error";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/app/components/ui/tabs";
+import { notFound } from "next/navigation";
 
-interface Blog {
-  blogId: string;
-  content: string;
-  title: string;
-  imageUrl: string;
-  categories: { category: { name: string } }[];
-  draft: boolean;
-}
-
-async function fetchBlog(blogId: string): Promise<Blog | null> {
-  try {
-    const res = await axiosInstance(`/api/blog/${blogId}`, {
-      headers: {
-        Authorization: getCookie("token"),
-      },
-    });
-    return res.data;
-  } catch (err: any) {
-    console.error("Error fetching blog:", err.response?.data || err.message);
-    return null;
-  }
-}
+type categoryType = {
+  category: {
+    name: string;
+  };
+};
 
 const CreatePage = ({ params }: { params: { blogId: string } }) => {
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [content, setContent] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
+  const [isLoading, setIsloading] = useState(false);
+  const [error, setError] = useState<AxiosError | null>(null);
   useEffect(() => {
-    async function getBlog() {
-      const data = await fetchBlog(params.blogId);
-      if (data) {
-        setBlog(data);
-        setContent(data.content || "");
-        setTitle(data.title || "");
-        setImageUrl(data.imageUrl || "");
-        setSelectedCategories(
-          data.categories.map((category) => category.category.name) || [],
-        );
+    async function fetchBlog() {
+      try {
+        setIsloading(true);
+        const res = await axiosInstance(`/api/blog/${params.blogId}`, {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+
+        if (res.status === 200) {
+          setContent(res.data.content || "");
+          setTitle(res.data.title || "");
+          setImageUrl(res.data.imageUrl || "");
+          console.log(res.data.categories);
+          setSelectedCategories(
+            res.data.categories.map(
+              (category: categoryType) => category.category.name,
+            ) || [],
+          );
+        }
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          console.error("Error fetching blog:", err.response?.data);
+          setError(err);
+        }
+      } finally {
+        setIsloading(false);
       }
     }
 
-    getBlog();
+    fetchBlog();
   }, [params.blogId]);
-
-  if (!blog) {
+  if (isLoading) {
     return (
       <>
         <nav className="fixed left-0 top-0 m-3 flex items-center gap-1 font-bold text-primary">
@@ -76,6 +78,14 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
     );
   }
 
+  if (error) {
+    if (error.response?.status === 404) {
+      notFound();
+    } else {
+      return <Error />;
+    }
+  }
+
   return (
     <>
       <nav className="fixed left-0 top-0 z-40 flex h-16 w-full items-center gap-1 bg-card px-3 font-bold text-primary">
@@ -84,7 +94,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
         </Link>
         <h1 className="text-xl">Create</h1>
       </nav>
-      <div className="mt-20 w-full lg:mx-auto lg:w-[55rem]">
+      <div className="mt-48 file:w-full sm:mt-32 lg:mx-auto lg:mt-20 lg:w-[55rem]">
         <Tabs defaultValue="write">
           <TabsList className="bg-transparent">
             <TabsTrigger value="write">Write</TabsTrigger>
@@ -92,7 +102,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
           </TabsList>
           <TabsContent value="write">
             <Sheet
-              blog={blog}
+              blogId={params.blogId}
               content={content}
               setContent={setContent}
               title={title}

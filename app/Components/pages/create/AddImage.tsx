@@ -21,7 +21,7 @@ const AddImage = ({ editor }: { editor: any }) => {
     <>
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger>
-          <Image className="m-1 size-5" />
+          <Image className="size-9 p-2 text-accent-foreground hover:bg-muted sm:size-10" />
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-2">
           <h1>Image Url</h1>

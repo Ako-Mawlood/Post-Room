@@ -61,9 +61,10 @@ const BlogCard = async ({
             <CardTitle className="line-clamp-2 font-PT text-xl md:text-2xl">
               {title}
             </CardTitle>
-            <CardDescription className="prose line-clamp-2 text-sm text-accent-foreground">
+
+            <div className="prose line-clamp-2 text-sm text-accent-foreground">
               {parse(content)}
-            </CardDescription>
+            </div>
           </CardContent>
           <CardFooter className="items-cente flex w-full justify-between gap-2 p-0 text-xs">
             <div className="flex items-center">

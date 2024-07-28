@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import {RWebShare} from "react-web-share"
-import {LuShare as ShareIcon} from "react-icons/lu"
-import {Button} from "../../ui/button"
+import { RWebShare } from "react-web-share";
+import { LuShare as ShareIcon } from "react-icons/lu";
+import { Button } from "../../ui/button";
 
-const ShareBtn = ({blogId}: {blogId: string}) => {
+const ShareBtn = ({ blogId }: { blogId: string }) => {
   return (
     <RWebShare
       data={{
@@ -16,10 +16,10 @@ const ShareBtn = ({blogId}: {blogId: string}) => {
     >
       <Button size="sm" variant="outline">
         <ShareIcon size={20} />
-        <span>Share</span>{" "}
+        <span className="hidden sm:block">Share</span>{" "}
       </Button>
     </RWebShare>
-  )
-}
+  );
+};
 
-export default ShareBtn
+export default ShareBtn;

@@ -26,7 +26,7 @@ const AddLink = ({ editor }: { editor: any }) => {
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger>
           <Link
-            className="size-5"
+            className="size-9 p-2 text-accent-foreground hover:bg-muted sm:size-10"
             aria-disabled={
               !editor.can().chain().focus().toggleLink({ href: linkUrl }).run()
             }

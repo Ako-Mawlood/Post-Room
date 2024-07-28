@@ -26,17 +26,8 @@ import {
 } from "@/app/components/ui/form";
 import clsx from "clsx";
 
-type Blog = {
-  blogId: string;
-  content: string;
-  title: string;
-  imageUrl: string;
-  categories: { category: { name: string } }[];
-  draft: boolean;
-};
-
 type sheetProps = {
-  blog: Blog;
+  blogId: string;
   content: string;
   setContent: (content: string) => void;
   title: string;
@@ -50,7 +41,7 @@ type sheetProps = {
 type formDataType = z.infer<typeof createBlogSchema>;
 
 const Sheet = ({
-  blog,
+  blogId,
   content,
   setContent,
   title,
@@ -66,9 +57,9 @@ const Sheet = ({
   const debouncedTitle = useDebounce(title, 500);
   const form = useForm<formDataType>({
     defaultValues: {
-      imageUrl: blog?.imageUrl || "",
-      title: blog?.title || "",
-      content: blog?.content || "",
+      imageUrl: imageUrl || "",
+      title: title || "",
+      content: content || "",
       categories: selectedCategories,
     },
     resolver: zodResolver(createBlogSchema),
@@ -86,21 +77,21 @@ const Sheet = ({
   function handleAddBlog(data: formDataType) {
     axiosInstance
       .patch(
-        `/api/blog/${blog.blogId}`,
+        `/api/blog/${blogId}`,
         { ...data, categories: selectedCategories, imageUrl },
         {
           headers: { Authorization: getCookie("token") },
         },
       )
       .then(() => {
-        router.push(`/blogs/${blog.blogId}`);
+        router.push(`/blogs/${blogId}`);
       });
   }
 
   useEffect(() => {
     axiosInstance
       .put(
-        `/api/blog/${blog.blogId}`,
+        `/api/blog/${blogId}`,
         {
           content,
           title,
@@ -120,7 +111,7 @@ const Sheet = ({
   return (
     <>
       {isSaved && (
-        <span className="fixed right-28 top-5 z-50 p-1 text-sm text-muted-foreground">
+        <span className="fixed right-28 top-5 z-50 bg-card p-1 text-sm text-muted-foreground">
           Saved
         </span>
       )}

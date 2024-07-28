@@ -1,20 +1,28 @@
-"use client"
+"use client";
 
-import {Button} from "../../ui/button"
-import {LuBookmark as SaveIcon} from "react-icons/lu"
-import {IoBookmark as SavedIcon} from "react-icons/io5"
-import axiosInstance from "@/libs/axiosInstance"
-import {getCookie} from "cookies-next"
-import {useState, useCallback} from "react"
-import clsx from "clsx"
+import { Button } from "../../ui/button";
+import { LuBookmark as SaveIcon } from "react-icons/lu";
+import { IoBookmark as SavedIcon } from "react-icons/io5";
+import axiosInstance from "@/libs/axiosInstance";
+import { getCookie } from "cookies-next";
+import { useState, useCallback } from "react";
+import clsx from "clsx";
 
-const SaveBtn = ({isSaved, blogId, isMyBlog}: {isSaved: boolean; blogId: string; isMyBlog: boolean}) => {
-  const [isBlogSaved, setIsBlogSaved] = useState(isSaved)
-  const [isPending, setIsPending] = useState(false)
+const SaveBtn = ({
+  isSaved,
+  blogId,
+  isMyBlog,
+}: {
+  isSaved: boolean;
+  blogId: string;
+  isMyBlog: boolean;
+}) => {
+  const [isBlogSaved, setIsBlogSaved] = useState(isSaved);
+  const [isPending, setIsPending] = useState(false);
   const handleSaveBlog = useCallback(async () => {
     try {
-      setIsBlogSaved(true)
-      setIsPending(true)
+      setIsBlogSaved(true);
+      setIsPending(true);
       await axiosInstance.post(
         `/api/list/blog/${blogId}`,
         {},
@@ -22,30 +30,30 @@ const SaveBtn = ({isSaved, blogId, isMyBlog}: {isSaved: boolean; blogId: string;
           headers: {
             Authorization: getCookie("token"),
           },
-        }
-      )
+        },
+      );
     } catch (err) {
-      setIsBlogSaved(false)
+      setIsBlogSaved(false);
     } finally {
-      setIsPending(false)
+      setIsPending(false);
     }
-  }, [blogId])
+  }, [blogId]);
 
   const handleUnSaveBlog = useCallback(async () => {
     try {
-      setIsBlogSaved(false)
-      setIsPending(true)
+      setIsBlogSaved(false);
+      setIsPending(true);
       await axiosInstance.delete(`/api/list/blog/${blogId}`, {
         headers: {
           Authorization: getCookie("token"),
         },
-      })
+      });
     } catch (err) {
-      setIsBlogSaved(true)
+      setIsBlogSaved(true);
     } finally {
-      setIsPending(false)
+      setIsPending(false);
     }
-  }, [blogId])
+  }, [blogId]);
 
   if (isBlogSaved) {
     return (
@@ -54,12 +62,12 @@ const SaveBtn = ({isSaved, blogId, isMyBlog}: {isSaved: boolean; blogId: string;
         disabled={isPending}
         size="sm"
         variant="outline"
-        className={clsx("disabled:opacity-100", {hidden: isMyBlog})}
+        className={clsx("disabled:opacity-100", { hidden: isMyBlog })}
       >
         <SavedIcon size={20} />
-        <span>Saved</span>
+        <span className="hidden sm:block">Saved</span>
       </Button>
-    )
+    );
   }
   return (
     <Button
@@ -67,12 +75,12 @@ const SaveBtn = ({isSaved, blogId, isMyBlog}: {isSaved: boolean; blogId: string;
       disabled={isPending}
       size="sm"
       variant="outline"
-      className={clsx("disabled:opacity-100", {hidden: isMyBlog})}
+      className={clsx("disabled:opacity-100", { hidden: isMyBlog })}
     >
       <SaveIcon size={20} />
-      <span>Save</span>
+      <span className="hidden sm:block">Save</span>
     </Button>
-  )
-}
+  );
+};
 
-export default SaveBtn
+export default SaveBtn;

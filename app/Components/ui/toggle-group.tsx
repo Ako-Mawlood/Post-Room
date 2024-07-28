@@ -22,7 +22,7 @@ const ToggleGroup = React.forwardRef<
   <ToggleGroupPrimitive.Root
     ref={ref}
     className={cn(
-      "flex items-center justify-center gap-1 bg-accent-foreground text-accent",
+      "text-priymary flex items-center justify-center gap-1 bg-card",
       className,
     )}
     {...props}

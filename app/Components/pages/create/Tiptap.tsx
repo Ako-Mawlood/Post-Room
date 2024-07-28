@@ -1,7 +1,6 @@
 import StarterKit from "@tiptap/starter-kit";
 import ToolBar from "./ToolBar";
 import Youtube from "@tiptap/extension-youtube";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { EditorContent, useEditor } from "@tiptap/react";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
@@ -10,7 +9,7 @@ import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Image from "@tiptap/extension-image";
-
+import { TextStyle } from "@tiptap/extension-text-style";
 const Tiptap = ({ content, setContent, form }: any) => {
   const editor = useEditor({
     content,
@@ -19,6 +18,7 @@ const Tiptap = ({ content, setContent, form }: any) => {
         codeBlock: false,
       }),
       Underline,
+      TextStyle,
       TextAlign.configure({
         types: [
           "heading",
@@ -51,8 +51,7 @@ const Tiptap = ({ content, setContent, form }: any) => {
     ],
     editorProps: {
       attributes: {
-        class:
-          "w-full min-h-96 mx-auto pg-transparent p-2 text-xl outline-none",
+        class: "w-full min-h-96 mx-auto pg-transparent p-2  outline-none",
       },
     },
     onUpdate: ({ editor }) => {
@@ -70,7 +69,7 @@ const Tiptap = ({ content, setContent, form }: any) => {
     <div className="flex w-full flex-col">
       <ToolBar editor={editor} />
       <div
-        className={clsx("dark:prose-dark prose relative", {
+        className={clsx("prose relative dark:prose-dark", {
           "mt-4 border border-red-500": form.formState.errors.content,
         })}
       >

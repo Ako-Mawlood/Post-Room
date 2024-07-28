@@ -18,6 +18,7 @@ import {
   AlignCenter,
   AlignLeft,
   AlignRight,
+  ParkingSquare as Paragraph,
 } from "lucide-react";
 import { ToggleGroupItem } from "@/app/components/ui/toggle-group";
 import { ToggleGroup } from "@/app/components/ui/toggle-group";
@@ -25,16 +26,20 @@ import { Editor } from "@tiptap/react";
 import AddVideo from "./AddVideo";
 import AddLink from "./AddLink";
 import AddImage from "./AddImage";
+import { Button } from "../../ui/button";
 
 function ToolBar({ editor }: { editor: Editor | null }) {
   if (!editor) {
     return null;
   }
+  function handleTextAlign(alignment: "center" | "left" | "right") {
+    editor?.chain().focus().setTextAlign(alignment).run();
+  }
 
   return (
     <ToggleGroup
       type="multiple"
-      className="fixed top-2 z-50 mx-8 flex w-fit flex-wrap justify-start bg-card p-2 text-black dark:bg-neutral-100"
+      className="fixed left-1/2 top-14 z-40 flex w-full -translate-x-1/2 flex-wrap justify-center p-1 lg:top-3 lg:w-fit lg:flex-nowrap"
     >
       <ToggleGroupItem
         variant={editor.isActive("bold") ? "outline" : "default"}
@@ -46,7 +51,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         value="bold"
         aria-label="Toggle bold"
       >
-        <Bold className="h-6 w-6" />
+        <Bold className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         variant={editor.isActive("italic") ? "outline" : "default"}
@@ -58,7 +63,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         value="italic"
         aria-label="Toggle italic"
       >
-        <Italic className="h-6 w-6" />
+        <Italic className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         variant={editor.isActive("underline") ? "outline" : "default"}
@@ -68,9 +73,9 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         }}
         disabled={!editor.can().chain().focus().toggleUnderline().run()}
         value="underline"
-        aria-label="Toggle underlines"
+        aria-label="Toggle underline"
       >
-        <Underline className="h-6 w-6" />
+        <Underline className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         variant={editor.isActive("strike") ? "outline" : "default"}
@@ -80,9 +85,9 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         }}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         value="strike"
-        aria-label="Toggle blockquote"
+        aria-label="Toggle strikethrough"
       >
-        <Strikethrough className="h-6 w-6" />
+        <Strikethrough className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         variant={editor.isActive("highlight") ? "outline" : "default"}
@@ -94,40 +99,63 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         value="highlight"
         aria-label="Toggle highlight"
       >
-        <Highlighter className="h-6 w-6" />
+        <Highlighter className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
-        variant={editor.isActive("left") ? "outline" : "default"}
-        onClick={() => editor.chain().focus().setTextAlign("left").run()}
-        className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
-        value="left"
-        aria-label="Toggle align left"
+        variant={editor.isActive("code") ? "outline" : "default"}
+        onClick={(e) => {
+          e.preventDefault();
+          editor.chain().focus().toggleCode().run();
+        }}
+        disabled={!editor.can().chain().focus().toggleCode().run()}
+        value="code"
+        aria-label="Toggle code"
       >
-        <AlignLeft className="h-6 w-6" />
+        <Code className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
-        variant={editor.isActive("center") ? "outline" : "default"}
-        onClick={() => editor.chain().focus().setTextAlign("center").run()}
-        className={editor.isActive({ textAlign: "center" }) ? "is-active" : ""}
-        value="center"
-        aria-label="Toggle align center"
+        variant={editor.isActive("bulletList") ? "outline" : "default"}
+        onClick={(e) => {
+          e.preventDefault();
+          editor.chain().focus().toggleBulletList().run();
+        }}
+        disabled={!editor.can().chain().focus().toggleBulletList().run()}
+        value="bulletList"
+        aria-label="Toggle bullet list"
       >
-        <AlignCenter className="h-6 w-6" />
+        <List className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
-        variant={editor.isActive("right") ? "outline" : "default"}
-        onClick={() => editor.chain().focus().setTextAlign("right").run()}
-        className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}
-        value="center"
-        aria-label="Toggle align right"
+        variant={editor.isActive("orderedList") ? "outline" : "default"}
+        onClick={(e) => {
+          e.preventDefault();
+          editor.chain().focus().toggleOrderedList().run();
+        }}
+        disabled={!editor.can().chain().focus().toggleOrderedList().run()}
+        value="orderedList"
+        aria-label="Toggle ordered list"
       >
-        <AlignRight className="h-6 w-6" />
+        <ListOrdered className="size-5 sm:size-6" />
       </ToggleGroupItem>
+      <ToggleGroupItem
+        variant={editor.isActive("blockquote") ? "outline" : "default"}
+        onClick={(e) => {
+          e.preventDefault();
+          editor.chain().focus().toggleBlockquote().run();
+        }}
+        disabled={!editor.can().chain().focus().toggleBlockquote().run()}
+        value="blockquote"
+        aria-label="Toggle blockquote"
+      >
+        <QuoteIcon className="size-5 sm:size-6" />
+      </ToggleGroupItem>
+
+      {/* Headings */}
       <ToggleGroupItem
         variant={
           editor.isActive("heading", { level: 1 }) ? "outline" : "default"
         }
-        onClick={(e: any) => {
+        onClick={(e) => {
           e.preventDefault();
           editor.chain().focus().toggleHeading({ level: 1 }).run();
         }}
@@ -135,9 +163,9 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           !editor.can().chain().focus().toggleHeading({ level: 1 }).run()
         }
         value="heading1"
-        aria-label="Toggle heading 1"
+        aria-label="Heading 1"
       >
-        <Heading1 className="h-6 w-6" />
+        <Heading1 className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         variant={
@@ -151,9 +179,9 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           !editor.can().chain().focus().toggleHeading({ level: 2 }).run()
         }
         value="heading2"
-        aria-label="Toggle heading 2"
+        aria-label="Heading 2"
       >
-        <Heading2 className="h-6 w-6" />
+        <Heading2 className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         variant={
@@ -167,58 +195,42 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           !editor.can().chain().focus().toggleHeading({ level: 3 }).run()
         }
         value="heading3"
-        aria-label="Toggle heading 3"
+        aria-label="Heading 3"
       >
-        <Heading3 className="h-6 w-6" />
+        <Heading3 className="size-5 sm:size-6" />
       </ToggleGroupItem>
-      <ToggleGroupItem
-        variant={editor.isActive("code") ? "outline" : "default"}
-        onClick={(e) => {
-          e.preventDefault();
-          editor.chain().focus().toggleCode().run();
-        }}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        value="code"
-        aria-label="Toggle code"
+
+      <Button
+        onClick={() => handleTextAlign("left")}
+        value="left"
+        aria-label="Align left"
+        type="button"
+        variant={editor.isActive({ textAlign: "left" }) ? "default" : "ghost"}
+        className="h-8 rounded-lg px-2 duration-0"
       >
-        <Code className="h-6 w-6" />
-      </ToggleGroupItem>
-      <ToggleGroupItem
-        variant={editor.isActive("bulletList") ? "outline" : "default"}
-        onClick={(e) => {
-          e.preventDefault();
-          editor.chain().focus().toggleBulletList().run();
-        }}
-        disabled={!editor.can().chain().focus().toggleBulletList().run()}
-        value="bulletList"
-        aria-label="Toggle bullet list"
+        <AlignLeft className="size-5 sm:size-6" />
+      </Button>
+      <Button
+        onClick={() => handleTextAlign("center")}
+        type="button"
+        value="center"
+        aria-label="Align center"
+        variant={editor.isActive({ textAlign: "center" }) ? "default" : "ghost"}
+        className="h-8 rounded-lg px-2 duration-0"
       >
-        <List className="h-6 w-6" />
-      </ToggleGroupItem>
-      <ToggleGroupItem
-        variant={editor.isActive("orderedList") ? "outline" : "default"}
-        onClick={(e) => {
-          e.preventDefault();
-          editor.chain().focus().toggleOrderedList().run();
-        }}
-        disabled={!editor.can().chain().focus().toggleOrderedList().run()}
-        value="orderedList"
-        aria-label="Toggle ordered list"
+        <AlignCenter className="size-5 sm:size-6" />
+      </Button>
+      <Button
+        onClick={() => handleTextAlign("right")}
+        type="button"
+        value="right"
+        aria-label="Align right"
+        variant={editor.isActive({ textAlign: "right" }) ? "default" : "ghost"}
+        className="h-8 rounded-lg px-2 duration-0"
       >
-        <ListOrdered className="h-6 w-6" />
-      </ToggleGroupItem>
-      <ToggleGroupItem
-        variant={editor.isActive("blockquote") ? "outline" : "default"}
-        onClick={(e) => {
-          e.preventDefault();
-          editor.chain().focus().toggleBlockquote().run();
-        }}
-        disabled={!editor.can().chain().focus().toggleBlockquote().run()}
-        value="blockquote"
-        aria-label="Toggle blockquote"
-      >
-        <QuoteIcon className="h-6 w-6" />
-      </ToggleGroupItem>
+        <AlignRight className="size-5 sm:size-6" />
+      </Button>
+
       <AddImage editor={editor} />
       <AddLink editor={editor} />
       <AddVideo editor={editor} />
@@ -228,9 +240,9 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           editor.chain().focus().undo().run();
         }}
         value="undo"
-        aria-label="Toggle blockquote"
+        aria-label="Undo"
       >
-        <Undo className="h-6 w-6" />
+        <Undo className="size-5 sm:size-6" />
       </ToggleGroupItem>
       <ToggleGroupItem
         onClick={(e) => {
@@ -238,9 +250,9 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           editor.chain().focus().redo().run();
         }}
         value="redo"
-        aria-label="Toggle blockquote"
+        aria-label="Redo"
       >
-        <Redo className="h-6 w-6" />
+        <Redo className="size-5 sm:size-6" />
       </ToggleGroupItem>
     </ToggleGroup>
   );

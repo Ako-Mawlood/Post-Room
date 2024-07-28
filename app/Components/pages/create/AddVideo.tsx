@@ -28,7 +28,7 @@ const AddVideo = ({ editor }: { editor: any }) => {
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
       <PopoverTrigger>
-        <Youtube className="m-1 h-6 w-6" />
+        <Youtube className="size-9 p-2 text-accent-foreground hover:bg-muted sm:size-10" />
       </PopoverTrigger>
       <PopoverContent className="flex flex-col gap-2">
         <h1>Video Url</h1>

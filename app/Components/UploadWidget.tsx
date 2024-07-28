@@ -42,7 +42,11 @@ const UploadWidget = ({
       uploadPreset="ebh5pne5"
     >
       {({ open }) => {
-        return <div onClick={() => open()}>{children}</div>;
+        return (
+          <div className="w-fit" onClick={() => open()}>
+            {children}
+          </div>
+        );
       }}
     </CldUploadWidget>
   );

@@ -8,6 +8,7 @@ type previewPropsType = {
   imageUrl: string | "none";
   selectedCategories: string[];
 };
+
 const Preview = ({
   content,
   title,
@@ -15,7 +16,7 @@ const Preview = ({
   selectedCategories,
 }: previewPropsType) => {
   return (
-    <section className="relative min-h-[80vh] rounded-lg bg-gray-100 p-6 dark:bg-muted">
+    <section className="relative min-h-[80vh] px-6">
       <h1 className="w-full border-b-2 py-4 font-PT text-3xl text-accent-foreground">
         {title}
       </h1>
@@ -28,12 +29,13 @@ const Preview = ({
             "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
           }
           fill={true}
+          sizes="(max-width: 639px) 400px, (min-width: 640px) and (max-width: 767px) 700px, (min-width: 768px) and (max-width: 1023px) 1064px, (min-width: 1024px) 768px"
           quality={100}
           alt="Blog image"
         />
       </div>
       {selectedCategories && (
-        <ul className="mt-2 flex gap-3">
+        <ul className="mb-20 mt-4 flex flex-wrap gap-3">
           {selectedCategories.map((category, index) => (
             <div key={index} className="flex gap-1">
               <span
@@ -48,7 +50,9 @@ const Preview = ({
           ))}
         </ul>
       )}
-      <div className="prose">{parse(content)}</div>
+      <article className="prose w-full dark:prose-dark">
+        {parse(content)}
+      </article>
     </section>
   );
 };

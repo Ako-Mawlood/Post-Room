@@ -110,7 +110,7 @@ const AddCategory = ({
   return (
     <div className="mt-4 flex w-full flex-col items-start justify-start">
       <div className="flex">
-        <ul className="flex items-center">
+        <ul className="flex flex-wrap items-center">
           {selectedCategories.map((category: any, index: number) => (
             <li key={index} className="flex items-center rounded-sm p-1">
               <div

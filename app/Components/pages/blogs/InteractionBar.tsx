@@ -39,7 +39,7 @@ const InteractionBar = ({ blog, isMyBlog }: BlogMetaProps) => {
   const [isBlogStarred, setIsBlogStarred] = useState(blog.starred);
   const [starCount, setStarCount] = useState(blog._count.stars);
   return (
-    <section className="flex items-center justify-between py-4">
+    <section className="flex items-center justify-between border-y-2 py-4">
       <div className="flex items-center gap-2">
         {" "}
         <Link href={`/@${blog.author.username}`}>
