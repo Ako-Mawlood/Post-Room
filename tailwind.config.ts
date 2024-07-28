@@ -173,7 +173,6 @@ const config: Config = {
             },
             h2: {
               color: "hsl(var(--foreground))",
-
               marginBottom: "0.5rem",
               fontFamily: "PT Serif",
             },

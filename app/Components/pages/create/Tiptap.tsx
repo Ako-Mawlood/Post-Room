@@ -62,7 +62,7 @@ const Tiptap = ({ content, setContent, form }: any) => {
   });
 
   if (!editor) {
-    return null;
+    return;
   }
 
   return (
@@ -89,11 +89,3 @@ const Tiptap = ({ content, setContent, form }: any) => {
 };
 
 export default Tiptap;
-function ReactNodeViewRenderer(
-  CodeBlockComponent: ({
-    node,
-    updateAttributes,
-  }: any) => import("react").JSX.Element,
-): import("@tiptap/react").NodeViewRenderer {
-  throw new Error("Function not implemented.");
-}

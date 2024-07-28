@@ -4,7 +4,7 @@ const Error = () => {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center p-5 md:flex-row">
       <Image
-        className="m-10 w-80 md:order-2"
+        className="m-10 w-64 md:order-2"
         src="/assets/error.svg"
         width={400}
         height={400}

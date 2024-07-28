@@ -24,6 +24,7 @@ const Preview = ({
       <div className="relative h-[50vh] w-full overflow-hidden">
         <Image
           className="my-2 rounded-lg object-cover"
+          /*Todo:Default iamges should come from backend*/
           src={
             imageUrl ||
             "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
@@ -37,7 +38,7 @@ const Preview = ({
       {selectedCategories && (
         <ul className="mb-20 mt-4 flex flex-wrap gap-3">
           {selectedCategories.map((category, index) => (
-            <div key={index} className="flex gap-1">
+            <li key={index} className="flex gap-1">
               <span
                 style={{
                   color: `rgb(${backgroundColors[index]},0.9)`,
@@ -46,7 +47,7 @@ const Preview = ({
                 #
               </span>
               <span className="text-primary">{category}</span>
-            </div>
+            </li>
           ))}
         </ul>
       )}

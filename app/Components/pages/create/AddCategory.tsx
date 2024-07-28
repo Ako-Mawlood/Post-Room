@@ -1,24 +1,37 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Button } from "../../ui/button";
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { backgroundColors } from "@/constants/backgroundColors";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { X as Remove } from "lucide-react";
 import clsx from "clsx";
+import { UseFormReturn } from "react-hook-form";
+import z from "zod";
+import { createBlogSchema } from "@/libs/validations";
+
+type formDataType = z.infer<typeof createBlogSchema>;
+
+type AddCategoryProps = {
+  form: UseFormReturn<formDataType>;
+  selectedCategories: string[];
+  setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+};
 
 const AddCategory = ({
   form,
   selectedCategories,
   setSelectedCategories,
-}: any) => {
-  const [formValue, setFormValue] = useState("");
-  const [isCategoryInputOnFocus, setIsCategoryInputOnFocus] = useState(false);
-  const [categories, setCategories] = useState<string[] | undefined>(undefined);
+}: AddCategoryProps) => {
+  const [addCategoryInputValue, setAddCategoryInputValue] = useState("");
+  const [isAddCategoryInputOnFocus, setIsAddCategoryInputOnFocus] =
+    useState(false);
+  const [categories, setCategories] = useState<{ name: string }[] | undefined>(
+    undefined,
+  );
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [categoryInputValue, setCategoryInputValue] = useState("");
+  const [editingInputValue, setEditingInputValue] = useState("");
   const [editingCategoryIndex, setEditingCategoryIndex] = useState<
     number | null
   >(null);
@@ -26,10 +39,14 @@ const AddCategory = ({
   const categoriesRef = useRef<HTMLDivElement>(null);
   const editingInputRef = useRef<HTMLInputElement>(null);
 
-  const filteredCategories = categories?.filter((category: any) => {
-    if (formValue === "") return !selectedCategories.includes(category.name);
+  //Filtering categories depending of addCategoryInputValue state.
+  const filteredCategories = categories?.filter((category) => {
+    if (addCategoryInputValue === "")
+      return !selectedCategories.includes(category.name);
     return (
-      category.name.toLowerCase().includes(formValue.toLowerCase()) &&
+      category.name
+        .toLowerCase()
+        .includes(addCategoryInputValue.toLowerCase()) &&
       !selectedCategories.includes(category.name)
     );
   });
@@ -38,16 +55,22 @@ const AddCategory = ({
     if (e.key === "Enter") {
       e.preventDefault();
     }
-    if (e.key === " " && formValue.trim() !== "") {
-      if (!selectedCategories.includes(formValue)) {
-        setSelectedCategories([...selectedCategories, formValue.trim()]);
-        setFormValue("");
+    if (
+      e.key === "Enter" ||
+      (e.key === " " && addCategoryInputValue.trim() !== "")
+    ) {
+      if (!selectedCategories.includes(addCategoryInputValue)) {
+        setSelectedCategories([
+          ...selectedCategories,
+          addCategoryInputValue.trim(),
+        ]);
+        setAddCategoryInputValue("");
       }
     } else if (category !== "") {
       if (!selectedCategories.includes(category)) {
         setSelectedCategories([...selectedCategories, category]);
       }
-      setFormValue("");
+      setAddCategoryInputValue("");
     }
   };
 
@@ -58,7 +81,7 @@ const AddCategory = ({
   };
 
   const handleFocus = () => {
-    setIsCategoryInputOnFocus(true);
+    setIsAddCategoryInputOnFocus(true);
   };
 
   const handleUpdateCategory = (e: any, index: number) => {
@@ -85,7 +108,7 @@ const AddCategory = ({
       editingInputRef.current.focus();
     }
     if (selectedCategories.length >= 4) {
-      setIsCategoryInputOnFocus(false);
+      setIsAddCategoryInputOnFocus(false);
     }
     form.setValue("categories", selectedCategories);
   }, [selectedCategories, editingCategoryIndex]);
@@ -97,7 +120,7 @@ const AddCategory = ({
         !categoriesRef.current.contains(event.target as Node) &&
         !inputRef.current?.contains(event.target as Node)
       ) {
-        setIsCategoryInputOnFocus(false);
+        setIsAddCategoryInputOnFocus(false);
       }
     };
 
@@ -153,11 +176,11 @@ const AddCategory = ({
           <input
             ref={inputRef}
             onChange={(e) => {
-              setFormValue(e.target.value.split(" ").join(""));
-              setCategoryInputValue(e.target.value.split(" ").join(""));
+              setAddCategoryInputValue(e.target.value.split(" ").join(""));
+              setEditingInputValue(e.target.value.split(" ").join(""));
             }}
             onFocus={handleFocus}
-            value={formValue}
+            value={addCategoryInputValue}
             onKeyDown={(e) => handleAddCategory(e, "")}
             placeholder={
               selectedCategories.length
@@ -172,7 +195,7 @@ const AddCategory = ({
         )}
       </div>
 
-      {isCategoryInputOnFocus && selectedCategories.length < 4 && (
+      {isAddCategoryInputOnFocus && selectedCategories.length < 4 && (
         <div
           ref={categoriesRef}
           className="modal-open-animation flex h-52 w-full flex-col overflow-y-scroll rounded-lg border bg-card p-2 shadow-md dark:bg-neutral-900"
@@ -209,12 +232,12 @@ const AddCategory = ({
             <button
               type="button"
               onClick={(e) => {
-                handleAddCategory(e, categoryInputValue);
+                handleAddCategory(e, editingInputValue);
                 if (inputRef) inputRef.current?.focus();
               }}
               className="flex h-auto w-full flex-col p-4 text-start hover:bg-muted"
             >
-              <span># {categoryInputValue}</span>
+              <span># {editingInputValue}</span>
             </button>
           )}
         </div>

@@ -1,25 +1,30 @@
-"use client"
+"use client";
 
-import UploadWidget from "./UploadWidget"
-import {Avatar, AvatarFallback, AvatarImage} from "./ui/avatar"
-import {profileOwnerType} from "../types/profileOwnerType"
-import clsx from "clsx"
-import {useState} from "react"
-import {LuImagePlus as AddImage} from "react-icons/lu"
+import UploadWidget from "./UploadWidget";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { profileOwnerType } from "../types/profileOwnerType";
+import clsx from "clsx";
+import { useState } from "react";
+import { LuImagePlus as AddImage } from "react-icons/lu";
 
 type profileImageEditerType = {
-  form: any
-  profileOwner: profileOwnerType
-}
-const ProfileImageUpdater = ({form, profileOwner}: profileImageEditerType) => {
-  const [profileImage, setProfileImage] = useState<string | null>(profileOwner.imageUrl)
+  form: any;
+  profileOwner: profileOwnerType;
+};
+const ProfileImageUpdater = ({
+  form,
+  profileOwner,
+}: profileImageEditerType) => {
+  const [profileImage, setProfileImage] = useState(profileOwner.imageUrl);
 
   return (
-    <div className="flex gap-8 w-full my-5">
-      <UploadWidget form={form} setProfileImage={setProfileImage}>
+    <div className="my-5 flex w-full gap-8">
+      <UploadWidget form={form} setImageUrl={setProfileImage}>
         <Avatar className="size-16 cursor-pointer">
           <AvatarFallback>
-            <AddImage className={clsx("size-6 text-muted", {hidden: profileImage})} />
+            <AddImage
+              className={clsx("size-6 text-muted", { hidden: profileImage })}
+            />
           </AvatarFallback>
           <AvatarImage src={profileImage as string} />
         </Avatar>
@@ -27,7 +32,7 @@ const ProfileImageUpdater = ({form, profileOwner}: profileImageEditerType) => {
 
       <div className="flex flex-col justify-between">
         <div className="flex gap-4 text-xs font-semibold">
-          <UploadWidget form={form} setProfileImage={setProfileImage}>
+          <UploadWidget form={form} setImageUrl={setProfileImage}>
             <button type="button" className="text-green-600">
               {profileImage ? "Update" : "Upload"}
             </button>
@@ -35,10 +40,10 @@ const ProfileImageUpdater = ({form, profileOwner}: profileImageEditerType) => {
           <button
             type="button"
             onClick={() => {
-              setProfileImage(null)
-              form.setValue("imageUrl", "none")
+              setProfileImage("none");
+              form.setValue("imageUrl", "none");
             }}
-            className={clsx("text-destructive", {hidden: !profileImage})}
+            className={clsx("text-destructive", { hidden: !profileImage })}
           >
             Remove
           </button>
@@ -48,7 +53,7 @@ const ProfileImageUpdater = ({form, profileOwner}: profileImageEditerType) => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileImageUpdater
+export default ProfileImageUpdater;
