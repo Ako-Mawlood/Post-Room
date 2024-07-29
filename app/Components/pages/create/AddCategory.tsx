@@ -55,10 +55,7 @@ const AddCategory = ({
     if (e.key === "Enter") {
       e.preventDefault();
     }
-    if (
-      e.key === "Enter" ||
-      (e.key === " " && addCategoryInputValue.trim() !== "")
-    ) {
+    if (e.key === "Enter" && addCategoryInputValue.trim() !== "") {
       if (!selectedCategories.includes(addCategoryInputValue)) {
         setSelectedCategories([
           ...selectedCategories,
@@ -75,9 +72,7 @@ const AddCategory = ({
   };
 
   const handleRemoveCategory = (category: string) => {
-    setSelectedCategories(
-      selectedCategories.filter((c: any) => category !== c),
-    );
+    setSelectedCategories(selectedCategories.filter((c) => category !== c));
   };
 
   const handleFocus = () => {
@@ -134,11 +129,11 @@ const AddCategory = ({
     <div className="mt-4 flex w-full flex-col items-start justify-start">
       <div className="flex">
         <ul className="flex flex-wrap items-center">
-          {selectedCategories.map((category: any, index: number) => (
+          {selectedCategories.map((category, index: number) => (
             <li key={index} className="flex items-center rounded-sm p-1">
               <div
                 onClick={() => editingInputRef.current?.focus()}
-                className="flex w-fit items-center rounded-lg bg-blue-100/50 text-black"
+                className="flex w-fit items-center rounded-lg border dark:border-gray-700"
               >
                 {isEditing && editingCategoryIndex === index ? (
                   <input
@@ -148,7 +143,7 @@ const AddCategory = ({
                       setEditingCategory(e.target.value.replace(/^#\s*/, ""))
                     }
                     onBlur={(e) => handleUpdateCategory(e, index)}
-                    className="text-md h-8 bg-transparent text-xs text-black outline-none"
+                    className="text-md h-8 bg-transparent text-xs outline-none"
                   />
                 ) : (
                   <button
@@ -158,7 +153,7 @@ const AddCategory = ({
                       setEditingCategoryIndex(index);
                     }}
                     type="button"
-                    className="h-8 rounded-lg bg-blue-100/50 px-1 text-xs"
+                    className="h-8 rounded-lg px-1 text-xs"
                   >
                     # {category}
                   </button>
@@ -166,7 +161,7 @@ const AddCategory = ({
                 <Remove
                   type="button"
                   onClick={() => handleRemoveCategory(category)}
-                  className="mr-2 size-5 cursor-pointer rounded-full text-black shadow-inner duration-150"
+                  className="mr-2 size-4 cursor-pointer"
                 />
               </div>
             </li>
@@ -188,7 +183,7 @@ const AddCategory = ({
                 : "Add up to 4 tags..."
             }
             className={clsx(
-              "w-auto bg-transparent placeholder-muted-foreground outline-none",
+              "ml-1 w-auto bg-transparent placeholder-muted-foreground outline-none",
               { hidden: selectedCategories.length >= 4 },
             )}
           />
@@ -202,7 +197,7 @@ const AddCategory = ({
         >
           <h1 className="border-b p-2 text-xl font-semibold">Tags</h1>
           {filteredCategories?.length ? (
-            filteredCategories.map((category: any, index: number) => (
+            filteredCategories.map((category, index: number) => (
               <button
                 key={index}
                 type="button"

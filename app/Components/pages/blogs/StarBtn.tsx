@@ -7,21 +7,38 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { useState, useCallback, SetStateAction, Dispatch } from "react";
 
-type starBtnPropsType = {
+type StarBtnPropsType = {
   isBlogStarred: boolean;
   setIsBlogStarred: Dispatch<SetStateAction<boolean>>;
   starCount: number;
   setStarCount: Dispatch<SetStateAction<number>>;
   blogId: string;
+  handleOpenAuthModal: (isNewUser: boolean) => void;
 };
+
 const StarBtn = ({
   isBlogStarred,
   setIsBlogStarred,
   starCount,
   setStarCount,
   blogId,
-}: starBtnPropsType) => {
+  handleOpenAuthModal,
+}: StarBtnPropsType) => {
   const [isLoading, setIsLoading] = useState(false);
+  const token = getCookie("token");
+
+  if (!token) {
+    return (
+      <Button
+        onClick={() => handleOpenAuthModal(true)}
+        size="sm"
+        variant="outline"
+      >
+        {isBlogStarred ? <StaredIcon size={20} /> : <StarIcon size={20} />}
+        <span>{starCount}</span>
+      </Button>
+    );
+  }
 
   const handleStar = useCallback(async () => {
     setIsLoading(true);
@@ -33,7 +50,7 @@ const StarBtn = ({
         {},
         {
           headers: {
-            Authorization: getCookie("token"),
+            Authorization: token,
           },
         },
       );
@@ -43,16 +60,18 @@ const StarBtn = ({
     } finally {
       setIsLoading(false);
     }
-  }, [blogId]);
+  }, [blogId, token]);
 
   const handleUnStar = useCallback(async () => {
+    if (!token) return;
+
     setIsLoading(true);
     setIsBlogStarred(false);
     setStarCount((prevCount) => prevCount - 1);
     try {
       await axiosInstance.delete(`/api/blog/star/${blogId}`, {
         headers: {
-          Authorization: getCookie("token"),
+          Authorization: token,
         },
       });
     } catch (err) {
@@ -61,7 +80,7 @@ const StarBtn = ({
     } finally {
       setIsLoading(false);
     }
-  }, [blogId]);
+  }, [blogId, token]);
 
   return (
     <Button
@@ -69,7 +88,7 @@ const StarBtn = ({
       size="sm"
       variant="outline"
       disabled={isLoading}
-      className="disabled:opacity-100"
+      className="disabled:cursor-pointer"
     >
       {isBlogStarred ? <StaredIcon size={20} /> : <StarIcon size={20} />}
       <span>{starCount}</span>

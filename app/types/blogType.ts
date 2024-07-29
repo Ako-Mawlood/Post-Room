@@ -1,4 +1,5 @@
 export type blogType = {
+  author:{id:number,imageUrl:string,fullname:string,username:string}
   id: number
   blogId: string
   title: string
@@ -6,6 +7,9 @@ export type blogType = {
   imageUrl: string | null
   createdAt: string
   updatedAt: string
+  following:boolean
+  starred:boolean
+  saved:boolean
   categories: {
     id: number
     categoryId: number
@@ -14,5 +18,6 @@ export type blogType = {
   }[]
   _count: {
     stars: number
+    comments:any
   }
 }

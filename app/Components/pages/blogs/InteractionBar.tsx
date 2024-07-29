@@ -1,10 +1,6 @@
 "use client";
+
 import Link from "next/link";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/components/ui/avatar";
 import { Button } from "@/app/components/ui/button";
 import { LuMessageCircle as CommentIcon, LuDot as Dot } from "react-icons/lu";
 import FollowBtn from "@/app/components/pages/blogs/FollowBtn";
@@ -13,36 +9,42 @@ import SaveBtn from "@/app/components/pages/blogs/SaveBtn";
 import ShareBtn from "@/app/components/pages/blogs/ShareBtn";
 import { formatDate, getInitials } from "@/libs/utils";
 import { calculateReadingTime } from "@/libs/utils";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { blogType } from "@/app/types/blogType";
+import { getCookie } from "cookies-next";
 
-type BlogMetaProps = {
-  blog: {
-    author: {
-      username: string;
-      fullname: string;
-      imageUrl: string;
-      id: number;
-    };
-    following: boolean;
-    blogId: string;
-    starred: boolean;
-    _count: {
-      stars: number;
-      comments: number;
-    };
-    saved: boolean;
-  };
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/avatar";
+
+const InteractionBar = ({
+  blog,
+  isMyBlog,
+  handleOpenAuthModal,
+  isBlogStarred,
+  setIsBlogStarred,
+  starCount,
+  setStarCount,
+}: {
+  blog: blogType;
   isMyBlog: boolean;
-};
-
-const InteractionBar = ({ blog, isMyBlog }: BlogMetaProps) => {
-  const [isBlogStarred, setIsBlogStarred] = useState(blog.starred);
-  const [starCount, setStarCount] = useState(blog._count.stars);
+  handleOpenAuthModal: (isNewUser: boolean) => void;
+  isBlogStarred: boolean;
+  setIsBlogStarred: Dispatch<SetStateAction<boolean>>;
+  starCount: number;
+  setStarCount: Dispatch<SetStateAction<number>>;
+}) => {
+  const token = getCookie("token");
   return (
     <section className="flex items-center justify-between border-y-2 py-4">
-      <div className="flex items-center gap-2">
+      <div className="disabledf flex items-center gap-2">
         {" "}
-        <Link href={`/@${blog.author.username}`}>
+        <Link
+          onClick={() => !token && handleOpenAuthModal(true)}
+          href={token ? `/@${blog.author.username}` : "#"}
+        >
           <Avatar>
             <AvatarFallback>{getInitials(blog.author.fullname)}</AvatarFallback>
             <AvatarImage src={blog.author.imageUrl} />
@@ -51,26 +53,32 @@ const InteractionBar = ({ blog, isMyBlog }: BlogMetaProps) => {
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             <Link
-              href={`/@${blog.author.username}`}
               className="text-xs font-semibold hover:underline"
+              onClick={() => handleOpenAuthModal(true)}
+              href={token ? `/@${blog.author.username}` : "#"}
             >
               {blog.author.fullname}
             </Link>
-            <Dot className="text-blue-500" />
-            <FollowBtn
-              isFollowed={blog.following}
-              username={blog.author.username}
-              isMyBlog={isMyBlog}
-            />
+
+            {!isMyBlog && (
+              <>
+                <Dot size={20} className="text-blue-500" />
+                <FollowBtn
+                  isFollowed={blog.following}
+                  username={blog.author.username}
+                  isMyBlog={isMyBlog}
+                  handleOpenAuthModal={handleOpenAuthModal}
+                />
+              </>
+            )}
           </div>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <span>{formatDate(blog.createdAt)}</span>
-            <Dot className="text-blue-500" />
+            <Dot size={20} className="text-blue-500" />
             <span>{calculateReadingTime(blog.content)}</span>
           </div>
         </div>
       </div>
-
       <div className="flex items-center gap-2">
         <StarBtn
           blogId={blog.blogId}
@@ -78,6 +86,7 @@ const InteractionBar = ({ blog, isMyBlog }: BlogMetaProps) => {
           setIsBlogStarred={setIsBlogStarred}
           starCount={starCount}
           setStarCount={setStarCount}
+          handleOpenAuthModal={handleOpenAuthModal}
         />
         <Button size="sm" variant="outline">
           <CommentIcon size={20} />
@@ -87,6 +96,7 @@ const InteractionBar = ({ blog, isMyBlog }: BlogMetaProps) => {
           isSaved={blog.saved}
           blogId={blog.blogId}
           isMyBlog={isMyBlog}
+          handleOpenAuthModal={handleOpenAuthModal}
         />
         <ShareBtn blogId={blog.blogId} />
       </div>

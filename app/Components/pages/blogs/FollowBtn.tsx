@@ -9,14 +9,16 @@ const FollowBtn = ({
   isFollowed,
   username,
   isMyBlog,
+  handleOpenAuthModal,
 }: {
   isFollowed: boolean;
   username: string;
   isMyBlog: boolean;
+  handleOpenAuthModal: (isNewUser: boolean) => void;
 }) => {
   const [isAuthorFollowed, setIsAuthorFollowed] = useState(isFollowed);
   const [isPending, setIsPending] = useState(false);
-
+  const token = getCookie("token");
   const handleFollow = useCallback(async () => {
     try {
       setIsAuthorFollowed(true);
@@ -56,7 +58,7 @@ const FollowBtn = ({
   if (isAuthorFollowed) {
     return (
       <button
-        onClick={handleUnFollow}
+        onClick={token ? handleUnFollow : () => handleOpenAuthModal(true)}
         disabled={isPending}
         className={clsx(
           "h-8 rounded-full text-sm duration-200 disabled:opacity-100",
@@ -72,7 +74,7 @@ const FollowBtn = ({
 
   return (
     <button
-      onClick={handleFollow}
+      onClick={token ? handleFollow : () => handleOpenAuthModal(true)}
       disabled={isPending}
       className={clsx(
         "h-8 text-sm text-blue-500 duration-200 disabled:opacity-100",

@@ -1,14 +1,32 @@
 import BlogCard from "../../ui/BlogCard";
 import noBlogVector from "@/public/assets/no-blog.png";
 import Image from "next/image";
-import { blogType } from "@/app/types/blogType";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
 
-type profileOwnerBlogsListType = {
+type profileOwnerBlogsListProps = {
   profileOwner: profileOwnerType;
 };
 
-const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListType) => {
+type profileBlogType = {
+  id: number;
+  blogId: string;
+  title: string;
+  content: string;
+  imageUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+  categories: {
+    id: number;
+    categoryId: number;
+    blogId: number;
+    category: { id: number; name: string; createdAt: string };
+  }[];
+  _count: {
+    stars: number;
+  };
+};
+
+const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListProps) => {
   if (!profileOwner || profileOwner.blogs.length === 0) {
     return (
       <div className="mb-7 flex flex-col items-center justify-center opacity-85 dark:opacity-70">
@@ -22,7 +40,7 @@ const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListType) => {
 
   return (
     <div className="flex w-full flex-wrap justify-center gap-4 p-6 md:justify-start">
-      {profileOwner.blogs.map((blog: blogType) => (
+      {profileOwner.blogs.map((blog: profileBlogType) => (
         <div className="h-52 w-full md:w-4/5 lg:w-[47%]">
           <BlogCard
             author={profileOwner.fullname}
