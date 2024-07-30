@@ -9,7 +9,7 @@ import SaveBtn from "@/app/components/pages/blogs/SaveBtn";
 import ShareBtn from "@/app/components/pages/blogs/ShareBtn";
 import { formatDate, getInitials } from "@/libs/utils";
 import { calculateReadingTime } from "@/libs/utils";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { blogType } from "@/app/types/blogType";
 import { getCookie } from "cookies-next";
 
@@ -39,7 +39,7 @@ const InteractionBar = ({
   const token = getCookie("token");
   return (
     <section className="flex items-center justify-between border-y-2 py-4">
-      <div className="disabledf flex items-center gap-2">
+      <div className="flex items-center gap-2">
         {" "}
         <Link
           onClick={() => !token && handleOpenAuthModal(true)}
@@ -95,7 +95,6 @@ const InteractionBar = ({
         <SaveBtn
           isSaved={blog.saved}
           blogId={blog.blogId}
-          isMyBlog={isMyBlog}
           handleOpenAuthModal={handleOpenAuthModal}
         />
         <ShareBtn blogId={blog.blogId} />

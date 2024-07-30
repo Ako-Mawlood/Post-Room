@@ -88,7 +88,7 @@ const StarBtn = ({
       size="sm"
       variant="outline"
       disabled={isLoading}
-      className="disabled:cursor-pointer"
+      className="disabled:cursor-pointer disabled:opacity-100"
     >
       {isBlogStarred ? <StaredIcon size={20} /> : <StarIcon size={20} />}
       <span>{starCount}</span>

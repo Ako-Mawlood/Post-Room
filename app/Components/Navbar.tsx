@@ -28,9 +28,12 @@ import { getInitials } from "@/libs/utils";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { profileOwnerType } from "../types/profileOwnerType";
 import { getProfileOwner } from "@/libs/getProfileOwner";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 
 const Navbar = async () => {
-  const currentUser: currentUserType = await getCurrentUser();
+  const token = getCookie("token", { cookies });
+  const currentUser: currentUserType = await getCurrentUser(token as string);
   const profileOwner: profileOwnerType = await getProfileOwner(
     currentUser.username,
   );

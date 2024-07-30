@@ -6,17 +6,14 @@ import { IoBookmark as SavedIcon } from "react-icons/io5";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { useState, useCallback } from "react";
-import clsx from "clsx";
 
 const SaveBtn = ({
   isSaved,
   blogId,
-  isMyBlog,
   handleOpenAuthModal,
 }: {
   isSaved: boolean;
   blogId: string;
-  isMyBlog: boolean;
   handleOpenAuthModal: (isNewUser: boolean) => void;
 }) => {
   const [isBlogSaved, setIsBlogSaved] = useState(isSaved);
@@ -29,7 +26,7 @@ const SaveBtn = ({
         disabled={isPending}
         size="sm"
         variant="outline"
-        className={clsx("disabled:opacity-100", { hidden: isMyBlog })}
+        className="disabled:opacity-100"
       >
         <SaveIcon size={20} />
         <span className="hidden sm:block">Save</span>
@@ -79,7 +76,7 @@ const SaveBtn = ({
         disabled={isPending}
         size="sm"
         variant="outline"
-        className={clsx("disabled:opacity-100", { hidden: isMyBlog })}
+        className="disabled:opacity-100"
       >
         <SavedIcon size={20} />
         <span className="hidden sm:block">Saved</span>
@@ -92,9 +89,7 @@ const SaveBtn = ({
       disabled={isPending}
       size="sm"
       variant="outline"
-      className={clsx("disabled:opacity-100", {
-        hidden: isMyBlog,
-      })}
+      className="disabled:opacity-100"
     >
       <SaveIcon size={20} />
       <span className="hidden sm:block">Save</span>

@@ -1,11 +1,8 @@
 import axiosInstance from "./axiosInstance"
-import {getCookie} from "cookies-next"
-import {cookies} from "next/headers"
 
-export async function getCurrentUser() {
-  const token = getCookie('token',{cookies})
+export async function getCurrentUser(token:string) {
   if(token){
-      const res = await axiosInstance("/api/me", {headers: {Authorization: getCookie("token", {cookies})}})
+      const res = await axiosInstance("/api/me", {headers: {Authorization:token}})
   return res.data
   }
 

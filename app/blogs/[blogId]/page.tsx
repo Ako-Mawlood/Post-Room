@@ -6,7 +6,6 @@ import Image from "next/image";
 import InteractionBar from "@/app/components/pages/blogs/InteractionBar";
 import { backgroundColors } from "@/constants/backgroundColors";
 import parse from "html-react-parser";
-import { notFound } from "next/navigation";
 import { blogType } from "@/app/types/blogType";
 import { Button } from "@/app/components/ui/button";
 import { CgEricsson as Logo } from "react-icons/cg";
@@ -15,51 +14,70 @@ import SigninModal from "@/app/components/pages/Landing/SigninModal";
 import { useEffect, useState } from "react";
 import SignupModal from "@/app/components/pages/Landing/SignupModal";
 import clsx from "clsx";
+import { getCurrentUser } from "@/libs/getCurrentUser";
+import ReadBlogSkeleton from "@/app/components/pages/blogs/ReadBlogSkeleton";
+import { notFound } from "next/navigation";
 
-type readPageProps = {
+type ReadPageProps = {
   params: { blogId: string };
 };
 
-const ReadPage = ({ params }: readPageProps) => {
+const ReadPage = ({ params }: ReadPageProps) => {
+  const token = getCookie("token") as string | undefined;
   const [blog, setBlog] = useState<blogType | undefined>(undefined);
-  const isMyBlog = false;
-  const token = getCookie("token");
+  const [isLoading, setIsLoading] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [isAuthModalVisable, setIsAuthModalVisable] = useState(false);
-  const [isBlogStarred, setIsBlogStarred] = useState(blog?.starred as boolean);
-  const [starCount, setStarCount] = useState(blog?._count.stars as number);
-  console.log(isBlogStarred);
-  useEffect(() => {
-    async function getBlog(blogId: string) {
-      try {
-        const res = await axiosInstance(`/api/blog/${blogId}`, {
-          headers: { Authorization: token },
-        });
+  const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
+  const [isBlogStarred, setIsBlogStarred] = useState<boolean>(false);
+  const [starCount, setStarCount] = useState<number>(0);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
-        setBlog(res.data);
-        setIsBlogStarred(res.data.starred);
-        setStarCount(res.data._count.stars);
+  useEffect(() => {
+    async function fetchBlogAndUser(blogId: string) {
+      setIsLoading(true);
+      try {
+        if (token) {
+          // Fetch the current user
+          const user = await getCurrentUser(token);
+          setCurrentUser(user);
+
+          // Fetch the blog
+          const res = await axiosInstance(`/api/blog/${blogId}`, {
+            headers: { Authorization: token },
+          });
+
+          setBlog(res.data);
+          setIsBlogStarred(res.data.starred);
+          setStarCount(res.data._count.stars);
+        }
       } catch (err: any) {
-        if (err.response.status === 404) {
+        if (err.response?.status === 404) {
           notFound();
         }
+      } finally {
+        setIsLoading(false);
       }
     }
-    getBlog(params.blogId);
-  }, []);
+
+    fetchBlogAndUser(params.blogId);
+  }, [params.blogId, token]);
+
   function handleOpenAuthModal(isNewUser: boolean) {
     setIsNewUser(isNewUser);
-    setIsAuthModalVisable(true);
+    setIsAuthModalVisible(true);
     setIsAuthModalOpen(true);
   }
 
   function handleCloseAuthModal() {
     setIsAuthModalOpen(false);
     setTimeout(() => {
-      setIsAuthModalVisable(false);
+      setIsAuthModalVisible(false);
     }, 190);
   }
+
+  const isMyBlog = currentUser && blog && currentUser.id === blog.author.id;
+
   return (
     <>
       {!token && (
@@ -82,7 +100,7 @@ const ReadPage = ({ params }: readPageProps) => {
           </div>
         </nav>
       )}
-      {isAuthModalVisable && (
+      {isAuthModalVisible && (
         <>
           <div
             onClick={handleCloseAuthModal}
@@ -90,7 +108,7 @@ const ReadPage = ({ params }: readPageProps) => {
           ></div>
           <main
             className={clsx(
-              "fixed left-1/2 top-1/2 z-40 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-white shadow-md shadow-gray-400 md:absolute md:w-[678px]",
+              "fixed left-1/2 top-1/2 z-40 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-white shadow-md shadow-gray-400 md:w-[678px]",
               {
                 "modal-open-animation": isAuthModalOpen,
                 "modal-close-animation": !isAuthModalOpen,
@@ -113,56 +131,55 @@ const ReadPage = ({ params }: readPageProps) => {
           </main>
         </>
       )}
+      {isLoading && <ReadBlogSkeleton />}
       {blog && (
         <>
-          <>
-            <section className="w-full px-6">
-              <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
-                {blog.title}
-                {blog.categories && (
-                  <ul className="mt-2 flex gap-3 text-sm">
-                    {blog.categories.map((category, index: number) => (
-                      <div className="flex gap-1">
-                        <span
-                          style={{
-                            color: `rgb(${backgroundColors[index + 1]},0.9)`,
-                          }}
-                        >
-                          #
-                        </span>
-                        <span className="text-primary">
-                          {category.category.name}
-                        </span>
-                      </div>
-                    ))}
-                  </ul>
-                )}
-              </h1>
+          <section className="w-full px-6">
+            <div className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
+              {blog.title}
+              {blog.categories && (
+                <ul className="mt-2 flex gap-3 text-sm">
+                  {blog.categories.map((category, index: number) => (
+                    <div key={index} className="flex gap-1">
+                      <span
+                        style={{
+                          color: `rgb(${backgroundColors[index + 1]},0.9)`,
+                        }}
+                      >
+                        #
+                      </span>
+                      <span className="text-primary">
+                        {category.category.name}
+                      </span>
+                    </div>
+                  ))}
+                </ul>
+              )}
+            </div>
 
-              <InteractionBar
-                blog={blog}
-                isMyBlog={isMyBlog}
-                isBlogStarred={isBlogStarred}
-                setIsBlogStarred={setIsBlogStarred}
-                starCount={starCount}
-                setStarCount={setStarCount}
-                handleOpenAuthModal={handleOpenAuthModal}
+            <InteractionBar
+              blog={blog}
+              isMyBlog={isMyBlog}
+              isBlogStarred={isBlogStarred}
+              setIsBlogStarred={setIsBlogStarred}
+              starCount={starCount}
+              setStarCount={setStarCount}
+              handleOpenAuthModal={handleOpenAuthModal}
+            />
+            <div className="relative h-[90vh] w-full overflow-hidden">
+              <Image
+                className="rounded-lg object-cover"
+                src={
+                  blog.imageUrl ||
+                  "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
+                }
+                fill={true}
+                quality={100}
+                priority
+                alt="Blog image"
               />
-              <div className="relative h-[90vh] w-full overflow-hidden">
-                <Image
-                  className="rounded-lg object-cover"
-                  src={
-                    blog.imageUrl ||
-                    "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
-                  }
-                  fill={true}
-                  quality={100}
-                  priority
-                  alt="Blog image"
-                />
-              </div>
-            </section>
-          </>
+            </div>
+          </section>
           <section className="mx-auto w-full p-6 lg:w-[50vw]">
             <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
               {blog.title}

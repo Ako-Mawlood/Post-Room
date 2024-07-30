@@ -14,8 +14,9 @@ import { getInitials } from "@/libs/utils";
 import { getProfileOwner } from "@/libs/getProfileOwner";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import ProfileOwnerBlogsList from "../components/pages/profile/ProfileOwnerBlogsList";
-import { profile } from "console";
 import { notFound } from "next/navigation";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 
 const ProfilePage = async ({
   searchParams,
@@ -24,7 +25,8 @@ const ProfilePage = async ({
   searchParams?: { [key: string]: string | string[] | undefined };
   params: { username: string };
 }) => {
-  const currentUser: currentUserType = await getCurrentUser();
+  const token = getCookie("token", { cookies });
+  const currentUser: currentUserType = await getCurrentUser(token as string);
   const profileOwner: profileOwnerType = await getProfileOwner(
     params.username.substring(3),
   );

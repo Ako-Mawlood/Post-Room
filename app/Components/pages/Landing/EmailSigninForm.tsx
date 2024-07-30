@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
-import axios from "@/libs/axiosInstance";
+import axiosInstance from "@/libs/axiosInstance";
 import { CgDanger } from "react-icons/cg";
 import clsx from "clsx";
 import { Input } from "@/app/components/ui/input";
@@ -43,13 +43,14 @@ const EmailSigninForm = ({
   });
 
   async function handleSignin(data: formDataType) {
-    await axios
+    await axiosInstance
       .post("/api/login", data)
       .then((res) => {
         setCookie("token", res.headers.authorization);
+
         router.push("/blogs");
       })
-      .catch((err: any) => {
+      .catch((err) => {
         if (err.message === "Network Error") {
           setError("root", {
             message:

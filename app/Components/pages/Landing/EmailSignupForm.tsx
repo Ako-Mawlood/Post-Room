@@ -122,7 +122,7 @@ const EmailSignupForm = ({
             <Input
               {...register("password")}
               disabled={isSubmitting}
-              type="text"
+              type="password"
               onChangeCapture={() => setError("root", { message: "" })}
               className={clsx("w-full bg-slate-100", {
                 "border-gray-300 focus:border-gray-400":
