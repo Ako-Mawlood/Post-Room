@@ -11,17 +11,17 @@ import { Button } from "@/app/components/ui/button";
 import { CgEricsson as Logo } from "react-icons/cg";
 import { IoIosClose as CloseIcon } from "react-icons/io";
 import SigninModal from "@/app/components/pages/Landing/SigninModal";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SignupModal from "@/app/components/pages/Landing/SignupModal";
 import clsx from "clsx";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import ReadBlogSkeleton from "@/app/components/pages/blogs/ReadBlogSkeleton";
 import { notFound } from "next/navigation";
+import AuthorBlogs from "@/app/components/pages/blogs/AuthorBlogs";
 
 type ReadPageProps = {
   params: { blogId: string };
 };
-
 const ReadPage = ({ params }: ReadPageProps) => {
   const token = getCookie("token") as string | undefined;
   const [blog, setBlog] = useState<blogType | undefined>(undefined);
@@ -32,7 +32,8 @@ const ReadPage = ({ params }: ReadPageProps) => {
   const [isBlogStarred, setIsBlogStarred] = useState<boolean>(false);
   const [starCount, setStarCount] = useState<number>(0);
   const [currentUser, setCurrentUser] = useState<any>(null);
-
+  const [commentCount, setCommentCount] = useState<any>();
+  console.log(blog);
   useEffect(() => {
     async function fetchBlogAndUser(blogId: string) {
       setIsLoading(true);
@@ -50,6 +51,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
           setBlog(res.data);
           setIsBlogStarred(res.data.starred);
           setStarCount(res.data._count.stars);
+          setCommentCount(res.data._count.comments);
         }
       } catch (err: any) {
         if (err.response?.status === 404) {
@@ -164,6 +166,8 @@ const ReadPage = ({ params }: ReadPageProps) => {
               setIsBlogStarred={setIsBlogStarred}
               starCount={starCount}
               setStarCount={setStarCount}
+              commentCount={commentCount}
+              setCommentCount={setCommentCount}
               handleOpenAuthModal={handleOpenAuthModal}
             />
             <div className="relative h-[90vh] w-full overflow-hidden">
@@ -180,22 +184,31 @@ const ReadPage = ({ params }: ReadPageProps) => {
               />
             </div>
           </section>
-          <section className="mx-auto w-full p-6 lg:w-[50vw]">
+          <section className="mx-auto w-full p-6 md:w-[880px]">
             <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
               {blog.title}
             </h1>
             <div className="prose my-10 dark:prose-dark">
               {parse(blog.content)}
             </div>
+
+            <InteractionBar
+              blog={blog}
+              isMyBlog={isMyBlog}
+              isBlogStarred={isBlogStarred}
+              setIsBlogStarred={setIsBlogStarred}
+              starCount={starCount}
+              setStarCount={setStarCount}
+              commentCount={commentCount}
+              setCommentCount={setCommentCount}
+              handleOpenAuthModal={handleOpenAuthModal}
+            />
           </section>
-          <InteractionBar
-            blog={blog}
-            isMyBlog={isMyBlog}
-            isBlogStarred={isBlogStarred}
-            setIsBlogStarred={setIsBlogStarred}
-            starCount={starCount}
-            setStarCount={setStarCount}
+          <AuthorBlogs
+            authorUsername={blog.author.username}
             handleOpenAuthModal={handleOpenAuthModal}
+            isFollowed={blog.following}
+            isMyBLog={isMyBlog}
           />
         </>
       )}

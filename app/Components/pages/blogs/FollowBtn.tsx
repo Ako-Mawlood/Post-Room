@@ -4,6 +4,7 @@ import axiosInstance from "@/libs/axiosInstance";
 import clsx from "clsx";
 import { getCookie } from "cookies-next";
 import { useCallback, useState } from "react";
+import { Button } from "../../ui/button";
 
 const FollowBtn = ({
   isFollowed,
@@ -73,18 +74,18 @@ const FollowBtn = ({
   }
 
   return (
-    <button
+    <Button
       onClick={token ? handleFollow : () => handleOpenAuthModal(true)}
       disabled={isPending}
       className={clsx(
-        "h-8 text-sm text-blue-500 duration-200 disabled:opacity-100",
+        "h-8 rounded-full text-sm text-white duration-200 disabled:opacity-100",
         {
           hidden: isMyBlog,
         },
       )}
     >
       Follow
-    </button>
+    </Button>
   );
 };
 

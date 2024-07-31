@@ -1,7 +1,7 @@
 import {blogType} from "./blogType"
 import {currentUserType} from "./currentUserType"
 
-export interface profileOwnerType {
+export type profileOwnerType = {
   id: number
   fullname: string
   bio: string
@@ -12,4 +12,4 @@ export interface profileOwnerType {
     followed: number
   }
   blogs: blogType[]
-}
+} | undefined

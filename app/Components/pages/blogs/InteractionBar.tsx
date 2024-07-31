@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/app/components/ui/button";
 import { LuMessageCircle as CommentIcon, LuDot as Dot } from "react-icons/lu";
 import FollowBtn from "@/app/components/pages/blogs/FollowBtn";
 import StarBtn from "@/app/components/pages/blogs/StarBtn";
@@ -12,7 +11,7 @@ import { calculateReadingTime } from "@/libs/utils";
 import { Dispatch, SetStateAction } from "react";
 import { blogType } from "@/app/types/blogType";
 import { getCookie } from "cookies-next";
-
+import Comment from "./Comment";
 import {
   Avatar,
   AvatarFallback,
@@ -27,6 +26,8 @@ const InteractionBar = ({
   setIsBlogStarred,
   starCount,
   setStarCount,
+  commentCount,
+  setCommentCount,
 }: {
   blog: blogType;
   isMyBlog: boolean;
@@ -35,12 +36,13 @@ const InteractionBar = ({
   setIsBlogStarred: Dispatch<SetStateAction<boolean>>;
   starCount: number;
   setStarCount: Dispatch<SetStateAction<number>>;
+  commentCount: number;
+  setCommentCount: Dispatch<SetStateAction<number>>;
 }) => {
   const token = getCookie("token");
   return (
-    <section className="flex items-center justify-between border-y-2 py-4">
+    <section className="flex items-center justify-between py-4">
       <div className="flex items-center gap-2">
-        {" "}
         <Link
           onClick={() => !token && handleOpenAuthModal(true)}
           href={token ? `/@${blog.author.username}` : "#"}
@@ -54,7 +56,7 @@ const InteractionBar = ({
           <div className="flex items-center gap-2">
             <Link
               className="text-xs font-semibold hover:underline"
-              onClick={() => handleOpenAuthModal(true)}
+              onClick={() => !token && handleOpenAuthModal(true)}
               href={token ? `/@${blog.author.username}` : "#"}
             >
               {blog.author.fullname}
@@ -88,10 +90,13 @@ const InteractionBar = ({
           setStarCount={setStarCount}
           handleOpenAuthModal={handleOpenAuthModal}
         />
-        <Button size="sm" variant="outline">
-          <CommentIcon size={20} />
-          <span>{blog._count.comments}</span>
-        </Button>
+        <Comment
+          blogId={blog.blogId}
+          commentCount={commentCount}
+          fullname={blog.author.fullname}
+          imageUrl={blog.author.imageUrl}
+          setCommentCount={setCommentCount}
+        />
         <SaveBtn
           isSaved={blog.saved}
           blogId={blog.blogId}

@@ -1,12 +1,10 @@
-import {getCookie} from "cookies-next"
 import axiosInstance from "./axiosInstance"
-import {cookies} from "next/headers"
 import { notFound } from "next/navigation"
 
-export async function getProfileOwner(username: string) {
+export async function getProfileOwner(username: string,token:string) {
   try{
   const res = await axiosInstance(`/api/user/${username}`, {
-    headers: {Authorization: getCookie("token", {cookies})},
+    headers: {Authorization:token},
   })
   return res.data
   }catch (err:any){
@@ -14,5 +12,4 @@ export async function getProfileOwner(username: string) {
       notFound()
     }
   }
-
 }
