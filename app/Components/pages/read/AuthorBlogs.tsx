@@ -1,5 +1,5 @@
 import { profileOwnerType } from "@/app/types/profileOwnerType";
-import { getProfileOwner } from "@/libs/getProfileOwner";
+import { getUserByUsername } from "@/libs/getUserByUsername";
 import { getInitials } from "@/libs/utils";
 import Image from "next/image";
 import {
@@ -29,7 +29,7 @@ const AuthorBlogs = ({
   );
   const token = getCookie("token");
   useEffect(() => {
-    getProfileOwner(authorUsername, token as string).then(
+    getUserByUsername(authorUsername, token as string).then(
       (data: profileOwnerType) => {
         setAuthorInfo(data);
       },
@@ -49,7 +49,7 @@ const AuthorBlogs = ({
         {authorInfo.blogs.map((blog) => (
           <div className="relative duration-100 hover:bg-accent">
             <Link
-              href={`/blogs/${blog.blogId}`}
+              href={`/read/${blog.blogId}`}
               className="relative flex h-80 w-96 flex-col gap-2 p-4"
             >
               <div className="relative h-80 w-full">

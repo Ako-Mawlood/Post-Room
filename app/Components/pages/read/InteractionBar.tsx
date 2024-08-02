@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { LuMessageCircle as CommentIcon, LuDot as Dot } from "react-icons/lu";
-import FollowBtn from "@/app/components/pages/blogs/FollowBtn";
-import StarBtn from "@/app/components/pages/blogs/StarBtn";
-import SaveBtn from "@/app/components/pages/blogs/SaveBtn";
-import ShareBtn from "@/app/components/pages/blogs/ShareBtn";
+import FollowBtn from "@/app/components/pages/read/FollowBtn";
+import StarBtn from "@/app/components/pages/read/StarBtn";
+import SaveBtn from "@/app/components/pages/read/SaveBtn";
+import ShareBtn from "@/app/components/pages/read/ShareBtn";
 import { formatDate, getInitials } from "@/libs/utils";
 import { calculateReadingTime } from "@/libs/utils";
 import { Dispatch, SetStateAction } from "react";
@@ -96,6 +96,7 @@ const InteractionBar = ({
           fullname={blog.author.fullname}
           imageUrl={blog.author.imageUrl}
           setCommentCount={setCommentCount}
+          handleOpenAuthModal={handleOpenAuthModal}
         />
         <SaveBtn
           isSaved={blog.saved}

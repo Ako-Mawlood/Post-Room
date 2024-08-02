@@ -32,11 +32,11 @@ export default function LandingPage() {
   }
 
   return (
-    <div>
-      <nav className="flex h-[8vh] w-full items-center justify-between px-4 py-1 md:px-24">
+    <div className="selection:bg-gray-800 selection:text-gray-50">
+      <nav className="flex h-[8vh] w-full items-center justify-between bg-gray-100 px-4 py-1 text-gray-900 md:px-24">
         <Link
           href="/"
-          className="flex items-center text-lg font-bold sm:text-2xl"
+          className="flex items-center font-PT text-lg font-bold sm:text-2xl"
         >
           <CgEricsson size={25} />
           <h1>Post-Room</h1>
@@ -63,7 +63,7 @@ export default function LandingPage() {
           </button>
         </div>
       </nav>
-      <main className="relative flex w-full flex-col justify-start border-y-[1px] border-black font-PT duration-700 md:h-[84vh] md:flex-row">
+      <main className="relative flex w-full flex-col justify-start border-y-[1px] border-black bg-gray-100 font-PT text-gray-900 duration-700 md:h-[84vh] md:flex-row">
         <div
           style={{ backgroundColor: `rgb(${backgroundColor},0.3)` }}
           className="flex flex-col items-start justify-center gap-6 p-4 py-10 md:border-r-[1px] md:border-black md:px-24"
@@ -87,7 +87,7 @@ export default function LandingPage() {
           backgroundColor={backgroundColor}
         />
       </main>
-      <footer className="flex h-[8vh] w-full items-center justify-center gap-6 overflow-hidden border-y-[1px] border-black bg-gray-100 px-4 font-semibold md:border-none">
+      <footer className="flex h-[8vh] w-full items-center justify-center gap-6 overflow-hidden border-y-[1px] border-black bg-gray-100 px-4 font-semibold text-gray-900 md:border-none">
         <button onClick={() => handleOpenAuthModal(true)}>Blog</button>
         <button
           onClick={() => handleOpenAuthModal(true)}
@@ -105,7 +105,7 @@ export default function LandingPage() {
         <>
           <div
             onClick={handleCloseAuthModal}
-            className="fixed left-0 top-0 z-30 h-screen w-screen bg-gray-50 opacity-95"
+            className="fixed left-0 top-0 z-30 h-screen w-screen bg-gray-100 opacity-95"
           ></div>
           <main
             className={clsx(

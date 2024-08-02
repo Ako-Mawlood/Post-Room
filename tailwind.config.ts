@@ -152,7 +152,8 @@ const config: Config = {
               marginBottom: "0.25rem",
             },
             strong: {
-              color: "#8025f7",
+          fontSize:"17px",
+              fontFamily: "PT Serif",
             },
             'a': {
               color: "#8025f7",
@@ -236,7 +237,8 @@ const config: Config = {
               marginBottom: "0rem",
             },
             strong: {
-              color: "#ed8aff",
+              fontFamily: "PT Serif",
+               fontSize:"17px"
             },
           },
         },

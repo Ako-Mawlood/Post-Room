@@ -1,4 +1,4 @@
-import Search from "./pages/blogs/Search";
+import Search from "./pages/read/Search";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { CgEricsson as Logo } from "react-icons/cg";
@@ -30,18 +30,18 @@ import { profileOwnerType } from "../types/profileOwnerType";
 
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
-import { getProfileOwner } from "@/libs/getProfileOwner";
+import { getUserByUsername } from "@/libs/getUserByUsername";
 
 const Navbar = async () => {
   const token = getCookie("token", { cookies });
   const currentUser: currentUserType = await getCurrentUser(token as string);
-  const profileOwner: profileOwnerType = await getProfileOwner(
+  const userInfo: profileOwnerType = await getUserByUsername(
     currentUser.username,
     token as string,
   );
   const menuItems = getMenuItems(currentUser);
   return (
-    <nav className="flex h-14 w-full items-center justify-between border-b border-border px-2 text-foreground md:px-6">
+    <nav className="flex h-16 w-full items-center justify-between border-b border-primary px-2 text-foreground md:px-6">
       <Link
         href="/blogs"
         className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl"
@@ -55,7 +55,7 @@ const Navbar = async () => {
         <Button>
           <Link
             className="flex items-center gap-2 px-1 font-semibold"
-            href="/create"
+            href="/create/"
           >
             Create
           </Link>
@@ -64,7 +64,7 @@ const Navbar = async () => {
           <DropdownMenuTrigger>
             {currentUser ? (
               <Avatar className="cursor-pointer">
-                <AvatarImage src={profileOwner.imageUrl} />
+                <AvatarImage src={userInfo?.imageUrl} />
                 <AvatarFallback>
                   {getInitials(currentUser.fullname)}
                 </AvatarFallback>

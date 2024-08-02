@@ -11,7 +11,7 @@ import Link from "next/link";
 import { profileOwnerType } from "../types/profileOwnerType";
 import clsx from "clsx";
 import { getInitials } from "@/libs/utils";
-import { getProfileOwner } from "@/libs/getProfileOwner";
+import { getUserByUsername } from "@/libs/getUserByUsername";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import ProfileOwnerBlogsList from "../components/pages/profile/ProfileOwnerBlogsList";
 import { notFound } from "next/navigation";
@@ -27,8 +27,9 @@ const ProfilePage = async ({
 }) => {
   const token = getCookie("token", { cookies });
   const currentUser: currentUserType = await getCurrentUser(token as string);
-  const profileOwner: profileOwnerType = await getProfileOwner(
+  const profileOwner: profileOwnerType = await getUserByUsername(
     params.username.substring(3),
+    token as string
   );
   if (!profileOwner) notFound();
   const isCurrentUserProfile = currentUser.id === profileOwner.id;

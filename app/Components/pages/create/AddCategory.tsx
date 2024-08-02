@@ -205,7 +205,7 @@ const AddCategory = ({
                   handleAddCategory(e, category?.name);
                   if (inputRef) inputRef.current?.focus();
                 }}
-                className="flex h-auto w-full flex-col p-2 text-start hover:bg-muted"
+                className="flex h-0 w-full flex-col text-start hover:bg-muted"
               >
                 <div className="flex gap-1">
                   <span

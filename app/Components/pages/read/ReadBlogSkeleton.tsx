@@ -1,6 +1,5 @@
-import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { Skeleton } from "../../ui/skeleton";
-import { Dot } from "lucide-react";
+
 
 const ReadBlogSkeleton = () => {
   return (

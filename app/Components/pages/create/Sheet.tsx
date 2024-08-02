@@ -77,7 +77,7 @@ const Sheet = ({
         headers,
       )
       .then(() => {
-        router.push(`/blogs/${blogId}`);
+        router.push(`/read/${blogId}`);
       })
       .catch((err) => {
         console.log(err.response.data);

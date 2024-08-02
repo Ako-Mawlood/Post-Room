@@ -1,18 +1,30 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import { getBlogs } from "@/libs/getBlogs";
-import { ReadonlyURLSearchParams } from "next/navigation";
-import { blogType } from "../types/blogType";
-import BlogCard from "../components/ui/BlogCard";
-import Trigger from "../components/pages/blogs/Trigger";
+import Navbar from "@/app/components/Navbar";
+import BlogCard from "@/app/components/ui/BlogCard";
+import { blogType } from "@/app/types/blogType";
+import axiosInstance from "@/libs/axiosInstance";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
+
+import React, { useState } from "react";
+
+async function getBlogs(q: string) {
+  const token = getCookie("token", { cookies });
+  const query = q;
+  console.log(query);
+  const res = await axiosInstance(`/api/search?query=${q}`, {
+    headers: { Authorization: token },
+  });
+  return res.data;
+}
+
 const BlogsPage = async ({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) => {
-  const skip = parseInt((searchParams && searchParams.skip) as string, 10) || 0;
+  const q = (searchParams && searchParams.q) || "";
 
-  const blogs = await getBlogs(skip);
+  const blogs = await getBlogs(q as string);
 
   return (
     <div className="w-full">
@@ -20,6 +32,19 @@ const BlogsPage = async ({
       <main className="mt-20 flex w-full items-start justify-center">
         {blogs && (
           <section className="flex w-3/6 flex-col gap-5 border-r border-primary pr-20">
+            <h1 className="text-4xl text-primary">
+              {blogs.length ? (
+                <span className="text-4xl text-muted-foreground">
+                  Result for{" "}
+                </span>
+              ) : (
+                <span className="text-4xl text-muted-foreground">
+                  No result for{" "}
+                </span>
+              )}
+
+              {q}
+            </h1>
             {blogs.map((blog: blogType) => (
               <div key={blog.blogId} className="h-60 w-full">
                 <BlogCard
@@ -35,7 +60,6 @@ const BlogsPage = async ({
                 />
               </div>
             ))}
-            <Trigger skip={skip} />
           </section>
         )}
         <section className="w-2/6 rounded-lg bg-black"></section>

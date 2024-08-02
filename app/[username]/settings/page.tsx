@@ -2,11 +2,15 @@ import Navbar from "@/app/components/Navbar";
 import ProfileImageUpdater from "@/app/components/ProfileImageUpdater";
 import { Button } from "@/app/components/ui/button";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
-import { getProfileOwner } from "@/libs/getProfileOwner";
+import { getUserByUsername } from "@/libs/getUserByUsername";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 
 const Settings = async ({ params }: { params: { username: string } }) => {
-  const profileOwner: profileOwnerType = await getProfileOwner(
+  const token = getCookie("token", { cookies });
+  const profileOwner: profileOwnerType = await getUserByUsername(
     params.username.substring(3),
+    token as string,
   );
   return (
     <>
@@ -21,33 +25,32 @@ const Settings = async ({ params }: { params: { username: string } }) => {
           <div className="flex items-center justify-between p-3">
             <div className="flex flex-col justify-between">
               <h1 className="font-semibold">Full name</h1>
-              <p className="text-muted-foreground">{profileOwner.fullname}</p>
+              <p className="text-muted-foreground">{profileOwner?.fullname}</p>
             </div>
             <Button variant="secondary">Edit</Button>
           </div>
-
           <div className="flex items-center justify-between p-3">
             <div className="flex flex-col justify-between">
               <h1 className="font-semibold">Username</h1>
-              <p className="text-muted-foreground">@{profileOwner.username}</p>
+              <p className="text-muted-foreground">@{profileOwner?.username}</p>
             </div>
             <Button variant="secondary">Edit</Button>
           </div>
-
           <div className="flex items-center justify-between p-3">
             <div className="flex flex-col justify-between">
               <h1 className="font-semibold">Bio</h1>
-              <p className="text-muted-foreground">{profileOwner.bio}</p>
+              <p className="text-muted-foreground">{profileOwner?.bio}</p>
             </div>
             <Button variant="secondary">Edit</Button>
           </div>
           <div className="flex items-center justify-between p-3">
             <div className="flex flex-col justify-between">
               <h1 className="font-semibold">Categories</h1>
-              <p className="text-muted-foreground">{profileOwner.bio}</p>
+              <p className="text-muted-foreground">{profileOwner?.bio}</p>
             </div>
             <Button variant="secondary">Edit</Button>
           </div>
+          ?
         </section>
       </main>
     </>

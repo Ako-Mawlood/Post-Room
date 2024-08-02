@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import {Button} from "../../ui/button"
-import {Input} from "../../ui/input"
-import {Textarea} from "../../ui/textarea"
-import {usePathname, useRouter} from "next/navigation"
-import {useForm} from "react-hook-form"
-import {zodResolver} from "@hookform/resolvers/zod"
-import z from "zod"
+import Image from "next/image";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Textarea } from "../../ui/textarea";
+import { usePathname, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 import {
   Form,
   FormControl,
@@ -16,23 +16,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form"
-import axiosInstance from "@/libs/axiosInstance"
-import {getCookie} from "cookies-next"
-import {useState} from "react"
-import clsx from "clsx"
-import Link from "next/link"
-import {profileOwnerType} from "@/app/types/profileOwnerType"
-import ProfileImageEditer from "../../ProfileImageUpdater"
-import {editProfileSchema} from "@/libs/validations"
-import {X as Close} from "lucide-react"
+} from "../../ui/form";
+import axiosInstance from "@/libs/axiosInstance";
+import { getCookie } from "cookies-next";
+import { useState } from "react";
+import clsx from "clsx";
+import Link from "next/link";
+import { profileOwnerType } from "@/app/types/profileOwnerType";
+import ProfileImageEditer from "../../ProfileImageUpdater";
+import { editProfileSchema } from "@/libs/validations";
+import { X as Close } from "lucide-react";
 type EditProfileModalType = {
-  profileOwner: profileOwnerType
-  currentUserUsername: string
-  searchParams?: {[key: string]: string | string[] | undefined}
-}
+  profileOwner: profileOwnerType;
+  currentUserUsername: string;
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
 
-type FormDataType = z.infer<typeof editProfileSchema>
+type FormDataType = z.infer<typeof editProfileSchema>;
 
 const EditProfileModal = ({
   profileOwner,
@@ -40,76 +40,82 @@ const EditProfileModal = ({
   searchParams,
 }: EditProfileModalType) => {
   const [fullnameCharacters, setFullnameCharacters] = useState(
-    profileOwner.fullname.length
-  )
+    profileOwner?.fullname.length,
+  );
   const [bioCharacters, setBioCharacters] = useState(
-    profileOwner.bio ? profileOwner.bio.length : 0
-  )
-  const router = useRouter()
-  const pathname = usePathname()
+    profileOwner?.bio ? profileOwner.bio.length : 0,
+  );
+  const router = useRouter();
+  const pathname = usePathname();
 
   const form = useForm<FormDataType>({
     defaultValues: {
-      imageUrl: profileOwner.imageUrl,
-      fullname: profileOwner.fullname || "",
-      bio: profileOwner.bio || "",
+      imageUrl: profileOwner?.imageUrl,
+      fullname: profileOwner?.fullname || "",
+      bio: profileOwner?.bio || "",
     },
     resolver: zodResolver(editProfileSchema),
-  })
+  });
 
   const handleModalToggle = () => {
-    const params = new URLSearchParams(searchParams as any)
+    const params = new URLSearchParams(searchParams as any);
     if (params.get("edit") === "t") {
-      params.delete("edit")
+      params.delete("edit");
     } else {
-      params.append("edit", "t")
+      params.append("edit", "t");
     }
-    router.push(pathname + "?" + params.toString(), {scroll: false})
-  }
+    router.push(pathname + "?" + params.toString(), { scroll: false });
+  };
 
   async function handleSave(data: FormDataType) {
     try {
       await axiosInstance.put("/api/user", data, {
-        headers: {Authorization: getCookie("token")},
-      })
-      handleModalToggle()
-      router.refresh()
+        headers: { Authorization: getCookie("token") },
+      });
+      handleModalToggle();
+      router.refresh();
     } catch (error) {
-      console.error("Failed to save profile:", error)
+      console.error("Failed to save profile:", error);
     }
   }
 
   return (
     <>
-      <section className="flex flex-col items-center gap-5 w-full md:w-[30rem] absolute md:top-6 left-1/2 -translate-x-1/2 p-6 bg-card text-card-foreground shadow-md rounded-md z-10 modal">
+      <section className="modal absolute left-1/2 z-10 flex w-full -translate-x-1/2 flex-col items-center gap-5 rounded-md bg-card p-6 text-card-foreground shadow-md md:top-6 md:w-[30rem]">
         <Close
           onClick={handleModalToggle}
-          className="size-5 absolute top-3 right-3 cursor-pointer"
+          className="absolute right-3 top-3 size-5 cursor-pointer"
         />
-        <h1 className="font-semibold text-2xl">Profile information</h1>
+        <h1 className="text-2xl font-semibold">Profile information</h1>
 
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSave)}
-            className="flex flex-col gap-5 w-full text-sm"
+            className="flex w-full flex-col gap-5 text-sm"
           >
             <ProfileImageEditer form={form} profileOwner={profileOwner} />
             <FormField
               name="fullname"
               control={form.control}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
                   <FormMessage />
                   <FormControl>
                     <Input
                       {...field}
-                      onChangeCapture={() => setFullnameCharacters(field.value.length)}
-                      className="text-muted-foreground bg-muted h-8"
+                      onChangeCapture={() =>
+                        setFullnameCharacters(field.value.length)
+                      }
+                      className="h-8 bg-muted text-muted-foreground"
                     />
                   </FormControl>
-                  <FormDescription className="w-fit ml-auto">
-                    <span className={clsx({"text-destructive": field.value.length > 50})}>
+                  <FormDescription className="ml-auto w-fit">
+                    <span
+                      className={clsx({
+                        "text-destructive": field.value.length > 50,
+                      })}
+                    >
                       {fullnameCharacters}
                     </span>
                     /50
@@ -120,21 +126,25 @@ const EditProfileModal = ({
             <FormField
               name="bio"
               control={form.control}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Bio</FormLabel>
                   <FormMessage />
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="text-muted-foreground bg-muted"
+                      className="bg-muted text-muted-foreground"
                       rows={5}
-                      onChangeCapture={() => setBioCharacters(field.value.length)}
+                      onChangeCapture={() =>
+                        setBioCharacters(field.value.length)
+                      }
                     />
                   </FormControl>
-                  <FormDescription className="w-fit ml-auto">
+                  <FormDescription className="ml-auto w-fit">
                     <span
-                      className={clsx({"text-destructive": field.value.length > 250})}
+                      className={clsx({
+                        "text-destructive": field.value.length > 250,
+                      })}
                     >
                       {bioCharacters}
                     </span>
@@ -145,14 +155,14 @@ const EditProfileModal = ({
             />
             <Link
               href={`/@${currentUserUsername}/settings`}
-              className="flex flex-col items-start gap-2 relative p-2 rounded-md duration-150 hover:bg-muted"
+              className="relative flex flex-col items-start gap-2 rounded-md p-2 duration-150 hover:bg-muted"
             >
               <h2 className="font-semibold">Manage Account Settings</h2>
               <p className="text-sm text-muted-foreground">
                 Update your categories, username, and account preferences.
               </p>
               <Image
-                className="absolute top-2 right-2"
+                className="absolute right-2 top-2"
                 src="/assets/redirect.svg"
                 width={20}
                 height={20}
@@ -164,7 +174,7 @@ const EditProfileModal = ({
                 onClick={handleModalToggle}
                 variant="outline"
                 type="button"
-                className="w-20 border-green-500 text-green-500 hover:text-green-500 hover:bg-green-500/15"
+                className="w-20 border-green-500 text-green-500 hover:bg-green-500/15 hover:text-green-500"
               >
                 Cancel
               </Button>
@@ -178,9 +188,9 @@ const EditProfileModal = ({
           </form>
         </Form>
       </section>
-      <div className="w-screen h-screen fixed top-0 left-0 bg-black opacity-70 z-0"></div>
+      <div className="fixed left-0 top-0 z-0 h-screen w-screen bg-black opacity-70"></div>
     </>
-  )
-}
+  );
+};
 
-export default EditProfileModal
+export default EditProfileModal;

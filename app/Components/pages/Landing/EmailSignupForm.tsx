@@ -70,10 +70,10 @@ const EmailSignupForm = ({
   }, [isSignupFormVisable]);
 
   return (
-    <main className="flex w-full flex-col items-center gap-12 sm:w-1/2">
+    <main className="flex w-full flex-col items-center gap-12 text-gray-900 sm:w-3/5">
       <div className="flex flex-col gap-6 px-4 text-center">
         <h1 className="text-4xl">Sign up with Email</h1>
-        <p>
+        <p className="text-gray-500">
           Enter your email address and Password to create an account, and
           we&#8217;ll send a magic link to your inbox.
         </p>

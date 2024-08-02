@@ -20,7 +20,9 @@ const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
 
   return (
     <div className="flex w-full flex-col items-center justify-between p-4 md:w-2/3">
-      <h1 className="text-4xl font-semibold">Welcome back.</h1>
+      <h1 className="mb-10 text-4xl font-semibold text-gray-900">
+        Welcome back.
+      </h1>
       <main className="text-md flex w-full flex-col items-center p-4 font-semibold text-gray-700">
         <section className="flex w-full flex-col items-center gap-3">
           <GoogleOAuth isNewUser={isNewUser} />
@@ -34,7 +36,7 @@ const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
           </button>
         </section>
 
-        <p className="text-md text-gray-500">
+        <p className="text-md mt-6 font-normal text-gray-500">
           Don&#8217;t have an account?
           <button
             onClick={() => setIsNewUser(true)}

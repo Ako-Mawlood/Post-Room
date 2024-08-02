@@ -1,5 +1,12 @@
 import z from "zod"
 
+export const passwordValidation = z.object({
+  password: 
+z.string().min(8, { message: 'Password must be at least 8 characters long.' })
+  .regex(/[A-Z]/, { message: 'Password must contain at least one capital letter.' })
+  .regex(/[!@#$%^&*(),.?":{}|<>]/, { message: 'Password must contain at least one symbol.' })
+  .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
+});
 export const fullnameValidation = z
   .string()
   .min(3, "Full name may not be less than 3 characters")

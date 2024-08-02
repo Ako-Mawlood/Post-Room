@@ -15,7 +15,9 @@ const ProfileImageUpdater = ({
   form,
   profileOwner,
 }: profileImageEditerType) => {
-  const [profileImage, setProfileImage] = useState(profileOwner.imageUrl);
+  const [profileImage, setProfileImage] = useState(
+    profileOwner?.imageUrl || "",
+  );
 
   return (
     <div className="my-5 flex w-full gap-8">

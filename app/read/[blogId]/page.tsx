@@ -3,7 +3,7 @@
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
-import InteractionBar from "@/app/components/pages/blogs/InteractionBar";
+import InteractionBar from "@/app/components/pages/read/InteractionBar";
 import { backgroundColors } from "@/constants/backgroundColors";
 import parse from "html-react-parser";
 import { blogType } from "@/app/types/blogType";
@@ -11,13 +11,13 @@ import { Button } from "@/app/components/ui/button";
 import { CgEricsson as Logo } from "react-icons/cg";
 import { IoIosClose as CloseIcon } from "react-icons/io";
 import SigninModal from "@/app/components/pages/Landing/SigninModal";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SignupModal from "@/app/components/pages/Landing/SignupModal";
 import clsx from "clsx";
 import { getCurrentUser } from "@/libs/getCurrentUser";
-import ReadBlogSkeleton from "@/app/components/pages/blogs/ReadBlogSkeleton";
+import ReadBlogSkeleton from "@/app/components/pages/read/ReadBlogSkeleton";
 import { notFound } from "next/navigation";
-import AuthorBlogs from "@/app/components/pages/blogs/AuthorBlogs";
+import AuthorBlogs from "@/app/components/pages/read/AuthorBlogs";
 
 type ReadPageProps = {
   params: { blogId: string };
@@ -37,22 +37,21 @@ const ReadPage = ({ params }: ReadPageProps) => {
   useEffect(() => {
     async function fetchBlogAndUser(blogId: string) {
       setIsLoading(true);
+      if (token) {
+        // Fetch the current user
+        const user = await getCurrentUser(token);
+        setCurrentUser(user);
+      }
       try {
-        if (token) {
-          // Fetch the current user
-          const user = await getCurrentUser(token);
-          setCurrentUser(user);
+        // Fetch the blog
+        const res = await axiosInstance(`/api/blog/${blogId}`, {
+          headers: { Authorization: token },
+        });
 
-          // Fetch the blog
-          const res = await axiosInstance(`/api/blog/${blogId}`, {
-            headers: { Authorization: token },
-          });
-
-          setBlog(res.data);
-          setIsBlogStarred(res.data.starred);
-          setStarCount(res.data._count.stars);
-          setCommentCount(res.data._count.comments);
-        }
+        setBlog(res.data);
+        setIsBlogStarred(res.data.starred);
+        setStarCount(res.data._count.stars);
+        setCommentCount(res.data._count.comments);
       } catch (err: any) {
         if (err.response?.status === 404) {
           notFound();
@@ -83,7 +82,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
   return (
     <>
       {!token && (
-        <nav className="flex h-16 w-full items-center justify-between border-b border-border px-2 py-1 text-foreground md:px-6">
+        <nav className="flex h-16 w-full items-center justify-between border-b border-primary px-2 py-1 text-foreground md:px-6">
           <div className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl">
             <Logo size={25} />
             <h1>Post-Room</h1>

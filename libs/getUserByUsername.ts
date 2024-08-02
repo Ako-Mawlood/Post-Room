@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance"
 import { notFound } from "next/navigation"
 
-export async function getProfileOwner(username: string,token:string) {
+export async function getUserByUsername(username: string,token:string) {
   try{
   const res = await axiosInstance(`/api/user/${username}`, {
     headers: {Authorization:token},
