@@ -11,43 +11,53 @@ import {
   FormField,
 } from "@/app/components/ui/form";
 import { CgEricsson as Logo } from "react-icons/cg";
-
+import { ImSpinner8 as Spinner } from "react-icons/im";
 import z from "zod";
 import { passwordValidation } from "@/libs/validations";
 import axiosInstance from "@/libs/axiosInstance";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/app/components/ui/button";
-type resetFormValidation = z.infer<typeof passwordValidation>;
-const page = ({ params }: { params: { resetToken: string } }) => {
+import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
+import clsx from "clsx";
+type ResetFormValidation = z.infer<typeof passwordValidation>;
+
+const Page = ({ params }: { params: { resetToken: string } }) => {
   const token = params.resetToken;
   const [isPasswordReseted, setIsPasswordReseted] = useState(false);
-  console.log(isPasswordReseted);
-
+  const [isPending, setIsPending] = useState(false);
+  const [isPasswordVisable, setIsPasswordVisable] = useState(false);
   const resetInputRef = useRef<HTMLInputElement | null>(null);
-  const form = useForm<resetFormValidation>({
+  const form = useForm<ResetFormValidation>({
     defaultValues: { password: "" },
     resolver: zodResolver(passwordValidation),
   });
-  function handleRestPassword(data: resetFormValidation) {
-    axiosInstance
-      .post(`/api/user/reset-password/${token}`, data, {
+
+  const handleResetPassword = async (data: ResetFormValidation) => {
+    setIsPending(true);
+    try {
+      await axiosInstance.post(`/api/user/reset-password/${token}`, data, {
         headers: { Authorization: token },
-      })
-      .then((res) => {
-        setIsPasswordReseted(true);
       });
-  }
+      setIsPasswordReseted(true);
+    } catch (error) {
+      console.error("Failed to reset password", error);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
   useEffect(() => {
     if (resetInputRef.current) {
       resetInputRef.current.focus();
     }
-  });
+  }, []);
+
   if (isPasswordReseted) {
     return (
       <div className="flex h-screen w-full flex-col items-center justify-center gap-5">
-        <h1 className="font-PT text-5xl">Password reseted</h1>
+        <h1 className="font-PT text-5xl">Password Reseted</h1>
         <p className="w-96 text-center text-muted-foreground">
-          Your password has succesfully reseted, now you can use your new
+          Your password has been successfully reset. You can now use your new
           password and close this tab.
         </p>
       </div>
@@ -60,19 +70,17 @@ const page = ({ params }: { params: { resetToken: string } }) => {
         <Logo size={25} />
         <h1>Post-Room</h1>
       </div>
-      <div className="flex w-1/3 justify-center bg-card">
+      <div className="mx-2 flex w-full justify-center bg-card md:w-1/2 lg:w-1/3">
         <Form {...form}>
           <form
             className="flex flex-col items-center justify-center gap-14 p-6 text-center sm:w-[30rem]"
-            onSubmit={form.handleSubmit(handleRestPassword)}
+            onSubmit={form.handleSubmit(handleResetPassword)}
           >
             <div className="flex flex-col gap-4">
-              {" "}
               <h1 className="font-PT text-4xl text-primary">
-                Reseting your password
+                Reset Your Password
               </h1>
               <p className="text-lg text-muted-foreground">
-                {" "}
                 Enter a new password that's both secure and easy to remember.
               </p>
             </div>
@@ -82,21 +90,44 @@ const page = ({ params }: { params: { resetToken: string } }) => {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="flex w-full flex-col">
-                  <FormLabel>New password</FormLabel>
+                  <FormLabel>New Password</FormLabel>
                   <FormMessage />
                   <FormControl ref={resetInputRef}>
-                    <input
-                      {...field}
-                      className="border-b bg-transparent p-2 text-center outline-none duration-100"
-                      autoComplete="off"
-                    />
+                    <div className="relative">
+                      <input
+                        {...field}
+                        type={isPasswordVisable ? "text" : "password"}
+                        className={clsx(
+                          "w-full border-b bg-transparent p-2 text-center outline-none duration-100",
+                          {
+                            "border-b-destructive":
+                              form.formState.errors.password,
+                          },
+                        )}
+                        autoComplete="off"
+                      />
+                      {isPasswordVisable ? (
+                        <HidePassord
+                          className="absolute right-2 top-2 size-5 cursor-pointer"
+                          onClick={() => setIsPasswordVisable(false)}
+                        />
+                      ) : (
+                        <>
+                          <ShowPassword
+                            className="absolute right-2 top-2 size-5 cursor-pointer"
+                            onClick={() => setIsPasswordVisable(true)}
+                          />
+                          <div />
+                        </>
+                      )}
+                    </div>
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button className="w-40" type="submit">
-              {form.formState.isSubmitting ? (
-                <Logo className="animate-spin" />
+            <Button disabled={isPending} className="w-40" type="submit">
+              {isPending ? (
+                <Spinner className="animate-spin" />
               ) : (
                 <span>Reset</span>
               )}
@@ -108,4 +139,4 @@ const page = ({ params }: { params: { resetToken: string } }) => {
   );
 };
 
-export default page;
+export default Page;
