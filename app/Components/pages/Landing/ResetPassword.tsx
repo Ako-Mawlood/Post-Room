@@ -35,9 +35,9 @@ const emailValidation = z.object({
 
 type FormDataType = z.infer<typeof emailValidation>;
 
-export function ForgotPasswordBtn() {
+export function ResetPassword() {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
-  const [isResetLinkSent, setIsResetLinkSent] = useState(false);
+
   const { toast } = useToast();
   const form = useForm<FormDataType>({
     defaultValues: { email: "" },
@@ -53,11 +53,13 @@ export function ForgotPasswordBtn() {
       );
 
       setIsResetModalOpen(false);
-      setIsResetLinkSent(true);
     } catch (err) {
       console.error("Failed to send reset link", err);
     }
   }
+  useEffect(() => {
+    form.setValue("email", "");
+  }, []);
 
   return (
     <>
@@ -66,11 +68,11 @@ export function ForgotPasswordBtn() {
       </div>
       <Dialog open={isResetModalOpen} onOpenChange={setIsResetModalOpen}>
         <DialogTrigger asChild>
-          <Button variant="link" className="text-gray-900">
-            Reset your password
+          <Button variant="link" className="m-0 p-0 text-base text-gray-900">
+            Reset it
           </Button>
         </DialogTrigger>
-        <DialogContent className="flex flex-col justify-between bg-gray-100 text-gray-900 sm:max-w-[425px]">
+        <DialogContent className="flex w-full flex-col justify-between bg-gray-100 text-gray-900 sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-xl">Reset Your Password</DialogTitle>
             <DialogDescription className="mt-4">

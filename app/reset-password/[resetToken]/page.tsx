@@ -26,7 +26,6 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
   const [isPasswordReseted, setIsPasswordReseted] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [isPasswordVisable, setIsPasswordVisable] = useState(false);
-  const resetInputRef = useRef<HTMLInputElement | null>(null);
   const form = useForm<ResetFormValidation>({
     defaultValues: { password: "" },
     resolver: zodResolver(passwordValidation),
@@ -47,9 +46,7 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
   };
 
   useEffect(() => {
-    if (resetInputRef.current) {
-      resetInputRef.current.focus();
-    }
+    form.setFocus("password");
   }, []);
 
   if (isPasswordReseted) {
@@ -92,7 +89,7 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
                 <FormItem className="flex w-full flex-col">
                   <FormLabel>New Password</FormLabel>
                   <FormMessage />
-                  <FormControl ref={resetInputRef}>
+                  <FormControl>
                     <div className="relative">
                       <input
                         {...field}

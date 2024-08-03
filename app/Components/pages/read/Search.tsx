@@ -11,6 +11,7 @@ import { Button } from "../../ui/button";
 const Search = () => {
   const router = useRouter();
   const [isRecentSearchesOpen, setIsRe] = useState(false);
+  const [isSearchInputOnFocus, setIsSearchInputOnFocus] = useState(false);
   const [recentSearches, setRecentSearches] = useState<
     { id: number; content: string }[] | undefined
   >(undefined);

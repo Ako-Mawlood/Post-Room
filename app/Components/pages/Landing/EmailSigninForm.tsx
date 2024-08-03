@@ -12,7 +12,7 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
-import { ForgotPasswordBtn } from "./ForgotPasswordBtn";
+import { ResetPassword } from "./ResetPassword";
 
 const signinSchema = z.object({
   email: z
@@ -150,7 +150,10 @@ const EmailSigninForm = ({
           )}
         </button>
       </form>
-      <ForgotPasswordBtn />
+      <div className="flex items-center gap-1">
+        <span className="text-gray-500">Forgot your password? </span>
+        <ResetPassword />
+      </div>
 
       <button
         disabled={isSubmitting}

@@ -102,3 +102,15 @@ iframe{
   margin:3rem 0;
   height:70vh;
 }
+.animate-strech{
+  animation: strech 0.5s ease ;
+}
+@keyframes strech {
+  0%{
+    transform: translateY(150px);
+  }
+  100%
+{
+transform: translateY(0px);
+}
+}
