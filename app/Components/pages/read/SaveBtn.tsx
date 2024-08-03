@@ -19,20 +19,6 @@ const SaveBtn = ({
   const [isBlogSaved, setIsBlogSaved] = useState(isSaved);
   const [isPending, setIsPending] = useState(false);
   const token = getCookie("token");
-  if (!token) {
-    return (
-      <Button
-        onClick={() => handleOpenAuthModal(true)}
-        disabled={isPending}
-        size="sm"
-        variant="outline"
-        className="disabled:opacity-100"
-      >
-        <SaveIcon size={20} />
-        <span className="hidden sm:block">Save</span>
-      </Button>
-    );
-  }
   const handleSaveBlog = useCallback(async () => {
     try {
       setIsBlogSaved(true);
@@ -69,6 +55,21 @@ const SaveBtn = ({
     }
   }, [blogId]);
 
+  if (!token) {
+    return (
+      <Button
+        onClick={() => handleOpenAuthModal(true)}
+        disabled={isPending}
+        size="sm"
+        variant="outline"
+        className="disabled:opacity-100"
+      >
+        <SaveIcon size={20} />
+        <span className="hidden sm:block">Save</span>
+      </Button>
+    );
+  }
+
   if (isBlogSaved) {
     return (
       <Button
@@ -83,6 +84,7 @@ const SaveBtn = ({
       </Button>
     );
   }
+
   return (
     <Button
       onClick={handleSaveBlog}

@@ -11,8 +11,6 @@ import { Input } from "@/app/components/ui/input";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/app/components/ui/use-toast";
-import { Toaster } from "@/app/components/ui/toaster";
 import {
   Form,
   FormField,
@@ -37,8 +35,6 @@ type FormDataType = z.infer<typeof emailValidation>;
 
 export function ResetPassword() {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
-
-  const { toast } = useToast();
   const form = useForm<FormDataType>({
     defaultValues: { email: "" },
     resolver: zodResolver(emailValidation),
@@ -59,12 +55,11 @@ export function ResetPassword() {
   }
   useEffect(() => {
     form.setValue("email", "");
-  }, []);
+  }, [form]);
 
   return (
     <>
       <div className="absolute right-10 top-10 z-50">
-        <Toaster />
       </div>
       <Dialog open={isResetModalOpen} onOpenChange={setIsResetModalOpen}>
         <DialogTrigger asChild>
@@ -106,12 +101,6 @@ export function ResetPassword() {
                 )}
               />
               <button
-                onClick={() => {
-                  toast({
-                    title: "Check your inbox",
-                    description: "We send a link to reset your password",
-                  });
-                }}
                 type="submit"
                 className="flex w-20 items-center justify-center rounded-full bg-black p-2 text-gray-50"
               >

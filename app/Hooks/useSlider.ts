@@ -12,7 +12,7 @@ const useSlider = (indexRange: number) => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [sliderIndex]);
+  }, [sliderIndex, indexRange]);
 
   return {
     sliderIndex,

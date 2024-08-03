@@ -44,7 +44,7 @@ const BlogCard = ({
 }: BlogCardPropsType) => {
   return (
     <Link key={blogId} href={`/read/${blogId}`}>
-      <Card className="animate-strech flex h-full w-full items-start gap-1 rounded-lg duration-150 hover:bg-accent">
+      <Card className="flex h-full w-full items-start gap-1 rounded-lg duration-150 hover:bg-accent">
         <div className="flex h-full w-4/6 flex-col justify-between p-2 font-semibold">
           <CardHeader className="flex w-full flex-row gap-1 space-y-0 p-0">
             {categories.map((category: { category: { name: string } }) => (

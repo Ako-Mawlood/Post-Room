@@ -4,13 +4,16 @@ import CategorySetup from "../components/pages/account-setup/CategorySetup";
 import { CgEricsson as Logo } from "react-icons/cg";
 import { currentUserType } from "../types/currentUserType";
 import { getCurrentUser } from "@/libs/getCurrentUser";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 
 const CreateAcount = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const currentUser: currentUserType = await getCurrentUser();
+  const token = getCookie("token", { cookies });
+  const currentUser: currentUserType = await getCurrentUser(token as string);
   const setupStep = searchParams.setupStep || "fullname";
 
   return (

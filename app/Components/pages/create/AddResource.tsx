@@ -29,7 +29,7 @@ const AddResource = ({
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   useEffect(() => {
     setUrl("");
-  }, [isPopoverOpen]);
+  }, [isPopoverOpen, setUrl]);
 
   return (
     <>

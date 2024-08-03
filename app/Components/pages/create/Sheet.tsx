@@ -108,7 +108,15 @@ const Sheet = ({
           setIsSaved(false);
         }, 700);
       });
-  }, [debouncedContent, debouncedTitle, selectedCategories, imageUrl]);
+  }, [
+    debouncedContent,
+    debouncedTitle,
+    selectedCategories,
+    imageUrl,
+    blogId,
+    content,
+    title,
+  ]);
 
   return (
     <>

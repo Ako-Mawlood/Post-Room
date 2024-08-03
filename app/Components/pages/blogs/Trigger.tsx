@@ -8,7 +8,6 @@ type triggerPropsType = {
 
 const Trigger = ({ setSkip }: triggerPropsType) => {
   const triggerRef = useRef<HTMLDivElement | null>(null);
-
   const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
@@ -51,7 +50,7 @@ const Trigger = ({ setSkip }: triggerPropsType) => {
         ref={triggerRef}
         className="absolute bottom-[99vh] left-1/2 mx-auto mb-20 mt-10 text-5xl"
       ></div>
-      <Spinner className="mx-auto my-10 animate-spin text-center" />
+      <Spinner className="mx-auto my-32 animate-spin text-center" />
     </>
   );
 };

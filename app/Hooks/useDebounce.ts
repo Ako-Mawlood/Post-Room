@@ -8,7 +8,7 @@ const useDebounce = (content: string, delay: number) => {
     }, delay)
 
     return () => clearTimeout(handler)
-  }, [content])
+  }, [content,delay])
   return debouncedContent
 }
 

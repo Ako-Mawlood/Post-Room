@@ -47,7 +47,7 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
 
   useEffect(() => {
     form.setFocus("password");
-  }, []);
+  }, [form]);
 
   if (isPasswordReseted) {
     return (
@@ -78,7 +78,8 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
                 Reset Your Password
               </h1>
               <p className="text-lg text-muted-foreground">
-                Enter a new password that's both secure and easy to remember.
+                Enter a new password that&apos;s both secure and easy to
+                remember.
               </p>
             </div>
 

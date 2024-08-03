@@ -65,7 +65,7 @@ const EmailSigninForm = ({
 
   useEffect(() => {
     setFocus("email");
-  }, []);
+  }, [setFocus]);
 
   return (
     <main className="flex w-full flex-col items-center gap-12 text-gray-900 sm:w-3/5">

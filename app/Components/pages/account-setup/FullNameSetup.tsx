@@ -62,7 +62,7 @@ const FullNameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
 
   useEffect(() => {
     form.setFocus("fullname");
-  }, []);
+  }, [form]);
 
   return (
     <Form {...form}>
@@ -72,7 +72,7 @@ const FullNameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
       >
         <h1 className="font-PT text-4xl text-primary">Set up your account.</h1>
         <p className="text-lg">
-          Let's set up your account by creating a full name.
+          Let&apos;s set up your account by creating a full name.
         </p>
         {form.formState.errors.root && (
           <span className="w-full border border-red-400 bg-red-500/15 p-2 text-sm font-semibold text-red-500">

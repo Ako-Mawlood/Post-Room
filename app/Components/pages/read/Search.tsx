@@ -10,7 +10,6 @@ import { Button } from "../../ui/button";
 
 const Search = () => {
   const router = useRouter();
-  const [isRecentSearchesOpen, setIsRe] = useState(false);
   const [isSearchInputOnFocus, setIsSearchInputOnFocus] = useState(false);
   const [recentSearches, setRecentSearches] = useState<
     { id: number; content: string }[] | undefined
@@ -21,7 +20,10 @@ const Search = () => {
     e.preventDefault();
 
     if (query) {
-      router.push(`/blogs/search?q=${encodeURIComponent(query)}`);
+      const params = new URLSearchParams();
+      params.set("q", query);
+      router.push(`/blogs/search?${params.toString()}`);
+
       setIsSearchInputOnFocus(false);
     }
   };

@@ -106,7 +106,7 @@ const AddCategory = ({
       setIsAddCategoryInputOnFocus(false);
     }
     form.setValue("categories", selectedCategories);
-  }, [selectedCategories, editingCategoryIndex]);
+  }, [selectedCategories, editingCategoryIndex, form]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

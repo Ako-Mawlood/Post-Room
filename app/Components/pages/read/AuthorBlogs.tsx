@@ -34,7 +34,7 @@ const AuthorBlogs = ({
         setAuthorInfo(data);
       },
     );
-  }, []);
+  }, [authorUsername, token]);
 
   if (!authorInfo?.blogs) {
     return null;
@@ -47,7 +47,7 @@ const AuthorBlogs = ({
       </h1>
       <section className="flex w-full flex-wrap gap-4">
         {authorInfo.blogs.map((blog) => (
-          <div className="relative duration-100 hover:bg-accent">
+          <div key={blog.id} className="relative duration-100 hover:bg-accent">
             <Link
               href={`/read/${blog.blogId}`}
               className="relative flex h-80 w-96 flex-col gap-2 p-4"
@@ -66,7 +66,7 @@ const AuthorBlogs = ({
               </div>
               <div className="flex gap-2 text-sm">
                 {blog.categories.map((category) => (
-                  <span># {category.category.name}</span>
+                  <span key={category.blogId}># {category.category.name}</span>
                 ))}
               </div>
 

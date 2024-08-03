@@ -45,7 +45,7 @@ const Comment = ({
       .catch((err) => {
         console.log(err.response.data);
       });
-  }, []);
+  }, [blogId]);
   function handleAddComment(e: FormEvent) {
     if (!token) {
       return null;

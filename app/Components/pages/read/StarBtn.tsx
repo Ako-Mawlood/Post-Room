@@ -27,19 +27,6 @@ const StarBtn = ({
   const [isLoading, setIsLoading] = useState(false);
   const token = getCookie("token");
 
-  if (!token) {
-    return (
-      <Button
-        onClick={() => handleOpenAuthModal(true)}
-        size="sm"
-        variant="outline"
-      >
-        {isBlogStarred ? <StaredIcon size={20} /> : <StarIcon size={20} />}
-        <span>{starCount}</span>
-      </Button>
-    );
-  }
-
   const handleStar = useCallback(async () => {
     setIsLoading(true);
     setIsBlogStarred(true);
@@ -60,7 +47,7 @@ const StarBtn = ({
     } finally {
       setIsLoading(false);
     }
-  }, [blogId, token]);
+  }, [blogId, token, setIsBlogStarred, setStarCount]);
 
   const handleUnStar = useCallback(async () => {
     if (!token) return;
@@ -80,7 +67,19 @@ const StarBtn = ({
     } finally {
       setIsLoading(false);
     }
-  }, [blogId, token]);
+  }, [blogId, token, setStarCount, setIsBlogStarred]);
+  if (!token) {
+    return (
+      <Button
+        onClick={() => handleOpenAuthModal(true)}
+        size="sm"
+        variant="outline"
+      >
+        {isBlogStarred ? <StaredIcon size={20} /> : <StarIcon size={20} />}
+        <span>{starCount}</span>
+      </Button>
+    );
+  }
 
   return (
     <Button

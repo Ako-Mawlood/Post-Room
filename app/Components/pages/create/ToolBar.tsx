@@ -13,10 +13,10 @@ import TextAlignBtn from "./TextAlignBtn";
 import { useState } from "react";
 
 function ToolBar({ editor }: { editor: Editor | null }) {
+  const [url, setUrl] = useState<string>("");
   if (!editor) {
     return null;
   }
-  const [url, setUrl] = useState<string>("");
   const buttons = toolBarButtons(editor);
 
   return (
@@ -26,6 +26,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
     >
       {buttons.map((button) => (
         <ToggleGroupItem
+          key={button.name}
           variant={editor.isActive(button.name) ? "outline" : "default"}
           onClick={(e) => {
             e.preventDefault();

@@ -16,29 +16,20 @@ const BlogsList = ({}) => {
       const fetchedBlogs = await getBlogs(skip);
       console.log(fetchedBlogs);
       if (blogs.length === 0) {
-        console.log("zero");
         setBlogs(fetchedBlogs);
       } else {
         setBlogs((prevBlogs) => [...prevBlogs, ...fetchedBlogs]);
-        console.log("not zero");
       }
     }
     fetchNewBlogs();
-  }, [skip]);
-
+  }, [skip, blogs.length]);
+  console.log(blogs);
   return (
     <>
       {blogs.length !== 0 ? (
-        <section className="mb-64x relative flex w-3/6 flex-col gap-5 border-r border-primary pr-20">
-          {blogs.map((blog: blogType, index) => (
-            <div
-              key={blog.id}
-              className={clsx(
-                "h-60 w-full",
-
-                { "animate-strech": false },
-              )}
-            >
+        <section className="relative flex w-3/6 flex-col gap-5 border-r border-primary pr-20">
+          {blogs.map((blog: blogType) => (
+            <div key={blog.id} className="animate-strech h-60 w-full">
               <BlogCard
                 title={blog.title}
                 author={blog.author.fullname}

@@ -54,7 +54,10 @@ const SavedBlogsList = async () => {
         <div className="mx-auto flex w-full flex-wrap justify-start gap-10 p-6">
           {savedBlogs.map((blog: { blog: savedBlogType }) => {
             return (
-              <div className="h-52 w-full md:w-4/5 lg:w-[47%]">
+              <div
+                key={blog.blog.id}
+                className="h-52 w-full md:w-4/5 lg:w-[47%]"
+              >
                 <BlogCard
                   author={blog.blog.author?.fullname}
                   authorImageUrl={blog.blog.author?.imageUrl}
