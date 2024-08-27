@@ -68,7 +68,6 @@ const EmailSignupForm = ({
   useEffect(() => {
     setFocus("email");
   }, [isSignupFormVisable, setFocus]);
-
   return (
     <main className="flex w-full flex-col items-center gap-12 text-gray-900 sm:w-3/5">
       <div className="flex flex-col gap-6 px-4 text-center">
@@ -159,7 +158,7 @@ const EmailSignupForm = ({
         onClick={() => setIsSignupFormVisable(false)}
       >
         <ArrowIcon className="mr-2 size-8" />
-        All sign in options
+        All sign up options
       </button>
     </main>
   );

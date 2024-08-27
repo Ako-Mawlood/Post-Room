@@ -205,16 +205,10 @@ const AddCategory = ({
                   handleAddCategory(e, category?.name);
                   if (inputRef) inputRef.current?.focus();
                 }}
-                className="flex h-0 w-full flex-col text-start hover:bg-muted"
+                className="flex h-20 w-full flex-col p-2 text-start hover:bg-muted hover:text-violet-600"
               >
                 <div className="flex gap-1">
-                  <span
-                    style={{
-                      color: `rgb(${backgroundColors[index % 6]},0.9)`,
-                    }}
-                  >
-                    #
-                  </span>
+                  <span className="text-violet-600">#</span>
                   <span>{category?.name}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">

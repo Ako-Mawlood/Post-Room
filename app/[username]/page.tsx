@@ -29,7 +29,7 @@ const ProfilePage = async ({
   const currentUser: currentUserType = await getCurrentUser(token as string);
   const profileOwner: profileOwnerType = await getUserByUsername(
     params.username.substring(3),
-    token as string
+    token as string,
   );
   if (!profileOwner) notFound();
   const isCurrentUserProfile = currentUser.id === profileOwner.id;
@@ -39,6 +39,7 @@ const ProfilePage = async ({
       ? searchParams?.tab
       : "blogs";
   const editQueryParam = isCurrentUserProfile ? searchParams?.edit : "";
+  console.log(profileOwner._count.followers);
   return (
     <>
       <div
@@ -51,7 +52,7 @@ const ProfilePage = async ({
         {profileOwner ? (
           <>
             <section className="relative flex h-[40vh] w-full items-center border-b border-border px-6">
-              <h1 className="font-PT text-7xl md:text-[8.5vw]">
+              <h1 className="line-clamp-2 font-PT text-7xl md:line-clamp-1 md:text-[8.5vw]">
                 {profileOwner.fullname}
               </h1>
               <div className="absolute bottom-4 left-6 flex items-center gap-2">

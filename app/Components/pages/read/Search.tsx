@@ -22,7 +22,7 @@ const Search = () => {
     if (query) {
       const params = new URLSearchParams();
       params.set("q", query);
-      router.push(`/blogs/search?${params.toString()}`);
+      router.push(`/search?${params.toString()}`);
 
       setIsSearchInputOnFocus(false);
     }
@@ -47,24 +47,24 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="relative flex w-72 flex-col gap-2">
+    <div className="relative flex w-32 flex-col gap-2 md:w-72">
       <form
         onSubmit={handleSearch}
-        className="flex w-72 items-center gap-2 rounded-full bg-muted p-2"
+        className="w-fulls flex items-center gap-2 rounded-full bg-muted p-2"
       >
         <button
           type="submit"
           className="size-6 cursor-pointer border-none bg-transparent"
         >
-          <SearchIcon />
+          <SearchIcon size={25} />
         </button>
         <input
           onFocus={() => setIsSearchInputOnFocus(true)}
           onBlur={() => setIsSearchInputOnFocus(false)}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="h-full w-full bg-transparent outline-none"
-          placeholder="Search for blogs..."
+          className="w-fulls h-full bg-transparent outline-none"
+          placeholder="Search"
           type="text"
         />
       </form>

@@ -47,7 +47,7 @@ const SignupModal = ({
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-between p-4 md:w-2/3">
+    <main className="flex w-full flex-col items-center justify-between p-4 md:w-2/3">
       <h1 className="mb-10 text-4xl font-semibold text-gray-900">
         Join Post-Room.
       </h1>
@@ -56,7 +56,7 @@ const SignupModal = ({
           <GoogleOAuthBtn isNewUser={isNewUser} />
           <button
             onClick={() => setIsSignupFormVisable(true)}
-            className="flex w-full justify-center rounded-full border border-gray-200 bg-transparent px-4 py-2 duration-150 hover:bg-gray-100"
+            className="flex w-full items-center justify-center rounded-full border border-gray-200 bg-transparent px-4 py-2 duration-150 hover:bg-gray-100"
           >
             <MailIcon className="mr-auto" size={30} />{" "}
             <span className="mr-auto">Sign up with Email</span>
@@ -85,7 +85,7 @@ const SignupModal = ({
           &#44; applies to you.
         </p>
       </main>
-    </div>
+    </main>
   );
 };
 

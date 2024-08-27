@@ -54,7 +54,7 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
       <div className="flex h-screen w-full flex-col items-center justify-center gap-5">
         <h1 className="font-PT text-5xl">Password Reseted</h1>
         <p className="w-96 text-center text-muted-foreground">
-          Your password has been successfully reset. You can now use your new
+          Your password has been successfully reseted. You can now use your new
           password and close this tab.
         </p>
       </div>
@@ -62,12 +62,12 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-10">
+    <div className="flex h-screen w-full flex-col items-center justify-center gap-10 bg-gray-50">
       <div className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl">
         <Logo size={25} />
         <h1>Post-Room</h1>
       </div>
-      <div className="mx-2 flex w-full justify-center bg-card md:w-1/2 lg:w-1/3">
+      <div className="mx-2 flex w-full justify-center bg-gray-50 md:w-1/2 lg:w-1/3">
         <Form {...form}>
           <form
             className="flex flex-col items-center justify-center gap-14 p-6 text-center sm:w-[30rem]"

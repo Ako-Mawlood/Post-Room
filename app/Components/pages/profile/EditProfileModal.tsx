@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { GoArrowUpRight as GoIcon } from "react-icons/go";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Textarea } from "../../ui/textarea";
@@ -39,18 +39,17 @@ const EditProfileModal = ({
   currentUserUsername,
   searchParams,
 }: EditProfileModalType) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [fullnameCharacters, setFullnameCharacters] = useState(
-    profileOwner?.fullname.length,
+    profileOwner?.fullname ? profileOwner.fullname.length : 0,
   );
   const [bioCharacters, setBioCharacters] = useState(
     profileOwner?.bio ? profileOwner.bio.length : 0,
   );
-  const router = useRouter();
-  const pathname = usePathname();
-
   const form = useForm<FormDataType>({
     defaultValues: {
-      imageUrl: profileOwner?.imageUrl,
+      imageUrl: profileOwner?.imageUrl || "",
       fullname: profileOwner?.fullname || "",
       bio: profileOwner?.bio || "",
     },
@@ -104,8 +103,8 @@ const EditProfileModal = ({
                   <FormControl>
                     <Input
                       {...field}
-                      onChangeCapture={() =>
-                        setFullnameCharacters(field.value.length)
+                      onChangeCapture={(e) =>
+                        setFullnameCharacters(e.currentTarget.value.length)
                       }
                       className="h-8 bg-muted text-muted-foreground"
                     />
@@ -113,7 +112,7 @@ const EditProfileModal = ({
                   <FormDescription className="ml-auto w-fit">
                     <span
                       className={clsx({
-                        "text-destructive": field.value.length > 50,
+                        "text-destructive": fullnameCharacters > 50,
                       })}
                     >
                       {fullnameCharacters}
@@ -135,15 +134,15 @@ const EditProfileModal = ({
                       {...field}
                       className="bg-muted text-muted-foreground"
                       rows={5}
-                      onChangeCapture={() =>
-                        setBioCharacters(field.value.length)
+                      onChangeCapture={(e) =>
+                        setBioCharacters(e.currentTarget.value.length)
                       }
                     />
                   </FormControl>
                   <FormDescription className="ml-auto w-fit">
                     <span
                       className={clsx({
-                        "text-destructive": field.value.length > 250,
+                        "text-destructive": bioCharacters > 250,
                       })}
                     >
                       {bioCharacters}
@@ -161,13 +160,7 @@ const EditProfileModal = ({
               <p className="text-sm text-muted-foreground">
                 Update your categories, username, and account preferences.
               </p>
-              <Image
-                className="absolute right-2 top-2"
-                src="/assets/redirect.svg"
-                width={20}
-                height={20}
-                alt="redirect"
-              />
+              <GoIcon className="absolute right-2 top-2 size-5 text-muted-foreground" />
             </Link>
             <div className="flex justify-end gap-3">
               <Button

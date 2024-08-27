@@ -238,7 +238,8 @@ const config: Config = {
             },
             strong: {
               fontFamily: "PT Serif",
-               fontSize:"17px"
+               fontSize:"17px",
+               color:"white"
             },
           },
         },

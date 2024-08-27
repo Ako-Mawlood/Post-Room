@@ -3,15 +3,8 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { CgEricsson as Logo } from "react-icons/cg";
 import { Button } from "./ui/button";
-import { PiNotePencilLight as WriteIcon } from "react-icons/pi";
-import { IoPersonOutline as ProfileIcon } from "react-icons/io5";
-import {
-  IoBookmarkOutline as BookmarkIcon,
-  IoSettingsOutline as SettingsIcon,
-} from "react-icons/io5";
 import { ModeToggle } from "./ui/ModeToggle";
 import { Skeleton } from "./ui/skeleton";
-import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,10 +20,10 @@ import { currentUserType } from "../types/currentUserType";
 import { getInitials } from "@/libs/utils";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { profileOwnerType } from "../types/profileOwnerType";
-
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import { getUserByUsername } from "@/libs/getUserByUsername";
+import NotficationLog from "./NotificationLog";
 
 const Navbar = async () => {
   const token = getCookie("token", { cookies });
@@ -41,18 +34,23 @@ const Navbar = async () => {
   );
   const menuItems = getMenuItems(currentUser);
   return (
-    <nav className="flex h-16 w-full items-center justify-between border-b border-primary px-2 text-foreground md:px-6">
-      <Link
-        href="/blogs"
-        className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl"
-      >
-        <Logo size={25} />
-        <h1>Post-Room</h1>
-      </Link>
-      <div className="flex items-center gap-4">
+    <nav className="flex h-16 w-full items-center justify-between border-b border-border px-2 text-foreground md:px-6">
+      <div className="flex items-center gap-3">
+        <Link
+          href="/blogs"
+          className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl"
+        >
+          <Logo size={25} />
+          <h1>Post-Room</h1>
+        </Link>
         <Search />
+      </div>
+
+      <div className="flex items-center gap-4">
         <ModeToggle />
-        <Button>
+        <NotficationLog />
+
+        <Button className="hidden sm:flex">
           <Link
             className="flex items-center gap-2 px-1 font-semibold"
             href="/create/"
@@ -88,13 +86,12 @@ const Navbar = async () => {
               {menuItems.map((item) => (
                 <Link key={item.label} href={item.href}>
                   <DropdownMenuItem>
-                    <Image src={item.icon} width={25} height={25} alt="Icon" />
+                    <item.icon className="size-8" />
                     <span className="ml-2">{item.label}</span>
                   </DropdownMenuItem>
                 </Link>
               ))}
               <DropdownMenuSeparator />
-
               <LogoutBtn />
             </DropdownMenuGroup>
           </DropdownMenuContent>

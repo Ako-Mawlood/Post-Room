@@ -39,13 +39,7 @@ const Preview = ({
         <ul className="mb-20 mt-4 flex flex-wrap gap-3">
           {selectedCategories.map((category, index) => (
             <li key={index} className="flex gap-1">
-              <span
-                style={{
-                  color: `rgb(${backgroundColors[index]},0.9)`,
-                }}
-              >
-                #
-              </span>
+              <span className="font-PT text-violet-600">#</span>
               <span className="text-primary">{category}</span>
             </li>
           ))}

@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import BlogCard from "../../ui/BlogCard";
 import { getBlogs } from "@/libs/getBlogs";
 import { Skeleton } from "../../ui/skeleton";
-import clsx from "clsx";
 
 const BlogsList = ({}) => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
@@ -22,8 +21,7 @@ const BlogsList = ({}) => {
       }
     }
     fetchNewBlogs();
-  }, [skip, blogs.length]);
-  console.log(blogs);
+  }, [skip]);
   return (
     <>
       {blogs.length !== 0 ? (

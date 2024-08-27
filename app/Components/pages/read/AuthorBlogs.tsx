@@ -10,7 +10,6 @@ import {
 import { getCookie } from "cookies-next";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import SaveBtn from "./SaveBtn";
 import FollowBtn from "./FollowBtn";
 
 const AuthorBlogs = ({
@@ -41,38 +40,37 @@ const AuthorBlogs = ({
   }
 
   return (
-    <main className="mx-auto flex w-full flex-col gap-6 p-6 lg:w-[50vw]">
+    <main className="mx-auto flex w-full flex-col gap-6 p-6 md:w-[880px]">
       <h1 className="text-3xl text-muted-foreground">
         All from <span className="text-primary">{authorInfo.fullname}</span>
       </h1>
-      <section className="flex w-full flex-wrap gap-4">
+      <section className="flex w-full flex-wrap justify-center gap-4">
         {authorInfo.blogs.map((blog) => (
-          <div key={blog.id} className="relative duration-100 hover:bg-accent">
-            <Link
-              href={`/read/${blog.blogId}`}
-              className="relative flex h-80 w-96 flex-col gap-2 p-4"
-            >
-              <div className="relative h-80 w-full">
-                <Image
-                  className="rounded-lg object-cover"
-                  src={
-                    blog.imageUrl ||
-                    "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
-                  }
-                  fill={true}
-                  quality={100}
-                  alt="Blog image"
-                />
-              </div>
-              <div className="flex gap-2 text-sm">
-                {blog.categories.map((category) => (
-                  <span key={category.blogId}># {category.category.name}</span>
-                ))}
-              </div>
+          <Link
+            key={blog.id}
+            href={`/read/${blog.blogId}`}
+            className="relative flex h-80 w-full flex-col gap-2 p-4 hover:bg-accent md:w-[24rem]"
+          >
+            <div className="relative h-80 w-full">
+              <Image
+                className="rounded-lg object-cover"
+                src={
+                  blog.imageUrl ||
+                  "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
+                }
+                fill={true}
+                quality={100}
+                alt="Blog image"
+              />
+            </div>
+            <div className="flex gap-2 text-sm">
+              {blog.categories.map((category) => (
+                <span key={category.blogId}># {category.category.name}</span>
+              ))}
+            </div>
 
-              <h1 className="font-PT text-xl">{blog.title}</h1>
-            </Link>
-          </div>
+            <h1 className="font-PT text-xl">{blog.title}</h1>
+          </Link>
         ))}
       </section>
       <section className="my-6 mt-6 flex items-center justify-around gap-3 rounded-lg border-b py-6">
