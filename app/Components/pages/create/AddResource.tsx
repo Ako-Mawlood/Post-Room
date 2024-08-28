@@ -9,23 +9,16 @@ import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import React from "react";
+import { IconType } from "react-icons/lib";
 
 type addResourceProps = {
-  label: string;
+  type: string;
   url: string;
   setUrl: Dispatch<SetStateAction<string>>;
-  description: string;
   action: () => void;
-  Icon: React.ReactElement;
+  Icon: IconType;
 };
-const AddResource = ({
-  label,
-  url,
-  setUrl,
-  description,
-  action,
-  Icon,
-}: addResourceProps) => {
+const AddResource = ({ type, url, setUrl, action, Icon }: addResourceProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   useEffect(() => {
     setUrl("");
@@ -35,16 +28,16 @@ const AddResource = ({
     <>
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger>
-          {React.cloneElement(Icon as React.ReactElement, {
-            className:
-              "size-9 p-2 text-accent-foreground hover:bg-muted sm:size-10",
-          })}
+          <Icon className="size-9 p-2 text-accent-foreground hover:bg-muted sm:size-10" />
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-2">
-          <h1>{label}</h1>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <h1>{type} url</h1>
+          <p className="text-sm text-muted-foreground">
+            Add the {type} you want to embed.
+          </p>
           <Input value={url} onChange={(e) => setUrl(e.target.value)} />
           <Button
+            className="my-2 h-8 w-20"
             type="button"
             onClick={() => {
               action();

@@ -1,16 +1,13 @@
 "use client";
 
-import { AlignCenter, AlignLeft, AlignRight } from "lucide-react";
 import toolBarButtons from "@/constants/toolBarButtons";
-import { LuLink as Link } from "react-icons/lu";
-import { LuYoutube as Video } from "react-icons/lu";
-import { LuImage as Image } from "react-icons/lu";
-import { ToggleGroupItem } from "@/app/components/ui/toggle-group";
-import { ToggleGroup } from "@/app/components/ui/toggle-group";
+import { ToggleGroupItem, ToggleGroup } from "@/app/components/ui/toggle-group";
 import { Editor } from "@tiptap/react";
 import AddResource from "./AddResource";
 import TextAlignBtn from "./TextAlignBtn";
 import { useState } from "react";
+import { getResources } from "@/constants/resources";
+import { alignments } from "@/constants/alignments";
 
 function ToolBar({ editor }: { editor: Editor | null }) {
   const [url, setUrl] = useState<string>("");
@@ -18,6 +15,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
     return null;
   }
   const buttons = toolBarButtons(editor);
+  const resources = getResources(editor, url);
 
   return (
     <ToggleGroup
@@ -39,62 +37,24 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           <button.icon className="size-5 sm:size-6" />
         </ToggleGroupItem>
       ))}
-
-      <TextAlignBtn
-        alignment="left"
-        editor={editor}
-        Icon={<AlignLeft className="size-5 sm:size-6" />}
-      />
-
-      <TextAlignBtn
-        alignment="center"
-        editor={editor}
-        Icon={<AlignCenter className="size-5 sm:size-6" />}
-      />
-
-      <TextAlignBtn
-        alignment="right"
-        editor={editor}
-        Icon={<AlignRight className="size-5 sm:size-6" />}
-      />
-
-      <AddResource
-        Icon={<Image />}
-        label="Image url"
-        url={url}
-        setUrl={setUrl}
-        description="add the url of the iamge you wish to imbel"
-        action={() => {
-          editor.chain().focus().setImage({ src: url }).run();
-        }}
-      />
-      <AddResource
-        Icon={<Video />}
-        label="Vido url"
-        url={url}
-        setUrl={setUrl}
-        description="add the url of the Video you wish to imbel"
-        action={() => {
-          editor.commands.setYoutubeVideo({
-            src: url,
-          });
-        }}
-      />
-      <AddResource
-        Icon={<Link />}
-        label="Link url"
-        url={url}
-        setUrl={setUrl}
-        description="add the url of the Link you wish to imbel"
-        action={() =>
-          editor
-            .chain()
-            .focus()
-            .extendMarkRange("link")
-            .setLink({ href: url })
-            .run()
-        }
-      />
+      {alignments.map((alignment) => (
+        <TextAlignBtn
+          key={alignment.id}
+          alignTo={alignment.alignTo}
+          editor={editor}
+          Icon={alignment.icon}
+        />
+      ))}
+      {resources.map((resource) => (
+        <AddResource
+          key={resource.id}
+          Icon={resource.icon}
+          type={resource.type}
+          url={url}
+          setUrl={setUrl}
+          action={resource.action}
+        />
+      ))}
     </ToggleGroup>
   );
 }
