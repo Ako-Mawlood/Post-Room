@@ -76,8 +76,8 @@ const AuthorBlogs = ({
         ))}
       </section>
       <section className="my-6 mt-6 flex items-center justify-around gap-3 rounded-lg border-b py-6">
-        <div className="flex flex-col gap-5">
-          <div className="flex h-full items-center gap-10">
+        <div className="flex flex-col gap-2">
+          <div className="flex h-full items-center gap-5">
             <Link href={`/@${authorInfo.username}`}>
               <Avatar className="size-20">
                 <AvatarFallback>
@@ -86,28 +86,31 @@ const AuthorBlogs = ({
                 <AvatarImage src={authorInfo.imageUrl} />
               </Avatar>
             </Link>
-            <div>
-              <Link
-                className="hover:underline"
-                href={`/@${authorInfo.username}`}
-              >
-                {authorInfo.fullname}
-              </Link>
-              <div className="flex gap-2 text-sm">
+            <div className="flex flex-col items-start justify-between gap-2">
+              <div className="flex justify-between gap-3">
+                <Link
+                  className="w-36 truncate hover:underline"
+                  href={`/@${authorInfo.username}`}
+                >
+                  {authorInfo.fullname}
+                </Link>
+                <FollowBtn
+                  username={authorInfo.username}
+                  handleOpenAuthModal={handleOpenAuthModal}
+                  isFollowed={isFollowed}
+                  isMyBlog={isMyBLog}
+                />
+              </div>
+
+              <div className="flex w-full items-center justify-between gap-2 text-sm">
                 <p className="text-muted-foreground">
                   {authorInfo._count.followers} Followers
                 </p>{" "}
-                <p className="text-muted-foreground">
+                <p className="mr-auto text-muted-foreground">
                   {authorInfo._count.followed} Followings
                 </p>
               </div>
             </div>
-            <FollowBtn
-              username={authorInfo.username}
-              handleOpenAuthModal={handleOpenAuthModal}
-              isFollowed={isFollowed}
-              isMyBlog={isMyBLog}
-            />
           </div>
         </div>
 

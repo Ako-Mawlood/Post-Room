@@ -1,11 +1,11 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
 import axiosInstance from "@/libs/axiosInstance";
-import { CgDanger } from "react-icons/cg";
+import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
 import clsx from "clsx";
 import { Input } from "@/app/components/ui/input";
 import z from "zod";
@@ -31,6 +31,7 @@ interface emailSigninFormPropsType {
 const EmailSigninForm = ({
   setIsSigninFormVisable,
 }: emailSigninFormPropsType) => {
+  const [isPasswordVisable, setIsPasswordVisable] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -85,7 +86,7 @@ const EmailSigninForm = ({
           </p>
         )}
         <label className="item-start flex w-full flex-col gap-2">
-          <span>Your email</span>
+          <span>Email address</span>
           {errors.email?.message && (
             <p className="text-xs font-semibold text-red-500">
               {errors.email?.message}
@@ -103,9 +104,6 @@ const EmailSigninForm = ({
                 "border-red-400": errors.email?.message || errors.root?.message,
               })}
             />
-            {errors.email?.message && (
-              <CgDanger className="absolute right-2 top-3 size-5 text-red-400" />
-            )}
           </div>
         </label>
         <label className="flex w-full flex-col items-start gap-2">
@@ -119,7 +117,7 @@ const EmailSigninForm = ({
             <Input
               {...register("password")}
               disabled={isSubmitting}
-              type="password"
+              type={isPasswordVisable ? "text" : "password"}
               onChangeCapture={() => setError("root", { message: "" })}
               className={clsx("w-full bg-slate-100", {
                 "border-gray-300 focus:border-gray-400":
@@ -128,8 +126,16 @@ const EmailSigninForm = ({
                   errors.password?.message || errors.root?.message,
               })}
             />
-            {errors.password?.message && (
-              <CgDanger className="absolute right-2 top-3 size-5 text-red-400" />
+            {isPasswordVisable ? (
+              <HidePassord
+                className="absolute right-2 top-2 size-5 cursor-pointer"
+                onClick={() => setIsPasswordVisable(false)}
+              />
+            ) : (
+              <ShowPassword
+                className="absolute right-2 top-2 size-5 cursor-pointer"
+                onClick={() => setIsPasswordVisable(true)}
+              />
             )}
           </div>
         </label>

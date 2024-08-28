@@ -15,7 +15,7 @@ import { ImSpinner8 as Spinner } from "react-icons/im";
 import z from "zod";
 import { passwordValidation } from "@/libs/validations";
 import axiosInstance from "@/libs/axiosInstance";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
 import clsx from "clsx";

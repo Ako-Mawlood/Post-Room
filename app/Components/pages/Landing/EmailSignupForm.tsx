@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
@@ -7,9 +7,9 @@ import { Input } from "@/app/components/ui/input";
 import clsx from "clsx";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CgDanger } from "react-icons/cg";
 import { setCookie } from "cookies-next";
 import { passwordValidation } from "@/libs/validations";
+import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
 
 const signupSchema = z.object({
   email: z
@@ -33,6 +33,7 @@ const EmailSignupForm = ({
   setIsSignupFormVisable,
   setIsVerifyMessageVisable,
 }: EmailSignupFormPropsType) => {
+  const [isPasswordVisable, setIsPasswordVisable] = useState(false);
   const {
     handleSubmit,
     getValues,
@@ -88,7 +89,7 @@ const EmailSignupForm = ({
           </p>
         )}
         <label className="item-start flex w-full flex-col gap-2">
-          <span>Your email</span>
+          <span>Email address</span>
           {errors.email?.message && (
             <p className="text-xs font-semibold text-red-500">
               {errors.email?.message}
@@ -98,17 +99,14 @@ const EmailSignupForm = ({
             <Input
               {...register("email")}
               disabled={isSubmitting}
-              autoComplete="off"
               type="text"
+              autoComplete="off"
               onChangeCapture={() => setError("root", { message: "" })}
               className={clsx("w-full bg-slate-100 text-start", {
                 "border-gray-300 focus:border-gray-400": !errors.email?.message,
                 "border-red-400": errors.email?.message || errors.root?.message,
               })}
             />
-            {errors.email?.message && (
-              <CgDanger className="absolute right-2 top-3 size-5 text-red-400" />
-            )}
           </div>
         </label>
         <label className="flex w-full flex-col items-start gap-2">
@@ -122,7 +120,7 @@ const EmailSignupForm = ({
             <Input
               {...register("password")}
               disabled={isSubmitting}
-              type="password"
+              type={isPasswordVisable ? "text" : "password"}
               onChangeCapture={() => setError("root", { message: "" })}
               className={clsx("w-full bg-slate-100", {
                 "border-gray-300 focus:border-gray-400":
@@ -131,8 +129,16 @@ const EmailSignupForm = ({
                   errors.password?.message || errors.root?.message,
               })}
             />
-            {errors.password?.message && (
-              <CgDanger className="absolute right-2 top-3 size-5 text-red-400" />
+            {isPasswordVisable ? (
+              <HidePassord
+                className="absolute right-2 top-2 size-5 cursor-pointer"
+                onClick={() => setIsPasswordVisable(false)}
+              />
+            ) : (
+              <ShowPassword
+                className="absolute right-2 top-2 size-5 cursor-pointer"
+                onClick={() => setIsPasswordVisable(true)}
+              />
             )}
           </div>
         </label>

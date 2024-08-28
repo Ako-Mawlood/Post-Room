@@ -1,5 +1,5 @@
 import z from "zod"
-
+const passwordRegex = /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 export const passwordValidation =
   z.string()
     .min(8, "Password should be at least 8 characters")
@@ -9,9 +9,9 @@ export const passwordValidation =
     .refine((value) => /[0-9]/.test(value), {
       message: "Password must have at least one number",
     })
-    .refine((value) => /[!@#$%^&*(),.?":{}|<>]/.test(value), {
-      message: "Password must have at least one symbol",
-    })
+.refine((value) => passwordRegex.test(value), {
+    message: "Password must contain at least one special character",
+  });
 export const fullnameValidation = z
   .string()
   .min(3, "Full name may not be less than 3 characters")

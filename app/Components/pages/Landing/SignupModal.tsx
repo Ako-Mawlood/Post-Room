@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { CiMail as MailIcon } from "react-icons/ci";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import EmailSignupForm from "./EmailSignupForm";
-import GoogleOAuthBtn from "./GoogleOAuthBtn";
-
+import { oAuthBtns } from "@/constants/OAuthBtns";
+import OAuthBtn from "./OAuthBtn";
 interface signupModalPropsType {
   isNewUser: boolean;
   setIsNewUser: Dispatch<SetStateAction<boolean>>;
@@ -53,12 +53,21 @@ const SignupModal = ({
       </h1>
       <main className="text-md flex w-full flex-col items-center p-4 font-semibold text-gray-700">
         <section className="flex w-full flex-col items-center gap-3">
-          <GoogleOAuthBtn isNewUser={isNewUser} />
+          {oAuthBtns.map((oAuthBtn) => (
+            <OAuthBtn
+              key={oAuthBtn.id}
+              name={oAuthBtn.name}
+              Icon={oAuthBtn.icon}
+              href={oAuthBtn.href}
+              color={oAuthBtn.color}
+              isNewUser={isNewUser}
+            />
+          ))}
           <button
             onClick={() => setIsSignupFormVisable(true)}
             className="flex w-full items-center justify-center rounded-full border border-gray-200 bg-transparent px-4 py-2 duration-150 hover:bg-gray-100"
           >
-            <MailIcon className="mr-auto" size={30} />{" "}
+            <MailIcon className="mr-auto size-8" />{" "}
             <span className="mr-auto">Sign up with Email</span>
           </button>
         </section>
