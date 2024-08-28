@@ -1,5 +1,4 @@
 import { AlignCenter, AlignLeft, AlignRight, LucideIcon } from "lucide-react";
-import { IconType } from "react-icons/lib";
 
 type alignmentsType = {
   id: number;

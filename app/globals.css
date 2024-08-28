@@ -105,11 +105,9 @@ iframe{
 .animate-strech{
   animation: strech 0.3s  ;
   transition: all 500ms cubic-bezier(1.000, 0.030, 1.000, 0.650);
-    /* custom */
-  
     transition-timing-function: cubic-bezier(1.000, 0.030, 1.000, 0.650);
-    /* custom */
 }
+
 @keyframes strech {
   0%{
     transform: translateY(150px);
