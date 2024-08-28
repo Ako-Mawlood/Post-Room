@@ -65,7 +65,9 @@ const AuthorBlogs = ({
             </div>
             <div className="flex gap-2 text-sm">
               {blog.categories.map((category) => (
-                <span key={category.blogId}># {category.category.name}</span>
+                <span className="truncate" key={category.blogId}>
+                  #{category.category.name}
+                </span>
               ))}
             </div>
 

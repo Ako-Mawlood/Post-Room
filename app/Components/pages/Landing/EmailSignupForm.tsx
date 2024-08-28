@@ -9,13 +9,14 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CgDanger } from "react-icons/cg";
 import { setCookie } from "cookies-next";
+import { passwordValidation } from "@/libs/validations";
 
 const signupSchema = z.object({
   email: z
     .string()
     .min(1, "Please provide your email address")
     .email("Invalid email address"),
-  password: z.string().min(8, "Password should be atleast 8 characters"),
+  password: passwordValidation,
 });
 type formDataType = z.infer<typeof signupSchema>;
 

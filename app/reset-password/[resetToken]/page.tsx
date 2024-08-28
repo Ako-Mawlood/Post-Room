@@ -19,7 +19,10 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
 import clsx from "clsx";
-type ResetFormValidation = z.infer<typeof passwordValidation>;
+const passwordSchema = z.object({
+  password: passwordValidation,
+});
+type ResetFormValidation = z.infer<typeof passwordSchema>;
 
 const Page = ({ params }: { params: { resetToken: string } }) => {
   const token = params.resetToken;

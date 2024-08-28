@@ -50,7 +50,7 @@ const BlogCard = ({
             {categories.map((category: { category: { name: string } }) => (
               <span
                 key={category.category.name}
-                className="w-fit rounded-lg p-1 text-xs"
+                className="truncate rounded-lg p-1 text-xs"
               >
                 #{category.category.name}
               </span>
@@ -70,7 +70,7 @@ const BlogCard = ({
                 <AvatarFallback>{getInitials(author)}</AvatarFallback>
                 <AvatarImage src={authorImageUrl as string} />
               </Avatar>
-              <span className="ml-2 hidden w-20 sm:block md:w-fit">
+              <span className="ml-2 hidden truncate sm:block md:w-32">
                 {author}
               </span>
             </div>
