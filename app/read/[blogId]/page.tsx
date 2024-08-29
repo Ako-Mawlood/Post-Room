@@ -4,7 +4,6 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import InteractionBar from "@/app/components/pages/read/InteractionBar";
-import { backgroundColors } from "@/constants/backgroundColors";
 import { blogType } from "@/app/types/blogType";
 import { Button } from "@/app/components/ui/button";
 import { CgEricsson as Logo } from "react-icons/cg";
@@ -142,13 +141,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
                 <ul className="mt-2 flex gap-3 text-sm">
                   {blog.categories.map((category, index: number) => (
                     <div key={index} className="flex gap-1">
-                      <span
-                        style={{
-                          color: `rgb(${backgroundColors[index + 1]},0.9)`,
-                        }}
-                      >
-                        #
-                      </span>
+                      <span className="text-violet-600">#</span>
                       <span className="text-primary">
                         {category.category.name}
                       </span>

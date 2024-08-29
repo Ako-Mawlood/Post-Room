@@ -47,12 +47,6 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           action={resource.action}
         />
       ))}
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        className={editor.isActive("code") ? "is-active" : ""}
-      >
-        Toggle code
-      </button>
     </ToggleGroup>
   );
 }

@@ -76,7 +76,7 @@ const toolBarButtons = () => [
       editor.chain().focus().toggleCodeBlock().run();
     },
     disabledWhile: (editor: Editor) =>
-      !editor.can().chain().focus().toggleCode().run(),
+      !editor.can().chain().focus().toggleCodeBlock().run(),
   },
   {
     name: "bulletList",

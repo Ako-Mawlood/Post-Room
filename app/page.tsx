@@ -95,8 +95,8 @@ export default function LandingPage() {
         >
           Write
         </button>
-        <button>Terms</button>
-        <button>Polices</button>
+        <Link href="/terms">Terms</Link>
+        <Link href="/privacy-policy">Privacy</Link>
         <button onClick={() => handleOpenAuthModal(false)}>Signin</button>
         <button onClick={() => handleOpenAuthModal(true)}>Signup</button>
       </footer>

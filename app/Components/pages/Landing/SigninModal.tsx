@@ -57,11 +57,11 @@ const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
         </p>
         <p className="pt-10 text-center text-sm font-normal text-gray-500">
           Click &#8220;Sign in&#8221; to agree to Post-Rooms&#8217;s{" "}
-          <Link href="/" className="underline underline-offset-2">
+          <Link href="/terms" className="underline underline-offset-2">
             Terms of Service
           </Link>
           &#44; and acknowledge that Post-Room&#8217;s{" "}
-          <Link href="/" className="underline underline-offset-2">
+          <Link href="/privacy-policy" className="underline underline-offset-2">
             Privacy Policy
           </Link>
           &#44; applies to you.

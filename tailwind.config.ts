@@ -181,6 +181,9 @@ const config: Config = {
               },
               textDecorationColor: "#ed8aff",
             },
+            pre: {
+              backgroundColor: "rgb(20,23,28)",
+            },
             blockquote: {
               borderLeftColor: "#ed8aff",
               color: "hsl(var(--foreground-dark))",
