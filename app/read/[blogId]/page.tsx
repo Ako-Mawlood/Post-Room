@@ -5,7 +5,6 @@ import { getCookie } from "cookies-next";
 import Image from "next/image";
 import InteractionBar from "@/app/components/pages/read/InteractionBar";
 import { backgroundColors } from "@/constants/backgroundColors";
-import parse from "html-react-parser";
 import { blogType } from "@/app/types/blogType";
 import { Button } from "@/app/components/ui/button";
 import { CgEricsson as Logo } from "react-icons/cg";
@@ -18,6 +17,8 @@ import { getCurrentUser } from "@/libs/getCurrentUser";
 import ReadBlogSkeleton from "@/app/components/pages/read/ReadBlogSkeleton";
 import { notFound } from "next/navigation";
 import AuthorBlogs from "@/app/components/pages/read/AuthorBlogs";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
 type ReadPageProps = {
   params: { blogId: string };
@@ -188,7 +189,9 @@ const ReadPage = ({ params }: ReadPageProps) => {
               {blog.title}
             </h1>
             <div className="prose my-10 dark:prose-dark">
-              {parse(blog.content)}
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                {blog.content}
+              </ReactMarkdown>
             </div>
 
             <InteractionBar

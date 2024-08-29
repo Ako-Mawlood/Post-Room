@@ -6,15 +6,13 @@ import { Editor } from "@tiptap/react";
 import AddResource from "./AddResource";
 import { useState } from "react";
 import { getResources } from "@/constants/resources";
-import { alignments } from "@/constants/alignments";
-import { Button } from "../../ui/button";
 
 function ToolBar({ editor }: { editor: Editor | null }) {
   const [url, setUrl] = useState<string>("");
   if (!editor) {
     return null;
   }
-  const buttons = toolBarButtons(editor);
+  const buttons = toolBarButtons();
   const resources = getResources(editor, url);
   return (
     <ToggleGroup
@@ -37,28 +35,6 @@ function ToolBar({ editor }: { editor: Editor | null }) {
         </ToggleGroupItem>
       ))}
 
-      {/* Alignment buttons */}
-
-      {alignments.map((alignment) => (
-        <Button
-          key={alignment.id}
-          onClick={() =>
-            editor?.chain().focus().setTextAlign(alignment.alignTo).run()
-          }
-          type="button"
-          value={alignment.alignTo}
-          aria-label="Align right"
-          variant={
-            editor.isActive({ textAlign: alignment.alignTo })
-              ? "default"
-              : "ghost"
-          }
-          className="h-8 rounded-lg px-2 duration-0"
-        >
-          <alignment.icon className="size-5 sm:size-6" />
-        </Button>
-      ))}
-
       {/* Resource  buttons */}
 
       {resources.map((resource) => (
@@ -71,6 +47,12 @@ function ToolBar({ editor }: { editor: Editor | null }) {
           action={resource.action}
         />
       ))}
+      <button
+        onClick={() => editor.chain().focus().toggleCode().run()}
+        className={editor.isActive("code") ? "is-active" : ""}
+      >
+        Toggle code
+      </button>
     </ToggleGroup>
   );
 }

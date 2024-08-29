@@ -10,6 +10,9 @@ import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Image from "@tiptap/extension-image";
 import { TextStyle } from "@tiptap/extension-text-style";
+import { Markdown } from "tiptap-markdown";
+import Code from "@tiptap/extension-code";
+
 const Tiptap = ({ content, setContent, form }: any) => {
   const editor = useEditor({
     content,
@@ -19,6 +22,12 @@ const Tiptap = ({ content, setContent, form }: any) => {
       }),
       Underline,
       TextStyle,
+      Code.configure({
+        HTMLAttributes: {
+          class:
+            "bg-primary text-semibold rounded-md p-3 text-primary-foreground w-full",
+        },
+      }),
       TextAlign.configure({
         types: [
           "heading",
@@ -48,6 +57,7 @@ const Tiptap = ({ content, setContent, form }: any) => {
         nocookie: true,
         ccLanguage: "en",
       }),
+      Markdown,
     ],
     editorProps: {
       attributes: {
@@ -55,9 +65,9 @@ const Tiptap = ({ content, setContent, form }: any) => {
       },
     },
     onUpdate: ({ editor }) => {
-      const contentHTML = editor.getHTML();
-      setContent(contentHTML);
-      form.setValue("content", contentHTML);
+      const contentMarkdown = editor.storage.markdown.getMarkdown();
+      setContent(contentMarkdown);
+      form.setValue("content", contentMarkdown);
     },
   });
 

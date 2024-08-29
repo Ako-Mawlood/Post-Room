@@ -1,6 +1,6 @@
 import Image from "next/image";
-import parse from "html-react-parser";
-import { backgroundColors } from "@/constants/backgroundColors";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
 type previewPropsType = {
   content: string;
@@ -46,7 +46,7 @@ const Preview = ({
         </ul>
       )}
       <article className="prose w-full dark:prose-dark">
-        {parse(content)}
+        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
       </article>
     </section>
   );
