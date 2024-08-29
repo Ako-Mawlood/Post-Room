@@ -1,25 +1,30 @@
+// useEditorInstance.ts
 import StarterKit from "@tiptap/starter-kit";
 import Youtube from "@tiptap/extension-youtube";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { Editor, useEditor } from "@tiptap/react";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Image from "@tiptap/extension-image";
 import { TextStyle } from "@tiptap/extension-text-style";
-import { Markdown } from "tiptap-markdown";
 import Code from "@tiptap/extension-code";
 import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
 import { common, createLowlight } from "lowlight";
-const BlogContent = ({ content }: { content: string }) => {
+import { Markdown } from "tiptap-markdown";
+
+type UseEditorInstanceProps = {
+  content: string;
+  updateContent: (editor: Editor) => void;
+};
+
+function useEditorInstance({ content, updateContent }: UseEditorInstanceProps) {
   const editor = useEditor({
     content,
-    editable: false,
     extensions: [
       StarterKit.configure({
         codeBlock: false,
       }),
-
       CodeBlockLowlight.configure({
         lowlight: createLowlight(common),
       }),
@@ -59,26 +64,15 @@ const BlogContent = ({ content }: { content: string }) => {
     ],
     editorProps: {
       attributes: {
-        class: "w-full min-h-96 mx-auto pg-transparent p-2  outline-none",
+        class: "w-full min-h-96 mx-auto pg-transparent p-2 outline-none",
       },
+    },
+    onUpdate: ({ editor }) => {
+      updateContent(editor as Editor);
     },
   });
 
-  if (!editor) {
-    return;
-  }
+  return editor;
+}
 
-  return (
-    <div className="flex w-full flex-col">
-      <div className="prose relative dark:prose-dark">
-        <EditorContent
-          placeholder="Content here..."
-          className="disabled: m-0 h-min w-full p-0"
-          editor={editor}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default BlogContent;
+export default useEditorInstance;

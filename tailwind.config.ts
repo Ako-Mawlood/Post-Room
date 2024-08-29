@@ -18,10 +18,9 @@ const config: Config = {
       },
     },
     extend: {
-    screens:{
-      "lg":"1130px"
-    }
-      ,
+      screens: {
+        lg: "1130px",
+      },
       fontFamily: {
         PT: ["PT Serif", "serif"],
       },
@@ -102,32 +101,18 @@ const config: Config = {
               marginBottom: "1.5rem",
               marginTop: "0",
             },
-            'ul li::marker': {
-              color: "#8025f7", 
+            "ul li::marker": {
+              color: "#8025f7",
             },
-            'ol li::marker': {
-              color: "#8025f7",  
+            "ol li::marker": {
+              color: "#8025f7",
             },
             blockquote: {
-              borderLeftColor: "#8025f7",  
+              borderLeftColor: "#8025f7",
               borderLeftWidth: "4px",
               paddingLeft: "1rem",
               fontStyle: "italic",
-              fontSize:"2rem"
-            },
-            code: {
-              backgroundColor: "hsl(var(--background))",
-              padding: "0.2rem 0.4rem",
-              borderRadius: "0.2rem",
-            },
-            pre: {
-              backgroundColor: "hsl(var(--background))",
-              padding: "1rem",
-              borderRadius: "0.5rem",
-              overflowX: "auto",
-              code: {
-                color: "hsl(var(--primary))",
-              },
+              fontSize: "2rem",
             },
             hr: {
               borderColor: "hsl(var(--border))",
@@ -135,31 +120,34 @@ const config: Config = {
             img: {
               borderRadius: "0.5rem",
             },
-            'ul': {
+            ul: {
               marginTop: "0",
               marginBottom: "1rem",
               paddingLeft: "1.5rem",
             },
-            'ol': {
+            ol: {
               marginTop: "0",
               marginBottom: "1rem",
               paddingLeft: "1.5rem",
             },
-            'ul li': {
+            "ul li": {
               marginBottom: "0.25rem",
             },
-            'ol li': {
+            "ol li": {
               marginBottom: "0.25rem",
             },
             strong: {
-          fontSize:"17px",
+              fontSize: "17px",
               fontFamily: "PT Serif",
             },
-            'a': {
+            pre: {
+              backgroundColor: "rgb(14,17,22)",
+            },
+            a: {
               color: "#8025f7",
               textDecoration: "underline",
-              '&:hover': {
-                color: "#7f5bd3",  
+              "&:hover": {
+                color: "#7f5bd3",
               },
             },
           },
@@ -186,12 +174,12 @@ const config: Config = {
               marginBottom: "1.5rem",
               marginTop: "0",
             },
-            'a': {
-              color: "#ed8aff", 
+            a: {
+              color: "#ed8aff",
               "&:hover": {
-                color: "#ed8aff", 
+                color: "#ed8aff",
               },
-              textDecorationColor: "#ed8aff", 
+              textDecorationColor: "#ed8aff",
             },
             blockquote: {
               borderLeftColor: "#ed8aff",
@@ -200,19 +188,11 @@ const config: Config = {
               fontFamily: "PT Serif",
               fontSize: "2rem",
             },
-            'ul li::marker': {
+            "ul li::marker": {
               color: "#ed8aff",
             },
-            'ol li::marker': {
+            "ol li::marker": {
               color: "#ed8aff",
-            },
-            code: {
-              backgroundColor: "hsl(var(--background-dark))",
-              color: "hsl(var(--primary-dark))",
-            },
-            pre: {
-              backgroundColor: "hsl(var(--background-dark))",
-              color: "hsl(var(--primary-dark))",
             },
             hr: {
               borderColor: "hsl(var(--border-dark))",
@@ -220,36 +200,33 @@ const config: Config = {
             img: {
               borderRadius: "0.5rem",
             },
-            'ul': {
+            ul: {
               marginTop: "0",
               marginBottom: "1rem",
               paddingLeft: "1.5rem",
             },
-            'ol': {
+            ol: {
               marginTop: "0",
               marginBottom: "1rem",
               paddingLeft: "1.5rem",
             },
-            'ul li': {
+            "ul li": {
               marginBottom: "0rem",
             },
-            'ol li': {
+            "ol li": {
               marginBottom: "0rem",
             },
             strong: {
               fontFamily: "PT Serif",
-               fontSize:"17px",
-               color:"white"
+              fontSize: "17px",
+              color: "white",
             },
           },
         },
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require("@tailwindcss/typography"),
-  ],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };
 
 export default config;

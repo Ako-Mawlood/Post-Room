@@ -17,8 +17,7 @@ import { getCurrentUser } from "@/libs/getCurrentUser";
 import ReadBlogSkeleton from "@/app/components/pages/read/ReadBlogSkeleton";
 import { notFound } from "next/navigation";
 import AuthorBlogs from "@/app/components/pages/read/AuthorBlogs";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
+import BlogContent from "@/app/components/BlogContent";
 
 type ReadPageProps = {
   params: { blogId: string };
@@ -189,9 +188,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
               {blog.title}
             </h1>
             <div className="prose my-10 dark:prose-dark">
-              <ReactMarkdown rehypePlugins={[rehypeRaw]}>
-                {blog.content}
-              </ReactMarkdown>
+              <BlogContent content={blog.content} />
             </div>
 
             <InteractionBar

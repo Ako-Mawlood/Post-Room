@@ -8,11 +8,13 @@ import {
   Heading3,
   Code,
   List,
+  Strikethrough,
   ListOrdered,
   QuoteIcon,
   Underline,
   Highlighter,
 } from "lucide-react";
+
 import { Editor } from "@tiptap/react";
 
 const toolBarButtons = () => [
@@ -47,6 +49,16 @@ const toolBarButtons = () => [
       !editor.can().chain().focus().toggleUnderline().run(),
   },
   {
+    name: "strike",
+    label: "Toggle strikethrough",
+    icon: Strikethrough,
+    action: (editor: Editor) => {
+      editor.chain().focus().toggleStrike().run();
+    },
+    disabledWhile: (editor: Editor) =>
+      !editor.can().chain().focus().toggleStrike().run(),
+  },
+  {
     name: "highlight",
     label: "Toggle highlight",
     icon: Highlighter,
@@ -61,7 +73,7 @@ const toolBarButtons = () => [
     label: "Toggle code",
     icon: Code,
     action: (editor: Editor) => {
-      editor.chain().focus().toggleCode().run();
+      editor.chain().focus().toggleCodeBlock().run();
     },
     disabledWhile: (editor: Editor) =>
       !editor.can().chain().focus().toggleCode().run(),
