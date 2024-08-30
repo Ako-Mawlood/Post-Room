@@ -1,4 +1,3 @@
-// useEditorInstance.ts
 import StarterKit from "@tiptap/starter-kit";
 import Youtube from "@tiptap/extension-youtube";
 import { Editor, useEditor } from "@tiptap/react";
@@ -15,11 +14,17 @@ import { Markdown } from "tiptap-markdown";
 
 type UseEditorInstanceProps = {
   content: string;
-  updateContent: (editor: Editor) => void;
+  updateContent?: (editor: Editor) => void;
+  isEditable: boolean;
 };
 
-function useEditorInstance({ content, updateContent }: UseEditorInstanceProps) {
+function useEditorInstance({
+  content,
+  updateContent = () => {},
+  isEditable,
+}: UseEditorInstanceProps) {
   const editor = useEditor({
+    editable: isEditable,
     content,
     extensions: [
       StarterKit.configure({

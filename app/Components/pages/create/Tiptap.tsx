@@ -1,14 +1,12 @@
-// Tiptap.tsx
 import ToolBar from "./ToolBar";
 import { Editor, EditorContent } from "@tiptap/react";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
 import useEditorInstance from "@/app/Hooks/useEditorInstance";
-
 type TiptapProps = {
   content: string;
   setContent: (content: string) => void;
-  form: any; // Adjust the type according to your form handling library
+  form: any;
 };
 
 const Tiptap = ({ content, setContent, form }: TiptapProps) => {
@@ -17,11 +15,11 @@ const Tiptap = ({ content, setContent, form }: TiptapProps) => {
     setContent(contentMarkdown);
     form.setValue("content", contentMarkdown);
   }
-
-  const editor = useEditorInstance({ content, updateContent });
+  const isEditable = true;
+  const editor = useEditorInstance({ content, updateContent, isEditable });
 
   if (!editor) {
-    return null; // Ensure this component does not return undefined
+    return null;
   }
 
   return (

@@ -89,7 +89,7 @@ const AuthorBlogs = ({
             <div className="flex flex-col items-start justify-between gap-2">
               <div className="flex justify-between gap-3">
                 <Link
-                  className="w-36 truncate hover:underline"
+                  className="w-48 truncate hover:underline"
                   href={`/@${authorInfo.username}`}
                 >
                   {authorInfo.fullname}

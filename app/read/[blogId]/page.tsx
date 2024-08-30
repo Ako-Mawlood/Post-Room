@@ -140,11 +140,9 @@ const ReadPage = ({ params }: ReadPageProps) => {
               {blog.categories && (
                 <ul className="mt-2 flex gap-3 text-sm">
                   {blog.categories.map((category, index: number) => (
-                    <div key={index} className="flex gap-1">
+                    <div key={index} className="flex gap-1 text-lg">
                       <span className="text-violet-600">#</span>
-                      <span className="text-primary">
-                        {category.category.name}
-                      </span>
+                      {category.category.name}
                     </div>
                   ))}
                 </ul>

@@ -10,10 +10,13 @@ import { Skeleton } from "../../ui/skeleton";
 const BlogsList = ({}) => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
   const [skip, setSkip] = useState(0);
+  const [hasReachedEnd, setHasReachedEnd] = useState(false);
   useEffect(() => {
     async function fetchNewBlogs() {
-      const fetchedBlogs = await getBlogs(skip);
-      console.log(fetchedBlogs);
+      const fetchedBlogs: blogType[] = await getBlogs(skip);
+      if (fetchedBlogs.length === 0) {
+        setHasReachedEnd(true);
+      }
       if (blogs.length === 0) {
         setBlogs(fetchedBlogs);
       } else {
@@ -25,7 +28,7 @@ const BlogsList = ({}) => {
   return (
     <>
       {blogs.length !== 0 ? (
-        <section className="relative flex w-3/6 flex-col gap-5 border-r border-primary pr-20">
+        <section className="relative flex w-3/6 flex-col items-center gap-5 border-r border-primary pr-20">
           {blogs.map((blog: blogType) => (
             <div key={blog.id} className="animate-strech h-60 w-full">
               <BlogCard
@@ -41,7 +44,11 @@ const BlogsList = ({}) => {
               />
             </div>
           ))}
-          <Trigger setSkip={setSkip} />
+          {hasReachedEnd ? (
+            <p className="my-20 font-PT">🚀 Whoa, you’ve reached the end!</p>
+          ) : (
+            <Trigger setSkip={setSkip} />
+          )}
         </section>
       ) : (
         <Skeleton className="h-40 w-96" />
