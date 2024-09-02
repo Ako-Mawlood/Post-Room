@@ -7,13 +7,16 @@ import BlogCard from "../../ui/BlogCard";
 import { getBlogs } from "@/libs/getBlogs";
 import { Skeleton } from "../../ui/skeleton";
 
-const BlogsList = ({}) => {
+const BlogsList = ({ url }: { url: string }) => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
   const [skip, setSkip] = useState(0);
+
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
+
   useEffect(() => {
     async function fetchNewBlogs() {
-      const fetchedBlogs: blogType[] = await getBlogs(skip);
+      const URL = url + `?skip=${skip}`;
+      const fetchedBlogs: blogType[] = await getBlogs(URL);
       if (fetchedBlogs.length === 0) {
         setHasReachedEnd(true);
       }
@@ -25,12 +28,25 @@ const BlogsList = ({}) => {
     }
     fetchNewBlogs();
   }, [skip]);
+
+  if (blogs.length === 0) {
+    return (
+      <div className="flex w-full flex-col gap-4">
+        <Skeleton className="h-52 w-full md:w-[40rem]" />
+        <Skeleton className="h-52 w-full md:w-[40rem]" />
+        <Skeleton className="h-52 w-full md:w-[40rem]" />
+        <Skeleton className="h-52 w-full md:w-[40rem]" />
+        <Skeleton className="h-52 w-full md:w-[40rem]" />
+        <Skeleton className="h-52 w-full md:w-[40rem]" />
+      </div>
+    );
+  }
   return (
     <>
-      {blogs.length !== 0 ? (
-        <section className="relative flex w-3/6 flex-col items-center gap-5 border-r border-primary pr-20">
+      {blogs.length !== 0 && (
+        <section className="relative flex w-full flex-col items-center gap-5 p-5 md:w-[728px]">
           {blogs.map((blog: blogType) => (
-            <div key={blog.id} className="animate-strech h-60 w-full">
+            <div key={blog.id} className="animate-strech h-52 w-full">
               <BlogCard
                 title={blog.title}
                 author={blog.author.fullname}
@@ -45,13 +61,13 @@ const BlogsList = ({}) => {
             </div>
           ))}
           {hasReachedEnd ? (
-            <p className="my-20 font-PT">🚀 Whoa, you’ve reached the end!</p>
+            <p className="my-20 font-PT">
+              🚀 Whoa, you&apos;ve reached the end!
+            </p>
           ) : (
             <Trigger setSkip={setSkip} />
           )}
         </section>
-      ) : (
-        <Skeleton className="h-40 w-96" />
       )}
     </>
   );

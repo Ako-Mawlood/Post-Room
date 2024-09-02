@@ -42,7 +42,7 @@ const ProfileImageUpdater = ({
           <button
             type="button"
             onClick={() => {
-              setProfileImage("none");
+              setProfileImage(null);
               form.setValue("imageUrl", "none");
             }}
             className={clsx("text-destructive", { hidden: !profileImage })}

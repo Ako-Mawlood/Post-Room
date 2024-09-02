@@ -1,9 +1,9 @@
 import axiosInstance from "./axiosInstance";
 import { getCookie } from "cookies-next";
 
-export async function getBlogs(skip: number) {
+export async function getBlogs(url: string) {
   try {
-    const res = await axiosInstance(`/api/blog?skip=${skip}`, {
+    const res = await axiosInstance(url, {
       headers: { Authorization: getCookie("token") },
     });
     return res.data;

@@ -14,7 +14,6 @@ async function getNotifications() {
 }
 const NotificationLog = async () => {
   const notifications = await getNotifications();
-  console.log({ notifications });
   return (
     <Popover>
       <PopoverTrigger asChild>

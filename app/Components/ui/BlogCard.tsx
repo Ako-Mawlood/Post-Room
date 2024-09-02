@@ -11,10 +11,7 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { CiStar as StarIcon } from "react-icons/ci";
 import { calculateReadingTime, formatDate, getInitials } from "@/libs/utils";
-import parse from "html-react-parser";
 import { Badge } from "./badge";
-import { getCurrentUser } from "@/libs/getCurrentUser";
-import { currentUserType } from "@/app/types/currentUserType";
 
 type BlogCardPropsType = {
   author: string;
@@ -44,7 +41,7 @@ const BlogCard = ({
 }: BlogCardPropsType) => {
   return (
     <Link key={blogId} href={`/read/${blogId}`}>
-      <Card className="flex h-full w-full items-start gap-1 rounded-lg duration-150 hover:bg-accent">
+      <Card className="flex h-full w-full items-start gap-1 rounded-lg border-none duration-150 hover:bg-accent">
         <div className="flex h-full w-4/6 flex-col justify-between p-2 font-semibold">
           <CardHeader className="flex w-full flex-row gap-1 space-y-0 p-0">
             {categories.map((category: { category: { name: string } }) => (
@@ -90,7 +87,7 @@ const BlogCard = ({
               blogImageUrl ||
               "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
             }
-            sizes="400px"
+            sizes="230px"
             fill={true}
             alt="Blog image"
           />

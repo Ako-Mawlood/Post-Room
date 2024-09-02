@@ -1,5 +1,6 @@
 import Image from "next/image";
-import noBlogVector from "@/public/assets/no-blog.png";
+import blogWhite from "@/public/assets/blogWhite.svg";
+import blogBlack from "@/public/assets/blogBlack.svg";
 import { blogType } from "@/app/types/blogType";
 import { ImSpinner2 as Spinner } from "react-icons/im";
 import axiosInstance from "@/libs/axiosInstance";
@@ -34,13 +35,23 @@ const SavedBlogsList = async () => {
   }
   if (!savedBlogs || savedBlogs.length === 0) {
     return (
-      <div className="mb-7 flex flex-col items-center justify-center opacity-85 dark:opacity-70">
-        <Image
-          src={noBlogVector}
-          width={250}
-          height={250}
-          alt="No blog vector"
-        />
+      <div className="mb-7 flex flex-col items-center justify-center dark:opacity-90">
+        <div className="my-10 w-72">
+          <Image
+            src={blogWhite}
+            className="hidden dark:block"
+            width={0}
+            height={250}
+            alt="No blog vector"
+          />
+          <Image
+            src={blogBlack}
+            className="dark:hidden"
+            width={0}
+            height={250}
+            alt="No blog vector"
+          />
+        </div>
         <h1 className="text-center font-PT text-4xl font-semibold">
           No saved blogs.
         </h1>

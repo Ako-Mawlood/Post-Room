@@ -39,7 +39,6 @@ const ProfilePage = async ({
       ? searchParams?.tab
       : "blogs";
   const editQueryParam = isCurrentUserProfile ? searchParams?.edit : "";
-  console.log(profileOwner._count.followers);
   return (
     <>
       <div

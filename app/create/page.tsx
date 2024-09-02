@@ -18,6 +18,11 @@ const page = async () => {
     .then((res) => {
       redirect(`/create/${res.data.blogId}`);
     });
+  return (
+    <div className="w-ful h-full items-center justify-center font-PT text-3xl">
+      <p>Creating...</p>
+    </div>
+  );
 };
 
 export default page;

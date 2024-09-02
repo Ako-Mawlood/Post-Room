@@ -1,4 +1,4 @@
-import { Editor, EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent } from "@tiptap/react";
 import useEditorInstance from "../Hooks/useEditorInstance";
 const BlogContent = ({ content }: { content: string }) => {
   const isEditable = false;

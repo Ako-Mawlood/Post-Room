@@ -4,8 +4,7 @@ import { blogType } from "@/app/types/blogType";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
-
-import React, { useState } from "react";
+import BlogsList from "../components/pages/blogs/BlogsList";
 
 async function getBlogs(q: string) {
   const token = getCookie("token", { cookies });
@@ -45,21 +44,7 @@ const BlogsPage = async ({
 
               {q}
             </h1>
-            {blogs.map((blog: blogType) => (
-              <div key={blog.blogId} className="h-60 w-full">
-                <BlogCard
-                  title={blog.title}
-                  author={blog.author.fullname}
-                  authorImageUrl={blog.author.imageUrl}
-                  blogId={blog.blogId}
-                  blogImageUrl={blog.imageUrl}
-                  categories={blog.categories}
-                  content={blog.content}
-                  createdAt={blog.createdAt}
-                  stars={blog._count.stars}
-                />
-              </div>
-            ))}
+            <BlogsList url={`/api/search?q=${q}`} />
           </section>
         )}
         <section className="w-2/6 rounded-lg bg-black"></section>

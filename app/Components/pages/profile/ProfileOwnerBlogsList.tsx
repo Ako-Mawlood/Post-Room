@@ -1,5 +1,6 @@
 import BlogCard from "../../ui/BlogCard";
-import noBlogVector from "@/public/assets/no-blog.png";
+import blogBlack from "@/public/assets/blogBlack.svg";
+import blogWhite from "@/public/assets/blogWhite.svg";
 import Image from "next/image";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
 
@@ -29,8 +30,23 @@ type profileBlogType = {
 const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListProps) => {
   if (!profileOwner || profileOwner.blogs.length === 0) {
     return (
-      <div className="mb-7 flex flex-col items-center justify-center opacity-85 dark:opacity-70">
-        <Image src={noBlogVector} width={0} height={250} alt="No blog vector" />
+      <div className="mb-7 flex flex-col items-center justify-center dark:opacity-90">
+        <div className="my-10 w-72">
+          <Image
+            src={blogWhite}
+            className="hidden dark:block"
+            width={0}
+            height={250}
+            alt="No blog vector"
+          />
+          <Image
+            src={blogBlack}
+            className="dark:hidden"
+            width={0}
+            height={250}
+            alt="No blog vector"
+          />
+        </div>
         <h1 className="text-center font-PT text-4xl font-semibold">
           No blogs yet.
         </h1>

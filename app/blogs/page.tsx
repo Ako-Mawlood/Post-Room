@@ -1,17 +1,16 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { getBlogs } from "@/libs/getBlogs";
 
 import BlogsList from "../components/pages/blogs/BlogsList";
 const BlogsPage = async ({}) => {
   return (
-    <div className="w-full">
+    <>
       <Navbar />
-      <main className="mt-20 flex w-full items-start justify-center">
-        <BlogsList />
-        <section className="w-2/6 rounded-lg bg-black"></section>
+      <main className="mx-6 flex w-full justify-evenly lg:mx-10">
+        <BlogsList url={`/api/blog`} />
+        <section className="hidden w-[368px] border-l border-border p-10 md:block"></section>
       </main>
-    </div>
+    </>
   );
 };
 

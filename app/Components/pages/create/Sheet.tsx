@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/app/components/ui/button";
-import Tiptap from "./Tiptap";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import UploadWidget from "../../UploadWidget";
@@ -24,6 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/components/ui/form";
+import Editor from "./Editor";
 
 type sheetProps = {
   blogId: string;
@@ -184,7 +184,7 @@ const Sheet = ({
                 <FormItem>
                   <FormLabel />
                   <FormControl>
-                    <Tiptap
+                    <Editor
                       form={form}
                       content={content}
                       setContent={setContent}

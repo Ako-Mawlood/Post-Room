@@ -57,7 +57,7 @@ export default function LandingPage() {
           <button onClick={() => handleOpenAuthModal(false)}>Login</button>
           <button
             onClick={() => handleOpenAuthModal(true)}
-            className="rounded-full bg-gray-950 px-4 py-2 text-gray-100 hover:opacity-80"
+            className="button-shine"
           >
             Get Started
           </button>
@@ -75,8 +75,9 @@ export default function LandingPage() {
             Share your unique stories with a global audience. Join us today and
             make an impact with your words.
           </p>
+
           <button
-            className="w-36 rounded-full bg-black px-4 py-2 text-gray-100"
+            className="button-shine"
             onClick={() => handleOpenAuthModal(true)}
           >
             Start Reading

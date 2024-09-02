@@ -1,16 +1,16 @@
 import ToolBar from "./ToolBar";
-import { Editor, EditorContent } from "@tiptap/react";
+import { Editor as EditorType, EditorContent } from "@tiptap/react";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
 import useEditorInstance from "@/app/Hooks/useEditorInstance";
-type TiptapProps = {
+type EditorProps = {
   content: string;
   setContent: (content: string) => void;
   form: any;
 };
 
-const Tiptap = ({ content, setContent, form }: TiptapProps) => {
-  function updateContent(editor: Editor) {
+const Editor = ({ content, setContent, form }: EditorProps) => {
+  function updateContent(editor: EditorType) {
     const contentMarkdown = editor.storage.markdown.getMarkdown();
     setContent(contentMarkdown);
     form.setValue("content", contentMarkdown);
@@ -45,4 +45,4 @@ const Tiptap = ({ content, setContent, form }: TiptapProps) => {
   );
 };
 
-export default Tiptap;
+export default Editor;

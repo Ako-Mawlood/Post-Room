@@ -62,7 +62,7 @@ const FollowBtn = ({
         onClick={token ? handleUnFollow : () => handleOpenAuthModal(true)}
         disabled={isPending}
         className={clsx(
-          "h-7 rounded-full p-2 text-sm duration-200 disabled:opacity-100",
+          "h-7 rounded-full text-sm duration-200 disabled:opacity-100",
           {
             hidden: isMyBlog,
           },
