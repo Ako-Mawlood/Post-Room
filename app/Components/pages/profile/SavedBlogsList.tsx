@@ -53,7 +53,7 @@ const SavedBlogsList = async () => {
           />
         </div>
         <h1 className="text-center font-PT text-4xl font-semibold">
-          No saved blogs.
+          No saved blogs yet.
         </h1>
       </div>
     );

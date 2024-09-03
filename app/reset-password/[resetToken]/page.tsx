@@ -2,14 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-  FormField,
-} from "@/app/components/ui/form";
 import { CgEricsson as Logo } from "react-icons/cg";
 import { ImSpinner8 as Spinner } from "react-icons/im";
 import z from "zod";
@@ -19,6 +11,15 @@ import { useEffect, useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
 import clsx from "clsx";
+import {
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+  FormField,
+} from "@/app/components/ui/form";
+
 const passwordSchema = z.object({
   password: passwordValidation,
 });
@@ -31,7 +32,7 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
   const [isPasswordVisable, setIsPasswordVisable] = useState(false);
   const form = useForm<ResetFormValidation>({
     defaultValues: { password: "" },
-    resolver: zodResolver(passwordValidation),
+    resolver: zodResolver(passwordSchema),
   });
 
   const handleResetPassword = async (data: ResetFormValidation) => {
@@ -65,12 +66,12 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-10 bg-gray-50">
+    <div className="flex h-screen w-full flex-col items-center justify-center gap-10">
       <div className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl">
         <Logo size={25} />
         <h1>Post-Room</h1>
       </div>
-      <div className="mx-2 flex w-full justify-center bg-gray-50 md:w-1/2 lg:w-1/3">
+      <div className="mx-2 flex w-full justify-center md:w-1/2 lg:w-1/3">
         <Form {...form}>
           <form
             className="flex flex-col items-center justify-center gap-14 p-6 text-center sm:w-[30rem]"

@@ -99,7 +99,7 @@ const ProfilePage = async ({
                   <span className="text-gray-2 ml-1">Following</span>
                 </li>
               </ul>
-              <div className="flex items-start justify-start border-b border-border px-6 py-4 text-2xl font-semibold leading-7 md:w-2/3 md:border-none">
+              <div className="flex items-start justify-start border-b border-border px-6 py-4 text-2xl font-semibold leading-7 md:w-1/2 md:border-none">
                 {profileOwner.bio}
               </div>
             </section>

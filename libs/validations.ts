@@ -14,6 +14,7 @@ export const passwordValidation = z
   .refine((value) => passwordRegex.test(value), {
     message: "Password must contain at least one special character",
   });
+
 export const fullnameValidation = z
   .string()
   .min(3, "Full name may not be less than 3 characters")

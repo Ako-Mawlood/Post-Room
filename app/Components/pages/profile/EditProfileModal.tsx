@@ -80,7 +80,7 @@ const EditProfileModal = ({
 
   return (
     <>
-      <section className="modal absolute left-1/2 z-10 flex w-full -translate-x-1/2 flex-col items-center gap-5 rounded-md bg-card p-6 text-card-foreground shadow-md md:top-6 md:w-[30rem]">
+      <section className="modal absolute left-1/2 top-1/2 z-10 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5 rounded-md bg-card p-6 text-card-foreground shadow-md md:w-[35rem]">
         <Close
           onClick={handleModalToggle}
           className="absolute right-3 top-3 size-5 cursor-pointer"
@@ -90,7 +90,7 @@ const EditProfileModal = ({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSave)}
-            className="flex w-full flex-col gap-5 text-sm"
+            className="my-10 flex w-full flex-col gap-6 text-sm"
           >
             <ProfileImageEditer form={form} profileOwner={profileOwner} />
             <FormField
@@ -181,7 +181,7 @@ const EditProfileModal = ({
           </form>
         </Form>
       </section>
-      <div className="fixed left-0 top-0 z-0 h-screen w-screen bg-black opacity-70"></div>
+      <div className="fixed left-0 top-0 z-0 h-screen w-screen bg-black opacity-70 dark:bg-neutral-900"></div>
     </>
   );
 };
