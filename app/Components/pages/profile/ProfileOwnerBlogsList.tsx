@@ -30,7 +30,7 @@ type profileBlogType = {
 const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListProps) => {
   if (!profileOwner || profileOwner.blogs.length === 0) {
     return (
-      <div className="mb-7 flex flex-col items-center justify-center dark:opacity-90">
+      <div className="mb-7 flex flex-col items-center justify-center">
         <div className="my-10 w-72">
           <Image
             src={blogWhite}

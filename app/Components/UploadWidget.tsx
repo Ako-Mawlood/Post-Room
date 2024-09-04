@@ -9,14 +9,16 @@ const UploadWidget = ({
   setImageUrl,
 }: {
   children: ReactNode;
-  form: any;
+  form?: any;
   setImageUrl: Dispatch<SetStateAction<string>>;
 }) => {
   return (
     <CldUploadWidget
       onSuccess={(result: any) => {
         setImageUrl(result.info.url);
-        form.setValue("imageUrl", result.info.url);
+        if (form) {
+          form.setValue("imageUrl", result.info.url);
+        }
       }}
       options={{
         multiple: false,

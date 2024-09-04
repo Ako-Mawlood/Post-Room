@@ -86,10 +86,10 @@ const AuthorBlogs = ({
                 <AvatarImage src={authorInfo.imageUrl} />
               </Avatar>
             </Link>
-            <div className="flex flex-col items-start justify-between gap-2">
-              <div className="flex justify-between gap-3">
+            <div className="flex flex-col items-start gap-5">
+              <div className="flex w-full items-start gap-4">
                 <Link
-                  className="w-48 truncate hover:underline"
+                  className="truncate hover:underline"
                   href={`/@${authorInfo.username}`}
                 >
                   {authorInfo.fullname}
@@ -103,10 +103,10 @@ const AuthorBlogs = ({
               </div>
 
               <div className="flex w-full items-center justify-between gap-2 text-sm">
-                <p className="text-muted-foreground">
+                <p className="truncate text-muted-foreground">
                   {authorInfo._count.followers} Followers
                 </p>{" "}
-                <p className="mr-auto text-muted-foreground">
+                <p className="mr-auto truncate text-muted-foreground">
                   {authorInfo._count.followed} Followings
                 </p>
               </div>

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { LuImagePlus as AddImage } from "react-icons/lu";
 
 type profileImageEditerType = {
-  form: any;
+  form?: any;
   profileOwner: profileOwnerType;
 };
 const ProfileImageUpdater = ({

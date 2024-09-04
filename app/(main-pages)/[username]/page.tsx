@@ -1,19 +1,22 @@
-import Navbar from "../components/Navbar";
-import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../components/ui/avatar";
 import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
-import SavedBlogsList from "../components/pages/profile/SavedBlogsList";
-import ProfileSkeleton from "../components/pages/profile/ProfileSkeleton";
-import ProfileTabs from "../components/pages/profile/ProfileTabs";
-import { currentUserType } from "../types/currentUserType";
-import EditProfileModal from "../components/pages/profile/EditProfileModal";
-import EditProfileBtn from "../components/pages/profile/EditProfileBtn";
+import SavedBlogsList from "../../components/pages/profile/SavedBlogsList";
+import ProfileSkeleton from "../../components/pages/profile/ProfileSkeleton";
+import ProfileTabs from "../../components/pages/profile/ProfileTabs";
+import { currentUserType } from "../../types/currentUserType";
+import EditProfileModal from "../../components/pages/profile/EditProfileModal";
+import EditProfileBtn from "../../components/pages/profile/EditProfileBtn";
 import Link from "next/link";
-import { profileOwnerType } from "../types/profileOwnerType";
+import { profileOwnerType } from "../../types/profileOwnerType";
 import clsx from "clsx";
 import { getInitials } from "@/libs/utils";
 import { getUserByUsername } from "@/libs/getUserByUsername";
 import { getCurrentUser } from "@/libs/getCurrentUser";
-import ProfileOwnerBlogsList from "../components/pages/profile/ProfileOwnerBlogsList";
+import ProfileOwnerBlogsList from "../../components/pages/profile/ProfileOwnerBlogsList";
 import { notFound } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
@@ -47,7 +50,6 @@ const ProfilePage = async ({
             editQueryParam === "t",
         })}
       >
-        <Navbar />
         {profileOwner ? (
           <>
             <section className="relative flex h-[40vh] w-full items-center border-b border-border px-6">
@@ -70,7 +72,7 @@ const ProfilePage = async ({
                   <EditProfileBtn searchParams={searchParams} />
                   <Link href={`/@${currentUser?.username}/settings`}>
                     <SettingsIcon
-                      className="absolute right-6 top-4 cursor-pointer focus:animate-spin"
+                      className="absolute right-6 top-4 cursor-pointer"
                       size={20}
                     />
                   </Link>

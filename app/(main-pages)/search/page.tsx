@@ -1,10 +1,7 @@
-import Navbar from "@/app/components/Navbar";
-import BlogCard from "@/app/components/ui/BlogCard";
-import { blogType } from "@/app/types/blogType";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
-import BlogsList from "../components/pages/blogs/BlogsList";
+import BlogsList from "../../components/pages/blogs/BlogsList";
 
 async function getBlogs(q: string) {
   const token = getCookie("token", { cookies });
@@ -27,7 +24,6 @@ const BlogsPage = async ({
 
   return (
     <div className="w-full">
-      <Navbar />
       <main className="mt-20 flex w-full items-start justify-center">
         {blogs && (
           <section className="flex w-3/6 flex-col gap-5 border-r border-primary pr-20">

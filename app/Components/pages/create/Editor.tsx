@@ -3,6 +3,7 @@ import { Editor as EditorType, EditorContent } from "@tiptap/react";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
 import useEditorInstance from "@/app/Hooks/useEditorInstance";
+
 type EditorProps = {
   content: string;
   setContent: (content: string) => void;

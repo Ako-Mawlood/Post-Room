@@ -23,6 +23,7 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { ImSpinner8 as Spinner } from "react-icons/im";
 import { useEffect, useState } from "react";
+import { useToast } from "@/app/Hooks/use-toast";
 
 const emailValidation = z.object({
   email: z
@@ -34,6 +35,7 @@ const emailValidation = z.object({
 type FormDataType = z.infer<typeof emailValidation>;
 
 export function ResetPassword() {
+  const { toast } = useToast();
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const form = useForm<FormDataType>({
     defaultValues: { email: "" },
@@ -47,20 +49,27 @@ export function ResetPassword() {
         { email: data.email },
         { headers: { Authorization: getCookie("token") } },
       );
-
       setIsResetModalOpen(false);
+      toast({
+        title: "Reset Link Sent",
+        description: `A password reset link has been sent to ${data.email}. Please check your inbox.`,
+      });
     } catch (err) {
       console.error("Failed to send reset link", err);
+      toast({
+        variant: "destructive",
+        title: "Reset Link Failed",
+        description: `We couldn't send a reset link to ${data.email}. Please ensure the email address is correct and try again.`,
+      });
     }
   }
   useEffect(() => {
     form.setValue("email", "");
-  }, [form]);
+  }, [form, isResetModalOpen]);
 
   return (
     <>
-      <div className="absolute right-10 top-10 z-50">
-      </div>
+      <div className="absolute right-10 top-10 z-50"></div>
       <Dialog open={isResetModalOpen} onOpenChange={setIsResetModalOpen}>
         <DialogTrigger asChild>
           <Button variant="link" className="m-0 p-0 text-base text-gray-900">

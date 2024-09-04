@@ -38,7 +38,7 @@ const Navbar = async () => {
       <div className="flex items-center gap-3">
         <Link
           href="/blogs"
-          className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl"
+          className="text-mda flex items-center font-PT font-bold text-primary sm:text-2xl"
         >
           <Logo size={25} />
           <h1>Post-Room</h1>

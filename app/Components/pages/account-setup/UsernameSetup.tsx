@@ -53,7 +53,7 @@ const UsernameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
               "You probably disconnected, Please check your internet connection",
           });
         } else {
-          setError("root", { message: err.message });
+          setError("root", { message: err.response.data });
         }
       });
   }
