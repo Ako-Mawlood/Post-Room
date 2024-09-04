@@ -12,15 +12,10 @@ import clsx from "clsx";
 import { Skeleton } from "../../ui/skeleton";
 import { currentUserType } from "@/app/types/currentUserType";
 import { getCookie } from "cookies-next";
+import { usernameValidation } from "@/libs/validations";
 
 const usernameSchema = z.object({
-  username: z
-    .string()
-    .min(3, "Username should be atleast 3 characters long")
-    .regex(
-      /^[a-zA-Z0-9_-]+$/,
-      "Username can only contain letters, numbers, hyphens, and underscores",
-    ),
+  username: usernameValidation,
 });
 
 type usernameType = z.infer<typeof usernameSchema>;
