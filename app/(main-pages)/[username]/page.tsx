@@ -10,9 +10,7 @@ import ProfileTabs from "../../components/pages/profile/ProfileTabs";
 import { currentUserType } from "../../types/currentUserType";
 import EditProfileModal from "../../components/pages/profile/EditProfileModal";
 import EditProfileBtn from "../../components/pages/profile/EditProfileBtn";
-import Link from "next/link";
 import { profileOwnerType } from "../../types/profileOwnerType";
-import clsx from "clsx";
 import { getInitials } from "@/libs/utils";
 import { getUserByUsername } from "@/libs/getUserByUsername";
 import { getCurrentUser } from "@/libs/getCurrentUser";
@@ -20,6 +18,8 @@ import ProfileOwnerBlogsList from "../../components/pages/profile/ProfileOwnerBl
 import { notFound } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
+import clsx from "clsx";
+import Link from "next/link";
 
 const ProfilePage = async ({
   searchParams,

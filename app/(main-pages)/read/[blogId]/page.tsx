@@ -135,7 +135,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
       {blog && (
         <>
           <section className="w-full px-6">
-            <div className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
+            <div className="border-b-2 py-10 font-PT text-5xl text-accent-foreground">
               {blog.title}
               {blog.categories && (
                 <ul className="mt-2 flex gap-3 text-sm">
@@ -160,20 +160,20 @@ const ReadPage = ({ params }: ReadPageProps) => {
               setCommentCount={setCommentCount}
               handleOpenAuthModal={handleOpenAuthModal}
             />
-            <div className="relative h-[90vh] w-full overflow-hidden">
-              <Image
-                className="rounded-lg object-cover"
-                src={
-                  blog.imageUrl ||
-                  "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
-                }
-                fill={true}
-                quality={100}
-                priority
-                alt="Blog image"
-              />
-            </div>
           </section>
+          <div className="relative h-[90vh] w-full overflow-hidden">
+            <Image
+              className="object-cover"
+              src={
+                blog.imageUrl ||
+                "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
+              }
+              fill={true}
+              quality={100}
+              priority
+              alt="Blog image"
+            />
+          </div>
           <section className="mx-auto w-full p-6 md:w-[880px]">
             <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
               {blog.title}

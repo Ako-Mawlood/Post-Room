@@ -2,7 +2,6 @@
 
 import UserDetailEditor from "@/app/components/pages/settings/UserDetailEditor";
 import { fullnameValidation, usernameValidation } from "@/libs/validations";
-import ProfileImageUpdater from "@/app/components/ProfileImageUpdater";
 import { useEffect, useState } from "react";
 import { getUserByUsername } from "@/libs/getUserByUsername";
 import { getCookie } from "cookies-next";
@@ -16,7 +15,6 @@ const validateFullname = () => fullnameValidation;
 const Settings = ({ params }: { params: { username: string } }) => {
   const [userInfo, setUserInfo] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -50,38 +48,43 @@ const Settings = ({ params }: { params: { username: string } }) => {
         <SettingsIcon />
         Settings
       </div>
-      <h1 className="text-2xl font-semibold">Personal Information</h1>
-      <section className="flex flex-col gap-3 border p-4">
-        <ProfileImageUpdater form={undefined} profileOwner={userInfo} />
-        <UserDetailEditor
-          label="fullname"
-          currentValue={userInfo.fullname}
-          schemaFactory={validateFullname}
-          url="/api/user"
-        />
-        <UserDetailEditor
-          label="username"
-          currentValue={userInfo.username}
-          schemaFactory={validateUsername}
-          url="/api/user"
-        />
-        <UserDetailEditor
-          label="bio"
-          currentValue={userInfo.bio}
-          schemaFactory={validateUsername}
-          url="/api/user"
-        />
+      <section>
+        <div className="flex flex-col gap-3 border p-4">
+          <h1 className="text-xl font-semibold">Personal Information</h1>
+
+          <UserDetailEditor
+            label="fullname"
+            currentValue={userInfo.fullname}
+            schemaFactory={validateFullname}
+            url="/api/user"
+          />
+          <UserDetailEditor
+            label="username"
+            currentValue={userInfo.username}
+            schemaFactory={validateUsername}
+            url="/api/user"
+          />
+          <UserDetailEditor
+            label="bio"
+            currentValue={userInfo.bio}
+            schemaFactory={validateUsername}
+            url="/api/user"
+          />
+        </div>
       </section>
-      <h1 className="text-2xl font-semibold">Account Management</h1>
-      <section className="flex flex-col gap-3 border p-4">
-        <div className="flex items-center justify-between p-3">
-          <div className="flex flex-col justify-between gap-2">
-            <h1 className="font-semibold">Update Password</h1>
-            <p className="text-sm text-muted-foreground">
-              Click send, and we will email you a link to reset your password.
-            </p>
+      <section className="flex flex-col gap-3">
+        <h1 className="text-xl font-semibold">Account Management</h1>
+
+        <div className="flex flex-col gap-3 border p-4">
+          <div className="flex items-center justify-between p-3">
+            <div className="flex flex-col justify-between gap-2">
+              <h1 className="font-semibold">Update Password</h1>
+              <p className="text-sm text-muted-foreground">
+                Click send, and we will email you a link to reset your password.
+              </p>
+            </div>
+            <SendRestPasswordLinkBtn />
           </div>
-          <SendRestPasswordLinkBtn />
         </div>
       </section>
 
@@ -91,3 +94,5 @@ const Settings = ({ params }: { params: { username: string } }) => {
 };
 
 export default Settings;
+
+// Create a function that accepts file data and returns the url of the image from Cloudinary

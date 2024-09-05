@@ -36,7 +36,7 @@ const DeleteAccount = () => {
   }
   return (
     <section className="flex flex-col gap-3">
-      <h1 className="text-2xl font-semibold">Account Deletion</h1>
+      <h1 className="text-xl font-semibold">Account Deletion</h1>
 
       <div className="flex items-center justify-between border p-7">
         <div className="flex flex-col justify-between gap-2">
