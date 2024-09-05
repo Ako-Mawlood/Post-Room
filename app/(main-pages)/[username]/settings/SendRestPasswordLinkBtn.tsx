@@ -7,7 +7,7 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
-
+import { ImSpinner8 as Spinner } from "react-icons/im";
 const SendResetLinkBtn = () => {
   const [isPending, setIsPending] = useState(false);
   const [userEmail, setUserEmail] = useState("");
@@ -50,12 +50,12 @@ const SendResetLinkBtn = () => {
 
   return (
     <Button
-      className="rounded-md"
+      className="w-24 rounded-md"
       onClick={handleSendResetPasswordLink}
       disabled={isPending}
       variant="secondary"
     >
-      {isPending ? "Sending..." : "Send"}
+      {isPending ? <Spinner className="animate-spin" /> : "Send"}
     </Button>
   );
 };

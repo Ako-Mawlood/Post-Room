@@ -30,18 +30,20 @@ import { Textarea } from "../../ui/textarea";
 
 type UserDetailEditorProps = {
   label: string;
-  currentValue: string | undefined;
+  defaultValue: string;
   schemaFactory: () => ZodSchema;
   type: "bio" | "username" | "fullname";
 };
 
 const UserDetailEditor = ({
   label,
-  currentValue,
+  defaultValue,
   schemaFactory,
   type,
 }: UserDetailEditorProps) => {
   const [isUserDetailModalOpen, setIsUserDetailModalOpen] = useState(false);
+  const [currentValue, setCurrentValue] = useState(defaultValue);
+
   const formSchema = z.object({
     [type]: schemaFactory(),
   });
@@ -54,8 +56,10 @@ const UserDetailEditor = ({
       await axiosInstance.put("/api/user", data, {
         headers: { Authorization: getCookie("token") },
       });
+      const updatedValue = form.getValues(type);
       setIsUserDetailModalOpen(false);
-      form.setValue(`${type}`, form.getValues(type));
+      form.setValue(`${type}`, updatedValue);
+      setCurrentValue(updatedValue);
     } catch (err) {}
   }
   useEffect(() => {
@@ -67,10 +71,13 @@ const UserDetailEditor = ({
       open={isUserDetailModalOpen}
       onOpenChange={setIsUserDetailModalOpen}
     >
-      <div className="flex items-center justify-between p-3">
+      <div className="flex items-center justify-between md:p-3">
         <div className="flex flex-col justify-between">
           <h1 className="font-semibold">{label}</h1>
-          <p className="mr-20 text-sm text-muted-foreground">{currentValue}</p>
+
+          <p className="mr-4 text-sm text-muted-foreground lg:mr-20">
+            {currentValue}
+          </p>
         </div>
         <DialogTrigger asChild>
           <Button variant="secondary">Edit</Button>
@@ -78,10 +85,10 @@ const UserDetailEditor = ({
       </div>
 
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit {label}</DialogTitle>
+        <DialogHeader className="text-left">
+          <DialogTitle>Edit {type}</DialogTitle>
           <DialogDescription>
-            Make changes to your {label} here. Click save when done.
+            Make changes to your {} here. Click save when done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -110,7 +117,7 @@ const UserDetailEditor = ({
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <div className="flex justify-end gap-3">
               <Button
                 type="button"
                 variant="outline"
@@ -125,7 +132,7 @@ const UserDetailEditor = ({
                   "Save changes"
                 )}
               </Button>
-            </DialogFooter>
+            </div>
           </form>
         </Form>
       </DialogContent>
