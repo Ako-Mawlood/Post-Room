@@ -1,20 +1,28 @@
 "use client";
 
 import UserDetailEditor from "@/app/components/pages/settings/UserDetailEditor";
-import { fullnameValidation, usernameValidation } from "@/libs/validations";
+import {
+  bioValidation,
+  fullnameValidation,
+  usernameValidation,
+} from "@/libs/validations";
 import { useEffect, useState } from "react";
 import { getUserByUsername } from "@/libs/getUserByUsername";
 import { getCookie } from "cookies-next";
 import DeleteAccount from "./DeleteAccount";
 import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
 import SendRestPasswordLinkBtn from "./SendRestPasswordLinkBtn";
+import ProfileImageUpdater from "@/app/components/ProfileImageUpdater";
 
 const validateUsername = () => usernameValidation;
 const validateFullname = () => fullnameValidation;
+const validateBio = () => bioValidation;
 
 const Settings = ({ params }: { params: { username: string } }) => {
   const [userInfo, setUserInfo] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [profileImage, setProfileImage] = useState();
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -24,6 +32,7 @@ const Settings = ({ params }: { params: { username: string } }) => {
           token as string,
         );
         setUserInfo(user);
+        setProfileImage(user.imageUrl);
       } catch (error) {
         console.error("Error fetching user information:", error);
       } finally {
@@ -51,24 +60,23 @@ const Settings = ({ params }: { params: { username: string } }) => {
       <section>
         <div className="flex flex-col gap-3 border p-4">
           <h1 className="text-xl font-semibold">Personal Information</h1>
-
           <UserDetailEditor
-            label="fullname"
+            label="Fullname"
+            type="fullname"
             currentValue={userInfo.fullname}
             schemaFactory={validateFullname}
-            url="/api/user"
           />
           <UserDetailEditor
-            label="username"
+            label="Username"
+            type="username"
             currentValue={userInfo.username}
             schemaFactory={validateUsername}
-            url="/api/user"
           />
           <UserDetailEditor
-            label="bio"
+            label="Bio"
+            type="bio"
             currentValue={userInfo.bio}
-            schemaFactory={validateUsername}
-            url="/api/user"
+            schemaFactory={validateBio}
           />
         </div>
       </section>
@@ -94,5 +102,3 @@ const Settings = ({ params }: { params: { username: string } }) => {
 };
 
 export default Settings;
-
-// Create a function that accepts file data and returns the url of the image from Cloudinary

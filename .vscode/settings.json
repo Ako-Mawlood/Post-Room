@@ -2,5 +2,8 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["hookform"]
+  "cSpell.words": [
+    "fullname",
+    "hookform"
+  ]
 }

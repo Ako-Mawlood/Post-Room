@@ -26,26 +26,27 @@ import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z, ZodSchema } from "zod";
+import { Textarea } from "../../ui/textarea";
 
 type UserDetailEditorProps = {
   label: string;
   currentValue: string | undefined;
   schemaFactory: () => ZodSchema;
-  url: string;
+  type: "bio" | "username" | "fullname";
 };
 
 const UserDetailEditor = ({
   label,
   currentValue,
   schemaFactory,
-  url,
+  type,
 }: UserDetailEditorProps) => {
   const [isUserDetailModalOpen, setIsUserDetailModalOpen] = useState(false);
   const formSchema = z.object({
-    [label]: schemaFactory(),
+    [type]: schemaFactory(),
   });
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { [label]: currentValue },
+    defaultValues: { [type]: currentValue },
     resolver: zodResolver(formSchema),
   });
   async function handleUpdateUserInfo(data: z.infer<typeof formSchema>) {
@@ -54,11 +55,11 @@ const UserDetailEditor = ({
         headers: { Authorization: getCookie("token") },
       });
       setIsUserDetailModalOpen(false);
-      form.setValue(`${label}`, form.getValues(label));
+      form.setValue(`${type}`, form.getValues(type));
     } catch (err) {}
   }
   useEffect(() => {
-    form.setValue(`${label}`, `${currentValue}`);
+    form.setValue(`${type}`, `${currentValue}`);
   }, [form, isUserDetailModalOpen]);
 
   return (
@@ -90,13 +91,21 @@ const UserDetailEditor = ({
           >
             <FormField
               control={form.control}
-              name={label}
+              name={type}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{label}</FormLabel>
                   <FormMessage />
                   <FormControl>
-                    <Input placeholder={`Enter ${label}`} {...field} />
+                    {type === "bio" ? (
+                      <Textarea
+                        {...field}
+                        className="bg-muted text-muted-foreground"
+                        rows={5}
+                      />
+                    ) : (
+                      <Input placeholder={`Enter ${type}`} {...field} />
+                    )}
                   </FormControl>
                 </FormItem>
               )}
