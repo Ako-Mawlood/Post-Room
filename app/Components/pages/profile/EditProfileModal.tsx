@@ -132,7 +132,7 @@ const EditProfileModal = ({
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="bg-muted text-muted-foreground"
+                      className="resize-none bg-muted text-muted-foreground"
                       rows={5}
                       onChangeCapture={(e) =>
                         setBioCharacters(e.currentTarget.value.length)

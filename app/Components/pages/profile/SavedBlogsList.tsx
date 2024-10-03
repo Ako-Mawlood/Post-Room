@@ -7,6 +7,7 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import BlogCard from "../../ui/BlogCard";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 interface savedBlogType extends blogType {
   author: {
@@ -65,22 +66,18 @@ const SavedBlogsList = async () => {
         <div className="mx-auto flex w-full flex-wrap justify-start gap-10 p-6">
           {savedBlogs.map((blog: { blog: savedBlogType }) => {
             return (
-              <div
+              <BlogCard
                 key={blog.blog.id}
-                className="h-52 w-full md:w-4/5 lg:w-[47%]"
-              >
-                <BlogCard
-                  author={blog.blog.author?.fullname}
-                  authorImageUrl={blog.blog.author?.imageUrl}
-                  blogId={blog.blog.blogId}
-                  blogImageUrl={blog.blog.imageUrl}
-                  categories={blog.blog.categories}
-                  title={blog.blog.title}
-                  content={blog.blog.content}
-                  createdAt={blog.blog.createdAt}
-                  stars={blog.blog._count.stars}
-                />
-              </div>
+                author={blog.blog.author?.fullname}
+                authorImageUrl={blog.blog.author?.imageUrl}
+                blogId={blog.blog.blogId}
+                blogImageUrl={blog.blog.imageUrl}
+                categories={blog.blog.categories}
+                title={blog.blog.title}
+                content={blog.blog.content}
+                createdAt={blog.blog.createdAt}
+                stars={blog.blog._count.stars}
+              />
             );
           })}
         </div>

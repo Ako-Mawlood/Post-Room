@@ -3,6 +3,7 @@ import blogBlack from "@/public/assets/blogBlack.svg";
 import blogWhite from "@/public/assets/blogWhite.svg";
 import Image from "next/image";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
+import Link from "next/link";
 
 type profileOwnerBlogsListProps = {
   profileOwner: profileOwnerType;
@@ -57,7 +58,11 @@ const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListProps) => {
   return (
     <div className="flex w-full flex-wrap justify-center gap-4 p-6 md:justify-start">
       {profileOwner.blogs.map((blog: profileBlogType) => (
-        <div key={blog.blogId} className="h-52 w-full md:w-4/5 lg:w-[47%]">
+        <Link
+          href={`/write/${blog.blogId}`}
+          key={blog.blogId}
+          className="h-52 w-full md:w-4/5 lg:w-[47%]"
+        >
           <BlogCard
             author={profileOwner.fullname}
             authorId={profileOwner.id}
@@ -71,7 +76,7 @@ const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListProps) => {
             stars={blog._count.stars}
             isDraft={true}
           />
-        </div>
+        </Link>
       ))}
     </div>
   );

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { CiStar as StarIcon } from "react-icons/ci";
 import { calculateReadingTime, formatDate, getInitials } from "@/libs/utils";
-import { Badge } from "./badge";
 
 type BlogCardPropsType = {
   author: string;
@@ -84,11 +83,6 @@ const BlogCard = ({
             fill={true}
             alt="Blog image"
           />
-          {isDraft && (
-            <Badge className="absolute right-2 top-2 bg-card text-card-foreground opacity-90 hover:bg-card">
-              Draft
-            </Badge>
-          )}
         </div>
       </Card>
     </Link>

@@ -1,5 +1,11 @@
-import {currentUserType} from "@/app/types/currentUserType"
-import { CiUser as Profile,CiEdit as Write,CiBookmark as Saved,CiSettings as Settings } from "react-icons/ci";
+import { currentUserType } from "@/app/types/currentUserType";
+import {
+  CiUser as Profile,
+  CiEdit as Write,
+  CiBookmark as Saved,
+  CiSettings as Settings,
+  CiViewTimeline as Drafted,
+} from "react-icons/ci";
 
 export const getMenuItems = (currentUser: currentUserType) => [
   {
@@ -18,8 +24,13 @@ export const getMenuItems = (currentUser: currentUserType) => [
     label: "Saved Blogs",
   },
   {
+    href: `/@${currentUser?.username}?tab=drafts`,
+    icon: Drafted,
+    label: "Drafted Blogs",
+  },
+  {
     href: `/@${currentUser?.username}/settings`,
     icon: Settings,
     label: "Settings",
   },
-]
+];

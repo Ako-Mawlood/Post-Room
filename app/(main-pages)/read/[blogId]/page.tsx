@@ -84,7 +84,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
         <nav className="flex h-16 w-full items-center justify-between border-b border-primary px-2 py-1 text-foreground md:px-6">
           <div className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl">
             <Logo size={25} />
-            <h1>Post-Room</h1>
+          pm<h1>Post-Room</h1>
           </div>
           <div className="flex gap-3">
             <Button

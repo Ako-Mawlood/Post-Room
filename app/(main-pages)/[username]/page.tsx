@@ -20,6 +20,7 @@ import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import clsx from "clsx";
 import Link from "next/link";
+import DraftBlogList from "@/app/components/pages/profile/DraftBlogList";
 
 const ProfilePage = async ({
   searchParams,
@@ -121,7 +122,9 @@ const ProfilePage = async ({
         {tabQueryParam === "saved-blogs" && isCurrentUserProfile && (
           <SavedBlogsList />
         )}
-        {tabQueryParam === "drafts" && isCurrentUserProfile && <h1>drafts</h1>}
+        {tabQueryParam === "drafts" && isCurrentUserProfile && (
+          <DraftBlogList />
+        )}
       </div>
       {editQueryParam === "t" && (
         <EditProfileModal
