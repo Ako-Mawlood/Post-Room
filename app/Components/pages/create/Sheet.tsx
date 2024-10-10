@@ -86,7 +86,7 @@ const Sheet = ({
         setIsSubmitting(false);
       });
   }
-  // Saving blog while typeing
+  // Saving blog while typing
 
   useEffect(() => {
     axiosInstance

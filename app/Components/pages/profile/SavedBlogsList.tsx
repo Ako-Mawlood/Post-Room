@@ -7,7 +7,6 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import BlogCard from "../../ui/BlogCard";
 import { cookies } from "next/headers";
-import Link from "next/link";
 
 interface savedBlogType extends blogType {
   author: {

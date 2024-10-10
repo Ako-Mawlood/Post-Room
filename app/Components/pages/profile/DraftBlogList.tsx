@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import blogWhite from "@/public/assets/blogWhite.svg";
 import blogBlack from "@/public/assets/blogBlack.svg";
-import { ImSpinner2 as Spinner } from "react-icons/im";
 import { blogType } from "@/app/types/blogType";
 import Link from "next/link";
 import {

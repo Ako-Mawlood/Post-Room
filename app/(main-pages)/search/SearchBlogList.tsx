@@ -7,7 +7,7 @@ import BlogCard from "../../ui/BlogCard";
 import { getBlogs } from "@/libs/getBlogs";
 import { Skeleton } from "../../ui/skeleton";
 
-const BlogsList = ({ url }: { url: string }) => {
+const SearchBlogList = ({ url }: { url: string }) => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
   const [skip, setSkip] = useState(0);
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
@@ -72,4 +72,4 @@ const BlogsList = ({ url }: { url: string }) => {
   );
 };
 
-export default BlogsList;
+export default SearchBlogList;

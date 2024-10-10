@@ -8,6 +8,7 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/app/components/ui/alert-dialog";
@@ -37,7 +38,7 @@ const DeleteAccount = () => {
   return (
     <div className="flex items-center justify-between border p-4 md:p-8">
       <div className="flex flex-col justify-between gap-2">
-        <h1 className="font-semibold">Delete Your Account</h1>
+        <h1 className="font-semibold">Delete your account</h1>
         <p className="mr-10 text-sm text-muted-foreground">
           By clicking delete, your account, along with all your blogs and
           associated content, will be permanently removed. This action is
@@ -47,7 +48,7 @@ const DeleteAccount = () => {
 
       <AlertDialog>
         <AlertDialogTrigger>
-          <Button variant="destructive">Delete account</Button>
+          <Button variant="destructive">Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <DialogHeader className="text-left">
@@ -62,7 +63,7 @@ const DeleteAccount = () => {
             <AlertDialogAction
               onClick={handleDeleteAccount}
               disabled={isPending}
-              className="bg-destructive text-white hover:bg-red-950"
+              className="bg-destructive"
             >
               {isPending ? "Deleting..." : "Delete"}
             </AlertDialogAction>

@@ -2,6 +2,7 @@
 
 import { Button } from "@/app/components/ui/button";
 import { useToast } from "@/app/Hooks/use-toast";
+
 import axiosInstance from "@/libs/axiosInstance";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { getCookie } from "cookies-next";
@@ -49,7 +50,7 @@ const SendResetLinkBtn = () => {
 
   return (
     <Button
-      className="w-24 rounded-md hover:bg-neutral-200 dark:hover:bg-secondary/80"
+      className="w-24 rounded-md"
       onClick={handleSendResetPasswordLink}
       disabled={isPending}
       variant="secondary"

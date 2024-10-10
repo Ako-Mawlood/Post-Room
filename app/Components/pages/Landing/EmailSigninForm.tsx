@@ -25,13 +25,13 @@ const signinSchema = z.object({
 type formDataType = z.infer<typeof signinSchema>;
 
 interface emailSigninFormPropsType {
-  setIsSigninFormVisable: Dispatch<SetStateAction<boolean>>;
+  setIsSigninFormVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 const EmailSigninForm = ({
-  setIsSigninFormVisable,
+  setIsSigninFormVisible,
 }: emailSigninFormPropsType) => {
-  const [isPasswordVisable, setIsPasswordVisable] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -117,7 +117,7 @@ const EmailSigninForm = ({
             <Input
               {...register("password")}
               disabled={isSubmitting}
-              type={isPasswordVisable ? "text" : "password"}
+              type={isPasswordVisible ? "text" : "password"}
               onChangeCapture={() => setError("root", { message: "" })}
               className={clsx("w-full bg-slate-100", {
                 "border-gray-300 focus:border-gray-400":
@@ -126,15 +126,15 @@ const EmailSigninForm = ({
                   errors.password?.message || errors.root?.message,
               })}
             />
-            {isPasswordVisable ? (
+            {isPasswordVisible ? (
               <HidePassord
                 className="absolute right-2 top-2 size-5 cursor-pointer"
-                onClick={() => setIsPasswordVisable(false)}
+                onClick={() => setIsPasswordVisible(false)}
               />
             ) : (
               <ShowPassword
                 className="absolute right-2 top-2 size-5 cursor-pointer"
-                onClick={() => setIsPasswordVisable(true)}
+                onClick={() => setIsPasswordVisible(true)}
               />
             )}
           </div>
@@ -163,7 +163,7 @@ const EmailSigninForm = ({
 
       <button
         disabled={isSubmitting}
-        onClick={() => setIsSigninFormVisable(false)}
+        onClick={() => setIsSigninFormVisible(false)}
         className="flex items-center rounded-full p-2 px-4 duration-75 hover:bg-gray-100"
       >
         <ArrowIcon className="mr-2 size-8" />
