@@ -29,7 +29,7 @@ export const getMenuItems = (currentUser: currentUserType) => [
     label: "Drafted Blogs",
   },
   {
-    href: `/@${currentUser?.username}/settings`,
+    href: `/settings`,
     icon: Settings,
     label: "Settings",
   },

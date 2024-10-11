@@ -13,7 +13,7 @@ import { ImSpinner8 as Spinner } from "react-icons/im";
 import Image from "next/image";
 import { LuDot as Dot } from "react-icons/lu";
 
-type notificationsType = {
+type NotificationType = {
   id: number;
   blog: {
     id: number;
@@ -22,9 +22,9 @@ type notificationsType = {
   };
   createdAt: string;
   seen: boolean;
-}[];
+};
 const NotificationLog = () => {
-  const [notifications, setNotifications] = useState<notificationsType>([]);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [isNotificationLogOpened, setIsNotificationLogOpened] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,9 @@ const NotificationLog = () => {
       .then((res) => {
         setNotifications(res.data);
         setNotificationCount(
-          res.data.filter((noti) => noti.seen == false).length,
+          res.data.filter(
+            (notification: NotificationType) => notification.seen == false,
+          ).length,
         );
       })
       .finally(() => {

@@ -101,13 +101,13 @@ iframe{
   margin:3rem 0;
   height:70vh;
 }
-.animate-strech{
-  animation: strech 0.3s  ;
+.animate-stretch{
+  animation: stretch 0.3s  ;
   transition: all 500ms cubic-bezier(1.000, 0.030, 1.000, 0.650);
     transition-timing-function: cubic-bezier(1.000, 0.030, 1.000, 0.650);
 }
 
-@keyframes strech {
+@keyframes stretch {
   0%{
     transform: translateY(150px);
   }
@@ -117,7 +117,6 @@ transform: translateY(0px);
 }
 }
 
-/* From Uiverse.io by mrhyddenn */
 .button-shine {
   position: relative;
   padding: 10px 20px;

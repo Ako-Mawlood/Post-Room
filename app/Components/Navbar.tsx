@@ -1,4 +1,4 @@
-import Search from "./pages/read/Search";
+import Search from "./pages/search/Search";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { CgEricsson as Logo } from "react-icons/cg";
@@ -23,7 +23,7 @@ import { profileOwnerType } from "../types/profileOwnerType";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import { getUserByUsername } from "@/libs/getUserByUsername";
-import NotficationLog from "./NotificationLog";
+import NotificationLog from "./NotificationLog";
 
 const Navbar = async () => {
   const token = getCookie("token", { cookies });
@@ -48,7 +48,7 @@ const Navbar = async () => {
 
       <div className="flex items-center gap-4">
         <ModeToggle />
-        <NotficationLog />
+        <NotificationLog />
 
         <Button className="hidden sm:flex">
           <Link
@@ -81,7 +81,7 @@ const Navbar = async () => {
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
-            {/*Todo:Make drop down menu items constant */}
+
             <DropdownMenuGroup>
               {menuItems.map((item) => (
                 <Link key={item.label} href={item.href}>

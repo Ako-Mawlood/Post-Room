@@ -71,7 +71,7 @@ const ProfilePage = async ({
               {isCurrentUserProfile && (
                 <>
                   <EditProfileBtn searchParams={searchParams} />
-                  <Link href={`/@${currentUser?.username}/settings`}>
+                  <Link href={`/settings`}>
                     <SettingsIcon
                       className="absolute right-6 top-4 cursor-pointer"
                       size={20}

@@ -1,7 +1,7 @@
 "use client";
 
 import { blogType } from "@/app/types/blogType";
-import Trigger from "./Trigger";
+import Trigger from "../blogs/Trigger";
 import React, { useEffect, useState } from "react";
 import BlogCard from "../../ui/BlogCard";
 import { getBlogs } from "@/libs/getBlogs";
@@ -45,7 +45,7 @@ const SearchBlogList = ({ url }: { url: string }) => {
       {blogs.length !== 0 && (
         <section className="relative flex w-full flex-col items-center gap-5 p-5 md:w-[728px]">
           {blogs.map((blog: blogType) => (
-            <div key={blog.id} className="animate-strech h-52 w-full">
+            <div key={blog.id} className="animate-stretch h-52 w-full">
               <BlogCard
                 title={blog.title}
                 author={blog.author.fullname}
