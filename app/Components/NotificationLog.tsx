@@ -65,15 +65,15 @@ const NotificationLog = () => {
       <PopoverTrigger className="relative flex items-center rounded-full p-2 hover:bg-muted">
         <div
           className={clsx(
-            "absolute right-2 top-2 flex items-center justify-center rounded-full bg-red-500 text-xs text-white",
+            "absolute flex items-center justify-center rounded-full bg-red-500 text-xs text-white",
             {
               hidden: notificationCount === 0,
-              "size-4": notifications.length < 9,
-              "size-5": notifications.length >= 9,
+              "right-2 top-2 size-4": notifications.length < 9,
+              "right-1 top-1 size-5": notifications.length >= 9,
             },
           )}
         >
-          {notifications ? notificationCount : "9+"}
+          {notifications.length < 10 ? notificationCount : "9+"}
         </div>
         <Notification size={25} />
       </PopoverTrigger>
@@ -92,7 +92,7 @@ const NotificationLog = () => {
         ) : notifications.length === 0 ? (
           <p>No notification available</p>
         ) : (
-          [...notifications].reverse().map((notification: any) => (
+          notifications.map((notification: any) => (
             <div key={notification.id}>
               <Link
                 href={`/read/${notification.blog.blogId}`}

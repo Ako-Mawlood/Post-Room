@@ -3,7 +3,6 @@
 import { CiSearch as SearchIcon } from "react-icons/ci";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { Popover, PopoverTrigger, PopoverContent } from "../../ui/popover";

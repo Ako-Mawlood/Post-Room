@@ -1,4 +1,3 @@
-import { currentUserType } from "@/app/types/currentUserType";
 import axiosInstance from "./axiosInstance";
 
 export async function getCurrentUser(token: string) {

@@ -3,7 +3,7 @@ export type CommentType = {
   blogId: string;
   author: {
     id: number;
-    imageUrl: string;
+    imageUrl?: string;
     fullname: string;
     username: string;
   };

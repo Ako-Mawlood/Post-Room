@@ -17,6 +17,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
+import CommentSideBar from "./CommentSideBar";
 
 const InteractionBar = ({
   blog,
@@ -90,7 +91,7 @@ const InteractionBar = ({
           setStarCount={setStarCount}
           handleOpenAuthModal={handleOpenAuthModal}
         />
-        <Comment
+        <CommentSideBar
           blogId={blog.blogId}
           commentCount={commentCount}
           fullname={blog.author.fullname}

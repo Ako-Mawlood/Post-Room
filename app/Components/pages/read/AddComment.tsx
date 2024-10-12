@@ -14,45 +14,46 @@ import { ImSpinner8 as Spinner } from "react-icons/im";
 import { toast } from "@/app/Hooks/use-toast";
 import { CommentType } from "@/app/types/commentType";
 import { useQueryClient } from "@tanstack/react-query";
+import { currentUserType } from "@/app/types/currentUserType";
 
 type Props = {
-  comments: CommentType[];
+  currentUser: currentUserType | undefined;
+  comments: CommentType[] | undefined;
   commentCount: number;
   setCommentCount: Dispatch<SetStateAction<number>>;
   blogId: string;
 };
 
-const AddComment = ({ setCommentCount, blogId }: Props) => {
+const AddComment = ({ currentUser, setCommentCount, blogId }: Props) => {
   const token = getCookie("token");
   const queryClient = useQueryClient();
   const [commentContent, setCommentContent] = useState("");
   const [isPending, setIsPending] = useState(false);
   async function addComment(e: FormEvent) {
     e.preventDefault();
-    setIsPending(true);
-    await axiosInstance
-      .post(
+    try {
+      setIsPending(true);
+
+      await axiosInstance.post(
         `/api/blog/${blogId}/comment`,
         { content: commentContent },
         { headers: { Authorization: token } },
-      )
-      .then(() => {
-        queryClient.invalidateQueries({ queryKey: ["comments"] });
-        setCommentCount((prevcommentCount) => prevcommentCount + 1);
-        setCommentContent("");
-      })
-      .catch((err) => {
-        console.error("Failed to add comment", err);
-        toast({
-          variant: "destructive",
-          title: "Comment Failed",
-          description:
-            "Something went wrong while adding your comment. Please try again.",
-        });
-      })
-      .finally(() => {
-        setIsPending(false);
+      );
+      setCommentCount((prevcommentCount) => prevcommentCount + 1);
+
+      await queryClient.invalidateQueries({ queryKey: ["comments"] });
+      setCommentContent("");
+    } catch (err) {
+      console.error("Failed to add comment", err);
+      toast({
+        variant: "destructive",
+        title: "Comment Failed",
+        description:
+          "Something went wrong while adding your comment. Please try again.",
       });
+    } finally {
+      setIsPending(false);
+    }
   }
   if (!token) {
     return null;
@@ -66,10 +67,13 @@ const AddComment = ({ setCommentCount, blogId }: Props) => {
       >
         <div className="flex w-full flex-row items-center gap-3">
           <Avatar>
-            <AvatarFallback>{getInitials("Ako Maw")}</AvatarFallback>
-            <AvatarImage src={"/"} />
+            <AvatarFallback>
+              {getInitials(currentUser?.fullname as string)}
+            </AvatarFallback>
+            {/* ToDo:Add imageUrl to currentUser in backend */}
+            <AvatarImage src={""} />
           </Avatar>
-          <span className="text-sm">{"Ako"}</span>
+          <span className="text-sm">{currentUser?.fullname}</span>
         </div>
         <textarea
           value={commentContent}

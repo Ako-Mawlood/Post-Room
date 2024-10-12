@@ -22,9 +22,7 @@ const BlogsPage = async ({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) => {
   const q = (searchParams && searchParams.q) || "";
-  console.log({ q });
   const blogs = await getBlogs(q as string);
-  console.log(blogs);
   return (
     <div className="w-full">
       <main className="mt-20 flex w-full items-start justify-center">
@@ -33,7 +31,7 @@ const BlogsPage = async ({
             <h1 className="text-4xl text-primary">
               {blogs.length ? (
                 <span className="text-4xl text-muted-foreground">
-                  Result for{" "}
+                  Results for{" "}
                 </span>
               ) : (
                 <span className="text-4xl text-muted-foreground">
