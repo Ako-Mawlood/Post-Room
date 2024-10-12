@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LuMessageCircle as CommentIcon, LuDot as Dot } from "react-icons/lu";
+import { LuDot as Dot } from "react-icons/lu";
 import FollowBtn from "@/app/components/pages/read/FollowBtn";
 import StarBtn from "@/app/components/pages/read/StarBtn";
 import SaveBtn from "@/app/components/pages/read/SaveBtn";
@@ -11,7 +11,6 @@ import { calculateReadingTime } from "@/libs/utils";
 import { Dispatch, SetStateAction } from "react";
 import { blogType } from "@/app/types/blogType";
 import { getCookie } from "cookies-next";
-import Comment from "./Comment";
 import {
   Avatar,
   AvatarFallback,
@@ -27,8 +26,6 @@ const InteractionBar = ({
   setIsBlogStarred,
   starCount,
   setStarCount,
-  commentCount,
-  setCommentCount,
 }: {
   blog: blogType;
   isMyBlog: boolean;
@@ -37,8 +34,6 @@ const InteractionBar = ({
   setIsBlogStarred: Dispatch<SetStateAction<boolean>>;
   starCount: number;
   setStarCount: Dispatch<SetStateAction<number>>;
-  commentCount: number;
-  setCommentCount: Dispatch<SetStateAction<number>>;
 }) => {
   const token = getCookie("token");
   return (
@@ -93,10 +88,9 @@ const InteractionBar = ({
         />
         <CommentSideBar
           blogId={blog.blogId}
-          commentCount={commentCount}
           fullname={blog.author.fullname}
+          authorId={blog.author.id}
           imageUrl={blog.author.imageUrl}
-          setCommentCount={setCommentCount}
           handleOpenAuthModal={handleOpenAuthModal}
         />
         <SaveBtn

@@ -19,12 +19,10 @@ import { currentUserType } from "@/app/types/currentUserType";
 type Props = {
   currentUser: currentUserType | undefined;
   comments: CommentType[] | undefined;
-  commentCount: number;
-  setCommentCount: Dispatch<SetStateAction<number>>;
   blogId: string;
 };
 
-const AddComment = ({ currentUser, setCommentCount, blogId }: Props) => {
+const AddComment = ({ currentUser, blogId }: Props) => {
   const token = getCookie("token");
   const queryClient = useQueryClient();
   const [commentContent, setCommentContent] = useState("");
@@ -39,7 +37,6 @@ const AddComment = ({ currentUser, setCommentCount, blogId }: Props) => {
         { content: commentContent },
         { headers: { Authorization: token } },
       );
-      setCommentCount((prevcommentCount) => prevcommentCount + 1);
 
       await queryClient.invalidateQueries({ queryKey: ["comments"] });
       setCommentContent("");

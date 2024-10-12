@@ -14,14 +14,13 @@ import { CommentType } from "@/app/types/commentType";
 
 type Props = {
   blogId: string;
-  commentCount: number;
-  setCommentCount: Dispatch<SetStateAction<number>>;
   fullname: string;
   imageUrl: string;
+  authorId: number;
   handleOpenAuthModal: (isNewUser: boolean) => void;
 };
 
-const CommentSideBar = ({ blogId, commentCount, setCommentCount }: Props) => {
+const CommentSideBar = ({ blogId, authorId }: Props) => {
   const [editCommentIndex, setEditCommentIndex] = useState<null | number>(null);
   const { data: comments } = useQuery<CommentType[]>({
     queryKey: ["comments"],
@@ -45,30 +44,29 @@ const CommentSideBar = ({ blogId, commentCount, setCommentCount }: Props) => {
       <SheetTrigger asChild>
         <Button size="sm" variant="outline">
           <CommentIcon size={20} />
-          <span>{commentCount}</span>
+          <span>{comments?.length}</span>
         </Button>
       </SheetTrigger>
       <SheetContent
-        className="flex h-full w-[400px] flex-col items-start justify-start gap-4 overflow-auto"
+        className="flex flex-col items-start justify-start gap-4 overflow-auto"
         side="right"
       >
         <h1 className="text-2xl">Comments</h1>
         <AddComment
           currentUser={currentUser}
-          commentCount={commentCount}
           comments={comments}
-          setCommentCount={setCommentCount}
           blogId={blogId}
         />
         <section className="w-full">
           {comments &&
             comments.map((comment, index) => {
-              const isCurrentUsersComment =
-                comment.author.id === currentUser?.id;
+              const isCommentOwner = comment.author.id === currentUser?.id;
+              const isBlogAuthor = authorId === currentUser?.id;
               const isEditingComment = editCommentIndex === index;
               return (
                 <Comment
-                  isCurrentUsersComment={isCurrentUsersComment}
+                  isCommentOwner={isCommentOwner}
+                  isBlogAuthor={isBlogAuthor}
                   index={index}
                   comment={comment}
                   isEditingComment={isEditingComment}

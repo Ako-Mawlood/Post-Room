@@ -5,22 +5,20 @@ import { formatDate, getInitials } from "@/libs/utils";
 import { CommentType } from "@/app/types/commentType";
 import { EditComment } from "./EditComment";
 import clsx from "clsx";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
-import {
-  CiMenuKebab as MenuIcon,
-  CiEdit as EditIcon,
-  CiTrash as DeleteIcon,
-} from "react-icons/ci";
+import { CiMenuKebab as MenuIcon, CiEdit as EditIcon } from "react-icons/ci";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
+import DeleteComment from "./DeleteComment";
 
 type Props = {
-  isCurrentUsersComment: boolean;
+  isCommentOwner: boolean;
+  isBlogAuthor: boolean;
   index: number;
   comment: CommentType;
   isEditingComment: boolean;
@@ -28,17 +26,19 @@ type Props = {
   setEditCommentIndex: Dispatch<SetStateAction<number | null>>;
 };
 const Comment = ({
-  isCurrentUsersComment,
+  isCommentOwner,
+  isBlogAuthor,
   index,
   comment,
   isEditingComment,
   editCommentIndex,
   setEditCommentIndex,
 }: Props) => {
+  const [isCommentMenuOpen, setIsCommentMenuOpen] = useState(false);
   return (
     <div className="relative">
-      {isCurrentUsersComment && (
-        <Popover>
+      {(isCommentOwner || isBlogAuthor) && (
+        <Popover open={isCommentMenuOpen} onOpenChange={setIsCommentMenuOpen}>
           <PopoverTrigger className="absolute right-4 top-4">
             <MenuIcon size={20} />
           </PopoverTrigger>
@@ -46,18 +46,20 @@ const Comment = ({
             className="flex flex-col gap-2 border bg-card p-3 text-sm shadow-sm"
             align="end"
           >
-            <button
-              className="flex items-center gap-1"
-              onClick={() => setEditCommentIndex(index)}
-            >
-              <EditIcon className="mr-2 size-6" />
-              <span>Edit</span>
-            </button>
+            {isCommentOwner && (
+              <button
+                className="flex items-center gap-1"
+                onClick={() => setEditCommentIndex(index)}
+              >
+                <EditIcon className="mr-2 size-6" />
+                <span>Edit</span>
+              </button>
+            )}
 
-            <button className="flex items-center gap-1">
-              <DeleteIcon className="mr-2 size-6" />
-              <span>Delete</span>
-            </button>
+            <DeleteComment
+              commentId={comment.id}
+              setIsCommentMenuOpen={setIsCommentMenuOpen}
+            />
           </PopoverContent>
         </Popover>
       )}
