@@ -35,6 +35,7 @@ const Comment = ({
   setEditCommentIndex,
 }: Props) => {
   const [isCommentMenuOpen, setIsCommentMenuOpen] = useState(false);
+  const [showFullContent, setShowFullContent] = useState(false);
   return (
     <div className="relative">
       {(isCommentOwner || isBlogAuthor) && (
@@ -65,7 +66,7 @@ const Comment = ({
       )}
 
       <div
-        className={clsx("flex w-full flex-col gap-3 border-b py-4", {
+        className={clsx("flex w-full flex-col border-b py-4", {
           isEditingComment: "border-black bg-green-300 pb-0",
         })}
         key={comment.id}
@@ -97,7 +98,22 @@ const Comment = ({
             commentId={comment.id}
           />
         ) : (
-          <p className="text-sm">{comment.content}</p>
+          <>
+            {showFullContent || comment.content.length <= 200 ? (
+              <p className="mt-2 text-sm">{comment.content}</p>
+            ) : (
+              <p className="mt-2 text-sm">{comment.content.slice(0, 200)}...</p>
+            )}
+
+            {comment.content.length > 200 && (
+              <button
+                className="w-fit text-sm text-blue-500"
+                onClick={() => setShowFullContent((prev) => !prev)}
+              >
+                {showFullContent ? "Show Less" : "Read More"}
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
