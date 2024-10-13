@@ -153,7 +153,7 @@ const EditProfileModal = ({
               )}
             />
             <Link
-              href={`/@${currentUserUsername}/settings`}
+              href={`/settings`}
               className="relative flex flex-col items-start gap-2 rounded-md p-2 duration-150 hover:bg-muted"
             >
               <h2 className="font-semibold">Manage Account Settings</h2>

@@ -21,10 +21,12 @@ type Props = {
   commentId: number;
   setIsCommentMenuOpen: Dispatch<SetStateAction<boolean>>;
 };
+
 const DeleteComment = ({ commentId, setIsCommentMenuOpen }: Props) => {
   const [isPending, setIsPending] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const queryClient = useQueryClient();
+
   async function handleDeleteComment() {
     try {
       setIsPending(true);
@@ -35,7 +37,7 @@ const DeleteComment = ({ commentId, setIsCommentMenuOpen }: Props) => {
       setIsCommentMenuOpen(false);
       toast({
         title: "Comment deleted",
-        description: "Your comment has been deleted.",
+        description: "The comment has been deleted successfully.",
       });
       setIsAlertOpen(false);
     } catch (err: any) {
@@ -43,12 +45,13 @@ const DeleteComment = ({ commentId, setIsCommentMenuOpen }: Props) => {
       toast({
         variant: "destructive",
         title: "Failed to Delete Comment",
-        description: "unexpected error occurred.",
+        description: "An unexpected error occurred while deleting the comment.",
       });
     } finally {
       setIsPending(false);
     }
   }
+
   return (
     <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
       <AlertDialogTrigger asChild>
@@ -61,11 +64,13 @@ const DeleteComment = ({ commentId, setIsCommentMenuOpen }: Props) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Comment?</AlertDialogTitle>
           <AlertDialogDescription>
-            Delete your comment permanently?
+            Are you sure you want to permanently delete this comment?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={() => setIsCommentMenuOpen(false)}>
+            Cancel
+          </AlertDialogCancel>
           <Button
             className="w-20"
             disabled={isPending}

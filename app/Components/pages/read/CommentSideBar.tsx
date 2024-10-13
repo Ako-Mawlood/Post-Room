@@ -65,6 +65,7 @@ const CommentSideBar = ({ blogId, authorId }: Props) => {
               const isEditingComment = editCommentIndex === index;
               return (
                 <Comment
+                  key={comment.id}
                   isCommentOwner={isCommentOwner}
                   isBlogAuthor={isBlogAuthor}
                   index={index}

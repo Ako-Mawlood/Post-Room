@@ -43,7 +43,6 @@ const Search = () => {
       // Update recent searches
       setRecentSearches((prevSearches) => {
         const searchesCopy = [...prevSearches];
-        searchesCopy.pop(); // Remove the last element
         return [{ id: Date.now(), content: query }, ...searchesCopy]; // Add the new search entry
       });
 

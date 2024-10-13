@@ -11,6 +11,7 @@ type Props = {
   setRecentSearches: Dispatch<SetStateAction<recentSearchesType[]>>;
   setIsPopoverOpen: Dispatch<SetStateAction<boolean>>;
 };
+
 type recentSearchesType = {
   id: number;
   content: string;
@@ -37,43 +38,48 @@ const RecentSearchList = ({
   }
 
   useEffect(() => {
-    axiosInstance("api/search/recent", {
-      headers: { Authorization: token },
-    }).then((res) => {
+    const fetchRecentSearches = async () => {
+      const res = await axiosInstance("api/search/recent", {
+        headers: { Authorization: token },
+      });
       setRecentSearches(res.data);
-    });
-  }, []);
+    };
+
+    fetchRecentSearches();
+  }, [setRecentSearches, token]);
 
   return (
     <>
       <h1 className="text-md font-semibold text-primary">Recent Searches</h1>
       {recentSearches.length > 0 ? (
         <form onSubmit={handleSearch}>
-          {recentSearches.map((recentSearch) => (
-            <div
-              key={recentSearch.id}
-              className="flex w-full items-center justify-between"
-            >
-              <button
-                onClick={() => {
-                  setQuery(recentSearch.content);
-                  setIsPopoverOpen(false);
-                }}
-                type="submit"
-                className="flex-grow truncate px-0 py-2 text-start text-[15px] font-normal hover:underline"
+          {recentSearches.map((recentSearch, index) =>
+            index < 5 ? (
+              <div
+                key={recentSearch.id}
+                className="flex w-full items-center justify-between"
               >
-                {recentSearch.content}
-              </button>
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => handleRemoveRecentSearch(recentSearch.id)}
-                className="size-8 p-1"
-              >
-                <X className="size-4" />
-              </Button>
-            </div>
-          ))}
+                <button
+                  onClick={() => {
+                    setQuery(recentSearch.content);
+                    setIsPopoverOpen(false);
+                  }}
+                  type="button" // Use "button" to prevent form submission
+                  className="flex-grow truncate px-0 py-2 text-start text-[15px] font-normal hover:underline"
+                >
+                  {recentSearch.content}
+                </button>
+                <Button
+                  type="button" // Keep as "button" to prevent form submission
+                  variant="ghost"
+                  onClick={() => handleRemoveRecentSearch(recentSearch.id)}
+                  className="size-8 p-1"
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
+            ) : null,
+          )}
         </form>
       ) : (
         <p className="p-2 text-center">No recent searches found.</p>

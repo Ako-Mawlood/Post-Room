@@ -1,27 +1,30 @@
 interface blogType {
-  id: number
-  fullName: string
-  authorBio: string
-  authorImage: string | undefined
-  title: string
-  description: string
-  src: string
+  id: number;
+  fullName: string;
+  authorBio: string;
+  authorImage: string | undefined;
+  title: string;
+  description: string;
+  src: string;
 }
 
 export const previewBlogs: blogType[] = [
   {
-    id: 0,
-    title: "Impacts of Adult Behaviors on Children",
-    description: "Explore how adult actions and behaviors influence children's development.",
-    src: "https://tse2.mm.bing.net/th/id/OIG1.69oXxCxgb5GiBZw6Rz4m?pid=ImgGn",
-    fullName: "Sangar Mawlood",
+    id: 2,
+    title: "The Rapid Economic Growth of Kurdistan",
+    description:
+      "An in-depth look at the factors driving Kurdistan's economic development.",
+    src: "https://images.pexels.com/photos/1209978/pexels-photo-1209978.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    fullName: "Mohammed Osman",
     authorImage: undefined,
-    authorBio: "Psychologist, Author",
+    authorBio: "Engineer, Writer",
   },
+
   {
     id: 1,
     title: "The Importance of Sleep for Children",
-    description: "Explore how adequate sleep positively impacts children's health and development.",
+    description:
+      "Explore how adequate sleep positively impacts children's health and development.",
     src: "https://tse2.mm.bing.net/th/id/OIG3.mdSgx14Ax0H725buTlml?pid=ImgGn",
     fullName: "Jordan Smith",
     authorImage:
@@ -29,18 +32,20 @@ export const previewBlogs: blogType[] = [
     authorBio: "Doctor, Writer",
   },
   {
-    id: 2,
-    title: "The Rapid Economic Growth of Kurdistan",
-    description: "An in-depth look at the factors driving Kurdistan's economic development.",
-    src: "https://images.pexels.com/photos/1209978/pexels-photo-1209978.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    fullName: "Mohammed Osman",
+    id: 0,
+    title: "Impacts of Adult Behaviors on Children",
+    description:
+      "Explore how adult actions and behaviors influence children's development.",
+    src: "https://tse2.mm.bing.net/th/id/OIG1.69oXxCxgb5GiBZw6Rz4m?pid=ImgGn",
+    fullName: "Sangar Mawlood",
     authorImage: undefined,
-    authorBio: "Engineer, Writer",
+    authorBio: "Psychologist, Author",
   },
   {
     id: 3,
     title: "The Importance of Calmness",
-    description: "Explore how staying calm can improve your overall well-being.",
+    description:
+      "Explore how staying calm can improve your overall well-being.",
     src: "https://images.pexels.com/photos/9002742/pexels-photo-9002742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     fullName: "Rawand Ranjdar",
     authorImage:
@@ -50,7 +55,8 @@ export const previewBlogs: blogType[] = [
   {
     id: 4,
     title: "The Effects of Loneliness",
-    description: "Understand the impact of loneliness on mental health and ways to combat it.",
+    description:
+      "Understand the impact of loneliness on mental health and ways to combat it.",
     src: "https://tse1.mm.bing.net/th/id/OIG1.KwznMBY4NglXceoosm2u?pid=ImgGn",
     fullName: "Karim Abadulla",
     authorImage:
@@ -60,10 +66,11 @@ export const previewBlogs: blogType[] = [
   {
     id: 5,
     title: "The Joy of Coding",
-    description: "Dive into the world of coding and discover how it can unlock endless possibilities.",
+    description:
+      "Dive into the world of coding and discover how it can unlock endless possibilities.",
     src: "https://tse4.mm.bing.net/th/id/OIG3.AkxPxsozuQr7CoBPgUoe?pid=ImgGn",
     fullName: "Abdlbarry Qaisar",
     authorImage: undefined,
     authorBio: "Software Developer, Educator",
   },
-]
+];
