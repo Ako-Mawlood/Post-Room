@@ -1,21 +1,22 @@
 "use client";
 
 import { CldUploadWidget } from "next-cloudinary";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 
 const UploadWidget = ({
   children,
   form,
-  setImageUrl,
+  updateImageUrlState,
 }: {
   children: ReactNode;
   form?: any;
-  setImageUrl: Dispatch<SetStateAction<string>>;
+  updateImageUrlState: (url: string) => void;
 }) => {
   return (
     <CldUploadWidget
       onSuccess={(result: any) => {
-        setImageUrl(result.info.url);
+        //setImageUrl(result.info.url);
+        updateImageUrlState(result.info.url);
         if (form) {
           form.setValue("imageUrl", result.info.url);
         }

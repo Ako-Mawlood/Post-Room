@@ -1,9 +1,10 @@
 import axiosInstance from "./axiosInstance";
 import { getCookie } from "cookies-next";
 
-export async function getBlogs(url: string) {
+export async function getBlogs(url: string, data: any = []) {
   try {
     const res = await axiosInstance(url, {
+      params: data,
       headers: { Authorization: getCookie("token") },
     });
     return res.data;

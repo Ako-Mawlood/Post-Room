@@ -55,7 +55,7 @@ export function ResetPassword() {
         description: `A password reset link has been sent to ${data.email}. Please check your inbox.`,
       });
     } catch (err) {
-      console.error("Failed to send reset link", err);
+      console.log("Failed to send reset link", err);
       toast({
         variant: "destructive",
         title: "Reset Link Failed",

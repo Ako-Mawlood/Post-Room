@@ -26,7 +26,7 @@ const CommentSideBar = ({ blogId, authorId }: Props) => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await axiosInstance(`api/blog/${blogId}/comment`);
-      return res.data.reverse();
+      return res.data;
     },
   });
   const { data: currentUser } = useQuery<currentUserType>({

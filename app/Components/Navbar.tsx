@@ -28,10 +28,6 @@ import NotificationLog from "./NotificationLog";
 const Navbar = async () => {
   const token = getCookie("token", { cookies });
   const currentUser: currentUserType = await getCurrentUser(token as string);
-  const userInfo: profileOwnerType = await getUserByUsername(
-    currentUser.username,
-    token as string,
-  );
   const menuItems = getMenuItems(currentUser);
   return (
     <nav className="flex h-16 w-full items-center justify-between border-b border-border px-2 text-foreground md:px-6">
@@ -62,7 +58,7 @@ const Navbar = async () => {
           <DropdownMenuTrigger>
             {currentUser ? (
               <Avatar className="cursor-pointer">
-                <AvatarImage src={userInfo?.imageUrl} />
+                <AvatarImage src={currentUser?.imageUrl} />
                 <AvatarFallback>
                   {getInitials(currentUser.fullname)}
                 </AvatarFallback>

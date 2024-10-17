@@ -41,7 +41,7 @@ export const editProfileSchema = z.object({
 });
 
 export const createBlogSchema = z.object({
-  title: z.string().min(1, "Title is can not be empty"),
+  title: z.string().min(1, "Title can not be empty"),
   content: z.string().refine(
     (content) => {
       const text = content.replace(/<[^>]*>?/gm, "");

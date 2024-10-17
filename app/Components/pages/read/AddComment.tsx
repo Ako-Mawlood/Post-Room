@@ -55,6 +55,7 @@ const AddComment = ({ currentUser, blogId }: Props) => {
   if (!token) {
     return null;
   }
+  console.log(currentUser);
 
   return (
     <>
@@ -67,8 +68,8 @@ const AddComment = ({ currentUser, blogId }: Props) => {
             <AvatarFallback>
               {getInitials(currentUser?.fullname as string)}
             </AvatarFallback>
-            {/* ToDo:Add imageUrl to currentUser in backend */}
-            <AvatarImage src={""} />
+
+            <AvatarImage src={currentUser?.imageUrl} />
           </Avatar>
           <span className="text-sm">{currentUser?.fullname}</span>
         </div>

@@ -9,13 +9,21 @@ import { Skeleton } from "../../ui/skeleton";
 
 const BlogsList = ({ url }: { url: string }) => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
+  const [fetchedBlogIds, setFetchedBlogIds] = useState<number[]>([]);
   const [skip, setSkip] = useState(0);
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
 
   useEffect(() => {
     async function fetchNewBlogs() {
       const URL = url + `?skip=${skip}`;
-      const fetchedBlogs: blogType[] = await getBlogs(URL);
+      const fetchedBlogs: blogType[] = await getBlogs(URL, {
+        skipBlogIds: fetchedBlogIds,
+      });
+      const blogIdes: number[] = [];
+      fetchedBlogs.map((blog) => {
+        blogIdes.push(blog.id);
+      });
+      setFetchedBlogIds(blogIdes);
       if (fetchedBlogs.length === 0) {
         setHasReachedEnd(true);
       }

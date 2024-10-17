@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
-import { backgroundColors } from "@/constants/backgroundColors";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { X as Remove } from "lucide-react";
@@ -9,20 +8,21 @@ import clsx from "clsx";
 import { UseFormReturn } from "react-hook-form";
 import z from "zod";
 import { createBlogSchema } from "@/libs/validations";
+import { CreateBlogType } from "@/app/types/CreateBlogType";
 
 type formDataType = z.infer<typeof createBlogSchema>;
 
-type AddCategoryProps = {
+type Props = {
   form: UseFormReturn<formDataType>;
-  selectedCategories: string[];
-  setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+  blogData: CreateBlogType;
+  setBlogData: Dispatch<SetStateAction<CreateBlogType>>;
 };
 
 const AddCategory = ({
   form,
-  selectedCategories,
-  setSelectedCategories,
-}: AddCategoryProps) => {
+  blogData: { selectedCategories },
+  setBlogData,
+}: Props) => {
   const [addCategoryInputValue, setAddCategoryInputValue] = useState("");
   const [isAddCategoryInputOnFocus, setIsAddCategoryInputOnFocus] =
     useState(false);
@@ -57,22 +57,31 @@ const AddCategory = ({
     }
     if (e.key === "Enter" && addCategoryInputValue.trim() !== "") {
       if (!selectedCategories.includes(addCategoryInputValue)) {
-        setSelectedCategories([
-          ...selectedCategories,
-          addCategoryInputValue.trim(),
-        ]);
+        setBlogData((prev) => ({
+          ...prev,
+          selectedCategories: [
+            ...selectedCategories,
+            addCategoryInputValue.trim(),
+          ],
+        }));
         setAddCategoryInputValue("");
       }
     } else if (category !== "") {
       if (!selectedCategories.includes(category)) {
-        setSelectedCategories([...selectedCategories, category]);
+        setBlogData((prev) => ({
+          ...prev,
+          selectedCategories: [...selectedCategories, category],
+        }));
       }
       setAddCategoryInputValue("");
     }
   };
 
   const handleRemoveCategory = (category: string) => {
-    setSelectedCategories(selectedCategories.filter((c) => category !== c));
+    setBlogData((prev) => ({
+      ...prev,
+      selectedCategories: selectedCategories.filter((c) => category !== c),
+    }));
   };
 
   const handleFocus = () => {
@@ -84,7 +93,10 @@ const AddCategory = ({
     if (updatedCategory.trim() !== "") {
       const updatedCategories = [...selectedCategories];
       updatedCategories[index] = updatedCategory;
-      setSelectedCategories(updatedCategories);
+      setBlogData((prev) => ({
+        ...prev,
+        selectedCategories: updatedCategories,
+      }));
     }
     setIsEditing(false);
     setEditingCategoryIndex(null);

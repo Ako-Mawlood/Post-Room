@@ -1,14 +1,11 @@
-"use client";
-
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createBlogSchema } from "@/libs/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/app/components/ui/button";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
-import UploadWidget from "../../UploadWidget";
-import useDebounce from "@/app/Hooks/useDebounce";
 import AddCategory from "./AddCategory";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -24,57 +21,44 @@ import {
   FormMessage,
 } from "@/app/components/ui/form";
 import Editor from "./Editor";
+import { CreateBlogType } from "@/app/types/CreateBlogType";
+import useDebounceBlogData from "@/app/Hooks/useDebounceBlogData";
+import UploadWidget from "../../UploadWidget";
 
 type sheetProps = {
   blogId: string;
-  content: string;
-  setContent: Dispatch<SetStateAction<string>>;
-  title: string;
-  setTitle: Dispatch<SetStateAction<string>>;
-  imageUrl: string;
-  setImageUrl: Dispatch<SetStateAction<string>>;
-  selectedCategories: string[];
-  setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+  blogData: CreateBlogType;
+  setBlogData: Dispatch<SetStateAction<CreateBlogType>>;
 };
 
 type formDataType = z.infer<typeof createBlogSchema>;
 
-const Sheet = ({
-  blogId,
-  content,
-  setContent,
-  title,
-  setTitle,
-  imageUrl,
-  setImageUrl,
-  selectedCategories,
-  setSelectedCategories,
-}: sheetProps) => {
+const Sheet = ({ blogId, blogData, setBlogData }: sheetProps) => {
   const router = useRouter();
   const [isSaved, setIsSaved] = useState(false);
-  const debouncedContent = useDebounce(content, 500);
-  const debouncedTitle = useDebounce(title, 500);
+  const debouncedBlogData = useDebounceBlogData(blogData, 500);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<formDataType>({
     defaultValues: {
-      imageUrl: imageUrl,
-      title: title,
-      content: content,
-      categories: selectedCategories,
+      imageUrl: blogData.imageUrl,
+      title: blogData.title,
+      content: blogData.content,
+      categories: blogData.selectedCategories,
     },
     resolver: zodResolver(createBlogSchema),
   });
-  const headers = {
-    headers: { Authorization: getCookie("token") },
-  };
+
   // Publishing the blog
-  function handlePublish(data: formDataType) {
+  function handlePublish() {
     setIsSubmitting(true);
     axiosInstance
       .patch(
         `/api/blog/${blogId}`,
-        { ...data, categories: selectedCategories, imageUrl },
-        headers,
+        {},
+        {
+          headers: { Authorization: getCookie("token") },
+        },
       )
       .then(() => {
         router.push(`/read/${blogId}`);
@@ -86,30 +70,39 @@ const Sheet = ({
         setIsSubmitting(false);
       });
   }
-  // Saving blog while typing
 
-  useEffect(() => {
-    axiosInstance
-      .put(
+  async function handleSaveBlog() {
+    try {
+      await axiosInstance.put(
         `/api/blog/${blogId}`,
         {
-          content,
-          title,
-          categories: selectedCategories,
-          imageUrl,
+          ...blogData,
+          categories: blogData.selectedCategories,
         },
-        headers,
-      )
-      .then(() => {
-        setIsSaved(true);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setIsSaved(false);
-        }, 700);
-      });
-  }, [debouncedContent, debouncedTitle, selectedCategories, imageUrl, blogId]);
 
+        {
+          headers: { Authorization: getCookie("token") },
+        },
+      );
+      setIsSaved(true);
+    } catch (err) {
+    } finally {
+      setTimeout(() => {
+        setIsSaved(false);
+      }, 1000);
+    }
+  }
+  useEffect(() => {
+    handleSaveBlog();
+  }, [blogId, debouncedBlogData]);
+  function updateImageState(url: string) {
+    setBlogData((prev) => ({ ...prev, imageUrl: url }));
+  }
+
+  function handleRemoveCover() {
+    setBlogData((prev) => ({ ...prev, imageUrl: "" }));
+    form.setValue("imageUrl", "");
+  }
   return (
     <>
       {isSaved && (
@@ -120,35 +113,59 @@ const Sheet = ({
       <section className="min-h-[80vh] w-full rounded-lg bg-muted px-3 py-6 lg:px-14">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handlePublish)}>
-            <UploadWidget form={form} setImageUrl={setImageUrl}>
-              <Button className="mb-4 w-fit rounded-md" type="button">
-                {imageUrl ? (
-                  <span>Update cover imgae</span>
+            <div className="mb-4 flex gap-2">
+              <UploadWidget form={form} updateImageUrlState={updateImageState}>
+                {blogData.imageUrl ? (
+                  <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
+                    <button
+                      type="button"
+                      className="flex-1 rounded-md bg-primary px-4 py-2 text-white"
+                    >
+                      Update Cover
+                    </button>
+                  </div>
                 ) : (
-                  <span>Add a cover image</span>
+                  <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
+                    <button
+                      type="button"
+                      className="flex-1 rounded-md bg-primary px-4 py-2 text-white"
+                    >
+                      Upload cover
+                    </button>
+                  </div>
                 )}
-              </Button>
-            </UploadWidget>
+              </UploadWidget>
+              {blogData.imageUrl && (
+                <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
+                  <button
+                    type="button"
+                    onClick={handleRemoveCover}
+                    className="flex-1 rounded-md bg-white px-4 py-2"
+                  >
+                    Remove cover
+                  </button>
+                </div>
+              )}
+            </div>
 
             <div className="relative h-96 w-full">
               <Image
                 src={
-                  imageUrl ||
+                  blogData.imageUrl ||
                   "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
                 }
                 fill={true}
+                priority={true}
                 sizes="(max-width: 639px) 400px, (min-width: 640px) and (max-width: 767px) 700px, (min-width: 768px) and (max-width: 1023px) 1064px, (min-width: 1024px) 768px"
-                alt={"Blog cover Image"}
+                alt="Blog cover Image"
                 className="rounded-md object-cover"
               />
             </div>
-
             <AddCategory
               form={form}
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
+              blogData={blogData}
+              setBlogData={setBlogData}
             />
-
             <FormField
               control={form.control}
               name="title"
@@ -161,7 +178,10 @@ const Sheet = ({
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
-                        setTitle(e.target.value);
+                        setBlogData((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }));
                       }}
                       placeholder="New post title here..."
                       className={clsx(
@@ -186,14 +206,13 @@ const Sheet = ({
                   <FormControl>
                     <Editor
                       form={form}
-                      content={content}
-                      setContent={setContent}
+                      blogData={blogData}
+                      setBlogData={setBlogData}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-
             <Button
               disabled={isSubmitting}
               className="fixed right-3 top-3 z-50 w-20 disabled:opacity-100"

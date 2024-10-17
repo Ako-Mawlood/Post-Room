@@ -31,7 +31,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
   const [isBlogStarred, setIsBlogStarred] = useState<boolean>(false);
   const [starCount, setStarCount] = useState<number>(0);
   const [currentUser, setCurrentUser] = useState<any>(null);
-
+  console.log(blog);
   useEffect(() => {
     async function fetchBlogAndUser(blogId: string) {
       setIsLoading(true);
@@ -45,7 +45,6 @@ const ReadPage = ({ params }: ReadPageProps) => {
         const res = await axiosInstance(`/api/blog/${blogId}`, {
           headers: { Authorization: token },
         });
-
         setBlog(res.data);
         setIsBlogStarred(res.data.starred);
         setStarCount(res.data._count.stars);
@@ -82,7 +81,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
         <nav className="flex h-16 w-full items-center justify-between border-b border-primary px-2 py-1 text-foreground md:px-6">
           <div className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl">
             <Logo size={25} />
-            pm<h1>Post-Room</h1>
+            <h1>Post-Room</h1>
           </div>
           <div className="flex gap-3">
             <Button

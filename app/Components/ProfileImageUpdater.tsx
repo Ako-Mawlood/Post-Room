@@ -19,22 +19,26 @@ const ProfileImageUpdater = ({
     profileOwner?.imageUrl || "",
   );
 
+  function updateImageState(url: string) {
+    setProfileImage(url);
+    form.setValue("imageUrl", url);
+  }
   return (
     <div className="my-5 flex w-full gap-8">
-      <UploadWidget form={form} setImageUrl={setProfileImage}>
+      <UploadWidget form={form} updateImageUrlState={updateImageState}>
         <Avatar className="size-16 cursor-pointer">
           <AvatarFallback>
             <AddImage
               className={clsx("size-6 text-muted", { hidden: profileImage })}
             />
           </AvatarFallback>
-          <AvatarImage src={profileImage as string} />
+          <AvatarImage src={profileImage} />
         </Avatar>
       </UploadWidget>
 
       <div className="flex flex-col justify-between">
         <div className="flex gap-4 text-xs font-semibold">
-          <UploadWidget form={form} setImageUrl={setProfileImage}>
+          <UploadWidget form={form} updateImageUrlState={updateImageState}>
             <button type="button" className="text-green-600">
               {profileImage ? "Update" : "Upload"}
             </button>
@@ -42,7 +46,7 @@ const ProfileImageUpdater = ({
           <button
             type="button"
             onClick={() => {
-              setProfileImage(null);
+              setProfileImage("");
               form.setValue("imageUrl", "none");
             }}
             className={clsx("text-destructive", { hidden: !profileImage })}

@@ -3,20 +3,24 @@ import { Editor as EditorType, EditorContent } from "@tiptap/react";
 import clsx from "clsx";
 import { FormMessage } from "../../ui/form";
 import useEditorInstance from "@/app/Hooks/useEditorInstance";
+import { CreateBlogType } from "@/app/types/CreateBlogType";
+import { Dispatch, SetStateAction } from "react";
 
 type EditorProps = {
-  content: string;
-  setContent: (content: string) => void;
+  blogData: CreateBlogType;
+  setBlogData: Dispatch<SetStateAction<CreateBlogType>>;
   form: any;
 };
 
-const Editor = ({ content, setContent, form }: EditorProps) => {
+const Editor = ({ blogData, setBlogData, form }: EditorProps) => {
   function updateContent(editor: EditorType) {
     const contentMarkdown = editor.storage.markdown.getMarkdown();
-    setContent(contentMarkdown);
+    setBlogData((prev) => ({ ...blogData, content: contentMarkdown }));
     form.setValue("content", contentMarkdown);
   }
   const isEditable = true;
+
+  const content = blogData.content;
   const editor = useEditorInstance({ content, updateContent, isEditable });
 
   if (!editor) {

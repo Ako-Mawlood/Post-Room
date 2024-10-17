@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Sheet from "../../components/pages/create/Sheet";
 import axiosInstance from "@/libs/axiosInstance";
 import Link from "next/link";
@@ -8,7 +8,6 @@ import { CgEricsson as Logo } from "react-icons/cg";
 import { getCookie } from "cookies-next";
 import Preview from "@/app/components/pages/create/Preview";
 import SheetSkeleton from "@/app/components/pages/create/SheetSkeleton";
-import { AxiosError } from "axios";
 import Error from "@/app/components/Error";
 import {
   Tabs,
@@ -17,53 +16,47 @@ import {
   TabsTrigger,
 } from "@/app/components/ui/tabs";
 import { notFound } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { CreateBlogType } from "@/app/types/CreateBlogType";
 
-type categoryType = {
+type CategoryType = {
   category: {
     name: string;
   };
 };
 
 const CreatePage = ({ params }: { params: { blogId: string } }) => {
-  const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [isLoading, setIsloading] = useState(false);
-  const [error, setError] = useState<AxiosError | null>(null);
-  useEffect(() => {
-    async function fetchBlog() {
-      try {
-        setIsloading(true);
-        const res = await axiosInstance(`/api/blog/${params.blogId}`, {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        });
+  const [blogData, setBlogData] = useState<CreateBlogType>({
+    title: "",
+    content: "",
+    imageUrl: "",
+    selectedCategories: [],
+  });
 
-        if (res.status === 200) {
-          setContent(res.data.content || "");
-          setTitle(res.data.title || "");
-          setImageUrl(res.data.imageUrl || "");
-          console.log(res.data.categories);
-          setSelectedCategories(
-            res.data.categories.map(
-              (category: categoryType) => category.category.name,
-            ) || [],
-          );
-        }
-      } catch (err) {
-        if (err instanceof AxiosError) {
-          console.error("Error fetching blog:", err.response?.data);
-          setError(err);
-        }
-      } finally {
-        setIsloading(false);
-      }
-    }
+  const { isLoading, error, isFetched } = useQuery<CreateBlogType>({
+    queryKey: ["createBlog", params.blogId],
+    queryFn: async () => {
+      const res = await axiosInstance(`/api/blog/${params.blogId}`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      const blogDataObj = {
+        title: res.data.title,
+        content: res.data.content,
+        imageUrl: res.data.imageUrl,
+        selectedCategories: res.data.categories.map(
+          (category: CategoryType) => category.category.name,
+        ),
+      };
+      setBlogData(blogDataObj);
+      return blogDataObj;
+    },
+  });
+  if (!isFetched) {
+    return;
+  }
 
-    fetchBlog();
-  }, [params.blogId]);
   if (isLoading) {
     return (
       <>
@@ -79,7 +72,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
   }
 
   if (error) {
-    if (error.response?.status === 404) {
+    if ((error as any).response?.status === 404) {
       notFound();
     } else {
       return <Error />;
@@ -103,22 +96,16 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
           <TabsContent value="write">
             <Sheet
               blogId={params.blogId}
-              content={content}
-              setContent={setContent}
-              title={title}
-              setTitle={setTitle}
-              imageUrl={imageUrl}
-              setImageUrl={setImageUrl}
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
+              blogData={blogData}
+              setBlogData={setBlogData}
             />
           </TabsContent>
           <TabsContent value="preview">
             <Preview
-              content={content}
-              title={title}
-              imageUrl={imageUrl}
-              selectedCategories={selectedCategories}
+              content={blogData.content}
+              title={blogData.title}
+              imageUrl={blogData.imageUrl}
+              selectedCategories={blogData.selectedCategories}
             />
           </TabsContent>
         </Tabs>
