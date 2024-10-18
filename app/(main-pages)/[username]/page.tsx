@@ -58,7 +58,7 @@ const ProfilePage = async ({
                 {profileOwner.fullname}
               </h1>
               <div className="absolute bottom-4 left-6 flex items-center gap-2">
-                <Avatar className="flex items-center justify-center gap-2 font-semibold">
+                <Avatar className="flex size-16 items-center justify-center gap-2 font-semibold">
                   <AvatarImage src={profileOwner.imageUrl} />
                   <AvatarFallback>
                     {getInitials(profileOwner?.fullname)}

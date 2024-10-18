@@ -119,7 +119,7 @@ const Sheet = ({ blogId, blogData, setBlogData }: sheetProps) => {
                   <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
                     <button
                       type="button"
-                      className="flex-1 rounded-md bg-primary px-4 py-2 text-white"
+                      className="flex-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
                     >
                       Update Cover
                     </button>
@@ -128,7 +128,7 @@ const Sheet = ({ blogId, blogData, setBlogData }: sheetProps) => {
                   <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
                     <button
                       type="button"
-                      className="flex-1 rounded-md bg-primary px-4 py-2 text-white"
+                      className="flex-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
                     >
                       Upload cover
                     </button>
@@ -140,7 +140,7 @@ const Sheet = ({ blogId, blogData, setBlogData }: sheetProps) => {
                   <button
                     type="button"
                     onClick={handleRemoveCover}
-                    className="flex-1 rounded-md bg-white px-4 py-2"
+                    className="flex-1 rounded-md bg-primary-foreground px-4 py-2 text-sm font-semibold"
                   >
                     Remove cover
                   </button>

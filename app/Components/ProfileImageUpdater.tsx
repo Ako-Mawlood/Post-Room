@@ -7,14 +7,11 @@ import clsx from "clsx";
 import { useState } from "react";
 import { LuImagePlus as AddImage } from "react-icons/lu";
 
-type profileImageEditerType = {
+type Props = {
   form?: any;
   profileOwner: profileOwnerType;
 };
-const ProfileImageUpdater = ({
-  form,
-  profileOwner,
-}: profileImageEditerType) => {
+const ProfileImageUpdater = ({ form, profileOwner }: Props) => {
   const [profileImage, setProfileImage] = useState(
     profileOwner?.imageUrl || "",
   );
