@@ -120,6 +120,8 @@ transform: translateY(0px);
 }
 
 .button-shine {
+  display: flex;
+  align-items: center;
   position: relative;
   padding: 10px 20px;
   border-radius:200px;

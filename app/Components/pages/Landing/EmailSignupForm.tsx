@@ -9,7 +9,10 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { setCookie } from "cookies-next";
 import { passwordValidation } from "@/libs/validations";
-import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
+import {
+  LuEye as ShowPassword,
+  LuEyeOff as HidePassword,
+} from "react-icons/lu";
 
 const signupSchema = z.object({
   email: z
@@ -22,18 +25,18 @@ type formDataType = z.infer<typeof signupSchema>;
 
 interface EmailSignupFormPropsType {
   setUserEmail: Dispatch<SetStateAction<string>>;
-  isSignupFormVisable: boolean;
-  setIsSignupFormVisable: Dispatch<SetStateAction<boolean>>;
-  setIsVerifyMessageVisable: Dispatch<SetStateAction<boolean>>;
+  isSignupFormVisible: boolean;
+  setIsSignupFormVisible: Dispatch<SetStateAction<boolean>>;
+  setIsVerifyMessageVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 const EmailSignupForm = ({
   setUserEmail,
-  isSignupFormVisable,
-  setIsSignupFormVisable,
-  setIsVerifyMessageVisable,
+  isSignupFormVisible,
+  setIsSignupFormVisible,
+  setIsVerifyMessageVisible,
 }: EmailSignupFormPropsType) => {
-  const [isPasswordVisable, setIsPasswordVisable] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const {
     handleSubmit,
     getValues,
@@ -51,8 +54,8 @@ const EmailSignupForm = ({
       .post("/api/register", data)
       .then((res) => {
         setUserEmail(getValues("email"));
-        setIsSignupFormVisable(false);
-        setIsVerifyMessageVisable(true);
+        setIsSignupFormVisible(false);
+        setIsVerifyMessageVisible(true);
         setCookie("token", res.headers.authorization);
       })
       .catch((err: any) => {
@@ -69,7 +72,7 @@ const EmailSignupForm = ({
 
   useEffect(() => {
     setFocus("email");
-  }, [isSignupFormVisable, setFocus]);
+  }, [isSignupFormVisible, setFocus]);
   return (
     <main className="flex w-full flex-col items-center gap-12 text-gray-900 sm:w-3/5">
       <div className="flex flex-col gap-6 px-4 text-center">
@@ -120,7 +123,7 @@ const EmailSignupForm = ({
             <Input
               {...register("password")}
               disabled={isSubmitting}
-              type={isPasswordVisable ? "text" : "password"}
+              type={isPasswordVisible ? "text" : "password"}
               onChangeCapture={() => setError("root", { message: "" })}
               className={clsx("w-full bg-slate-100", {
                 "border-gray-300 focus:border-gray-400":
@@ -129,15 +132,15 @@ const EmailSignupForm = ({
                   errors.password?.message || errors.root?.message,
               })}
             />
-            {isPasswordVisable ? (
-              <HidePassord
+            {isPasswordVisible ? (
+              <HidePassword
                 className="absolute right-2 top-2 size-5 cursor-pointer"
-                onClick={() => setIsPasswordVisable(false)}
+                onClick={() => setIsPasswordVisible(false)}
               />
             ) : (
               <ShowPassword
                 className="absolute right-2 top-2 size-5 cursor-pointer"
-                onClick={() => setIsPasswordVisable(true)}
+                onClick={() => setIsPasswordVisible(true)}
               />
             )}
           </div>
@@ -162,7 +165,7 @@ const EmailSignupForm = ({
       <button
         className="flex items-center rounded-full px-4 py-2 duration-150 hover:bg-gray-100"
         disabled={isSubmitting}
-        onClick={() => setIsSignupFormVisable(false)}
+        onClick={() => setIsSignupFormVisible(false)}
       >
         <ArrowIcon className="mr-2 size-8" />
         All sign up options

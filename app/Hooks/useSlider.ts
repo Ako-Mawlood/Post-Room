@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 
@@ -9,7 +9,7 @@ const useSlider = (indexRange: number) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setSliderIndex((prevIndex) => (prevIndex + 1) % indexRange);
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [sliderIndex, indexRange]);

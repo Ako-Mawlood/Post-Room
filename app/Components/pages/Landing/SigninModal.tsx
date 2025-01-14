@@ -7,12 +7,12 @@ import EmailSigninForm from "./EmailSigninForm";
 import OAuthBtn from "./OAuthBtn";
 import { oAuthBtns } from "@/constants/OAuthBtns";
 
-interface signinModalPropsType {
+interface Props {
   isNewUser: boolean;
   setIsNewUser: Dispatch<SetStateAction<boolean>>;
 }
 
-const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
+const SigninModal = ({ isNewUser, setIsNewUser }: Props) => {
   const [isSigninFormVisible, setIsSigninFormVisible] = useState(false);
 
   if (isSigninFormVisible) {
@@ -20,10 +20,8 @@ const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-between p-4 md:w-2/3">
-      <h1 className="mb-10 text-4xl font-semibold text-gray-900">
-        Welcome back.
-      </h1>
+    <div className="flex w-[30rem] flex-col items-center justify-between p-4">
+      <h1 className="mb-10 text-4xl font-semibold text-black">Welcome back.</h1>
       <main className="text-md flex w-full flex-col items-center p-4 font-semibold text-gray-700">
         <section className="flex w-full flex-col items-center gap-3">
           {oAuthBtns.map((oAuthBtn) => (

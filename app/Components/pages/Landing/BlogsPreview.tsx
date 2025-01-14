@@ -7,19 +7,16 @@ import { Badge } from "../../ui/badge";
 import { previewBlogs } from "@/constants/previewBlogs";
 import { getInitials } from "@/libs/utils";
 
-interface BlogsPreviewPropsType {
+type Props = {
   sliderIndex: number;
   backgroundColor: string;
-}
+};
 
-const BlogsPreview = ({
-  sliderIndex,
-  backgroundColor,
-}: BlogsPreviewPropsType) => {
+const BlogsPreview = ({ sliderIndex, backgroundColor }: Props) => {
   return (
     <div
       style={{ backgroundColor: `rgb(${backgroundColor})` }}
-      className="relative h-[70vh] w-full border-y-[1px] border-black text-gray-900 md:h-auto md:w-[560px] md:border-none"
+      className="relative h-[70vh] w-full border-t-[1px] border-black text-black md:h-auto md:w-[560px] md:border-none"
     >
       {previewBlogs.map((blog, index) => (
         <div
@@ -66,14 +63,10 @@ const BlogsPreview = ({
           <div className="md:px-5 md:py-7 lg:py-10">
             <div
               style={{ backgroundColor: `rgb(${backgroundColor})` }}
-              className="absolute bottom-2 left-0 z-20 flex w-full flex-col justify-center gap-2 p-4 font-semibold md:relative md:h-2/5 md:p-0"
+              className="absolute bottom-2 left-0 z-20 flex w-full flex-col justify-center gap-2 p-4 md:relative md:h-2/5 md:p-0"
             >
-              <h1 className="text-2xl opacity-75 md:line-clamp-2">
-                {blog.title}
-              </h1>
-              <p className="text-base opacity-70 md:line-clamp-2">
-                {blog.description}
-              </p>
+              <h1 className="text-4xl md:line-clamp-2">{blog.title}</h1>
+
               <div className="flex items-center gap-3">
                 <Avatar>
                   <AvatarImage src={blog.authorImage} />

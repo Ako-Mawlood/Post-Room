@@ -4,34 +4,36 @@ import { Dispatch, SetStateAction, useState } from "react";
 import EmailSignupForm from "./EmailSignupForm";
 import { oAuthBtns } from "@/constants/OAuthBtns";
 import OAuthBtn from "./OAuthBtn";
-interface signupModalPropsType {
+
+type Props = {
   isNewUser: boolean;
   setIsNewUser: Dispatch<SetStateAction<boolean>>;
   handleCloseAuthModal: () => void;
-}
+};
+
 const SignupModal = ({
   isNewUser,
   setIsNewUser,
   handleCloseAuthModal,
-}: signupModalPropsType) => {
+}: Props) => {
   const [userEmail, setUserEmail] = useState("");
-  const [isSignupFormVisable, setIsSignupFormVisable] = useState(false);
-  const [isVerifyMessageVisable, setIsVerifyMessageVisable] = useState(false);
+  const [isSignupFormVisible, setIsSignupFormVisible] = useState(false);
+  const [isVerifyMessageVisible, setIsVerifyMessageVisible] = useState(false);
 
-  if (isSignupFormVisable) {
+  if (isSignupFormVisible) {
     return (
       <EmailSignupForm
         setUserEmail={setUserEmail}
-        isSignupFormVisable={isSignupFormVisable}
-        setIsSignupFormVisable={setIsSignupFormVisable}
-        setIsVerifyMessageVisable={setIsVerifyMessageVisable}
+        isSignupFormVisible={isSignupFormVisible}
+        setIsSignupFormVisible={setIsSignupFormVisible}
+        setIsVerifyMessageVisible={setIsVerifyMessageVisible}
       />
     );
   }
 
-  if (isVerifyMessageVisable) {
+  if (isVerifyMessageVisible) {
     return (
-      <main className="flex w-full flex-col items-center gap-12 text-gray-900 sm:w-1/2">
+      <main className="flex w-96 flex-col items-center gap-12 text-black">
         <div className="flex flex-col gap-6 px-4 text-center">
           <h1 className="text-4xl">Check your inbox.</h1>
           <p>{`Click the link we sent to ${userEmail} to complete your account set-up.`}</p>
@@ -47,8 +49,8 @@ const SignupModal = ({
   }
 
   return (
-    <main className="flex w-full flex-col items-center justify-between p-4 md:w-2/3">
-      <h1 className="mb-10 text-4xl font-semibold text-gray-900">
+    <main className="flex w-[30rem] flex-col items-center justify-between p-4">
+      <h1 className="mb-10 text-4xl font-semibold text-black">
         Join Post-Room.
       </h1>
       <main className="text-md flex w-full flex-col items-center p-4 font-semibold text-gray-700">
@@ -64,7 +66,7 @@ const SignupModal = ({
             />
           ))}
           <button
-            onClick={() => setIsSignupFormVisable(true)}
+            onClick={() => setIsSignupFormVisible(true)}
             className="flex w-full items-center justify-center rounded-full border border-gray-200 bg-transparent px-4 py-2 duration-150 hover:bg-gray-100"
           >
             <MailIcon className="mr-auto size-8" />{" "}
@@ -72,7 +74,7 @@ const SignupModal = ({
           </button>
         </section>
         <span className="text-md mt-6 font-normal text-gray-500">
-          Aready have an account?
+          Already have an account?
           <button
             onClick={() => setIsNewUser(false)}
             className="text-md px-1 text-gray-900 decoration-black underline-offset-4 hover:underline"
