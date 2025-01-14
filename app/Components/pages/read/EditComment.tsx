@@ -15,6 +15,7 @@ import { ImSpinner8 as SpinnerIcon } from "react-icons/im";
 import { toast } from "@/app/Hooks/use-toast";
 
 type Props = {
+  setHasEdited: Dispatch<SetStateAction<boolean>>;
   editCommentIndex: number | null;
   setEditCommentIndex: Dispatch<SetStateAction<number | null>>;
   initialCommentContent: string;
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const EditComment = ({
+  setHasEdited,
   initialCommentContent,
   setEditCommentIndex,
   commentId,
@@ -43,6 +45,7 @@ export const EditComment = ({
       );
       await queryClient.invalidateQueries({ queryKey: ["comments"] });
       setEditCommentIndex(null);
+      setHasEdited(true);
     } catch (err) {
       console.error("Failed to Edit comment", err);
       toast({
@@ -87,7 +90,11 @@ export const EditComment = ({
         <Button
           size="sm"
           type="submit"
-          disabled={isPending || commentContent.length === 0}
+          disabled={
+            isPending ||
+            commentContent.length === 0 ||
+            commentContent === initialCommentContent
+          }
         >
           {isPending ? <SpinnerIcon className="animate-spin" /> : "Save"}
         </Button>

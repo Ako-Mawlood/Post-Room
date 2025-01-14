@@ -57,7 +57,7 @@ const Navbar = async () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             {currentUser ? (
-              <Avatar className="cursor-pointer">
+              <Avatar className="cursor-popinter">
                 <AvatarImage src={currentUser?.imageUrl} />
                 <AvatarFallback>
                   {getInitials(currentUser.fullname)}

@@ -13,10 +13,10 @@ interface signinModalPropsType {
 }
 
 const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
-  const [isSigninFormVisable, setIsSigninFormVisable] = useState(false);
+  const [isSigninFormVisible, setIsSigninFormVisible] = useState(false);
 
-  if (isSigninFormVisable) {
-    return <EmailSigninForm setIsSigninFormVisable={setIsSigninFormVisable} />;
+  if (isSigninFormVisible) {
+    return <EmailSigninForm setIsSigninFormVisible={setIsSigninFormVisible} />;
   }
 
   return (
@@ -37,7 +37,7 @@ const SigninModal = ({ isNewUser, setIsNewUser }: signinModalPropsType) => {
             />
           ))}
           <button
-            onClick={() => setIsSigninFormVisable(true)}
+            onClick={() => setIsSigninFormVisible(true)}
             className="flex w-full items-center justify-center rounded-full border border-gray-200 bg-transparent px-4 py-2 duration-150 hover:bg-gray-100"
           >
             {" "}

@@ -3,4 +3,5 @@ export type CreateBlogType = {
   content: string;
   imageUrl: string;
   selectedCategories: string[];
+  isDraft: boolean;
 };

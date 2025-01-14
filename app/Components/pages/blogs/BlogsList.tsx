@@ -23,7 +23,7 @@ const BlogsList = ({ url }: { url: string }) => {
       fetchedBlogs.map((blog) => {
         blogIdes.push(blog.id);
       });
-      setFetchedBlogIds(blogIdes);
+      setFetchedBlogIds((prev) => [...prev, ...blogIdes]);
       if (fetchedBlogs.length === 0) {
         setHasReachedEnd(true);
       }
@@ -35,6 +35,7 @@ const BlogsList = ({ url }: { url: string }) => {
     }
     fetchNewBlogs();
   }, [skip]);
+  console.log(fetchedBlogIds);
 
   if (blogs.length === 0) {
     return (

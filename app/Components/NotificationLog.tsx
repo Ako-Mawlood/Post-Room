@@ -77,8 +77,8 @@ const NotificationLog = () => {
         </div>
         <Notification size={25} />
       </PopoverTrigger>
-      <PopoverContent className="z-50 mr-28 flex max-h-[40rem] w-[30rem] flex-col overflow-auto rounded-xl p-0 text-lg">
-        <div className="sticky top-0 z-50 flex w-[30rem] items-center gap-2 border-b bg-card p-2 text-xl font-semibold">
+      <PopoverContent className="z-50 mx-2 mt-2 flex max-h-[25rem] w-[25rem] flex-col items-center overflow-auto rounded-xl p-0 text-lg md:mr-28 md:max-h-[40rem] md:w-[30rem]">
+        <div className="sticky top-0 z-50 flex w-full items-center gap-2 border-b bg-card p-2 text-xl font-semibold">
           <Notification size={25} />
           <h1>Notifications</h1>
         </div>
@@ -131,7 +131,7 @@ const NotificationLog = () => {
                   </p>
                 </div>
                 <Image
-                  className="h-[66px] w-[128px] rounded-lg"
+                  className="h-[39px] w-[70px] rounded-lg md:h-[66px] md:w-[128px]"
                   src={
                     notification.blog.imageUrl ||
                     "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"

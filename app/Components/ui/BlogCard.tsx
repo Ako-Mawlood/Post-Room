@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./card";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,7 +37,7 @@ const BlogCard = ({
       key={blogId}
       href={`/read/${blogId}`}
     >
-      <Card className="flex h-full w-full items-start gap-1 rounded-lg border-none duration-150 hover:bg-accent">
+      <Card className="flex h-full w-full items-start gap-1 rounded-xl border-none bg-background p-2 duration-150 hover:bg-accent">
         <div className="flex h-full w-4/6 flex-col justify-between p-2 font-semibold">
           <CardHeader className="flex w-full flex-row gap-1 space-y-0 p-0">
             {categories.map((category: { category: { name: string } }) => (
@@ -53,6 +55,9 @@ const BlogCard = ({
             </CardTitle>
 
             <div className="line-clamp-2 text-sm text-accent-foreground"></div>
+            <div className="flex animate-none justify-normal">
+                          <div className="flex items-start justify-normal text-ellipsis font-PT text-accent-foreground"></div>
+            </div>
           </CardContent>
           <CardFooter className="flex w-full items-center justify-between gap-2 p-0 text-xs">
             <div className="flex items-center">
@@ -74,9 +79,9 @@ const BlogCard = ({
             </div>
           </CardFooter>
         </div>
-        <div className="relative h-full w-2/6 rounded-lg">
+        <div className="relative h-full w-2/6 rounded-xl">
           <Image
-            className="rounded-r-md object-cover"
+            className="rounded-xl object-cover"
             src={
               blogImageUrl ||
               "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"

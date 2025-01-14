@@ -36,6 +36,9 @@ const Comment = ({
 }: Props) => {
   const [isCommentMenuOpen, setIsCommentMenuOpen] = useState(false);
   const [showFullContent, setShowFullContent] = useState(false);
+  const [hasEdited, setHasEdited] = useState(
+    comment.createdAt !== comment.updatedAt,
+  );
   return (
     <div className="relative">
       {(isCommentOwner || isBlogAuthor) && (
@@ -85,13 +88,19 @@ const Comment = ({
             >
               {comment.author.fullname}
             </Link>
-            <p className="text-xs text-muted-foreground">
-              {formatDate(comment.createdAt)}
-            </p>
+            <div className="flex gap-3">
+              <p className="text-xs text-muted-foreground">
+                {formatDate(comment.createdAt)}
+              </p>
+              {hasEdited && (
+                <p className="text-xs text-muted-foreground">(Edited)</p>
+              )}
+            </div>
           </div>
         </div>
         {isEditingComment ? (
           <EditComment
+            setHasEdited={setHasEdited}
             editCommentIndex={editCommentIndex}
             setEditCommentIndex={setEditCommentIndex}
             initialCommentContent={comment.content}

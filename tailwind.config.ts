@@ -18,6 +18,9 @@ const config: Config = {
       },
     },
     extend: {
+      backgroundImage: {
+        dirty: "url('/image.png')",
+      },
       screens: {
         lg: "1130px",
       },
@@ -100,6 +103,8 @@ const config: Config = {
             p: {
               marginBottom: "1.5rem",
               marginTop: "0",
+              fontSize: "1.2rem",
+              fontWeight: "300",
             },
             "ul li::marker": {
               color: "#8025f7",
@@ -130,11 +135,13 @@ const config: Config = {
               marginBottom: "1rem",
               paddingLeft: "1.5rem",
             },
-            "ul li": {
-              marginBottom: "0.25rem",
+            "ul li p": {
+              marginBottom: "0",
+              padding: "0",
             },
-            "ol li": {
-              marginBottom: "0.25rem",
+            "ol li p": {
+              marginBottom: "0",
+              padding: "0",
             },
             strong: {
               fontSize: "17px",

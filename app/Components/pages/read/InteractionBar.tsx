@@ -11,12 +11,16 @@ import { calculateReadingTime } from "@/libs/utils";
 import { Dispatch, SetStateAction } from "react";
 import { blogType } from "@/app/types/blogType";
 import { getCookie } from "cookies-next";
+import { LuPencil as EditIcon } from "react-icons/lu";
+
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
 import CommentSideBar from "./CommentSideBar";
+import DeleteBlogBtn from "./DeleteBlogBtn";
+import { Button } from "../../ui/button";
 
 const InteractionBar = ({
   blog,
@@ -99,6 +103,18 @@ const InteractionBar = ({
           handleOpenAuthModal={handleOpenAuthModal}
         />
         <ShareBtn blogId={blog.blogId} />
+        {isMyBlog && (
+          <>
+            {" "}
+            <Link href={`/create/${blog.blogId}`}>
+              <Button size="sm" variant="outline">
+                <EditIcon size={20} />
+                <span className="hidden md:block">Edit</span>
+              </Button>
+            </Link>
+            <DeleteBlogBtn blogId={blog.blogId} />
+          </>
+        )}
       </div>
     </section>
   );

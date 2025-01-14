@@ -11,7 +11,7 @@ const Error = () => {
         alt="Not-found"
       />
       <div className="flex w-96 flex-col items-center gap-8 text-center">
-        <h1 className="text-3xl md:text-5xl">Error Ocurred</h1>
+        <h1 className="text-3xl md:text-5xl">Error Occurred</h1>
         <p>
           Something went wrong while fetching the data. Please check your
           connection and try again.”

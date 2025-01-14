@@ -31,8 +31,8 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
     content: "",
     imageUrl: "",
     selectedCategories: [],
+    isDraft: false,
   });
-
   const { isLoading, error, isFetched } = useQuery<CreateBlogType>({
     queryKey: ["createBlog", params.blogId],
     queryFn: async () => {
@@ -41,6 +41,8 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
           Authorization: getCookie("token"),
         },
       });
+      console.log(res.data.isDraft);
+
       const blogDataObj = {
         title: res.data.title,
         content: res.data.content,
@@ -48,6 +50,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
         selectedCategories: res.data.categories.map(
           (category: CategoryType) => category.category.name,
         ),
+        isDraft: res.data.draft,
       };
       setBlogData(blogDataObj);
       return blogDataObj;
@@ -98,6 +101,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
               blogId={params.blogId}
               blogData={blogData}
               setBlogData={setBlogData}
+              isDraft={blogData.isDraft}
             />
           </TabsContent>
           <TabsContent value="preview">

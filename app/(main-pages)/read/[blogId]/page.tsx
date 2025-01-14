@@ -169,7 +169,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
               alt="Blog image"
             />
           </div>
-          <section className="mx-auto w-full p-6 md:w-[880px]">
+          <section className="mx-auto w-full bg-white p-6 shadow md:w-[880px]">
             <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
               {blog.title}
             </h1>

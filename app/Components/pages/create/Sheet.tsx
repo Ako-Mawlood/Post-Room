@@ -24,16 +24,18 @@ import Editor from "./Editor";
 import { CreateBlogType } from "@/app/types/CreateBlogType";
 import useDebounceBlogData from "@/app/Hooks/useDebounceBlogData";
 import UploadWidget from "../../UploadWidget";
+import Link from "next/link";
 
 type sheetProps = {
   blogId: string;
   blogData: CreateBlogType;
   setBlogData: Dispatch<SetStateAction<CreateBlogType>>;
+  isDraft: boolean;
 };
 
 type formDataType = z.infer<typeof createBlogSchema>;
 
-const Sheet = ({ blogId, blogData, setBlogData }: sheetProps) => {
+const Sheet = ({ blogId, blogData, setBlogData, isDraft }: sheetProps) => {
   const router = useRouter();
   const [isSaved, setIsSaved] = useState(false);
   const debouncedBlogData = useDebounceBlogData(blogData, 500);
@@ -183,7 +185,7 @@ const Sheet = ({ blogId, blogData, setBlogData }: sheetProps) => {
                           title: e.target.value,
                         }));
                       }}
-                      placeholder="New post title here..."
+                      placeholder="Blog title here..."
                       className={clsx(
                         "w-full resize-none bg-transparent p-0 font-PT text-3xl outline-none",
                         {
@@ -213,17 +215,29 @@ const Sheet = ({ blogId, blogData, setBlogData }: sheetProps) => {
                 </FormItem>
               )}
             />
-            <Button
-              disabled={isSubmitting}
-              className="fixed right-3 top-3 z-50 w-20 disabled:opacity-100"
-              type="submit"
-            >
-              {isSubmitting ? (
-                <Spinner size={20} className="animate-spin" />
-              ) : (
-                <span>Publish</span>
-              )}
-            </Button>
+            {isDraft ? (
+              <Button
+                disabled={isSubmitting}
+                className="fixed right-3 top-3 z-50 w-20 disabled:opacity-100"
+                type="submit"
+                onClick={handlePublish}
+              >
+                {isSubmitting ? (
+                  <Spinner size={20} className="animate-spin" />
+                ) : (
+                  "Publish"
+                )}
+              </Button>
+            ) : (
+              <Link
+                href={`/read/${blogId}`}
+                className="fixed right-3 top-4 z-50"
+              >
+                <Button size="sm" className="font-semibold">
+                  Go Back to blog
+                </Button>
+              </Link>
+            )}
           </form>
         </Form>
       </section>
