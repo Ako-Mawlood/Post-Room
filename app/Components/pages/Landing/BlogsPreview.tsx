@@ -6,6 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "../../ui/avatar";
 import { Badge } from "../../ui/badge";
 import { previewBlogs } from "@/constants/previewBlogs";
 import { getInitials } from "@/libs/utils";
+import { PiStarFourFill as StarIcon } from "react-icons/pi";
 
 type Props = {
   sliderIndex: number;
@@ -16,7 +17,7 @@ const BlogsPreview = ({ sliderIndex, backgroundColor }: Props) => {
   return (
     <div
       style={{ backgroundColor: `rgb(${backgroundColor})` }}
-      className="relative h-[70vh] w-full border-t-[1px] border-black text-black md:h-auto md:w-[560px] md:border-none"
+      className="relative h-[70vh] w-full border-t-[1px] border-black text-black md:h-auto md:w-[530px] md:border-none"
     >
       {previewBlogs.map((blog, index) => (
         <div
@@ -36,17 +37,8 @@ const BlogsPreview = ({ sliderIndex, backgroundColor }: Props) => {
               }}
               className="relative bottom-[-2px] left-0 z-10 h-full w-full"
             >
-              <Badge
-                variant="secondary"
-                className="absolute left-4 z-20 mt-8 flex items-center gap-3 rounded-none text-xs opacity-85 shadow-md md:bottom-[-15px] md:rounded-full"
-              >
-                <Image
-                  className="size-6"
-                  src="/assets/star.svg"
-                  width={20}
-                  height={20}
-                  alt="Star icon"
-                />
+              <Badge className="absolute left-8 z-20 flex items-center justify-center gap-1 rounded-none bg-yellow-500 px-3 py-1.5 text-sm font-normal text-black shadow-md md:bottom-[-15px] md:rounded-full">
+                <StarIcon size={15} />
                 Get this & many more
               </Badge>
             </div>
@@ -61,11 +53,10 @@ const BlogsPreview = ({ sliderIndex, backgroundColor }: Props) => {
             />
           </div>
           <div className="md:px-5 md:py-7 lg:py-10">
-            <div
-              style={{ backgroundColor: `rgb(${backgroundColor})` }}
-              className="absolute bottom-2 left-0 z-20 flex w-full flex-col justify-center gap-2 p-4 md:relative md:h-2/5 md:p-0"
-            >
-              <h1 className="text-4xl md:line-clamp-2">{blog.title}</h1>
+            <div className="absolute bottom-2 left-0 z-20 flex h-56 w-full flex-col justify-around px-6">
+              <h1 className="mt-2 font-PT text-3xl font-light md:line-clamp-2">
+                {blog.title}
+              </h1>
 
               <div className="flex items-center gap-3">
                 <Avatar>
@@ -74,9 +65,7 @@ const BlogsPreview = ({ sliderIndex, backgroundColor }: Props) => {
                 </Avatar>
                 <div className="font-sans text-base">
                   <h2 className="opacity-75">{blog.fullName}</h2>
-                  <p className="line-clamp-2 text-xs opacity-70">
-                    {blog.authorBio}
-                  </p>
+                  <p className="line-clamp-2 text-sm">{blog.authorBio}</p>
                 </div>
               </div>
             </div>
