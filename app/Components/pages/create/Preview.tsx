@@ -23,7 +23,7 @@ const Preview = ({
       <div className="relative h-[50vh] w-full overflow-hidden">
         <Image
           className="my-2 rounded-lg object-cover"
-          /*Todo:Default iamges should come from backend*/
+          /*Todo:Default images should come from backend*/
           src={
             imageUrl ||
             "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"

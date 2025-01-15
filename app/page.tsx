@@ -2,10 +2,9 @@
 
 import SigninModal from "./components/pages/Landing/SigninModal";
 import SignupModal from "./components/pages/Landing/SignupModal";
-import { backgroundColors } from "@/constants/backgroundColors";
 import { useState } from "react";
-import BlogsPreview from "./components/pages/Landing/BlogsPreview";
-import useSlider from "./Hooks/useSlider";
+import BlogsPreview from "./components/pages/Landing/BlogShowcase";
+import FeatureShowcase from "./components/pages/Landing/FeatureShowcase";
 import Link from "next/link";
 import clsx from "clsx";
 import { CgEricsson } from "react-icons/cg";
@@ -14,18 +13,14 @@ import {
   DialogContent,
   DialogOverlay,
 } from "@/app/components/ui/dialog";
-
-// Utility function for dynamic background colors
-const getNavbarBackgroundColor = (sliderIndex: number) =>
-  `rgb(${backgroundColors[sliderIndex]},0.07)`;
-const getMainBackgroundColor = (sliderIndex: number) =>
-  `rgb(${backgroundColors[sliderIndex]},0.3)`;
+import useSlider from "./Hooks/useSlider";
+import { backgroundColors } from "@/constants/backgroundColors";
 
 export default function LandingPage() {
   const [isNewUser, setIsNewUser] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { sliderIndex } = useSlider(6);
-
+  const backgroundColor = backgroundColors[sliderIndex];
   // Handlers for the authentication modal
   function handleOpenAuthModal(isNewUser: boolean) {
     setIsNewUser(isNewUser);
@@ -37,12 +32,9 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="bg-neutral-50 text-black">
+    <div className="relative bg-neutral-50 text-neutral-900">
       {/* Navbar */}
-      <nav
-        style={{ backgroundColor: getNavbarBackgroundColor(sliderIndex) }}
-        className="flex h-[5.5rem] w-full items-center justify-between p-6"
-      >
+      <nav className="sticky left-0 top-0 z-50 flex h-[5.5rem] w-full items-center justify-between border-b border-black bg-neutral-50 bg-opacity-10 p-6 backdrop-blur">
         <Link
           href="/"
           className="flex items-center text-lg font-bold sm:text-2xl"
@@ -53,65 +45,46 @@ export default function LandingPage() {
 
         <div className="flex gap-4 text-sm font-light">
           <button
-            onClick={() => handleOpenAuthModal(true)}
+            onClick={() => handleOpenAuthModal(false)}
             className="rounded-full border border-black px-4 py-2"
           >
             Sign in
           </button>
           <button
-            onClick={() => handleOpenAuthModal(false)}
-            className="rounded-full bg-black px-4 py-2 text-white"
+            onClick={() => handleOpenAuthModal(true)}
+            className="black-btn"
           >
             Sign up
           </button>
         </div>
       </nav>
 
-      {/* Main Section */}
-      <main className="relative flex w-full flex-col justify-between border-y-[1px] border-black bg-gray-100 md:h-[70vh] md:flex-row">
-        <section
-          style={{ backgroundColor: getMainBackgroundColor(sliderIndex) }}
-          className="flex h-full flex-grow flex-col items-start justify-between gap-6 p-10 py-10 md:border-r-[1px] md:border-black"
+      <BlogsPreview handleOpenAuthModal={handleOpenAuthModal} />
+      <section className="flex w-full items-center justify-between border-b border-black px-8 py-20">
+        <p className="max-w-[50rem] text-3xl">
+          We&apos;ve carved out our expertise in branding, webdesign,
+          development, and crafting distinctive digital products. Our aim is
+          always to empower brands that want to push boundaries, build influence
+          and make their mark in the digital landscape. View more projects
+        </p>
+        <button
+          onClick={() => handleOpenAuthModal(true)}
+          className="black-btn hidden items-center gap-3 rounded-full px-6 py-3 text-lg md:flex"
         >
-          <h1 className="mt-4 font-PT text-6xl text-neutral-900 md:text-[5.5rem]">
-            Your story matters
-          </h1>
-          <div className="flex max-w-[35rem] flex-col gap-10">
-            <p className="text-xl font-light text-neutral-700 md:text-2xl">
-              Share your unique stories with the world. Become a part of our
-              community today and inspire readers everywhere with your powerful
-              words.
-            </p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleOpenAuthModal(false)}
-                className="rounded-full bg-black px-4 py-2 text-white"
-              >
-                Start reading
-              </button>
-              <button
-                onClick={() => handleOpenAuthModal(true)}
-                className="rounded-full border border-black px-4 py-2"
-              >
-                Create blog
-              </button>
-            </div>
-          </div>
-        </section>
-        <BlogsPreview
-          sliderIndex={sliderIndex}
-          backgroundColor={backgroundColors[sliderIndex]}
-        />
-      </main>
-
-      {/* Footer */}
-      <footer
-        style={{ backgroundColor: getNavbarBackgroundColor(sliderIndex) }}
-        className="flex h-[8vh] w-full items-center justify-center gap-6 overflow-hidden border-b-[1px] border-black bg-gray-100 px-4 font-semibold text-gray-900 md:border-none"
+          Create my account
+          <span className="size-3 rounded-full"></span>
+        </button>
+      </section>
+      <FeatureShowcase />
+      <section
+        style={{ backgroundColor: `rgb(${backgroundColor},0.3)` }}
+        className="flex h-80 w-full flex-col items-center justify-center gap-14 border-y border-black bg-yellow-400 p-8 text-center md:mt-10"
       >
-        <Link href="/terms">Terms</Link>
-        <Link href="/privacy-policy">Privacy</Link>
-      </footer>
+        <h1 className="font-PT text-6xl">Unlock greatest blogs ever made </h1>
+        <button onClick={() => handleOpenAuthModal(true)} className="black-btn">
+          Get Started
+        </button>
+      </section>
 
       {/* Auth modal */}
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
