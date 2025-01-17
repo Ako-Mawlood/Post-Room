@@ -1,4 +1,12 @@
-import { Edit3, Globe, Users, Shield, Eye, MessageCircle } from "lucide-react";
+import {
+  Edit3,
+  Globe,
+  Users,
+  Shield,
+  Eye,
+  MessageCircle,
+  BookOpen,
+} from "lucide-react";
 
 export type Feature = {
   title: string;
@@ -10,37 +18,32 @@ export const featureConfig: Feature[] = [
   {
     title: "Effortless Blogging",
     description:
-      "Write and publish your blogs with ease using our intuitive editor. From bold headlines to elegant formatting, our tools are designed to help you craft engaging stories that captivate your audience.",
+      "Leverage our advanced editor with ease so that you can write and publish your blogs without any issues. Our tools assist users in formatting headlines and writing captivating essays that appeal to the audience.",
     icon: Edit3, // Updated to use a different pen icon
   },
+
   {
-    title: "Global Reach",
+    title: "Endless Reads",
     description:
-      "Take your stories to readers around the globe. Our platform ensures your content is accessible to a diverse audience, breaking geographical boundaries to give your words a global stage.",
-    icon: Globe,
+      "Enjoy a diverse library of blogs. Find content that inspires, informs, and entertains you.",
+    icon: BookOpen,
   },
   {
-    title: "Engaged Community",
+    title: "Active Community",
     description:
-      "Build connections that matter. Interact with readers and fellow writers through comments, likes, and shares, creating a thriving community that values meaningful conversations and mutual support.",
+      "Establish relationships that are significant. Engage with your audience as well as other authors by commenting, liking and sharing so as to foster a community that appreciates deeper and supportive talks",
     icon: Users,
   },
   {
     title: "Secure Platform",
     description:
-      "We prioritize your security. From advanced encryption to regular updates, your content and data are protected at all times, giving you peace of mind to focus on creating.",
+      "We ensure that your content and data are shielded round the clock through strong amendments, frequent upgrades, and other tweaks and therefore are always able to focus on their creativity at ease",
     icon: Shield,
   },
   {
-    title: "Reader Insights",
+    title: "Global Reach",
     description:
-      "Understand your readers like never before. Access detailed analytics about your blogs' performance, including views, engagement, and demographics, so you can tailor your content to what your audience loves.",
-    icon: Eye,
-  },
-  {
-    title: "Interactive Discussions",
-    description:
-      "Turn your blogs into vibrant conversations. Our built-in commenting system encourages readers to share their thoughts, fostering deeper engagement and meaningful discussions around your content.",
-    icon: MessageCircle,
+      "Bring your narratives to the audience around the world. Our platform makes your content available to a greater scope of readers and takes it across the borders so that it can speak to the world,",
+    icon: Globe,
   },
 ];

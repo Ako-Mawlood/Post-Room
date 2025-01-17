@@ -4,7 +4,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Avatar, AvatarImage, AvatarFallback } from "../../ui/avatar";
 import { Badge } from "../../ui/badge";
-import { previewBlogs } from "@/constants/previewBlogs";
+import { blogsConfig } from "@/constants/blogsConfig";
 import { getInitials } from "@/libs/utils";
 import { PiStarFourFill as StarIcon } from "react-icons/pi";
 import { backgroundColors } from "@/constants/backgroundColors";
@@ -18,7 +18,7 @@ const BlogShowcase = ({ handleOpenAuthModal }: Props) => {
   const { sliderIndex } = useSlider(6);
   const backgroundColor = backgroundColors[sliderIndex];
   return (
-    <main className="relative flex w-full flex-col justify-between border-y-[1px] border-black bg-gray-100 md:h-[70vh] md:flex-row">
+    <main className="relative flex w-full flex-col justify-between border-b border-black bg-gray-100 md:h-[70vh] md:flex-row">
       <section
         style={{ backgroundColor: `rgb(${backgroundColors[sliderIndex]},0.3)` }}
         className="flex h-full flex-grow flex-col items-start justify-between gap-6 p-10 py-10 md:border-r-[1px] md:border-black"
@@ -53,7 +53,7 @@ const BlogShowcase = ({ handleOpenAuthModal }: Props) => {
         style={{ backgroundColor: `rgb(${backgroundColor})` }}
         className="relative h-[70vh] w-full border-t-[1px] border-black text-black md:h-auto md:w-[530px] md:border-none"
       >
-        {previewBlogs.map((blog, index) => (
+        {blogsConfig.map((blog, index) => (
           <div
             key={blog.id}
             className={clsx(
@@ -87,7 +87,7 @@ const BlogShowcase = ({ handleOpenAuthModal }: Props) => {
               />
             </div>
             <div className="md:px-5 md:py-7 lg:py-10">
-              <div className="absolute bottom-2 left-0 z-20 flex h-56 w-full flex-col justify-around px-6">
+              <div className="absolute bottom-2 left-0 z-20 flex h-56 w-full flex-col justify-around px-10 md:px-6">
                 <h1 className="mt-2 font-PT text-3xl font-light md:line-clamp-2">
                   {blog.title}
                 </h1>

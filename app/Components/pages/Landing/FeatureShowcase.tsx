@@ -29,9 +29,9 @@ const FeatureShowcase = () => {
     });
   }, []);
   return (
-    <section className="flex h-fit flex-col justify-between gap-8 p-8 text-black md:flex-row">
+    <section className="flex h-fit flex-col justify-between gap-8 p-8 md:flex-row">
       <div className="w-full md:w-fit">
-        <h1 className="sticky left-4 top-28 my-auto font-PT text-7xl leading-none md:text-8xl lg:text-[12rem]">
+        <h1 className="sticky left-4 top-[15vh] my-auto font-PT text-7xl leading-none md:text-8xl lg:text-[10rem]">
           A Hub
           <br />
           for your
@@ -45,7 +45,7 @@ const FeatureShowcase = () => {
       >
         {featureConfig.map((feature, index) => (
           <div key={index} className="relative flex flex-col gap-2">
-            <h1 className="font-PT text-2xl md:text-4xl lg:text-5xl">
+            <h1 className="font-PT text-3xl md:text-4xl lg:text-5xl">
               {feature.title}
             </h1>
             <p className="md:text-xl">{feature.description}</p>

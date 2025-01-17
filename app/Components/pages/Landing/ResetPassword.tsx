@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
@@ -72,11 +73,11 @@ export function ResetPassword() {
       <div className="absolute right-10 top-10 z-50"></div>
       <Dialog open={isResetModalOpen} onOpenChange={setIsResetModalOpen}>
         <DialogTrigger asChild>
-          <Button variant="link" className="m-0 p-0 text-base text-gray-900">
+          <Button variant="link" className="m-0 p-0 text-base text-neutral-900">
             Reset it
           </Button>
         </DialogTrigger>
-        <DialogContent className="flex w-full flex-col justify-between bg-gray-100 text-gray-900 sm:max-w-[425px]">
+        <DialogContent className="flex w-full flex-col justify-between bg-neutral-50 text-neutral-900 sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-xl">Reset Your Password</DialogTitle>
             <DialogDescription className="mt-4">
