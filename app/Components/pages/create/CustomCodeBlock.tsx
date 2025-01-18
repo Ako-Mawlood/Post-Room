@@ -1,11 +1,11 @@
 import { CodeBlock } from "@tiptap/extension-code-block";
 import { Copy, Check } from "lucide-react";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot, Root } from "react-dom/client";
 
 export const CustomCodeBlock = CodeBlock.extend({
   addNodeView() {
-    return ({ node }) => {
+    return ({ node }: { node: { textContent: string } }) => {
       const dom = document.createElement("div");
       dom.classList.add("relative");
 
@@ -15,44 +15,49 @@ export const CustomCodeBlock = CodeBlock.extend({
 
       const button = document.createElement("button");
       button.classList.add("copy-button");
-      button.style.position = "absolute";
-      button.style.top = "0";
-      button.style.right = "0";
-      button.style.padding = "0.5rem";
-      button.style.backgroundColor = "#0F1116";
-      button.style.color = "#fff";
-      button.style.border = "none";
-      button.style.cursor = "pointer";
-      button.style.display = "flex";
-      button.style.alignItems = "center";
-      button.style.justifyContent = "center";
-      button.style.width = "2.5rem";
-      button.style.height = "2.5rem";
+      Object.assign(button.style, {
+        position: "absolute",
+        top: "0",
+        right: "0",
+        padding: "0.5rem",
+        backgroundColor: "#0F1116",
+        color: "#fff",
+        border: "none",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "2.5rem",
+        height: "2.5rem",
+      } as React.CSSProperties);
 
       const iconWrapper = document.createElement("div");
       iconWrapper.classList.add("icon-wrapper");
 
-      // Render the Copy icon using React
-      ReactDOM.render(<Copy size={16} color="white" />, iconWrapper);
+      // Use createRoot for rendering the Copy icon
+      const copyRoot: Root = createRoot(iconWrapper);
+      copyRoot.render(<Copy size={16} color="white" />);
       button.appendChild(iconWrapper);
 
       // Create tooltip
       const tooltip = document.createElement("span");
       tooltip.classList.add("tooltip");
       tooltip.textContent = "Copy";
-      tooltip.style.position = "absolute";
-      tooltip.style.bottom = "100%";
-      tooltip.style.left = "50%";
-      tooltip.style.transform = "translateX(-50%)";
-      tooltip.style.marginBottom = "0.5rem";
-      tooltip.style.padding = "0.25rem 0.5rem";
-      tooltip.style.backgroundColor = "#000";
-      tooltip.style.color = "#fff";
-      tooltip.style.borderRadius = "0.25rem";
-      tooltip.style.fontSize = "0.75rem";
-      tooltip.style.visibility = "hidden";
-      tooltip.style.opacity = "0";
-      tooltip.style.transition = "opacity 0.1s, visibility 0.1s";
+      Object.assign(tooltip.style, {
+        position: "absolute",
+        bottom: "100%",
+        left: "50%",
+        transform: "translateX(-50%)",
+        marginBottom: "0.5rem",
+        padding: "0.25rem 0.5rem",
+        backgroundColor: "#000",
+        color: "#fff",
+        borderRadius: "0.25rem",
+        fontSize: "0.75rem",
+        visibility: "hidden",
+        opacity: "0",
+        transition: "opacity 0.1s, visibility 0.1s",
+      } as React.CSSProperties);
 
       button.addEventListener("mouseenter", () => {
         tooltip.style.visibility = "visible";
@@ -68,13 +73,12 @@ export const CustomCodeBlock = CodeBlock.extend({
 
       button.addEventListener("click", () => {
         navigator.clipboard.writeText(node.textContent).then(() => {
-          // Replace the icon with the Check icon
-          ReactDOM.render(<Check size={16} color="white" />, iconWrapper);
-          // Change tooltip text to "Copied"
+          // Replace the icon with the Check icon using createRoot
+          copyRoot.render(<Check size={16} color="white" />);
           tooltip.textContent = "Copied";
           setTimeout(() => {
-            // Revert back to the Copy icon and tooltip text
-            ReactDOM.render(<Copy size={16} color="white" />, iconWrapper);
+            // Revert back to the Copy icon and reset tooltip text
+            copyRoot.render(<Copy size={16} color="white" />);
             tooltip.textContent = "Copy";
           }, 2000);
         });

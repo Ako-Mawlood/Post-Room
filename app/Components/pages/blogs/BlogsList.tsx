@@ -35,7 +35,6 @@ const BlogsList = ({ url }: { url: string }) => {
     }
     fetchNewBlogs();
   }, [skip]);
-  console.log(fetchedBlogIds);
 
   if (blogs.length === 0) {
     return (
