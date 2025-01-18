@@ -72,7 +72,7 @@ export const EditComment = ({
   return (
     <form onSubmit={handleEditComment}>
       <textarea
-        className="h-auto w-full resize-none border-none text-sm outline-none"
+        className="h-[20vh] w-full resize-none border-none bg-transparent py-4 text-sm outline-none md:h-[15vh]"
         value={commentContent}
         onChange={(e) => setCommentContent(e.target.value)}
         placeholder="What are your thoughts"

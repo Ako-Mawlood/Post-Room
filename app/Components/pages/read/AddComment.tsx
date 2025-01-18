@@ -4,7 +4,7 @@ import { getCookie } from "cookies-next";
 import axiosInstance from "@/libs/axiosInstance";
 import { useState, FormEvent } from "react";
 import { Button } from "../../ui/button";
-import { getInitials } from "@/libs/utils";
+import { getInitials, sanitizeContent } from "@/libs/utils";
 import {
   Avatar,
   AvatarFallback,
@@ -55,7 +55,6 @@ const AddComment = ({ currentUser, blogId }: Props) => {
   if (!token) {
     return null;
   }
-  console.log(currentUser);
 
   return (
     <>
@@ -75,7 +74,7 @@ const AddComment = ({ currentUser, blogId }: Props) => {
         </div>
         <textarea
           value={commentContent}
-          onChange={(e) => setCommentContent(e.target.value)}
+          onChange={(e) => setCommentContent(sanitizeContent(e.target.value))}
           placeholder="What are your thoughts?"
           className="resize-none bg-background p-2 text-sm outline-none"
           rows={4}

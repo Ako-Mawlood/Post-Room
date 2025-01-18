@@ -7,7 +7,10 @@ import { EditComment } from "./EditComment";
 import clsx from "clsx";
 import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
-import { CiMenuKebab as MenuIcon, CiEdit as EditIcon } from "react-icons/ci";
+import {
+  EllipsisVertical as MenuIcon,
+  PencilLine as EditIcon,
+} from "lucide-react";
 
 import {
   Popover,
@@ -15,6 +18,7 @@ import {
   PopoverTrigger,
 } from "@radix-ui/react-popover";
 import DeleteComment from "./DeleteComment";
+import { Button } from "../../ui/button";
 
 type Props = {
   isCommentOwner: boolean;
@@ -43,21 +47,23 @@ const Comment = ({
     <div className="relative">
       {(isCommentOwner || isBlogAuthor) && (
         <Popover open={isCommentMenuOpen} onOpenChange={setIsCommentMenuOpen}>
-          <PopoverTrigger className="absolute right-4 top-4">
+          <PopoverTrigger className="absolute right-0 top-4">
             <MenuIcon size={20} />
           </PopoverTrigger>
           <PopoverContent
-            className="flex flex-col gap-2 border bg-card p-3 text-sm shadow-sm"
+            className="flex flex-col gap-2 border bg-card p-1 text-sm shadow-sm"
             align="end"
           >
             {isCommentOwner && (
-              <button
-                className="flex items-center gap-1"
+              <Button
+                variant="ghost"
+                className="flex justify-start rounded-sm text-sm font-normal"
+                size="sm"
                 onClick={() => setEditCommentIndex(index)}
               >
-                <EditIcon className="mr-2 size-6" />
-                <span>Edit</span>
-              </button>
+                <EditIcon size={20} />
+                Edit
+              </Button>
             )}
 
             <DeleteComment
@@ -108,13 +114,13 @@ const Comment = ({
           />
         ) : (
           <>
-            {showFullContent || comment.content.length <= 200 ? (
+            {showFullContent || comment.content.length <= 100 ? (
               <p className="mt-2 text-sm">{comment.content}</p>
             ) : (
-              <p className="mt-2 text-sm">{comment.content.slice(0, 200)}...</p>
+              <p className="mt-2 text-sm">{comment.content.slice(0, 100)}...</p>
             )}
 
-            {comment.content.length > 200 && (
+            {comment.content.length > 100 && (
               <button
                 className="w-fit text-sm text-blue-500"
                 onClick={() => setShowFullContent((prev) => !prev)}

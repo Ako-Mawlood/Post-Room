@@ -51,4 +51,8 @@ export function calculateReadingTime(content: string) {
   return `${minutes < 1 ? 1 : minutes} min read`;
 }
 
-
+export const sanitizeContent = (content: string) => {
+  const MAX_NEW_LINES = 2;
+  const newlineLimitRegex = new RegExp(`(\\n){${MAX_NEW_LINES + 1},}`, "g");
+  return content.replace(newlineLimitRegex, "\n".repeat(MAX_NEW_LINES));
+};

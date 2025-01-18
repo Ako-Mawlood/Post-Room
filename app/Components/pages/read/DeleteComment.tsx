@@ -1,4 +1,5 @@
-import { CiTrash as DeleteIcon } from "react-icons/ci";
+import { Trash as DeleteIcon } from "lucide-react";
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -55,10 +56,14 @@ const DeleteComment = ({ commentId, setIsCommentMenuOpen }: Props) => {
   return (
     <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
       <AlertDialogTrigger asChild>
-        <button className="flex items-center gap-1">
-          <DeleteIcon className="mr-2 size-6" />
-          <span>Delete</span>
-        </button>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="flex justify-start rounded-sm font-normal text-destructive hover:text-destructive"
+        >
+          <DeleteIcon size={20} />
+          Delete
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-80">
         <AlertDialogHeader>
