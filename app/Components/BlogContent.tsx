@@ -13,7 +13,7 @@ const BlogContent = ({ content }: { content: string }) => {
       <div className="prose relative dark:prose-dark">
         <EditorContent
           placeholder="Content here..."
-          className="disabled: m-0 h-min w-full p-0"
+          className="disabled: m-0 h-min w-full p-0 font-sans"
           editor={editor}
         />
       </div>

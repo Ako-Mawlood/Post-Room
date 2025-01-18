@@ -1,4 +1,3 @@
-import Search from "./pages/search/Search";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { CgEricsson as Logo } from "react-icons/cg";
@@ -39,7 +38,6 @@ const Navbar = async () => {
           <Logo size={25} />
           <h1>Post-Room</h1>
         </Link>
-        <Search />
       </div>
 
       <div className="flex items-center gap-4">
@@ -57,7 +55,7 @@ const Navbar = async () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             {currentUser ? (
-              <Avatar className="cursor-popinter">
+              <Avatar className="cursor-pointer">
                 <AvatarImage src={currentUser?.imageUrl} />
                 <AvatarFallback>
                   {getInitials(currentUser.fullname)}

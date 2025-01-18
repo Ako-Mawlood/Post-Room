@@ -1,50 +1,55 @@
-import { Skeleton } from "../../ui/skeleton";
-
+import { Skeleton } from "@/app/components/ui/skeleton";
 
 const ReadBlogSkeleton = () => {
   return (
-    <section className="w-full px-6">
-      <div className="flex flex-col gap-2">
-        <Skeleton className="mt-10 w-96 py-5 md:w-1/2" />
-        <ul className="flex gap-3">
-          <li>
-            <Skeleton className="h-4 w-14" />
-          </li>{" "}
-          <li>
-            <Skeleton className="h-4 w-16" />
-          </li>{" "}
-          <li>
-            <Skeleton className="h-4 w-20" />
-          </li>{" "}
-          <li>
-            <Skeleton className="h-4 w-16" />
-          </li>
-        </ul>
+    <section className="mx-auto mt-10 w-full px-6 md:mt-16 md:w-[45rem]">
+      {/* Title Skeleton */}
+      <div className="flex w-full flex-col gap-2">
+        <Skeleton className="h-4 w-full md:h-9 md:w-5/6" />
+        <Skeleton className="h-4 w-5/6 md:h-9" />
+        <Skeleton className="h-4 w-2/6 md:h-9" />
       </div>
 
-      <section className="flex items-center justify-between py-4">
-        <div className="flex items-center gap-2">
-          <Skeleton className="size-14 rounded-full" />
-
+      {/* Author and Interaction Bar Skeleton */}
+      <section className="flex w-full flex-col items-start justify-between gap-4 py-6 sm:flex-row">
+        {/* Author Info */}
+        <div className="flex w-full items-center gap-4 sm:w-fit">
+          <Skeleton className="h-12 w-12 rounded-full" />
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-4 w-40" />
-            </div>
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <Skeleton className="h-3 w-16" />
-              <Skeleton className="h-3 w-16" />
+            <Skeleton className="h-4 w-32 sm:w-40" />
+            <div className="flex gap-2 text-xs text-muted-foreground">
+              {[...Array(2)].map((_, index) => (
+                <Skeleton key={index} className="h-3 w-16" />
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-10 w-20 rounded-full" />
-          <Skeleton className="h-10 w-20 rounded-full" />
-          <Skeleton className="h-10 w-32 rounded-full" />
-          <Skeleton className="h-10 w-24 rounded-full" />
+        {/* Interaction Bar */}
+        <div className="flex w-full items-center gap-3 border-y py-4 sm:w-fit sm:border-none">
+          <>
+            <Skeleton className="h-8 w-10 rounded-full" />
+            <Skeleton className="h-8 w-10 rounded-full" />
+            <Skeleton className="h-8 w-10 rounded-full sm:w-16" />
+            <Skeleton className="h-8 w-10 rounded-full sm:w-14" />
+          </>
         </div>
       </section>
-      <Skeleton className="relative h-[90vh] w-full overflow-hidden"></Skeleton>
+
+      {/* Blog Image Skeleton */}
+      <Skeleton className="h-[40vh] w-full sm:h-[50vh]" />
+
+      {/* Blog Content Skeleton */}
+      <section className="flex flex-col gap-3 py-10">
+        {[...Array(10)].map((_, index) => (
+          <Skeleton
+            key={index}
+            className={`h-4 w-${index % 2 === 0 ? "full" : "3/4"} sm:w-${
+              index % 2 === 0 ? "[90%]" : "[75%]"
+            }`}
+          />
+        ))}
+      </section>
     </section>
   );
 };

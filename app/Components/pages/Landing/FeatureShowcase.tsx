@@ -44,7 +44,7 @@ const FeatureShowcase = () => {
         className="flex max-w-[45rem] flex-grow flex-col gap-10 overflow-hidden md:mt-[30rem]"
       >
         {featureConfig.map((feature, index) => (
-          <div key={index} className="relative flex flex-col gap-2">
+          <div key={index} className="relative mx-4 mt-4 flex flex-col gap-2">
             <h1 className="font-PT text-3xl md:text-4xl lg:text-5xl">
               {feature.title}
             </h1>

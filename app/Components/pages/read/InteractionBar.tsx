@@ -12,6 +12,13 @@ import { Dispatch, SetStateAction } from "react";
 import { blogType } from "@/app/types/blogType";
 import { getCookie } from "cookies-next";
 import { LuPencil as EditIcon } from "react-icons/lu";
+import { CircleEllipsis as MenuIcon } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu";
 
 import {
   Avatar,
@@ -30,18 +37,22 @@ const InteractionBar = ({
   setIsBlogStarred,
   starCount,
   setStarCount,
+  isFollowed,
+  setIsFollowed,
 }: {
   blog: blogType;
   isMyBlog: boolean;
   handleOpenAuthModal: (isNewUser: boolean) => void;
   isBlogStarred: boolean;
   setIsBlogStarred: Dispatch<SetStateAction<boolean>>;
+  isFollowed:boolean;
+  setIsFollowed:Dispatch<SetStateAction<boolean>>;
   starCount: number;
   setStarCount: Dispatch<SetStateAction<number>>;
 }) => {
   const token = getCookie("token");
   return (
-    <section className="flex items-center justify-between py-4">
+    <section className="flex flex-col gap-4 py-6 sm:flex-row sm:justify-between md:items-center">
       <div className="flex items-center gap-2">
         <Link
           onClick={() => !token && handleOpenAuthModal(true)}
@@ -66,7 +77,8 @@ const InteractionBar = ({
               <>
                 <Dot size={20} className="text-blue-500" />
                 <FollowBtn
-                  isFollowed={blog.following}
+                  isFollowed={isFollowed}
+                  setIsFollowed={setIsFollowed}
                   username={blog.author.username}
                   isMyBlog={isMyBlog}
                   handleOpenAuthModal={handleOpenAuthModal}
@@ -81,7 +93,7 @@ const InteractionBar = ({
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center border-y py-4 text-accent-foreground sm:border-none">
         <StarBtn
           blogId={blog.blogId}
           isBlogStarred={isBlogStarred}
@@ -104,16 +116,25 @@ const InteractionBar = ({
         />
         <ShareBtn blogId={blog.blogId} />
         {isMyBlog && (
-          <>
-            {" "}
-            <Link href={`/create/${blog.blogId}`}>
-              <Button size="sm" variant="outline">
-                <EditIcon size={20} />
-                <span className="hidden md:block">Edit</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="ml-auto md:ml-0">
+                <MenuIcon size={20} />
+                <span className="hidden md:block">More</span>
               </Button>
-            </Link>
-            <DeleteBlogBtn blogId={blog.blogId} />
-          </>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link className="flex gap-4" href={`/create/${blog.blogId}`}>
+                  <EditIcon size={20} />
+                  <span>Edit</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <DeleteBlogBtn blogId={blog.blogId} />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
       </div>
     </section>

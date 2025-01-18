@@ -73,7 +73,8 @@ const StarBtn = ({
       <Button
         onClick={() => handleOpenAuthModal(true)}
         size="sm"
-        variant="outline"
+        variant="ghost"
+        className="cursor-pointer"
       >
         {isBlogStarred ? <StaredIcon size={20} /> : <StarIcon size={20} />}
         <span>{starCount}</span>
@@ -85,9 +86,9 @@ const StarBtn = ({
     <Button
       onClick={isBlogStarred ? handleUnStar : handleStar}
       size="sm"
-      variant="outline"
+      variant="ghost"
       disabled={isLoading}
-      className="disabled:cursor-pointer disabled:opacity-100"
+      className="cursor-pointer disabled:opacity-100"
     >
       {isBlogStarred ? <StaredIcon size={20} /> : <StarIcon size={20} />}
       <span>{starCount}</span>

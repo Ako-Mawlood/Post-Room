@@ -84,7 +84,7 @@ export default function LandingPage() {
 
         {/* Links */}
         <div className="text flex gap-2 text-xs underline sm:self-end">
-          <Link href="/privacy-policy">Privacy</Link>
+          <Link href="/policy">Policy</Link>
           <Link href="/terms">Terms</Link>
           <button onClick={() => handleOpenAuthModal(false)}>Signin</button>
           <button onClick={() => handleOpenAuthModal(true)}>Signup</button>

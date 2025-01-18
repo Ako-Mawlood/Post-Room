@@ -32,11 +32,7 @@ const BlogCard = ({
   stars,
 }: BlogCardPropsType) => {
   return (
-    <Link
-      className="h-52 w-full md:w-4/5 lg:w-[47%]"
-      key={blogId}
-      href={`/read/${blogId}`}
-    >
+    <Link className="h-52 w-full"  href={`/read/${blogId}`}>
       <Card className="flex h-full w-full items-start gap-1 rounded-xl border-none bg-background p-2 duration-150 hover:bg-accent">
         <div className="flex h-full w-4/6 flex-col justify-between p-2 font-semibold">
           <CardHeader className="flex w-full flex-row gap-1 space-y-0 p-0">
@@ -56,7 +52,7 @@ const BlogCard = ({
 
             <div className="line-clamp-2 text-sm text-accent-foreground"></div>
             <div className="flex animate-none justify-normal">
-                          <div className="flex items-start justify-normal text-ellipsis font-PT text-accent-foreground"></div>
+              <div className="flex items-start justify-normal text-ellipsis font-PT text-accent-foreground"></div>
             </div>
           </CardContent>
           <CardFooter className="flex w-full items-center justify-between gap-2 p-0 text-xs">

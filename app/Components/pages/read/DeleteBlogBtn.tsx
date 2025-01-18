@@ -52,14 +52,10 @@ const DeleteBlogBtn = ({ blogId }: Props) => {
   return (
     <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <AlertDialogTrigger asChild>
-        <Button
-          className="border border-red-400 bg-transparent text-red-500 hover:text-neutral-50"
-          size="sm"
-          variant="destructive"
-        >
+        <button className="flex gap-2 text-destructive">
           <DeleteIcon size={20} />
-          <span className="hidden md:block">Delete</span>
-        </Button>
+          <span>Delete</span>
+        </button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-80">
         <AlertDialogHeader>

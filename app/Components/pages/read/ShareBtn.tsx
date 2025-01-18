@@ -14,7 +14,7 @@ const ShareBtn = ({ blogId }: { blogId: string }) => {
       sites={["copy", "mail", "facebook", "telegram", "whatsapp", "linkedin"]}
       disableNative={true}
     >
-      <Button size="sm" variant="outline">
+      <Button size="sm" variant="ghost">
         <ShareIcon size={20} />
         <span className="hidden sm:block">Share</span>{" "}
       </Button>

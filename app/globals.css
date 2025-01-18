@@ -77,3 +77,6 @@ img{
 .prose, p{
     white-space: pre-wrap;
 }
+iframe{
+  width: 100%;
+}

@@ -1,85 +1,92 @@
 "use client";
 
+import { useEffect, useState, useMemo, useCallback } from "react";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
+import { notFound } from "next/navigation";
 import Image from "next/image";
+import clsx from "clsx";
 import InteractionBar from "@/app/components/pages/read/InteractionBar";
-import { blogType } from "@/app/types/blogType";
 import { Button } from "@/app/components/ui/button";
 import { CgEricsson as Logo } from "react-icons/cg";
 import { IoIosClose as CloseIcon } from "react-icons/io";
-import SigninModal from "@/app/components/pages/Landing/SigninModal";
-import { useEffect, useState } from "react";
 import SignupModal from "@/app/components/pages/Landing/SignupModal";
-import clsx from "clsx";
-import { getCurrentUser } from "@/libs/getCurrentUser";
+import SigninModal from "@/app/components/pages/Landing/SigninModal";
 import ReadBlogSkeleton from "@/app/components/pages/read/ReadBlogSkeleton";
-import { notFound } from "next/navigation";
-import AuthorBlogs from "@/app/components/pages/read/AuthorBlogs";
 import BlogContent from "@/app/components/BlogContent";
+import AuthorBlogs from "@/app/components/pages/read/AuthorBlogs";
+import { blogType } from "@/app/types/blogType";
+import { getCurrentUser } from "@/libs/getCurrentUser";
 
-type ReadPageProps = {
+type Props = {
   params: { blogId: string };
 };
-const ReadPage = ({ params }: ReadPageProps) => {
-  const token = getCookie("token") as string | undefined;
-  const [blog, setBlog] = useState<blogType | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isNewUser, setIsNewUser] = useState(true);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
-  const [isBlogStarred, setIsBlogStarred] = useState<boolean>(false);
-  const [starCount, setStarCount] = useState<number>(0);
+
+const ReadPage = ({ params }: Props) => {
+  const token = useMemo(() => getCookie("token") as string | undefined, []);
+  const [blog, setBlog] = useState<blogType | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
-  console.log(blog);
-  useEffect(() => {
-    async function fetchBlogAndUser(blogId: string) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(true);
+
+  // InteractionBar states
+  const [isBlogStarred, setIsBlogStarred] = useState(false);
+  const [starCount, setStarCount] = useState(0);
+  const [isFollowed, setIsFollowed] = useState(false);
+
+  const fetchBlogAndUser = useCallback(
+    async (blogId: string) => {
       setIsLoading(true);
-      if (token) {
-        // Fetch the current user
-        const user = await getCurrentUser(token);
-        setCurrentUser(user);
-      }
       try {
-        // Fetch the blog
-        const res = await axiosInstance(`/api/blog/${blogId}`, {
-          headers: { Authorization: token },
-        });
-        setBlog(res.data);
-        setIsBlogStarred(res.data.starred);
-        setStarCount(res.data._count.stars);
+        const [userResponse, blogResponse] = await Promise.all([
+          token ? getCurrentUser(token) : Promise.resolve(null),
+          axiosInstance.get(`/api/blog/${blogId}`, {
+            headers: { Authorization: token },
+          }),
+        ]);
+
+        setCurrentUser(userResponse);
+        setBlog(blogResponse.data);
+        setIsBlogStarred(blogResponse.data.starred);
+        setStarCount(blogResponse.data._count.stars);
+        setIsFollowed(blogResponse.data.following);
       } catch (err: any) {
-        if (err.response?.status === 404) {
-          notFound();
-        }
+        if (err.response?.status === 404) notFound();
       } finally {
         setIsLoading(false);
       }
-    }
+    },
+    [token],
+  );
 
+  useEffect(() => {
     fetchBlogAndUser(params.blogId);
-  }, [params.blogId, token]);
+  }, [fetchBlogAndUser, params.blogId]);
 
-  function handleOpenAuthModal(isNewUser: boolean) {
+  const handleOpenAuthModal = useCallback((isNewUser: boolean) => {
     setIsNewUser(isNewUser);
-    setIsAuthModalVisible(true);
     setIsAuthModalOpen(true);
-  }
+  }, []);
 
-  function handleCloseAuthModal() {
+  const handleCloseAuthModal = useCallback(() => {
     setIsAuthModalOpen(false);
-    setTimeout(() => {
-      setIsAuthModalVisible(false);
-    }, 190);
-  }
+  }, []);
 
-  const isMyBlog = currentUser && blog && currentUser.id === blog.author.id;
+  const isMyBlog = useMemo(
+    () => currentUser && blog && currentUser.id === blog.author.id,
+    [currentUser, blog],
+  );
+
+  if (isLoading) return <ReadBlogSkeleton />;
+
+  if (!blog) return null;
 
   return (
     <>
       {!token && (
-        <nav className="flex h-16 w-full items-center justify-between border-b border-primary px-2 py-1 text-foreground md:px-6">
-          <div className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl">
+        <nav className="flex h-16 items-center justify-between border-b border-primary px-2 py-1 md:px-6">
+          <div className="text-md flex items-center font-bold text-primary sm:text-2xl">
             <Logo size={25} />
             <h1>Post-Room</h1>
           </div>
@@ -97,15 +104,69 @@ const ReadPage = ({ params }: ReadPageProps) => {
           </div>
         </nav>
       )}
-      {isAuthModalVisible && (
+
+      <main className="mx-auto w-full p-4 shadow-sm md:w-[45rem]">
+        <h1 className="font-PT text-3xl text-accent-foreground md:text-6xl">
+          {blog.title}
+        </h1>
+        <InteractionBar
+          blog={blog}
+          isMyBlog={isMyBlog}
+          handleOpenAuthModal={handleOpenAuthModal}
+          isFollowed={isFollowed}
+          setIsFollowed={setIsFollowed}
+          isBlogStarred={isBlogStarred}
+          setIsBlogStarred={setIsBlogStarred}
+          starCount={starCount}
+          setStarCount={setStarCount}
+        />
+
+        <div className="relative h-[40vh] w-full overflow-hidden">
+          <Image
+            src={
+              blog.imageUrl ||
+              "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
+            }
+            alt="Blog image"
+            fill
+            quality={100}
+            priority
+            className="object-cover"
+          />
+        </div>
+        <div className="prose  dark:prose-dark">
+          <BlogContent content={blog.content} />
+        </div>
+        <InteractionBar
+          blog={blog}
+          isMyBlog={isMyBlog}
+          handleOpenAuthModal={handleOpenAuthModal}
+          isFollowed={isFollowed}
+          setIsFollowed={setIsFollowed}
+          isBlogStarred={isBlogStarred}
+          setIsBlogStarred={setIsBlogStarred}
+          starCount={starCount}
+          setStarCount={setStarCount}
+        />
+
+        <AuthorBlogs
+          authorUsername={blog.author.username}
+          handleOpenAuthModal={handleOpenAuthModal}
+          isMyBLog={isMyBlog}
+          isFollowed={isFollowed}
+          setIsFollowed={setIsFollowed}
+        />
+      </main>
+
+      {isAuthModalOpen && (
         <>
           <div
             onClick={handleCloseAuthModal}
-            className="fixed left-0 top-0 z-30 h-screen w-screen bg-gray-50 opacity-95"
+            className="fixed inset-0 z-30"
           ></div>
           <main
             className={clsx(
-              "fixed left-1/2 top-1/2 z-40 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-white shadow-md shadow-gray-400 md:w-[678px]",
+              "fixed inset-1/2 z-40 w-full max-w-md -translate-x-1/2 -translate-y-1/2 bg-white shadow-md",
               {
                 "modal-open-animation": isAuthModalOpen,
                 "modal-close-animation": !isAuthModalOpen,
@@ -113,7 +174,7 @@ const ReadPage = ({ params }: ReadPageProps) => {
             )}
           >
             <CloseIcon
-              className="absolute right-2 top-2 size-12 cursor-pointer p-2 text-gray-500 hover:text-gray-950"
+              className="absolute right-2 top-2 cursor-pointer p-2 text-gray-500 hover:text-gray-900"
               onClick={handleCloseAuthModal}
             />
             {isNewUser ? (
@@ -126,73 +187,6 @@ const ReadPage = ({ params }: ReadPageProps) => {
               <SigninModal isNewUser={isNewUser} setIsNewUser={setIsNewUser} />
             )}
           </main>
-        </>
-      )}
-      {isLoading && <ReadBlogSkeleton />}
-      {blog && (
-        <>
-          <section className="w-full px-6">
-            <div className="border-b-2 py-10 font-PT text-5xl text-accent-foreground">
-              {blog.title}
-              {blog.categories && (
-                <ul className="mt-2 flex gap-3 text-sm">
-                  {blog.categories.map((category, index: number) => (
-                    <div key={index} className="flex gap-1 text-lg">
-                      <span className="text-violet-600">#</span>
-                      {category.category.name}
-                    </div>
-                  ))}
-                </ul>
-              )}
-            </div>
-
-            <InteractionBar
-              blog={blog}
-              isMyBlog={isMyBlog}
-              isBlogStarred={isBlogStarred}
-              setIsBlogStarred={setIsBlogStarred}
-              starCount={starCount}
-              setStarCount={setStarCount}
-              handleOpenAuthModal={handleOpenAuthModal}
-            />
-          </section>
-          <div className="relative h-[90vh] w-full overflow-hidden">
-            <Image
-              className="object-cover"
-              src={
-                blog.imageUrl ||
-                "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
-              }
-              fill={true}
-              quality={100}
-              priority
-              alt="Blog image"
-            />
-          </div>
-          <section className="mx-auto w-full bg-white p-6 shadow md:w-[880px]">
-            <h1 className="mt-6 border-b-2 py-4 font-PT text-5xl text-accent-foreground">
-              {blog.title}
-            </h1>
-            <div className="prose my-10 dark:prose-dark">
-              <BlogContent content={blog.content} />
-            </div>
-
-            <InteractionBar
-              blog={blog}
-              isMyBlog={isMyBlog}
-              isBlogStarred={isBlogStarred}
-              setIsBlogStarred={setIsBlogStarred}
-              starCount={starCount}
-              setStarCount={setStarCount}
-              handleOpenAuthModal={handleOpenAuthModal}
-            />
-          </section>
-          <AuthorBlogs
-            authorUsername={blog.author.username}
-            handleOpenAuthModal={handleOpenAuthModal}
-            isFollowed={blog.following}
-            isMyBLog={isMyBlog}
-          />
         </>
       )}
     </>

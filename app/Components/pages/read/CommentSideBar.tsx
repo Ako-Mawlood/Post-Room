@@ -42,7 +42,7 @@ const CommentSideBar = ({ blogId, authorId }: Props) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="sm" variant="outline">
+        <Button className="border-none" size="sm" variant="ghost">
           <CommentIcon size={20} />
           <span>{comments?.length}</span>
         </Button>

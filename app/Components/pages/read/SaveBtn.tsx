@@ -61,8 +61,8 @@ const SaveBtn = ({
         onClick={() => handleOpenAuthModal(true)}
         disabled={isPending}
         size="sm"
-        variant="outline"
-        className="disabled:opacity-100"
+        variant="ghost"
+        className="text-xs disabled:opacity-100"
       >
         <SaveIcon size={20} />
         <span className="hidden sm:block">Save</span>
@@ -76,7 +76,7 @@ const SaveBtn = ({
         onClick={handleUnSaveBlog}
         disabled={isPending}
         size="sm"
-        variant="outline"
+        variant="ghost"
         className="disabled:opacity-100"
       >
         <SavedIcon size={20} />
@@ -90,7 +90,7 @@ const SaveBtn = ({
       onClick={handleSaveBlog}
       disabled={isPending}
       size="sm"
-      variant="outline"
+      variant="ghost"
       className="disabled:opacity-100"
     >
       <SaveIcon size={20} />

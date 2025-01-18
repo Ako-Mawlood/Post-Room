@@ -89,7 +89,7 @@ const SignupModal = ({
             Terms of Service
           </Link>
           &#44; and acknowledge that Post-Room&#8217;s
-          <Link href="/privacy-policy" className="underline underline-offset-2">
+          <Link href="/policy" className="underline underline-offset-2">
             {" "}
             Privacy Policy
           </Link>
