@@ -13,7 +13,7 @@ const CreateAcount = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const token = getCookie("token", { cookies });
-  const currentUser: currentUserType = await getCurrentUser(token as string);
+  const currentUser: currentUserType = await getCurrentUser();
   const setupStep = searchParams.setupStep || "fullname";
 
   return (

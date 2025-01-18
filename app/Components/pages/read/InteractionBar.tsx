@@ -45,8 +45,8 @@ const InteractionBar = ({
   handleOpenAuthModal: (isNewUser: boolean) => void;
   isBlogStarred: boolean;
   setIsBlogStarred: Dispatch<SetStateAction<boolean>>;
-  isFollowed:boolean;
-  setIsFollowed:Dispatch<SetStateAction<boolean>>;
+  isFollowed: boolean;
+  setIsFollowed: Dispatch<SetStateAction<boolean>>;
   starCount: number;
   setStarCount: Dispatch<SetStateAction<number>>;
 }) => {
@@ -102,13 +102,16 @@ const InteractionBar = ({
           setStarCount={setStarCount}
           handleOpenAuthModal={handleOpenAuthModal}
         />
-        <CommentSideBar
-          blogId={blog.blogId}
-          fullname={blog.author.fullname}
-          authorId={blog.author.id}
-          imageUrl={blog.author.imageUrl}
-          handleOpenAuthModal={handleOpenAuthModal}
-        />
+        {token && (
+          <CommentSideBar
+            blogId={blog.blogId}
+            fullname={blog.author.fullname}
+            authorId={blog.author.id}
+            imageUrl={blog.author.imageUrl}
+            handleOpenAuthModal={handleOpenAuthModal}
+          />
+        )}
+
         <SaveBtn
           isSaved={blog.saved}
           blogId={blog.blogId}
@@ -123,14 +126,14 @@ const InteractionBar = ({
                 <span className="hidden md:block">More</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="mr-4 md:mr-0">
               <DropdownMenuItem>
                 <Link className="flex gap-4" href={`/create/${blog.blogId}`}>
                   <EditIcon size={20} />
                   <span>Edit</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <DeleteBlogBtn blogId={blog.blogId} />
               </DropdownMenuItem>
             </DropdownMenuContent>

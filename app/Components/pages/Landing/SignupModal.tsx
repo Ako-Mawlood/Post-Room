@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import EmailSignupForm from "./EmailSignupForm";
 import { oAuthBtns } from "@/constants/OAuthBtns";
 import OAuthBtn from "./OAuthBtn";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 type Props = {
   isNewUser: boolean;
@@ -50,9 +51,9 @@ const SignupModal = ({
 
   return (
     <main className="flex w-[30rem] flex-col items-center justify-between p-4">
-      <h1 className="mb-10 text-4xl font-semibold text-black">
+      <DialogTitle className="mb-10 text-4xl font-semibold text-black">
         Join Post-Room.
-      </h1>
+      </DialogTitle>
       <main className="text-md flex w-full flex-col items-center p-4 font-semibold text-gray-700">
         <section className="flex w-full flex-col items-center gap-3">
           {oAuthBtns.map((oAuthBtn) => (

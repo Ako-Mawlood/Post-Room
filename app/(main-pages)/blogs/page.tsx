@@ -4,6 +4,7 @@ import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import { Button } from "@/app/components/ui/button";
+import Navbar from "@/app/components/Navbar";
 
 type userTagType = {
   id: number;
@@ -26,6 +27,7 @@ const BlogsPage = async () => {
   console.log(userTags);
   return (
     <>
+      <Navbar />
       <main className="mx-6 flex w-full justify-evenly lg:mx-10">
         <BlogsList url={`/api/blog`} />
         <section className="hidden w-[368px] border-l border-border p-10 md:block">

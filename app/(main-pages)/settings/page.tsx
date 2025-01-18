@@ -27,7 +27,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = getCookie("token");
-      const currentUser = await getCurrentUser(token as string);
+      const currentUser = await getCurrentUser();
       const userInfo = await getUserByUsername(
         currentUser.username,
         token as string,

@@ -17,7 +17,7 @@ const SendResetLinkBtn = () => {
     const fetchUserEmail = async () => {
       try {
         const token = getCookie("token");
-        const currentUser = await getCurrentUser(token as string);
+        const currentUser = await getCurrentUser();
         setUserEmail(currentUser.email);
       } catch (error) {
         console.error("Failed to fetch user email", error);

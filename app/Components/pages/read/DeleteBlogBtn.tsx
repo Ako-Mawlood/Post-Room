@@ -18,6 +18,8 @@ import axiosInstance from "@/libs/axiosInstance";
 import { useRouter } from "next/navigation";
 import { toast } from "@/app/Hooks/use-toast";
 import { getCookie } from "cookies-next";
+import { Dialog } from "@radix-ui/react-dialog";
+import { DialogFooter } from "../../ui/dialog";
 
 type Props = {
   blogId: string;
@@ -52,26 +54,25 @@ const DeleteBlogBtn = ({ blogId }: Props) => {
   return (
     <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <AlertDialogTrigger asChild>
-        <button className="flex gap-2 text-destructive">
+        <button className="flex w-full gap-4 rounded-sm p-1 text-red-500 hover:bg-muted">
           <DeleteIcon size={20} />
           <span>Delete</span>
         </button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="w-80">
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Blog?</AlertDialogTitle>
           <AlertDialogDescription>
             Are you sure you want to permanently delete this blog?
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="gap-2">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button
             disabled={isPending}
             type="button"
             variant="destructive"
             onClick={handleDeleteBlog}
-            className="w-20"
           >
             {isPending ? (
               <Spinner className="animate-spin" />

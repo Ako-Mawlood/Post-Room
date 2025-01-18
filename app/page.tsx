@@ -5,17 +5,13 @@ import SignupModal from "./components/pages/Landing/SignupModal";
 import { useState } from "react";
 import BlogsPreview from "./components/pages/Landing/BlogShowcase";
 import FeatureShowcase from "./components/pages/Landing/FeatureShowcase";
-import clsx from "clsx";
 import Link from "next/link";
-import {
-  Dialog,
-  DialogContent,
-  DialogOverlay,
-} from "@/app/components/ui/dialog";
+import { Dialog, DialogContent } from "@/app/components/ui/dialog";
 import useSlider from "./Hooks/useSlider";
 import { backgroundColors } from "@/constants/backgroundColors";
 import Logo from "./components/ui/Logo";
 import DescriptionSection from "@/app/components/pages/Landing/DescriptionSection";
+import NavbarUnauthorized from "./components/NavbarUnauthorized";
 
 export default function LandingPage() {
   const [isNewUser, setIsNewUser] = useState(true);
@@ -35,24 +31,7 @@ export default function LandingPage() {
   return (
     <div className="relative bg-neutral-50 text-neutral-900">
       {/* Navbar */}
-      <nav className="sticky left-0 top-0 z-50 flex h-[5.5rem] w-full items-center justify-between border-b border-black bg-neutral-50 bg-opacity-90 p-6 backdrop-blur">
-        <Logo href="#" />
-
-        <div className="flex gap-4 text-sm font-light">
-          <button
-            onClick={() => handleOpenAuthModal(false)}
-            className="rounded-full border border-black px-4 py-2"
-          >
-            Sign in
-          </button>
-          <button
-            onClick={() => handleOpenAuthModal(true)}
-            className="black-btn"
-          >
-            Sign up
-          </button>
-        </div>
-      </nav>
+      <NavbarUnauthorized handleOpenAuthModal={handleOpenAuthModal} />
 
       <BlogsPreview handleOpenAuthModal={handleOpenAuthModal} />
       <DescriptionSection
@@ -93,12 +72,7 @@ export default function LandingPage() {
 
       {/* Auth modal */}
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
-        <DialogOverlay className="fixed bg-white bg-opacity-95" />
-        <DialogContent
-          className={clsx(
-            "flex h-full items-center justify-center bg-white md:max-w-[40rem]",
-          )}
-        >
+        <DialogContent className="flex h-full items-center justify-center bg-white md:max-w-[40rem]">
           {isNewUser ? (
             <SignupModal
               isNewUser={isNewUser}

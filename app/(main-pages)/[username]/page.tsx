@@ -28,7 +28,7 @@ const ProfilePage = async ({
   params: { username: string };
 }) => {
   const token = getCookie("token", { cookies });
-  const currentUser: currentUserType = await getCurrentUser(token as string);
+  const currentUser: currentUserType = await getCurrentUser();
   const profileOwner: profileOwnerType = await getUserByUsername(
     params.username.substring(3),
     token as string,

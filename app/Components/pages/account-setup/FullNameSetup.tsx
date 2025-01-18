@@ -24,8 +24,8 @@ const fullnameSchema = z.object({
   fullname: z
     .string()
     .regex(/^[A-Za-z]+(?:[ \-'][A-Za-z]+)*$/, "Invalid full name format")
-    .min(2, "Full name may not be less than 2 characters")
-    .max(20, "Full anme may not be more than 20 characters"),
+    .min(2, "Fullname may not be less than 2 characters")
+    .max(20, "Fullname may not be more than 20 characters"),
 });
 
 type fullnameType = z.infer<typeof fullnameSchema>;

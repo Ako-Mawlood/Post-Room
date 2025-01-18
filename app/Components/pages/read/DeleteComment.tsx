@@ -59,13 +59,13 @@ const DeleteComment = ({ commentId, setIsCommentMenuOpen }: Props) => {
         <Button
           variant="ghost"
           size="sm"
-          className="flex justify-start rounded-sm font-normal text-destructive hover:text-destructive"
+          className="flex justify-start rounded-sm font-normal text-red-500"
         >
           <DeleteIcon size={20} />
           Delete
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="w-80">
+      <AlertDialogContent className="fw-80">
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Comment?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -77,9 +77,9 @@ const DeleteComment = ({ commentId, setIsCommentMenuOpen }: Props) => {
             Cancel
           </AlertDialogCancel>
           <Button
-            className="w-20"
             disabled={isPending}
             type="button"
+            variant="destructive"
             onClick={handleDeleteComment}
           >
             {isPending ? (
