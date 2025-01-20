@@ -18,8 +18,6 @@ import axiosInstance from "@/libs/axiosInstance";
 import { useRouter } from "next/navigation";
 import { toast } from "@/app/Hooks/use-toast";
 import { getCookie } from "cookies-next";
-import { Dialog } from "@radix-ui/react-dialog";
-import { DialogFooter } from "../../ui/dialog";
 
 type Props = {
   blogId: string;
@@ -35,11 +33,11 @@ const DeleteBlogBtn = ({ blogId }: Props) => {
       await axiosInstance.delete(`/api/blog/${blogId}`, {
         headers: { Authorization: getCookie("token") },
       });
+      router.push("/blogs");
       toast({
         title: "Blog deleted",
         description: "The blog has been deleted successfully.",
       });
-      router.push("/blogs");
     } catch (err) {
       toast({
         title: "Could not delete blog",

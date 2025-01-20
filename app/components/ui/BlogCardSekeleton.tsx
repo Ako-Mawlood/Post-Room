@@ -31,7 +31,7 @@ const BlogCardSkeleton = () => {
         </CardFooter>
       </div>
       <div className="relative h-full w-2/6 rounded-lg">
-        <Skeleton className="h-full w-full rounded-r-md object-cover" />
+        <Skeleton className="h-full w-full rounded-lg object-cover" />
       </div>
     </Card>
   );

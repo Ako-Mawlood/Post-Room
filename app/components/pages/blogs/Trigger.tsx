@@ -47,7 +47,7 @@ const Trigger = ({ setSkip }: triggerPropsType) => {
     <>
       <div
         ref={triggerRef}
-        className="absolute bottom-[99vh] left-1/2 mx-auto mt-20 size-10 text-5xl"
+        className="absolute bottom-[40vh] left-1/2 mx-auto mt-20 size-10 text-5xl"
       ></div>
       <Spinner className="mx-auto my-32 animate-spin text-center" />
     </>

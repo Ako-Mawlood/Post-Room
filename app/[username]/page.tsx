@@ -2,23 +2,24 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "../../components/ui/avatar";
+} from "@/app/components/ui/avatar";
 import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
-import SavedBlogsList from "../../components/pages/profile/SavedBlogsList";
-import ProfileSkeleton from "../../components/pages/profile/ProfileSkeleton";
-import ProfileTabs from "../../components/pages/profile/ProfileTabs";
-import { currentUserType } from "../../types/currentUserType";
-import EditProfileModal from "../../components/pages/profile/EditProfileModal";
-import { profileOwnerType } from "../../types/profileOwnerType";
+import SavedBlogsList from "@/app/components/pages/profile/SavedBlogsList";
+import ProfileSkeleton from "@/app/components/pages/profile/ProfileSkeleton";
+import ProfileTabs from "@/app/components/pages/profile/ProfileTabs";
+import { currentUserType } from "@/app/types/currentUserType";
+import EditProfileModal from "@/app/components/pages/profile/EditProfileModal";
+import { profileOwnerType } from "@/app/types/profileOwnerType";
 import { getInitials } from "@/libs/utils";
 import { getUserByUsername } from "@/libs/getUserByUsername";
 import { getCurrentUser } from "@/libs/getCurrentUser";
-import ProfileOwnerBlogsList from "../../components/pages/profile/ProfileOwnerBlogsList";
+import ProfileOwnerBlogsList from "@/app/components/pages/profile/ProfileOwnerBlogsList";
 import { notFound } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import DraftBlogList from "@/app/components/pages/profile/DraftBlogList";
+import Navbar from "../components/Navbar";
 
 const ProfilePage = async ({
   searchParams,
@@ -34,8 +35,10 @@ const ProfilePage = async ({
     token as string,
   );
   if (!profileOwner) notFound();
+  console.log(currentUser);
   const isCurrentUserProfile = currentUser.id === profileOwner.id;
   const validTabs = ["blogs", "saved-blogs", "drafts"];
+
   const tabQueryParam =
     validTabs.includes(searchParams?.tab as string) && isCurrentUserProfile
       ? searchParams?.tab
@@ -45,6 +48,7 @@ const ProfilePage = async ({
     <>
       {profileOwner ? (
         <>
+          <Navbar />
           <section className="relative flex h-[40vh] w-full items-center border-b border-border px-6">
             <h1 className="line-clamp-2 font-PT text-7xl md:line-clamp-1 md:text-[8.5vw]">
               {profileOwner.fullname}

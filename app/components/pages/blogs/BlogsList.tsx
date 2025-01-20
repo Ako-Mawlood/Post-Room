@@ -5,7 +5,7 @@ import Trigger from "./Trigger";
 import React, { useEffect, useState } from "react";
 import BlogCard from "../../ui/BlogCard";
 import { getBlogs } from "@/libs/getBlogs";
-import { Skeleton } from "../../ui/skeleton";
+import BlogCardSkeleton from "../../ui/BlogCardSekeleton";
 
 const BlogsList = ({ url }: { url: string }) => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
@@ -38,20 +38,17 @@ const BlogsList = ({ url }: { url: string }) => {
 
   if (blogs.length === 0) {
     return (
-      <div className="flex w-full flex-col gap-4">
-        <Skeleton className="h-52 w-full md:w-[40rem]" />
-        <Skeleton className="h-52 w-full md:w-[40rem]" />
-        <Skeleton className="h-52 w-full md:w-[40rem]" />
-        <Skeleton className="h-52 w-full md:w-[40rem]" />
-        <Skeleton className="h-52 w-full md:w-[40rem]" />
-        <Skeleton className="h-52 w-full md:w-[40rem]" />
-      </div>
+      <section className="relative flex w-full flex-col items-center gap-5 p-5">
+        <BlogCardSkeleton />
+        <BlogCardSkeleton />
+        <BlogCardSkeleton />
+      </section>
     );
   }
   return (
     <>
       {blogs.length !== 0 && (
-        <section className="relative flex w-full flex-col items-center gap-5 p-5 md:w-[728px]">
+        <section className="relative flex w-full flex-col items-center gap-5">
           {blogs.map((blog: blogType) => (
             <div key={blog.id} className="animate-strech h-52 w-full">
               <BlogCard

@@ -8,7 +8,6 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/app/components/ui/alert-dialog";
@@ -24,11 +23,9 @@ const DeleteAccount = () => {
   function handleDeleteAccount() {
     try {
       setIsPending(true);
-      axiosInstance.delete("/suser", {
+      axiosInstance.delete("/api/user", {
         headers: { Authorization: getCookie("token") },
       });
-      deleteCookie("token");
-      router.push("/");
     } catch (err) {
       console.log("Deletion aborted");
     } finally {
@@ -63,9 +60,8 @@ const DeleteAccount = () => {
             <AlertDialogAction
               onClick={handleDeleteAccount}
               disabled={isPending}
-              className="bg-destructive"
             >
-              {isPending ? "Deleting..." : "Delete"}
+              {isPending ? "Sending..." : "Send"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

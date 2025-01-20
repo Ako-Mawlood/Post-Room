@@ -2,12 +2,10 @@
 
 import BlogCard from "@/app/components/ui/BlogCard";
 import { blogType } from "@/app/types/blogType";
-import useFetchBlogs from "@/app/Hooks/useFetchBlogs";
 import Trigger from "@/app/components/pages/blogs/Trigger";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
-import BlogsList from "@/app/components/pages/blogs/BlogsList";
 import { getBlogs } from "@/libs/getBlogs";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
@@ -19,22 +17,19 @@ const BlogsPage = ({
 }) => {
   const q = (searchParams && searchParams.q) || "";
   const [blogs, setBlogs] = useState<blogType[]>([]);
-  const [skip, setSkip] = useState(0);
-  const [hasReachedEnd, setHasReachedEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isBlogFound, setIsBlogFound] = useState(true);
   useEffect(() => {
     async function fetchNewBlogs() {
       setIsLoading(true);
-      const fetchedBlogs: blogType[] = await getBlogs(
-        `api/search?query=${q}&skip=${skip}`,
-      );
+
       try {
-        const res = await axiosInstance(`api/search?query=${q}&skip=${skip}`, {
+        setIsBlogFound(true);
+        const res = await axiosInstance(`api/search?query=${q}`, {
           headers: { Authorization: getCookie("token") },
         });
         if (res.data.length === 0) {
-          setHasReachedEnd(false);
+          setIsBlogFound(false);
         }
         setBlogs(res.data);
       } catch (err) {
@@ -42,39 +37,62 @@ const BlogsPage = ({
       } finally {
         setIsLoading(false);
       }
-      if (blogs.length === 0) {
-        setBlogs(fetchedBlogs);
-      } else {
-        setBlogs((prevBlogs) => [...prevBlogs, ...fetchedBlogs]);
-      }
     }
     fetchNewBlogs();
-  }, [skip]);
-
-  useEffect(() => {
-    setBlogs([]);
-    setSkip(0);
-    setHasReachedEnd(false);
   }, [q]);
+  useEffect(() => {
+    setIsBlogFound(true);
+  }, []);
 
   return (
-    <div className="w-full">
-      <main className="mt-20 flex w-full items-start justify-center">
-        <section className="flex w-3/6 flex-col gap-5 border-r border-primary pr-20">
-          <h1 className="text-4xl text-primary">
-            <span className="text-4xl text-muted-foreground">Results for </span>
-            {q}
-          </h1>
-          {blogs.length === 0 && !isLoading && (
-            <p>
-              Make sure you spelled everything correctly, or try different
-              keywords.
-            </p>
-          )}
+    <aside className="flex flex-col p-5 md:w-[45rem]">
+      <h1 className="text-4xl text-primary">
+        {!isBlogFound ? (
+          <>
+            <span className="text-4xl text-muted-foreground">
+              No result for{" "}
+            </span>
+            <span>{q}</span>
+          </>
+        ) : (
+          <>
+            <span className="text-4xl text-muted-foreground">Results for </span>{" "}
+            <span>{q}</span>
+          </>
+        )}
+      </h1>
+      {isLoading && (
+        <section className="relative flex w-full flex-col items-center gap-5 p-5">
+          <BlogCardSkeleton />
+          <BlogCardSkeleton />
+          <BlogCardSkeleton />
         </section>
-        <section className="w-2/6 rounded-lg bg-black"></section>
-      </main>
-    </div>
+      )}
+      {blogs.length !== 0 && !isLoading && (
+        <section className="relative flex w-full flex-col items-center gap-5 p-5 md:w-[728px]">
+          {blogs.map((blog: blogType) => (
+            <div key={blog.id} className="animate-stretch h-52 w-full">
+              <BlogCard
+                title={blog.title}
+                author={blog.author.fullname}
+                authorImageUrl={blog.author.imageUrl}
+                blogId={blog.blogId}
+                blogImageUrl={blog.imageUrl}
+                categories={blog.categories}
+                content={blog.content}
+                createdAt={blog.createdAt}
+                stars={blog._count.stars}
+              />
+            </div>
+          ))}
+        </section>
+      )}
+      {blogs.length === 0 && !isLoading && (
+        <p>
+          Make sure you spelled everything correctly, or try different keywords.
+        </p>
+      )}
+    </aside>
   );
 };
 

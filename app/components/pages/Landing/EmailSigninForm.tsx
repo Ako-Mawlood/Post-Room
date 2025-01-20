@@ -49,7 +49,6 @@ const EmailSigninForm = ({
       .post("/api/login", data)
       .then((res) => {
         setCookie("token", res.headers.authorization);
-
         router.push("/blogs");
       })
       .catch((err) => {
