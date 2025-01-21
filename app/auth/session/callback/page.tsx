@@ -1,34 +1,40 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import axiosInstance from "@/libs/axiosInstance";
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
+import { useEffect } from "react";
 
 const AuthCallback = () => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    // Ensure we're in the browser (window object is only available on the client)
     if (typeof window !== "undefined") {
       const hash = window.location.hash;
-
-      // Check if the hash exists
       if (hash) {
-        const params = new URLSearchParams(hash.substring(1)); // Remove the '#' from the hash
+        const params = new URLSearchParams(hash.substring(1));
         const token = params.get("access_token");
 
-        // If the token is found, update the state
         if (token) {
-          setAccessToken(token);
+          axiosInstance
+            .post("api/oauth", { token, provider: "google" })
+            .then((res) => {
+              const isAccountExist = !!res.data.username;
+
+              setCookie("token", res.headers.authorization);
+              if (isAccountExist) {
+                router.push("/blogs");
+              } else {
+                router.push("/account-setup");
+              }
+            })
+            .catch((err) => {
+              console.error("Error during authentication:", err);
+            });
         }
       }
     }
-  }, []); // Empty dependency array ensures this runs once on component mount
-
-  return (
-    <div>
-      <h1>Authentication Callback</h1>
-      {accessToken ? <p>Access Token: {accessToken}</p> : <p>No token found</p>}
-    </div>
-  );
+  }, [router]);
 };
 
 export default AuthCallback;

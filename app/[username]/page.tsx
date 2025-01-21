@@ -19,7 +19,7 @@ import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import DraftBlogList from "@/app/components/pages/profile/DraftBlogList";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/shared/Navbar";
 
 const ProfilePage = async ({
   searchParams,

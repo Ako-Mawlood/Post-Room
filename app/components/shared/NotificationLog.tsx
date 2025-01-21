@@ -1,10 +1,18 @@
 "use client";
 
 import axiosInstance from "@/libs/axiosInstance";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/app/components/ui/popover";
 import { CiBellOn as Notification } from "react-icons/ci";
 import { getCookie } from "cookies-next";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/avatar";
 import { formatDate, getInitials } from "@/libs/utils";
 import Link from "next/link";
 import clsx from "clsx";

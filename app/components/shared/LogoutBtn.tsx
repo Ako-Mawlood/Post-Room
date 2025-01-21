@@ -2,7 +2,7 @@
 
 import { CiLogout as LogoutIcon } from "react-icons/ci";
 import { useRouter } from "next/navigation";
-import { DropdownMenuItem } from "./ui/dropdown-menu";
+import { DropdownMenuItem } from "@/app/components/ui/dropdown-menu";
 import { deleteCookie } from "cookies-next";
 
 const LogoutBtn = () => {

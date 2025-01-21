@@ -29,7 +29,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
-import ProfileImageEditer from "../../ProfileImageUpdater";
+import ProfileImageEditer from "@/app/components/shared/ProfileImageUpdater";
 import { editProfileSchema } from "@/libs/validations";
 import { X as Close } from "lucide-react";
 import { useRouter } from "next/navigation";

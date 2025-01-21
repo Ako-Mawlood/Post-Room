@@ -2,11 +2,8 @@
 
 import BlogCard from "@/app/components/ui/BlogCard";
 import { blogType } from "@/app/types/blogType";
-import Trigger from "@/app/components/pages/blogs/Trigger";
 import { useEffect, useState } from "react";
-
 import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
-import { getBlogs } from "@/libs/getBlogs";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 
@@ -45,7 +42,7 @@ const BlogsPage = ({
   }, []);
 
   return (
-    <aside className="flex flex-col p-5 md:w-[45rem]">
+    <aside className="order-2 flex w-full flex-col items-start justify-start md:order-1 md:w-[45rem]">
       <h1 className="text-4xl text-primary">
         {!isBlogFound ? (
           <>
@@ -88,7 +85,7 @@ const BlogsPage = ({
         </section>
       )}
       {blogs.length === 0 && !isLoading && (
-        <p>
+        <p className="my-10 font-sans text-lg">
           Make sure you spelled everything correctly, or try different keywords.
         </p>
       )}

@@ -1,31 +1,30 @@
 "use client";
 
 import axiosInstance from "@/libs/axiosInstance";
-import clsx from "clsx";
+
 import { getCookie } from "cookies-next";
-import { useCallback, useState,Dispatch, SetStateAction } from "react";
+import { useCallback, useState, useContext } from "react";
 import { Button } from "../../ui/button";
+import { FollowContext } from "@/app/providers/FollowProvider";
 
-
-const FollowBtn = ({
-  isFollowed,
-  setIsFollowed,
-  username,
-  isMyBlog,
-  handleOpenAuthModal,
-}: {
-  isFollowed: boolean;
-  setIsFollowed: Dispatch<SetStateAction<boolean>>
+type Props = {
+  userId: number;
   username: string;
-  isMyBlog: boolean;
-  handleOpenAuthModal: (isNewUser: boolean) => void;
-}) => {
-
+  handleOpenAuthModal?: (isNewUser: boolean) => void;
+};
+const FollowBtn = ({
+  userId,
+  username,
+  handleOpenAuthModal = () => {},
+}: Props) => {
   const [isPending, setIsPending] = useState(false);
+  const context = useContext(FollowContext);
+  const isUserFollowed = context?.followedUsers[userId];
+
   const token = getCookie("token");
   const handleFollow = useCallback(async () => {
     try {
-      setIsFollowed(true);
+      context?.handleUpdateFollowedUsers(userId, true);
       setIsPending(true);
       await axiosInstance.post(
         `/api/follow/${username}`,
@@ -37,7 +36,7 @@ const FollowBtn = ({
         },
       );
     } catch (err) {
-      setIsFollowed(false);
+      context?.handleUpdateFollowedUsers(userId, false);
     } finally {
       setIsPending(false);
     }
@@ -45,7 +44,8 @@ const FollowBtn = ({
 
   const handleUnFollow = useCallback(async () => {
     try {
-      setIsFollowed(false);
+      context?.handleUpdateFollowedUsers(userId, false);
+
       setIsPending(true);
       await axiosInstance.delete(`/api/follow/${username}`, {
         headers: {
@@ -53,23 +53,18 @@ const FollowBtn = ({
         },
       });
     } catch (err) {
-      setIsFollowed(true);
+      context?.handleUpdateFollowedUsers(userId, true);
     } finally {
       setIsPending(false);
     }
   }, [username]);
 
-  if (isFollowed) {
+  if (isUserFollowed) {
     return (
       <button
         onClick={token ? handleUnFollow : () => handleOpenAuthModal(true)}
         disabled={isPending}
-        className={clsx(
-          "h-7 rounded-full text-sm duration-200 disabled:opacity-100",
-          {
-            hidden: isMyBlog,
-          },
-        )}
+        className="h-7 rounded-full text-sm duration-200 disabled:opacity-100"
       >
         Followed
       </button>
@@ -80,12 +75,7 @@ const FollowBtn = ({
     <Button
       onClick={token ? handleFollow : () => handleOpenAuthModal(true)}
       disabled={isPending}
-      className={clsx(
-        "h-7 rounded-full text-sm duration-200 disabled:opacity-100",
-        {
-          hidden: isMyBlog,
-        },
-      )}
+      className="h-7 rounded-full text-sm duration-200 disabled:opacity-100"
     >
       Follow
     </Button>

@@ -29,11 +29,11 @@ const UsernameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
     setFocus,
     formState: { isSubmitting, errors },
   } = useForm({
-    defaultValues: { username: "" },
+    defaultValues: { username: currentUser.username },
     resolver: zodResolver(usernameSchema),
   });
 
-  async function handeSetupUsername(data: usernameType) {
+  async function handleSetupUsername(data: usernameType) {
     await axios
       .put("/api/user", data, {
         headers: { Authorization: getCookie("token") },
@@ -57,7 +57,7 @@ const UsernameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
   }, [setFocus]);
   return (
     <form
-      onSubmit={handleSubmit(handeSetupUsername)}
+      onSubmit={handleSubmit(handleSetupUsername)}
       className="flex w-full flex-col items-center justify-center gap-4 p-6 text-center sm:w-[30rem]"
     >
       <h1 className="font-PT text-4xl text-primary">Almost there!</h1>

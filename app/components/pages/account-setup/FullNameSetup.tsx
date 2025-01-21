@@ -17,8 +17,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../../ui/form";
-import axios from "axios";
 import { currentUserType } from "@/app/types/currentUserType";
+import axiosInstance from "@/libs/axiosInstance";
 
 const fullnameSchema = z.object({
   fullname: z
@@ -33,15 +33,15 @@ type fullnameType = z.infer<typeof fullnameSchema>;
 const FullNameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
   const router = useRouter();
   const form = useForm<fullnameType>({
-    defaultValues: { fullname: "" },
+    defaultValues: { fullname: currentUser.fullname },
     resolver: zodResolver(fullnameSchema),
   });
 
   async function handleSetupFullname(data: fullnameType) {
     console.log(data);
 
-    await axios
-      .put("https://post-room-backend.vercel.app/api/user", data, {
+    await axiosInstance
+      .put("/api/user", data, {
         headers: { Authorization: getCookie("token") },
       })
       .then(() => {

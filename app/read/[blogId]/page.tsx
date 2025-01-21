@@ -11,12 +11,13 @@ import { Dialog, DialogContent } from "@/app/components/ui/dialog";
 import SignupModal from "@/app/components/pages/Landing/SignupModal";
 import SigninModal from "@/app/components/pages/Landing/SigninModal";
 import ReadBlogSkeleton from "@/app/components/pages/read/ReadBlogSkeleton";
-import BlogContent from "@/app/components/BlogContent";
+import BlogContent from "@/app/components/shared/BlogContent";
 import AuthorInfoSection from "@/app/components/pages/read/AuthorInfoSection";
 import { blogType } from "@/app/types/blogType";
 import { getCurrentUser } from "@/libs/getCurrentUser";
-import Navbar from "@/app/components/Navbar";
-import NavbarUnauthorized from "@/app/components/NavbarUnauthorized";
+import Navbar from "@/app/components/shared/Navbar";
+import NavbarUnauthorized from "@/app/components/shared/NavbarUnauthorized";
+import FollowProvider from "@/app/providers/FollowProvider";
 
 type Props = {
   params: { blogId: string };
@@ -96,41 +97,42 @@ const ReadPage = ({ params }: Props) => {
           <h1 className="font-PT text-3xl text-accent-foreground md:text-6xl">
             {blog.title}
           </h1>
-
-          <InteractionBar
-            blog={blog}
-            isMyBlog={isMyBlog}
-            handleOpenAuthModal={handleOpenAuthModal}
-            isFollowed={isFollowed}
-            setIsFollowed={setIsFollowed}
-            isBlogStarred={isBlogStarred}
-            setIsBlogStarred={setIsBlogStarred}
-            starCount={starCount}
-            setStarCount={setStarCount}
-          />
-
-          <div className="relative h-[40vh] w-full overflow-hidden">
-            <Image
-              src={blog.imageUrl || fallbackImageUrl}
-              alt="Blog image"
-              fill
-              quality={100}
-              priority
-              className="object-cover"
+          <FollowProvider
+            defaultFollowedUsers={{ [blog.author.id]: blog.following }}
+          >
+            <InteractionBar
+              blog={blog}
+              isMyBlog={isMyBlog}
+              handleOpenAuthModal={handleOpenAuthModal}
+              isBlogStarred={isBlogStarred}
+              setIsBlogStarred={setIsBlogStarred}
+              starCount={starCount}
+              setStarCount={setStarCount}
             />
-          </div>
 
-          <div className="prose dark:prose-dark">
-            <BlogContent content={blog.content} />
-          </div>
+            <div className="relative h-[40vh] w-full overflow-hidden">
+              <Image
+                src={blog.imageUrl || fallbackImageUrl}
+                alt="Blog image"
+                fill
+                quality={100}
+                priority
+                className="object-cover"
+              />
+            </div>
 
-          <AuthorInfoSection
-            authorUsername={blog.author.username}
-            handleOpenAuthModal={handleOpenAuthModal}
-            isMyBLog={isMyBlog}
-            isFollowed={isFollowed}
-            setIsFollowed={setIsFollowed}
-          />
+            <div className="prose dark:prose-dark">
+              <BlogContent content={blog.content} />
+            </div>
+
+            <AuthorInfoSection
+              authorUsername={blog.author.username}
+              handleOpenAuthModal={handleOpenAuthModal}
+              isMyBLog={isMyBlog}
+              isFollowed={isFollowed}
+              setIsFollowed={setIsFollowed}
+            />
+          </FollowProvider>
         </main>
       ) : (
         <ReadBlogSkeleton />

@@ -35,7 +35,7 @@ export function formatDate(dateString: string): string {
   }
 }
 
-export function getInitials(fullName: string): string {
+export function getInitials(fullName: string = ""): string {
   const words = fullName.split(" ");
   const initials = words
     .slice(0, 2)

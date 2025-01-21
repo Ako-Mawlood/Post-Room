@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createBlogSchema } from "@/libs/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/app/components/ui/button";
 import axiosInstance from "@/libs/axiosInstance";
@@ -23,7 +23,7 @@ import {
 import Editor from "./Editor";
 import { CreateBlogType } from "@/app/types/CreateBlogType";
 import useDebounceBlogData from "@/app/Hooks/useDebounceBlogData";
-import UploadWidget from "../../UploadWidget";
+import UploadWidget from "@/app/components/shared/UploadWidget";
 import Link from "next/link";
 
 type sheetProps = {

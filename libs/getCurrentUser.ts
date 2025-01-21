@@ -7,6 +7,7 @@ export async function getCurrentUser() {
     const res = await axiosInstance("/api/me", {
       headers: { Authorization: token },
     });
+    console.log(res.data);
     return res.data;
   }
 }

@@ -12,6 +12,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Link from "next/link";
 import FollowBtn from "./FollowBtn";
 import BlogCard from "../../ui/BlogCard";
+import FollowProvider from "@/app/providers/FollowProvider";
 
 const AuthorInfoSection = ({
   authorUsername,
@@ -70,10 +71,8 @@ const AuthorInfoSection = ({
                   </Link>
                   <FollowBtn
                     username={authorInfo.username}
+                    userId={authorInfo.id}
                     handleOpenAuthModal={handleOpenAuthModal}
-                    isFollowed={isFollowed}
-                    setIsFollowed={setIsFollowed}
-                    isMyBlog={isMyBLog}
                   />
                 </div>
 

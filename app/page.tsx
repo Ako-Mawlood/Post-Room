@@ -1,17 +1,17 @@
 "use client";
 
-import SigninModal from "./components/pages/Landing/SigninModal";
-import SignupModal from "./components/pages/Landing/SignupModal";
+import SigninModal from "@/app/components/pages/Landing/SigninModal";
+import SignupModal from "@/app/components/pages/Landing/SignupModal";
 import { useState } from "react";
-import BlogsPreview from "./components/pages/Landing/BlogShowcase";
-import FeatureShowcase from "./components/pages/Landing/FeatureShowcase";
+import BlogsPreview from "@/app/components/pages/Landing/BlogShowcase";
+import FeatureShowcase from "@/app/components/pages/Landing/FeatureShowcase";
 import Link from "next/link";
 import { Dialog, DialogContent } from "@/app/components/ui/dialog";
 import useSlider from "./Hooks/useSlider";
 import { backgroundColors } from "@/constants/backgroundColors";
-import Logo from "./components/ui/Logo";
+import Logo from "@/app/components/ui/Logo";
 import DescriptionSection from "@/app/components/pages/Landing/DescriptionSection";
-import NavbarUnauthorized from "./components/NavbarUnauthorized";
+import NavbarUnauthorized from "@/app/components/shared/NavbarUnauthorized";
 
 export default function LandingPage() {
   const [isNewUser, setIsNewUser] = useState(true);

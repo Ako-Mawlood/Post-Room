@@ -1,8 +1,12 @@
 "use client";
 
-import UploadWidget from "./UploadWidget";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { profileOwnerType } from "../types/profileOwnerType";
+import UploadWidget from "@/app/components/shared/UploadWidget";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/avatar";
+import { profileOwnerType } from "@/app/types/profileOwnerType";
 import clsx from "clsx";
 import { useState } from "react";
 import { LuImagePlus as AddImage } from "react-icons/lu";

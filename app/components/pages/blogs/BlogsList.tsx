@@ -7,7 +7,7 @@ import BlogCard from "../../ui/BlogCard";
 import { getBlogs } from "@/libs/getBlogs";
 import BlogCardSkeleton from "../../ui/BlogCardSekeleton";
 
-const BlogsList = ({ url }: { url: string }) => {
+const BlogsList = () => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
   const [fetchedBlogIds, setFetchedBlogIds] = useState<number[]>([]);
   const [skip, setSkip] = useState(0);
@@ -15,7 +15,7 @@ const BlogsList = ({ url }: { url: string }) => {
 
   useEffect(() => {
     async function fetchNewBlogs() {
-      const URL = url + `?skip=${skip}`;
+      const URL = `/api/blog?skip=${skip}`;
       const fetchedBlogs: blogType[] = await getBlogs(URL, {
         skipBlogIds: fetchedBlogIds,
       });
@@ -38,7 +38,7 @@ const BlogsList = ({ url }: { url: string }) => {
 
   if (blogs.length === 0) {
     return (
-      <section className="relative flex w-full flex-col items-center gap-5 p-5">
+      <section className="relative flex w-full flex-col items-center gap-5">
         <BlogCardSkeleton />
         <BlogCardSkeleton />
         <BlogCardSkeleton />

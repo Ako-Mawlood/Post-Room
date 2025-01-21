@@ -37,20 +37,17 @@ const InteractionBar = ({
   setIsBlogStarred,
   starCount,
   setStarCount,
-  isFollowed,
-  setIsFollowed,
 }: {
   blog: blogType;
   isMyBlog: boolean;
   handleOpenAuthModal: (isNewUser: boolean) => void;
   isBlogStarred: boolean;
   setIsBlogStarred: Dispatch<SetStateAction<boolean>>;
-  isFollowed: boolean;
-  setIsFollowed: Dispatch<SetStateAction<boolean>>;
   starCount: number;
   setStarCount: Dispatch<SetStateAction<number>>;
 }) => {
   const token = getCookie("token");
+  const userId = blog.author.id;
   return (
     <section className="flex flex-col gap-4 py-6 sm:flex-row sm:justify-between md:items-center">
       <div className="flex items-center gap-2">
@@ -77,10 +74,8 @@ const InteractionBar = ({
               <>
                 <Dot size={20} className="text-blue-500" />
                 <FollowBtn
-                  isFollowed={isFollowed}
-                  setIsFollowed={setIsFollowed}
+                  userId={blog.author.id}
                   username={blog.author.username}
-                  isMyBlog={isMyBlog}
                   handleOpenAuthModal={handleOpenAuthModal}
                 />
               </>

@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "./ui/Logo";
+import Logo from "@/app/components/ui/Logo";
 
 interface NavbarUnauthorizedProps {
   handleOpenAuthModal: (isNewUser: boolean) => void;

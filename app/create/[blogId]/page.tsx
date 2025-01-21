@@ -8,7 +8,7 @@ import { CgEricsson as Logo } from "react-icons/cg";
 import { getCookie } from "cookies-next";
 import Preview from "@/app/components/pages/create/Preview";
 import SheetSkeleton from "@/app/components/pages/create/SheetSkeleton";
-import Error from "@/app/components/Error";
+import Error from "@/app/components/shared/Error";
 import {
   Tabs,
   TabsContent,

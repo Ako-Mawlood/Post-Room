@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { CgEricsson as Logo } from "react-icons/cg";
-import { Button } from "./ui/button";
-import { ModeToggle } from "./ui/ModeToggle";
+import { Button } from "../ui/button";
+import { ModeToggle } from "../ui/ModeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,14 +14,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import LogoutBtn from "./LogoutBtn";
 import { getMenuItems } from "@/constants/menuItems";
-import { currentUserType } from "../types/currentUserType";
+import { currentUserType } from "../../types/currentUserType";
 import { getInitials } from "@/libs/utils";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { getCookie } from "cookies-next";
-import NotificationLog from "./NotificationLog";
+import NotificationLog from "@/app/components/shared/NotificationLog";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useState<currentUserType | null>(null);
