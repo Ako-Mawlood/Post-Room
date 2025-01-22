@@ -21,44 +21,6 @@ import FollowBtn from "../pages/read/FollowBtn";
 import { getInitials } from "@/libs/utils";
 import FollowProvider from "@/app/providers/FollowProvider";
 
-const mockUsersToFollow = [
-  {
-    id: "1",
-    fullName: "Ako Mawlood",
-    username: "ako.mawlood.othman",
-    profileImage: "https://via.placeholder.com/150",
-    bio: "Software developer with a passion for open-source.",
-  },
-  {
-    id: "2",
-    fullName: "Jane Smith",
-    username: "janesmith",
-    profileImage: "/images/authors/abdulbary.jpeg",
-    bio: "UX/UI designer who loves creating intuitive user experiences.",
-  },
-  {
-    id: "3",
-    fullName: "Michael Johnson",
-    username: "michaeljohnson",
-    profileImage: "https://via.placeholder.com/150",
-    bio: "Data scientist specializing in machine learning.",
-  },
-  {
-    id: "4",
-    fullName: "Emily Davis",
-    username: "emilydavis",
-    profileImage: "/images/authors/ehsan.jpg",
-    bio: "Digital marketer helping brands grow online.",
-  },
-  {
-    id: "5",
-    fullName: "David Brown",
-    username: "davidbrown",
-    profileImage: "/images/authors/sangar.jpg",
-    bio: "Cybersecurity enthusiast and ethical hacker.",
-  },
-];
-
 const WhoToFollow = () => {
   const [usersToFollow, setUsersToFollow] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,6 +38,7 @@ const WhoToFollow = () => {
         const res = await axiosInstance.get("/api/user/follow", {
           headers: { Authorization: token },
         });
+        console.log(res.data);
 
         setUsersToFollow(res.data);
       } catch (err: any) {
@@ -114,7 +77,7 @@ const WhoToFollow = () => {
     );
   }
 
-  if (false) {
+  if (error) {
     return (
       <Card className="rounded-xl bg-red-50 text-red-800">
         <CardHeader>
@@ -128,49 +91,44 @@ const WhoToFollow = () => {
   }
 
   return (
-    <Card className="rounded-xl bg-neutral-50 text-neutral-800">
+    <Card className="rounded-xl text-accent-foreground">
       <CardHeader>
         <CardTitle>Who to follow</CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="space-y-4">
-          {(usersToFollow.length > 0 ? usersToFollow : mockUsersToFollow).map(
-            (user: any) => (
-              <FollowProvider
-                key={user.id}
-                defaultFollowedUsers={{ [user.id]: false }}
-              >
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage
-                        src={user.profileImage}
-                        alt={user.fullName}
-                      />
-                      <AvatarFallback>
-                        {getInitials(user.fullName || "Anonymous")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <Link
-                        href={`/@${user.username}`}
-                        className="font-semibold hover:underline"
-                      >
-                        {user.fullName}
-                      </Link>
-                      <p className="text-sm text-muted-foreground">
-                        @{user.username}
-                      </p>
-                      <p className="line-clamp-1 text-sm text-muted-foreground">
-                        {user.bio}
-                      </p>
-                    </div>
+          {usersToFollow.map((user: any) => (
+            <FollowProvider
+              key={user.id}
+              defaultFollowedUsers={{ [user.id]: false }}
+            >
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage src={user.imageUrl} alt={user.fullname} />
+                    <AvatarFallback>
+                      {getInitials(user.fullname)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <Link
+                      href={`/@${user.username}`}
+                      className="font-semibold hover:underline"
+                    >
+                      {user.fullname}
+                    </Link>
+                    <p className="text-sm text-muted-foreground">
+                      @{user.username}
+                    </p>
+                    <p className="line-clamp-1 text-sm text-muted-foreground">
+                      {user.bio}
+                    </p>
                   </div>
-                  <FollowBtn username={user.username} userId={user.id} />
-                </li>
-              </FollowProvider>
-            ),
-          )}
+                </div>
+                <FollowBtn username={user.username} userId={user.id} />
+              </li>
+            </FollowProvider>
+          ))}
         </ul>
       </CardContent>
     </Card>

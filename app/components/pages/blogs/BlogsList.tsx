@@ -38,7 +38,7 @@ const BlogsList = () => {
 
   if (blogs.length === 0) {
     return (
-      <section className="relative flex w-full flex-col items-center gap-5">
+      <section className="flex w-full flex-col items-center gap-5">
         <BlogCardSkeleton />
         <BlogCardSkeleton />
         <BlogCardSkeleton />
@@ -48,21 +48,22 @@ const BlogsList = () => {
   return (
     <>
       {blogs.length !== 0 && (
-        <section className="relative flex w-full flex-col items-center gap-5">
+        <section className="flex w-full flex-col items-center gap-10">
           {blogs.map((blog: blogType) => (
-            <div key={blog.id} className="animate-strech h-52 w-full">
-              <BlogCard
-                title={blog.title}
-                author={blog.author.fullname}
-                authorImageUrl={blog.author.imageUrl}
-                blogId={blog.blogId}
-                blogImageUrl={blog.imageUrl}
-                categories={blog.categories}
-                content={blog.content}
-                createdAt={blog.createdAt}
-                stars={blog._count.stars}
-              />
-            </div>
+            <BlogCard
+              key={blog.id}
+              username={blog.author.username}
+              title={blog.title}
+              isSaved={blog.saved}
+              author={blog.author.fullname}
+              authorImageUrl={blog.author.imageUrl}
+              blogId={blog.blogId}
+              blogImageUrl={blog.imageUrl}
+              categories={blog.categories}
+              content={blog.content}
+              createdAt={blog.createdAt}
+              stars={blog._count.stars}
+            />
           ))}
           {hasReachedEnd ? (
             <p className="my-20 font-PT">

@@ -22,7 +22,7 @@ export default async function MainPagesLayout({
       <main className="relative flex w-full flex-col justify-center p-3 md:flex-row md:gap-16">
         {children}
 
-        <aside className="order-1 w-full p-5 md:order-2 md:w-[25rem]">
+        <aside className="sticky top-5 order-1 flex w-full flex-col gap-5 p-5 md:order-2 md:w-[27rem]">
           <Search />
           <TopBlogs />
           <WhoToFollow />

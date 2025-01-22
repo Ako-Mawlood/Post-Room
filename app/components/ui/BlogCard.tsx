@@ -1,17 +1,20 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./card";
+import { Card, CardHeader, CardContent } from "./card";
 import Image from "next/image";
-import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { CiStar as StarIcon } from "react-icons/ci";
-import { calculateReadingTime, formatDate, getInitials } from "@/libs/utils";
+import { formatDate, getInitials } from "@/libs/utils";
+import { Button } from "./button";
+import SaveBtn from "../pages/read/SaveBtn";
+import Link from "next/link";
 
 type BlogCardPropsType = {
   author: string;
+  username: string;
   authorId?: number;
   authorImageUrl: string | null;
   blogId: string;
+  isSaved: boolean;
   blogImageUrl: string | null;
   categories: any;
   title: string;
@@ -22,8 +25,10 @@ type BlogCardPropsType = {
 
 const BlogCard = ({
   author,
+  username,
   authorImageUrl,
   blogId,
+  isSaved,
   blogImageUrl,
   categories,
   title,
@@ -31,64 +36,80 @@ const BlogCard = ({
   createdAt,
   stars,
 }: BlogCardPropsType) => {
+  const sanitizedContent = content
+    .replace(/[#*_~`>\-\+\[\]\(\)!]/g, "")
+    .replace(/\\n|\n/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+  const previewContent = sanitizedContent.slice(0, 200);
   return (
-    <Link className="h-52 w-full" href={`/read/${blogId}`}>
-      <Card className="flex h-full w-full items-start gap-1 rounded-xl border-none bg-background p-2 duration-150 hover:bg-accent">
-        <div className="flex h-full w-4/6 flex-col justify-between p-2 font-semibold">
-          <CardHeader className="flex w-full flex-row gap-1 space-y-0 p-0">
-            {categories.map((category: { category: { name: string } }) => (
-              <span
-                key={category.category.name}
-                className="truncate rounded-lg p-1 text-xs"
-              >
-                #{category.category.name}
-              </span>
-            ))}
-          </CardHeader>{" "}
-          <CardContent className="flex flex-col gap-2 overflow-hidden p-0">
-            <CardTitle className="line-clamp-2 font-PT text-xl md:text-2xl">
+    <Card className="flex h-72 w-full flex-col items-start justify-between rounded-xl border border-border bg-background">
+      <CardHeader className="flex w-full flex-row items-center justify-start gap-2">
+        <Avatar>
+          <AvatarFallback>{getInitials(author)}</AvatarFallback>
+          <AvatarImage src={authorImageUrl || ""} />
+        </Avatar>
+        <div className="flex flex-col items-start justify-between">
+          <span>{author}</span>
+          <div className="flex gap-3">
+            <span className="text-sm font-normal text-muted-foreground">
+              @{username} . {formatDate(createdAt)}
+            </span>
+          </div>
+        </div>
+      </CardHeader>
+
+      <CardContent className="flex h-fit w-full justify-between gap-4">
+        <div className="flex flex-grow flex-col gap-2">
+          <Link href={`/read/${blogId}`}>
+            <h1 className="line-clamp-2 font-PT text-xl hover:underline md:text-2xl">
               {title}
-            </CardTitle>
+            </h1>
+          </Link>
 
-            <div className="line-clamp-2 text-sm text-accent-foreground"></div>
-            <div className="flex animate-none justify-normal">
-              <div className="flex items-start justify-normal text-ellipsis font-PT text-accent-foreground"></div>
-            </div>
-          </CardContent>
-          <CardFooter className="flex w-full items-center justify-between gap-2 p-0 text-xs">
-            <div className="flex items-center">
-              {" "}
-              <Avatar>
-                <AvatarFallback>{getInitials(author)}</AvatarFallback>
-                <AvatarImage src={authorImageUrl as string} />
-              </Avatar>
-              <span className="ml-2 hidden truncate sm:block md:w-32">
-                {author}
-              </span>
-            </div>
+          <p className="line-clamp-2 font-normal text-muted-foreground">
+            {previewContent}
+          </p>
+        </div>
+        {blogImageUrl && (
+          <div className="relative h-24 w-[500px] rounded-lg">
+            <Image
+              className="rounded-lg object-cover"
+              src={blogImageUrl}
+              sizes="230px"
+              fill={true}
+              alt="Blog image"
+            />
+          </div>
+        )}
+      </CardContent>
+      <div className="flex w-full items-center justify-between gap-2 px-5 pb-2 text-xs">
+        <div className="flex items-center gap-1">
+          <div className="flex h-full w-fit items-center gap-1 text-sm">
+            <span>{stars}</span>
+            {" Stars"}
+            <SaveBtn isSaved={isSaved} blogId={blogId} />
+          </div>
+        </div>
 
-            <span className="w-fit">{formatDate(createdAt)}</span>
-            <span className="w-fit">{calculateReadingTime(content)}</span>
-            <div className="flex w-fit items-center gap-1">
-              <StarIcon className="size-5" />
-              <span>{stars}</span>
-            </div>
-          </CardFooter>
+        <div className="flex items-center gap-3">
+          {categories.map((category: { category: { name: string } }) => (
+            <Button
+              key={category.category.name}
+              variant="secondary"
+              size="sm"
+              className="truncate rounded-full py-1 text-xs font-normal"
+            >
+              {category.category.name}
+            </Button>
+          ))}
         </div>
-        <div className="relative h-full w-2/6 rounded-xl">
-          <Image
-            className="rounded-xl object-cover"
-            src={
-              blogImageUrl ||
-              "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
-            }
-            sizes="230px"
-            fill={true}
-            alt="Blog image"
-          />
-        </div>
-      </Card>
-    </Link>
+      </div>
+      {/* 
+     
+        */}
+    </Card>
   );
 };
 

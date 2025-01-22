@@ -10,11 +10,11 @@ import { useState, useCallback } from "react";
 const SaveBtn = ({
   isSaved,
   blogId,
-  handleOpenAuthModal,
+  handleOpenAuthModal = () => {},
 }: {
   isSaved: boolean;
   blogId: string;
-  handleOpenAuthModal: (isNewUser: boolean) => void;
+  handleOpenAuthModal?: (isNewUser: boolean) => void;
 }) => {
   const [isBlogSaved, setIsBlogSaved] = useState(isSaved);
   const [isPending, setIsPending] = useState(false);
@@ -75,12 +75,12 @@ const SaveBtn = ({
       <Button
         onClick={handleUnSaveBlog}
         disabled={isPending}
-        size="sm"
         variant="ghost"
+        size="sm"
         className="disabled:opacity-100"
       >
         <SavedIcon size={20} />
-        <span className="hidden sm:block">Saved</span>
+        Saved
       </Button>
     );
   }
@@ -89,12 +89,12 @@ const SaveBtn = ({
     <Button
       onClick={handleSaveBlog}
       disabled={isPending}
-      size="sm"
       variant="ghost"
+      size="sm"
       className="disabled:opacity-100"
     >
       <SaveIcon size={20} />
-      <span className="hidden sm:block">Save</span>
+      Save
     </Button>
   );
 };
