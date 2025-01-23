@@ -21,7 +21,6 @@ const CreateAccount = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const currentUser: currentUserType = await getCurrentUser();
-  console.log(currentUser);
   const setupStep = searchParams.setupStep || "fullname";
   if (!currentUser) return;
   return (

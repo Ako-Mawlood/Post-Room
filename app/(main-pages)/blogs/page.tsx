@@ -12,73 +12,77 @@ const BlogsPage = () => {
   const [fetchedBlogIds, setFetchedBlogIds] = useState<number[]>([]);
   const [skip, setSkip] = useState(0);
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchNewBlogs() {
+      setIsLoading(true); // Set loading to true before fetching
       const URL = `/api/blog?skip=${skip}`;
-      const fetchedBlogs: blogType[] = await getBlogs(URL, {
-        skipBlogIds: fetchedBlogIds,
-      });
-      const blogIdes: number[] = [];
-      fetchedBlogs.map((blog) => {
-        blogIdes.push(blog.id);
-      });
-      setFetchedBlogIds((prev) => [...prev, ...blogIdes]);
-      if (fetchedBlogs.length === 0) {
-        setHasReachedEnd(true);
-      }
-      if (blogs.length === 0) {
-        setBlogs(fetchedBlogs);
-      } else {
+      try {
+        const fetchedBlogs: blogType[] = await getBlogs(URL, {
+          skipBlogIds: fetchedBlogIds,
+        });
+        const blogIds: number[] = fetchedBlogs.map((blog) => blog.id);
+        setFetchedBlogIds((prev) => [...prev, ...blogIds]);
+
+        if (fetchedBlogs.length === 0) {
+          setHasReachedEnd(true);
+        }
+
         setBlogs((prevBlogs) => [...prevBlogs, ...fetchedBlogs]);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false after fetching
       }
     }
+
     fetchNewBlogs();
   }, [skip]);
 
-  if (blogs.length === 0) {
+  if (blogs.length === 0 && isLoading) {
     return (
       <section className="order-2 flex w-full flex-col items-start justify-start gap-10 md:order-1 md:w-[45rem]">
-        <h1 className="font-Pt my-4 text-5xl md:my-10">Explore blogs</h1>
         <BlogCardSkeleton />
         <BlogCardSkeleton />
         <BlogCardSkeleton />
       </section>
     );
   }
+
   return (
-    <>
-      <aside className="order-2 flex w-full flex-col items-start justify-start md:order-1 md:w-[45rem]">
-        <h1 className="font-Pt my-4 text-5xl md:my-10">Explore blogs</h1>
-        {blogs.length !== 0 && (
-          <section className="flex w-full flex-col items-center gap-5 md:gap-10">
-            {blogs.map((blog: blogType) => (
-              <BlogCard
-                key={blog.id}
-                username={blog.author.username}
-                title={blog.title}
-                isSaved={blog.saved}
-                author={blog.author.fullname}
-                authorImageUrl={blog.author.imageUrl}
-                blogId={blog.blogId}
-                blogImageUrl={blog.imageUrl}
-                categories={blog.categories}
-                content={blog.content}
-                createdAt={blog.createdAt}
-                stars={blog._count.stars}
-              />
-            ))}
-            {hasReachedEnd ? (
-              <p className="my-20 font-PT">
-                🚀 Whoa, you&apos;ve reached the end!
-              </p>
-            ) : (
-              <Trigger setSkip={setSkip} />
-            )}
-          </section>
+    <aside className="order-2 flex w-full flex-col items-start justify-start md:order-1 md:max-w-[45rem]">
+      <section className="flex w-full flex-col items-center gap-5 md:gap-10">
+        {blogs.map((blog: blogType) => (
+          <BlogCard
+            key={blog.id}
+            username={blog.author.username}
+            title={blog.title}
+            isSaved={blog.saved}
+            author={blog.author.fullname}
+            authorImageUrl={blog.author.imageUrl}
+            blogId={blog.blogId}
+            blogImageUrl={blog.imageUrl}
+            categories={blog.categories}
+            content={blog.content}
+            createdAt={blog.createdAt}
+            stars={blog._count.stars}
+          />
+        ))}
+        {isLoading && (
+          // Show skeleton loaders when new blogs are being fetched
+          <>
+            <BlogCardSkeleton />
+            <BlogCardSkeleton />
+          </>
         )}
-      </aside>
-    </>
+        {hasReachedEnd && !isLoading ? (
+          <p className="my-20 font-PT">🚀 Whoa, you&apos;ve reached the end!</p>
+        ) : (
+          !isLoading && <Trigger setSkip={setSkip} />
+        )}
+      </section>
+    </aside>
   );
 };
 

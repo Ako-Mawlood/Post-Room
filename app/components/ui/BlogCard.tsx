@@ -80,9 +80,7 @@ const BlogCard = ({
       <CardContent className="flex h-full w-full justify-between gap-4">
         <div className="flex flex-col gap-2">
           <Link href={`/read/${blogId}`}>
-            <h1 className="line-clamp-2 text-lg font-bold hover:underline">
-              {title}
-            </h1>
+            <h1 className="text-lg font-bold hover:underline">{title}</h1>
           </Link>
           <p className="line-clamp-2 text-sm text-muted-foreground">
             {previewContent}
@@ -108,26 +106,26 @@ const BlogCard = ({
         </div>
 
         <div className="flex gap-2 md:hidden">
-          {categories.slice(0, 2).map((category) => (
+          {categories.slice(0, 2).map(({ category }) => (
             <Button
-              key={category.category.name}
+              key={category.name}
               variant="secondary"
               size="sm"
               className="truncate rounded-full py-1 text-xs"
             >
-              {category.category.name}
+              {category.name}
             </Button>
           ))}
         </div>
         <div className="hidden gap-2 md:flex">
-          {categories.map((category) => (
+          {categories.map(({ category }) => (
             <Button
-              key={category.category.name}
+              key={category.name}
               variant="secondary"
               size="sm"
               className="truncate rounded-full py-1 text-xs"
             >
-              {category.category.name}
+              {category.name}
             </Button>
           ))}
         </div>

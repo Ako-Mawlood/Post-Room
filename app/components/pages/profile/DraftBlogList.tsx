@@ -1,28 +1,18 @@
+"use client";
+
 import axiosInstance from "@/libs/axiosInstance";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import blogWhite from "@/public/assets/blogWhite.svg";
 import blogBlack from "@/public/assets/blogBlack.svg";
 import { blogType } from "@/app/types/blogType";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../ui/card";
-import { getInitials, formatDate } from "@/libs/utils";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/components/ui/avatar";
 import { Badge } from "@/app/components/ui/badge";
+import { getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
+import BlogCard from "../../ui/BlogCard";
 
 async function getDraftedBlogs() {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token")?.value;
+  const token = getCookie("token");
 
   const res = await axiosInstance("/api/blog/draft", {
     headers: { Authorization: token },
@@ -30,8 +20,15 @@ async function getDraftedBlogs() {
   return res.data;
 }
 
-const DraftBlogList = async () => {
-  const draftedBlogs = await getDraftedBlogs();
+const DraftBlogList = () => {
+  const [draftedBlogs, setDraftedBlogs] = useState<blogType[] | undefined>(
+    undefined,
+  );
+  useEffect(() => {
+    getDraftedBlogs().then((data: blogType[]) => {
+      setDraftedBlogs(data);
+    });
+  }, []);
 
   if (!draftedBlogs || draftedBlogs.length === 0) {
     return (
@@ -60,67 +57,30 @@ const DraftBlogList = async () => {
       </div>
     );
   }
+
   return (
     <>
       {draftedBlogs && (
         <div className="mx-auto flex w-full flex-wrap justify-start gap-10 p-6">
-          {draftedBlogs.map((blog: blogType) => (
+          {draftedBlogs.map((blog) => (
             <Link
               href={`/create/${blog.blogId}`}
               key={blog.id}
               className="h-52 w-full md:w-4/5 lg:w-[47%]"
             >
-              <Card className="flex h-full w-full items-start gap-1 rounded-lg border-none duration-150 hover:bg-accent">
-                <div className="flex h-full w-4/6 flex-col justify-between p-2 font-semibold">
-                  <CardHeader className="flex w-full flex-row gap-1 space-y-0 p-0">
-                    {blog.categories.map(
-                      (category: { category: { name: string } }) => (
-                        <span
-                          key={category.category.name}
-                          className="truncate rounded-lg p-1 text-xs"
-                        >
-                          #{category.category.name}
-                        </span>
-                      ),
-                    )}
-                  </CardHeader>
-                  <CardContent className="flex flex-col gap-2 overflow-hidden p-0">
-                    <CardTitle className="line-clamp-2 font-PT text-xl md:text-2xl">
-                      {blog.title}
-                    </CardTitle>
-                  </CardContent>
-                  <CardFooter className="flex w-full items-center justify-between gap-2 p-0 text-xs">
-                    <div className="flex items-center">
-                      <Avatar>
-                        <AvatarFallback>
-                          {getInitials(blog.author.fullname)}
-                        </AvatarFallback>
-                        <AvatarImage src={blog.author.imageUrl as string} />
-                      </Avatar>
-                      <span className="ml-2 hidden truncate sm:block md:w-32">
-                        {blog.author.fullname}
-                      </span>
-                    </div>
-                    <span className="w-fit">{formatDate(blog.createdAt)}</span>
-                  </CardFooter>
-                </div>
-                <div className="relative h-full w-2/6 rounded-lg">
-                  <Image
-                    className="rounded-r-md object-cover"
-                    src={
-                      blog.imageUrl ||
-                      "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"
-                    }
-                    sizes="230px"
-                    fill={true}
-                    alt="Blog image"
-                  />
-
-                  <Badge className="absolute right-2 top-2 bg-card text-card-foreground opacity-90 hover:bg-card">
-                    Draft
-                  </Badge>
-                </div>
-              </Card>
+              <BlogCard
+                author={blog.author.fullname}
+                username={blog.author.username}
+                authorImageUrl={blog.author.imageUrl}
+                blogId={blog.blogId}
+                isSaved={blog.saved}
+                categories={blog.categories}
+                title={blog.title}
+                content={blog.content}
+                createdAt={blog.createdAt}
+                blogImageUrl={blog.imageUrl}
+                stars={blog._count.stars}
+              />
             </Link>
           ))}
         </div>

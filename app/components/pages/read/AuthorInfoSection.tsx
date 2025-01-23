@@ -1,5 +1,5 @@
 import { profileOwnerType } from "@/app/types/profileOwnerType";
-import { getUserByUsername } from "@/libs/getUserByUsername";
+
 import { getInitials } from "@/libs/utils";
 
 import {
@@ -12,14 +12,24 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Link from "next/link";
 import FollowBtn from "./FollowBtn";
 import BlogCard from "../../ui/BlogCard";
-import FollowProvider from "@/app/providers/FollowProvider";
+import axiosInstance from "@/libs/axiosInstance";
+import { notFound } from "next/navigation";
 
+async function getUserByUsername(username: string, token: string) {
+  try {
+    const res = await axiosInstance(`/api/user/${username}`, {
+      headers: { Authorization: token },
+    });
+    return res.data;
+  } catch (err: any) {
+    if (err.status === 404) {
+      notFound();
+    }
+  }
+}
 const AuthorInfoSection = ({
   authorUsername,
   handleOpenAuthModal,
-  isFollowed,
-  setIsFollowed,
-  isMyBLog,
 }: {
   authorUsername: string;
   handleOpenAuthModal: (isNewUser: boolean) => void;

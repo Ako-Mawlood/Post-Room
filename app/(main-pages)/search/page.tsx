@@ -42,7 +42,7 @@ const BlogsPage = ({
   }, []);
 
   return (
-    <aside className="order-2 flex w-full flex-col items-start justify-start md:order-1 md:w-[45rem]">
+    <aside className="order-2 flex w-full flex-col items-start justify-start gap-5 md:order-1 md:w-[45rem]">
       <h1 className="text-4xl text-primary">
         {!isBlogFound ? (
           <>
@@ -66,21 +66,21 @@ const BlogsPage = ({
         </section>
       )}
       {blogs.length !== 0 && !isLoading && (
-        <section className="relative flex w-full flex-col items-center gap-5 p-5 md:w-[728px]">
+        <section className="flex w-full flex-col items-center gap-5 md:gap-10">
           {blogs.map((blog: blogType) => (
-            <div key={blog.id} className="animate-stretch h-52 w-full">
-              <BlogCard
-                title={blog.title}
-                author={blog.author.fullname}
-                authorImageUrl={blog.author.imageUrl}
-                blogId={blog.blogId}
-                blogImageUrl={blog.imageUrl}
-                categories={blog.categories}
-                content={blog.content}
-                createdAt={blog.createdAt}
-                stars={blog._count.stars}
-              />
-            </div>
+            <BlogCard
+              title={blog.title}
+              author={blog.author.fullname}
+              authorImageUrl={blog.author.imageUrl}
+              blogId={blog.blogId}
+              blogImageUrl={blog.imageUrl}
+              categories={blog.categories}
+              content={blog.content}
+              createdAt={blog.createdAt}
+              stars={blog._count.stars}
+              username={blog.author.username}
+              isSaved={blog.saved}
+            />
           ))}
         </section>
       )}

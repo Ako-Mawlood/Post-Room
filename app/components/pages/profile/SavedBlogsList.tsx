@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import blogWhite from "@/public/assets/blogWhite.svg";
 import blogBlack from "@/public/assets/blogBlack.svg";
@@ -6,30 +8,40 @@ import { ImSpinner2 as Spinner } from "react-icons/im";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import BlogCard from "../../ui/BlogCard";
-import { cookies } from "next/headers";
+import { useEffect, useState } from "react";
+import { AxiosError } from "axios";
 
-interface savedBlogType extends blogType {
-  author: {
-    id: number;
-    imageUrl: string;
-    fullname: string;
-    username: string;
-  };
-}
+const SavedBlogsList = () => {
+  const [savedBlogs, setSavedBlogs] = useState<
+    { blog: blogType }[] | undefined
+  >([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-async function getSavedBlogs() {
-  const res = await axiosInstance("/api/list", {
-    headers: { Authorization: getCookie("token", { cookies }) },
-  });
-  return res.data;
-}
-const SavedBlogsList = async () => {
-  const savedBlogs = await getSavedBlogs();
+  useEffect(() => {
+    setIsLoading(true);
+    axiosInstance("/api/list", {
+      headers: { Authorization: getCookie("token") },
+    })
+      .then((res) => setSavedBlogs(res.data))
+      .catch((err) =>
+        setError(err.response?.data?.message || "Could not get saved blogs"),
+      )
+      .finally(() => setIsLoading(false));
+  }, []);
 
-  if (!savedBlogs) {
+  if (isLoading) {
     return (
       <div className="mt-8 flex h-[30rem] w-full items-start justify-center">
         <Spinner className="font-extrathin size-10 animate-spin text-slate-300" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mt-8 flex h-[30rem] w-full items-start justify-center">
+        <h1 className="text-destructive">{error}</h1>
       </div>
     );
   }
@@ -40,15 +52,13 @@ const SavedBlogsList = async () => {
           <Image
             src={blogWhite}
             className="hidden dark:block"
-            width={0}
-            height={250}
+            layout="intrinsic"
             alt="No blog vector"
           />
           <Image
             src={blogBlack}
             className="dark:hidden"
-            width={0}
-            height={250}
+            layout="intrinsic"
             alt="No blog vector"
           />
         </div>
@@ -60,28 +70,25 @@ const SavedBlogsList = async () => {
   }
 
   return (
-    <>
-      {savedBlogs && (
-        <div className="mx-auto flex w-full flex-wrap justify-start gap-10 p-6">
-          {savedBlogs.map((blog: { blog: savedBlogType }) => {
-            return (
-              <BlogCard
-                key={blog.blog.id}
-                author={blog.blog.author?.fullname}
-                authorImageUrl={blog.blog.author?.imageUrl}
-                blogId={blog.blog.blogId}
-                blogImageUrl={blog.blog.imageUrl}
-                categories={blog.blog.categories}
-                title={blog.blog.title}
-                content={blog.blog.content}
-                createdAt={blog.blog.createdAt}
-                stars={blog.blog._count.stars}
-              />
-            );
-          })}
+    <div className="mx-auto flex w-full flex-wrap justify-center gap-10 p-6">
+      {savedBlogs.map(({ blog }) => (
+        <div key={blog.id} className="w-full md:w-[40rem] lg:w-[45%]">
+          <BlogCard
+            author={blog.author.fullname}
+            username={blog.author.username}
+            authorImageUrl={blog.author.imageUrl}
+            blogId={blog.blogId}
+            isSaved={blog.saved}
+            blogImageUrl={blog.imageUrl}
+            categories={blog.categories}
+            title={blog.title}
+            content={blog.content}
+            createdAt={blog.createdAt}
+            stars={blog._count.stars}
+          />
         </div>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 

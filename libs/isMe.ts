@@ -1,7 +1,8 @@
+import { CurrentUserContext } from "@/app/providers/CurrentUserProvider";
 import { currentUserType } from "@/app/types/currentUserType";
-import { getCurrentUser } from "./getCurrentUser";
+import { useContext } from "react";
 
 export async function isMe(userId: number) {
-  const currentUser: currentUserType = await getCurrentUser();
-  return currentUser.id === userId;
+  const currentUser = useContext(CurrentUserContext);
+  return currentUser && currentUser.id === userId;
 }

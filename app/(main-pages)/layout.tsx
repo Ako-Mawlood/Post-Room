@@ -16,7 +16,7 @@ export default async function MainPagesLayout({
   return (
     <>
       <Navbar />
-      <main className="flex w-full flex-col justify-center p-3 md:flex-row md:gap-16">
+      <main className="flex w-full flex-col justify-center p-8 md:flex-row md:gap-8">
         {children}
         <SideBar />
       </main>

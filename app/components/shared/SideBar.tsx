@@ -23,13 +23,10 @@ const SideBar = () => {
       const contentHeight = container.getBoundingClientRect().height;
       const sideBarTop = sideBar.getBoundingClientRect().top + scrollTop;
 
-      // Adjust with an offset to make sure the last element is fully visible
-      const offsetPadding = 20; // Add space to prevent clipping
-      const totalOffset =
-        contentHeight - viewportHeight + sideBarTop + offsetPadding;
-
-      if (scrollTop >= totalOffset) {
-        container.style.transform = `translateY(-${totalOffset - sideBarTop}px)`;
+      if (scrollTop >= contentHeight - viewportHeight + sideBarTop) {
+        container.style.transform = `translateY(-${
+          contentHeight - viewportHeight + sideBarTop
+        }px)`;
         container.style.position = "fixed";
       } else {
         container.style.transform = "";
@@ -39,21 +36,18 @@ const SideBar = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup scroll event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <aside className="sidebar order-1 mb-5 hidden w-full flex-col gap-5 p-5 md:order-2 md:flex md:w-[27rem]">
+    <aside className="sidebar order-1 hidden w-full flex-col gap-5 md:order-2 md:flex md:w-[27rem]">
       <div className="container flex w-[27rem] flex-col gap-5">
         <Search />
         <WhoToFollow />
         <UserCategories />
-        <WhoToFollow />
-        <UserCategories />
-        <div className="h-6 w-full"></div>
+        <div className="h-10"></div>
       </div>
     </aside>
   );

@@ -4,28 +4,16 @@ import { Button } from "@/app/components/ui/button";
 import { useToast } from "@/app/Hooks/use-toast";
 
 import axiosInstance from "@/libs/axiosInstance";
-import { getCurrentUser } from "@/libs/getCurrentUser";
-import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+
+import { useContext, useState } from "react";
 import { ImSpinner8 as Spinner } from "react-icons/im";
+import { CurrentUserContext } from "../providers/CurrentUserProvider";
 const SendResetLinkBtn = () => {
   const [isPending, setIsPending] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  const currentUser = useContext(CurrentUserContext);
+  if (!currentUser) return null;
+  const userEmail = currentUser.email;
   const { toast } = useToast();
-
-  useEffect(() => {
-    const fetchUserEmail = async () => {
-      try {
-        const token = getCookie("token");
-        const currentUser = await getCurrentUser();
-        setUserEmail(currentUser.email);
-      } catch (error) {
-        console.error("Failed to fetch user email", error);
-      }
-    };
-
-    fetchUserEmail();
-  }, []);
 
   const handleSendResetPasswordLink = async () => {
     setIsPending(true);

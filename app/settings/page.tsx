@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   bioValidation,
   fullnameValidation,
@@ -8,17 +8,31 @@ import {
 } from "@/libs/validations";
 import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
 import SendRestPasswordLinkBtn from "./SendRestPasswordLinkBtn";
-import { getCurrentUser } from "@/libs/getCurrentUser";
 import { getCookie } from "cookies-next";
-import { getUserByUsername } from "@/libs/getUserByUsername";
 import DeleteAccount from "./DeleteAccount";
-import { profileOwnerType } from "../../types/profileOwnerType";
+import { profileOwnerType } from "@/app/types/profileOwnerType";
 import UserDetailEditorSkeleton from "@/app/components/pages/settings/UserDetailEditorSkeleto";
 import UserDetailEditor from "@/app/components/pages/settings/UserDetailEditor";
+import { CurrentUserContext } from "../providers/CurrentUserProvider";
+import axiosInstance from "@/libs/axiosInstance";
+import { notFound } from "next/navigation";
 
 const validateUsername = () => usernameValidation;
 const validateFullname = () => fullnameValidation;
 const validateBio = () => bioValidation;
+
+async function getUserByUsername(username: string, token: string) {
+  try {
+    const res = await axiosInstance(`/api/user/${username}`, {
+      headers: { Authorization: token },
+    });
+    return res.data;
+  } catch (err: any) {
+    if (err.status === 404) {
+      notFound();
+    }
+  }
+}
 
 const Settings = () => {
   const [userInfo, setUserInfo] = useState<profileOwnerType | null>(null);
@@ -27,11 +41,9 @@ const Settings = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = getCookie("token");
-      const currentUser = await getCurrentUser();
-      const userInfo = await getUserByUsername(
-        currentUser.username,
-        token as string,
-      );
+      const currentUser = useContext(CurrentUserContext);
+      if (!currentUser || !token) return;
+      const userInfo = await getUserByUsername(currentUser.username, token);
       setUserInfo(userInfo);
       setLoading(false);
     };

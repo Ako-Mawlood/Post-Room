@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import axiosInstance from "@/libs/axiosInstance";
@@ -58,7 +58,7 @@ const WhoToFollow = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="bg-background">
         <CardHeader>
           <CardTitle>Who to Follow</CardTitle>
         </CardHeader>

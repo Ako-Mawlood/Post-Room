@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useContext } from "react";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { notFound } from "next/navigation";
@@ -14,18 +14,19 @@ import ReadBlogSkeleton from "@/app/components/pages/read/ReadBlogSkeleton";
 import BlogContent from "@/app/components/shared/BlogContent";
 import AuthorInfoSection from "@/app/components/pages/read/AuthorInfoSection";
 import { blogType } from "@/app/types/blogType";
-import { getCurrentUser } from "@/libs/getCurrentUser";
+
 import Navbar from "@/app/components/shared/Navbar";
 import NavbarUnauthorized from "@/app/components/shared/NavbarUnauthorized";
 import FollowProvider from "@/app/providers/FollowProvider";
+import { CurrentUserContext } from "@/app/providers/CurrentUserProvider";
 
 type Props = {
   params: { blogId: string };
 };
 
 const ReadPage = ({ params }: Props) => {
+  const currentUser = useContext(CurrentUserContext);
   const [blog, setBlog] = useState<blogType | null>(null);
-  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
@@ -35,25 +36,19 @@ const ReadPage = ({ params }: Props) => {
 
   const token = useMemo(() => getCookie("token") as string | undefined, []);
 
-  const fetchBlogAndUser = useCallback(
+  const fetchBlog = useCallback(
     async (blogId: string) => {
       setIsLoading(true);
       try {
-        const [userResponse, blogResponse] = await Promise.all([
-          token ? getCurrentUser() : Promise.resolve(null),
-          axiosInstance.get(`/api/blog/${blogId}`, {
-            headers: { Authorization: token },
-          }),
-        ]);
-
-        setCurrentUser(userResponse);
-        setBlog(blogResponse.data);
-        setIsBlogStarred(blogResponse.data.starred);
-        setStarCount(blogResponse.data._count.stars);
-        setIsFollowed(blogResponse.data.following);
+        const res = await axiosInstance.get(`/api/blog/${blogId}`, {
+          headers: { Authorization: token },
+        });
+        setBlog(res.data);
+        setIsBlogStarred(res.data.starred);
+        setStarCount(res.data._count.stars);
+        setIsFollowed(res.data.following);
       } catch (err: any) {
         if (err.response?.status === 404) notFound();
-        // Handle other errors appropriately
       } finally {
         setIsLoading(false);
       }
@@ -62,8 +57,8 @@ const ReadPage = ({ params }: Props) => {
   );
 
   useEffect(() => {
-    if (params.blogId) fetchBlogAndUser(params.blogId);
-  }, [fetchBlogAndUser, params.blogId]);
+    fetchBlog(params.blogId);
+  }, [params.blogId]);
 
   function handleOpenAuthModal(isNewUser: boolean) {
     setIsNewUser(isNewUser);
@@ -74,16 +69,11 @@ const ReadPage = ({ params }: Props) => {
     setIsAuthModalOpen(false);
   }
 
-  const isMyBlog = useMemo(
-    () => currentUser && blog && currentUser.id === blog.author.id,
-    [currentUser, blog],
-  );
+  const isMyBlog =
+    currentUser && blog ? currentUser.id === blog.author.id : false;
 
-  const fallbackImageUrl = useMemo(
-    () =>
-      "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg",
-    [],
-  );
+  const fallbackImageUrl =
+    "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg";
 
   return (
     <>
