@@ -80,3 +80,11 @@ img{
 iframe{
   width: 100%;
 }
+
+.sticky-sidebar {
+  position: fixed;
+  top: 10px;
+  max-height: calc(100vh - 20px);
+  /* Ensure the sidebar does not stretch beyond the viewport */
+  overflow-y: auto;
+}

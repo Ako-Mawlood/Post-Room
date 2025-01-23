@@ -1,5 +1,5 @@
 import Image from "next/image";
-import BlogContent from "../../BlogContent";
+import BlogContent from "@/app/components/shared/BlogContent";
 
 type previewPropsType = {
   content: string;

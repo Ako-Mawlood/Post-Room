@@ -91,7 +91,7 @@ const WhoToFollow = () => {
   }
 
   return (
-    <Card className="rounded-xl text-accent-foreground">
+    <Card className="rounded-xl bg-background text-accent-foreground">
       <CardHeader>
         <CardTitle>Who to follow</CardTitle>
       </CardHeader>

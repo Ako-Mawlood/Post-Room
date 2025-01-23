@@ -11,12 +11,12 @@ import {
   CardTitle,
   CardContent,
 } from "@/app/components/ui/card";
+import clsx from "clsx";
 
 type Category = any;
 const UserCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  console.log(categories);
-
+  const [isExpanded, setIsExpanded] = useState(false);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -33,17 +33,22 @@ const UserCategories = () => {
   }, []);
 
   return (
-    <Card className="w-full max-w-md">
+    <Card
+      className={clsx("relative w-full overflow-hidden bg-background pb-4", {
+        "h-fit": isExpanded,
+        "max-h-[25rem]": !isExpanded,
+      })}
+    >
       <CardHeader>
         <CardTitle>Your Categories</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-2">
+        <div>
           {categories.map((category) => (
             <Button
               key={category.id}
               variant="secondary"
-              className="w-full justify-start text-black"
+              className="m-1 text-black"
               asChild
             >
               <Link href={`/category/${category.category.name}`}>
@@ -52,6 +57,16 @@ const UserCategories = () => {
             </Button>
           ))}
         </div>
+        {categories.length > 14 && (
+          <div className="absolute bottom-0 left-0 flex h-10 w-full items-center justify-center bg-white bg-opacity-50 backdrop-blur dark:bg-black">
+            <button
+              className="w-full justify-start text-sm text-primary"
+              onClick={() => setIsExpanded((prev) => !prev)}
+            >
+              {isExpanded ? "See Less" : "See More"}
+            </button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

@@ -1,132 +1,158 @@
 "use client";
 
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardContent } from "@/app/components/ui/card";
 import Image from "next/image";
-import { Card, CardContent } from "@/app/components/ui/card";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
-import { Skeleton } from "@/app/components/ui/skeleton";
-import axiosInstance from "@/libs/axiosInstance";
-import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
-import { getInitials } from "@/libs/utils";
-import { blogType } from "@/app/types/blogType";
+import { formatDate, getInitials } from "@/libs/utils";
+import { Button } from "@/app/components/ui/button";
+import SaveBtn from "../pages/read/SaveBtn";
+import Link from "next/link";
 
-function BlogItem({ blog }: { blog: blogType }) {
-  return (
-    <div className="flex w-full items-center gap-4 rounded-md">
-      <div className="relative h-24 w-20 flex-shrink-0 overflow-hidden rounded-md">
-        <Image
-          src={blog.imageUrl as string}
-          alt={blog.title}
-          fill
-          className="object-cover"
-        />
-      </div>
-      <div className="flex flex-col justify-between">
-        <div>
-          <Link
-            href={`/read/${blog.blogId}`}
-            className="block text-lg font-medium leading-tight hover:underline"
-          >
-            {blog.title}
-          </Link>
-          <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
-            {blog.content.slice(0, 100)}
-          </p>
-        </div>
-        <div className="flex items-center space-x-2 pt-4">
-          <Avatar className="size-8">
-            <AvatarImage
-              src={blog.author.imageUrl}
-              alt={blog.author.fullname}
-            />
-            <AvatarFallback>{getInitials(blog.author.fullname)}</AvatarFallback>
-          </Avatar>
-          <p className="text-xs text-muted-foreground">
-            {blog.author.fullname}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+type BlogCardPropsType = {
+  blogId: string;
+};
 
-// Blog List Component
-function TopBlogsList({ blogs }: { blogs: blogType[] }) {
-  return (
-    <div className="w-full space-y-4">
-      {blogs.map((blog) => (
-        <BlogItem key={blog.id} blog={blog} />
-      ))}
-    </div>
-  );
-}
+type BlogData = {
+  author: string;
+  username: string;
+  authorImageUrl: string | null;
+  isSaved: boolean;
+  blogImageUrl: string | null;
+  categories: { category: { name: string } }[];
+  title: string;
+  content: string;
+  createdAt: string;
+  stars: number;
+};
 
-// Loading Skeleton Component
-function TopBlogsLoading() {
-  return (
-    <div className="space-y-4">
-      {[1, 2, 3].map((i) => (
-        <div
-          key={i}
-          className="flex items-stretch space-x-4 rounded-md p-5 shadow-md"
-        >
-          <Skeleton className="h-20 w-1/4 rounded-md" />
-          <div className="flex-1 space-y-2">
-            <Skeleton className="h-5 w-full" />
-            <Skeleton className="h-4 w-[90%]" />
-            <Skeleton className="h-4 w-[80%]" />
-            <div className="flex items-center space-x-2 pt-4">
-              <Skeleton className="h-6 w-6 rounded-full" />
-              <Skeleton className="h-4 w-[60%]" />
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+const BlogCard = ({ blogId }: BlogCardPropsType) => {
+  const [blogData, setBlogData] = useState<BlogData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-// Main Component
-export default function TopBlogs() {
-  const [blogs, setBlogs] = useState<blogType[] | null>(null);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchBlogData = async () => {
       try {
-        const res = await axiosInstance.get("/api/blog/top", {
-          headers: { Authorization: getCookie("token") },
-        });
-        setBlogs(res.data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setBlogs([]);
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch(`/api/blogs/${blogId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch blog data.");
+        }
+
+        const data: BlogData = await response.json();
+        setBlogData(data);
+      } catch (err: any) {
+        setError(err.message || "An unexpected error occurred.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBlogs();
-  }, []);
+    fetchBlogData();
+  }, [blogId]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!blogData) {
+    return <p>No blog data available.</p>;
+  }
+
+  const {
+    author,
+    username,
+    authorImageUrl,
+    isSaved,
+    blogImageUrl,
+    categories,
+    title,
+    content,
+    createdAt,
+    stars,
+  } = blogData;
+
+  const sanitizedContent = content
+    .replace(
+      /[#*_~`>\-\+$begin:math:display$$end:math:display$$begin:math:text$$end:math:text$!]/g,
+      "",
+    )
+    .replace(/\\n|\n/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+  const previewContent = sanitizedContent.slice(0, 200);
 
   return (
-    <Card className="mx-auto w-full max-w-2xl p-5">
-      <h1 className="mb-4 text-2xl font-semibold">Top Blogs</h1>
-      <CardContent className="p-0">
-        {loading ? (
-          <TopBlogsLoading />
-        ) : blogs && blogs.length > 0 ? (
-          <TopBlogsList blogs={blogs} />
-        ) : (
-          <p className="text-center text-muted-foreground">
-            No blogs found. Check back later!
+    <Card className="flex h-72 w-full flex-col items-start justify-between rounded-xl border border-border bg-background p-4">
+      <CardHeader className="flex w-full flex-row items-center justify-start gap-2">
+        <Avatar>
+          <AvatarFallback>{getInitials(author)}</AvatarFallback>
+          <AvatarImage src={authorImageUrl || ""} />
+        </Avatar>
+        <div className="flex flex-col items-start">
+          <span className="font-semibold">{author}</span>
+          <span className="text-sm text-muted-foreground">
+            @{username} · {formatDate(createdAt)}
+          </span>
+        </div>
+      </CardHeader>
+
+      <CardContent className="flex h-full w-full justify-between gap-4">
+        <div className="flex flex-col gap-2">
+          <Link href={`/read/${blogId}`}>
+            <h1 className="line-clamp-2 text-lg font-bold hover:underline">
+              {title}
+            </h1>
+          </Link>
+          <p className="line-clamp-2 text-sm text-muted-foreground">
+            {previewContent}
           </p>
+        </div>
+        {blogImageUrl && (
+          <div className="relative h-24 w-24 rounded-lg">
+            <Image
+              className="rounded-lg object-cover"
+              src={blogImageUrl}
+              sizes="96px"
+              fill
+              alt="Blog image"
+            />
+          </div>
         )}
       </CardContent>
+
+      <div className="flex w-full items-center justify-between text-xs">
+        <div className="flex items-center gap-1">
+          <span>{stars}</span> Stars
+          <SaveBtn isSaved={isSaved} blogId={blogId} />
+        </div>
+        <div className="flex gap-2">
+          {categories.map((category) => (
+            <Button
+              key={category.category.name}
+              variant="secondary"
+              size="sm"
+              className="truncate rounded-full py-1 text-xs"
+            >
+              {category.category.name}
+            </Button>
+          ))}
+        </div>
+      </div>
     </Card>
   );
-}
+};
+
+export default BlogCard;

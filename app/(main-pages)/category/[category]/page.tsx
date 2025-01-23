@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import BlogCard from "@/app/components/ui/BlogCard";
 import { getBlogs } from "@/libs/getBlogs";
 import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
-import Trigger from "@/app/components/pages/blogs/Trigger";
+import Trigger from "@/app/components/shared/Trigger";
 
 const CategoryPage = ({ params }: { params: { category: string } }) => {
   const [blogs, setBlogs] = useState<blogType[]>([]);
