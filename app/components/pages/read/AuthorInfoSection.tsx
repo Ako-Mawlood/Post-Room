@@ -121,6 +121,7 @@ const AuthorInfoSection = ({
               content={blog.content}
               createdAt={blog.createdAt}
               stars={blog._count.stars}
+              isDraft={false}
             />
           ))}
         </section>

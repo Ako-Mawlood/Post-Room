@@ -5,13 +5,11 @@ import Image from "next/image";
 import blogWhite from "@/public/assets/blogWhite.svg";
 import blogBlack from "@/public/assets/blogBlack.svg";
 import { blogType } from "@/app/types/blogType";
-import Link from "next/link";
-
 import { getCookie } from "cookies-next";
-
-import BlogCard from "../../ui/BlogCard";
-import DeleteBlogBtn from "../read/DeleteBlogBtn";
+import BlogCard from "@/app/components/ui/BlogCard";
+import DeleteBlogBtn from "@/app/components/pages/read/DeleteBlogBtn";
 import { useQuery } from "@tanstack/react-query";
+import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
 
 async function getDraftedBlogs() {
   const token = getCookie("token");
@@ -27,12 +25,20 @@ const DraftBlogList = () => {
     queryKey: ["draftedBlogs"],
     queryFn: getDraftedBlogs,
   });
-
   if (isLoading) {
-    return <div>loading...</div>;
+    return (
+      <div className="flex w-full flex-wrap justify-center gap-10 p-6">
+        <div className="w-full md:w-[40rem] lg:w-[45%]">
+          <BlogCardSkeleton />
+        </div>
+        <div className="w-full md:w-[40rem] lg:w-[45%]">
+          <BlogCardSkeleton />
+        </div>
+      </div>
+    );
   }
 
-  if (draftedBlogs.length === 0) {
+  if (!isLoading && draftedBlogs.length === 0) {
     return (
       <div className="mb-7 flex flex-col items-center justify-center opacity-30">
         <div className="my-10 w-72">
@@ -61,39 +67,31 @@ const DraftBlogList = () => {
   }
 
   return (
-    <>
-      {draftedBlogs && (
-        <div className="mx-auto flex w-full flex-wrap justify-start gap-10 p-6">
-          {draftedBlogs.map((blog: blogType) => (
-            <div
-              key={blog.id}
-              className="relative h-52 w-full md:w-4/5 lg:w-[47%]"
-            >
-              <div className="absolute right-4 top-4">
-                <DeleteBlogBtn
-                  text=""
-                  className="hover:bg-transparent"
-                  blogId={blog.blogId}
-                />
-              </div>
-              <BlogCard
-                author={blog.author.fullname}
-                username={blog.author.username}
-                authorImageUrl={blog.author.imageUrl}
-                blogId={blog.blogId}
-                isSaved={blog.saved}
-                categories={blog.categories}
-                title={blog.title}
-                content={blog.content}
-                createdAt={blog.createdAt}
-                blogImageUrl={blog.imageUrl}
-                stars={blog._count.stars}
-              />
-            </div>
-          ))}
+    <div className="flex w-full flex-wrap justify-center gap-10 p-6">
+      {draftedBlogs.map((blog: blogType) => (
+        <div key={blog.blogId} className="relative w-full md:w-4/5 lg:w-[47%]">
+          <DeleteBlogBtn
+            text=""
+            className="absolute right-4 top-6 w-fit hover:bg-transparent"
+            blogId={blog.blogId}
+          />
+          <BlogCard
+            author={blog.author.fullname}
+            username={blog.author.username}
+            authorImageUrl={blog.author.imageUrl}
+            blogId={blog.blogId}
+            isSaved={blog.saved}
+            categories={blog.categories}
+            title={blog.title}
+            content={blog.content}
+            createdAt={blog.createdAt}
+            blogImageUrl={blog.imageUrl}
+            stars={blog._count.stars}
+            isDraft={true}
+          />
         </div>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 

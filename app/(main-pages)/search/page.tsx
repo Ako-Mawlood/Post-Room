@@ -80,6 +80,7 @@ const BlogsPage = ({
               stars={blog._count.stars}
               username={blog.author.username}
               isSaved={blog.saved}
+              isDraft={false}
             />
           ))}
         </section>

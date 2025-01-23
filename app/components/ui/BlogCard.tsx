@@ -31,6 +31,7 @@ type BlogCardPropsType = {
   content: string;
   createdAt: string;
   stars: number;
+  isDraft: boolean;
 };
 
 const BlogCard = ({
@@ -45,6 +46,7 @@ const BlogCard = ({
   content,
   createdAt,
   stars,
+  isDraft,
 }: BlogCardPropsType) => {
   const sanitizedContent = content
     .replace(/^#{1,6}\s+/gm, "")
@@ -79,7 +81,7 @@ const BlogCard = ({
 
       <CardContent className="flex h-full w-full justify-between gap-4">
         <div className="flex flex-col gap-2">
-          <Link href={`/read/${blogId}`}>
+          <Link href={isDraft ? `/create/${blogId}` : `/read/${blogId}`}>
             <h1 className="text-lg font-bold hover:underline">{title}</h1>
           </Link>
           <p className="line-clamp-2 text-sm text-muted-foreground">
@@ -100,10 +102,12 @@ const BlogCard = ({
       </CardContent>
 
       <div className="flex w-full items-center justify-between p-4 text-xs">
-        <div className="flex items-center gap-1">
-          <span>{stars}</span> Stars
-          <SaveBtn isSaved={isSaved} blogId={blogId} />
-        </div>
+        {!isDraft && (
+          <div className="flex items-center gap-1">
+            <span>{stars}</span> Stars
+            <SaveBtn isSaved={isSaved} blogId={blogId} />
+          </div>
+        )}
 
         <div className="flex gap-2 md:hidden">
           {categories.slice(0, 2).map(({ category }) => (

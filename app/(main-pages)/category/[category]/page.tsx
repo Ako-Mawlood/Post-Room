@@ -74,6 +74,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
               stars={blog._count.stars}
               username={blog.author.username}
               isSaved={blog.saved}
+              isDraft={false}
             />
           </div>
         ))}

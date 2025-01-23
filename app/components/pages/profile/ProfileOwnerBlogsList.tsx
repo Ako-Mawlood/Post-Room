@@ -73,6 +73,7 @@ const ProfileUserBlogsList = ({ profileOwner }: profileOwnerBlogsListProps) => {
             username={profileOwner.username}
             //TODO:for now false change it later
             isSaved={false}
+            isDraft={false}
           />
         </div>
       ))}

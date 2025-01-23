@@ -32,7 +32,7 @@ const SavedBlogsList = () => {
 
   if (isLoading) {
     return (
-      <div className="mx-auto flex w-full flex-wrap justify-center gap-10 p-6">
+      <div className="flex w-full flex-wrap justify-center gap-10 p-6">
         <div className="w-full md:w-[40rem] lg:w-[45%]">
           <BlogCardSkeleton />
         </div>
@@ -75,7 +75,7 @@ const SavedBlogsList = () => {
   }
 
   return (
-    <div className="mx-auto flex w-full flex-wrap justify-center gap-10 p-6">
+    <div className="flex w-full flex-wrap justify-center gap-10 p-6">
       {savedBlogs.map(({ blog }) => (
         <div key={blog.id} className="w-full md:w-[40rem] lg:w-[45%]">
           <BlogCard
@@ -83,13 +83,14 @@ const SavedBlogsList = () => {
             username={blog.author.username}
             authorImageUrl={blog.author.imageUrl}
             blogId={blog.blogId}
-            isSaved={blog.saved}
+            isSaved={true}
             blogImageUrl={blog.imageUrl}
             categories={blog.categories}
             title={blog.title}
             content={blog.content}
             createdAt={blog.createdAt}
             stars={blog._count.stars}
+            isDraft={false}
           />
         </div>
       ))}

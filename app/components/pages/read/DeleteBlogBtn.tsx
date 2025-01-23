@@ -45,7 +45,7 @@ const DeleteBlogBtn = ({
       });
       await queryClient.invalidateQueries({ queryKey: ["draftedBlogs"] });
 
-      router.push(redirectUrl);
+      router.push(redirectUrl, { scroll: false });
       setIsModalOpen(false);
       toast({
         title: "Blog deleted",
@@ -66,7 +66,7 @@ const DeleteBlogBtn = ({
     <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <AlertDialogTrigger asChild>
         <button
-          className={`flex w-full gap-4 rounded-sm p-1 text-red-500 hover:bg-destructive/15 ${className}`}
+          className={`flex gap-4 rounded-sm p-1 text-red-500 hover:bg-destructive/15 ${className}`}
         >
           <DeleteIcon size={20} />
           {text}

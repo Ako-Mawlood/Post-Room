@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "../../ui/button";
-import { Skeleton } from "../../ui/skeleton";
-import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
+import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
+import { Skeleton } from "@/app/components/ui/skeleton";
 
 const ProfileSkeleton = () => {
   return (
@@ -13,12 +12,6 @@ const ProfileSkeleton = () => {
         <div className="absolute bottom-4 left-6 flex items-center gap-3">
           <Skeleton className="h-16 w-16 rounded-full" />
           <Skeleton className="h-4 w-36" />
-        </div>
-        <div className="absolute bottom-4 right-6 flex items-center gap-4">
-          <Button variant="outline" disabled>
-            Edit Profile
-          </Button>
-          <SettingsIcon className="text-muted-foreground" size={20} />
         </div>
       </section>
 
@@ -44,6 +37,23 @@ const ProfileSkeleton = () => {
           <Skeleton className="h-5 w-[50%]" />
         </div>
       </section>
+
+      {/* Profile Tabs Section */}
+      <section className="mt-5 flex h-7 w-full items-center justify-start gap-8 border-b border-border px-6 font-semibold text-foreground max-sm:text-sm md:mt-20">
+        <Skeleton className="h-4 w-20" />
+        <Skeleton className="h-4 w-28" />
+        <Skeleton className="h-4 w-16" />
+      </section>
+
+      {/* Blog Cards Section */}
+      <div className="mx-auto flex w-full flex-wrap justify-center gap-10 p-6">
+        <div className="w-full md:w-[40rem] lg:w-[45%]">
+          <BlogCardSkeleton />
+        </div>
+        <div className="w-full md:w-[40rem] lg:w-[45%]">
+          <BlogCardSkeleton />
+        </div>
+      </div>
     </>
   );
 };
