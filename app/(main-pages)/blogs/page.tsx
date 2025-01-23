@@ -16,7 +16,7 @@ const BlogsPage = () => {
 
   useEffect(() => {
     async function fetchNewBlogs() {
-      setIsLoading(true); // Set loading to true before fetching
+      setIsLoading(true);
       const URL = `/api/blog?skip=${skip}`;
       try {
         const fetchedBlogs: blogType[] = await getBlogs(URL, {
@@ -33,7 +33,7 @@ const BlogsPage = () => {
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
-        setIsLoading(false); // Set loading to false after fetching
+        setIsLoading(false);
       }
     }
 
@@ -70,7 +70,6 @@ const BlogsPage = () => {
           />
         ))}
         {isLoading && (
-          // Show skeleton loaders when new blogs are being fetched
           <>
             <BlogCardSkeleton />
             <BlogCardSkeleton />

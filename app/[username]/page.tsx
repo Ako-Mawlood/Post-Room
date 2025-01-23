@@ -21,21 +21,7 @@ import Navbar from "../components/shared/Navbar";
 import { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../providers/CurrentUserProvider";
 import axiosInstance from "@/libs/axiosInstance";
-
-async function getUserByUsername(username: string, token: string) {
-  try {
-    const res = await axiosInstance(`/api/user/${username}`, {
-      headers: { Authorization: token },
-    });
-    return res.data;
-  } catch (err: any) {
-    if (err.response?.status === 404) {
-      notFound();
-    } else {
-      console.error("Error fetching user:", err);
-    }
-  }
-}
+import { useQuery } from "@tanstack/react-query";
 
 const ProfilePage = ({
   searchParams,
@@ -45,32 +31,30 @@ const ProfilePage = ({
   params: { username: string };
 }) => {
   const currentUser = useContext(CurrentUserContext);
-  const [profileOwner, setProfileOwner] = useState<profileOwnerType | null>(
-    null,
-  );
-  console.log({ currentUser, profileOwner });
 
   const token = getCookie("token");
 
-  useEffect(() => {
-    if (!token || !params.username) {
-      notFound();
-    }
+  if (!token || !params.username) {
+    notFound();
+  }
 
-    const fetchProfileOwner = async () => {
-      const data = await getUserByUsername(
-        params.username.substring(3),
-        token as string,
+  const { data: profileOwner, isLoading } = useQuery<profileOwnerType>({
+    queryKey: ["ProfileOwner"],
+    queryFn: async () => {
+      const res = await axiosInstance(
+        `/api/user/${params.username.substring(3)}`,
+        {
+          headers: { Authorization: token },
+        },
       );
-      setProfileOwner(data);
-    };
+      return res.data;
+    },
+  });
 
-    fetchProfileOwner();
-  }, [params.username, token]);
-
-  if (!profileOwner) {
+  if (isLoading) {
     return <ProfileSkeleton />;
   }
+  if (!profileOwner) return;
 
   const isCurrentUserProfile = currentUser?.id === profileOwner.id;
   const validTabs = ["blogs", "saved-blogs", "drafts"];

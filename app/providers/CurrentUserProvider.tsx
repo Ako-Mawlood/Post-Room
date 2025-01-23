@@ -14,20 +14,23 @@ export const CurrentUserProvider = ({
   const [currentUser, setCurrentUser] = useState<currentUserType | null>(null);
   const token = getCookie("token");
 
-  if (!token) return;
   async function getCurrentUser() {
     try {
-      const res = await axios("/api/me", { headers: { Authorization: token } });
+      if (token) {
+        const res = await axios("/api/me", {
+          headers: { Authorization: token },
+        });
 
-      setCurrentUser(res.data);
+        setCurrentUser(res.data);
+      }
     } catch (err: any) {
-      console.error(err.response.data || "Failed to get user data");
+      console.error("Failed to get user data");
     }
   }
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  }, [token]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

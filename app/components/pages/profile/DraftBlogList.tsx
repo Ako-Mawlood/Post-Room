@@ -6,10 +6,12 @@ import blogWhite from "@/public/assets/blogWhite.svg";
 import blogBlack from "@/public/assets/blogBlack.svg";
 import { blogType } from "@/app/types/blogType";
 import Link from "next/link";
-import { Badge } from "@/app/components/ui/badge";
+
 import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+
 import BlogCard from "../../ui/BlogCard";
+import DeleteBlogBtn from "../read/DeleteBlogBtn";
+import { useQuery } from "@tanstack/react-query";
 
 async function getDraftedBlogs() {
   const token = getCookie("token");
@@ -21,16 +23,16 @@ async function getDraftedBlogs() {
 }
 
 const DraftBlogList = () => {
-  const [draftedBlogs, setDraftedBlogs] = useState<blogType[] | undefined>(
-    undefined,
-  );
-  useEffect(() => {
-    getDraftedBlogs().then((data: blogType[]) => {
-      setDraftedBlogs(data);
-    });
-  }, []);
+  const { data: draftedBlogs, isLoading } = useQuery({
+    queryKey: ["draftedBlogs"],
+    queryFn: getDraftedBlogs,
+  });
 
-  if (!draftedBlogs || draftedBlogs.length === 0) {
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+
+  if (draftedBlogs.length === 0) {
     return (
       <div className="mb-7 flex flex-col items-center justify-center opacity-30">
         <div className="my-10 w-72">
@@ -62,12 +64,18 @@ const DraftBlogList = () => {
     <>
       {draftedBlogs && (
         <div className="mx-auto flex w-full flex-wrap justify-start gap-10 p-6">
-          {draftedBlogs.map((blog) => (
-            <Link
-              href={`/create/${blog.blogId}`}
+          {draftedBlogs.map((blog: blogType) => (
+            <div
               key={blog.id}
-              className="h-52 w-full md:w-4/5 lg:w-[47%]"
+              className="relative h-52 w-full md:w-4/5 lg:w-[47%]"
             >
+              <div className="absolute right-4 top-4">
+                <DeleteBlogBtn
+                  text=""
+                  className="hover:bg-transparent"
+                  blogId={blog.blogId}
+                />
+              </div>
               <BlogCard
                 author={blog.author.fullname}
                 username={blog.author.username}
@@ -81,7 +89,7 @@ const DraftBlogList = () => {
                 blogImageUrl={blog.imageUrl}
                 stars={blog._count.stars}
               />
-            </Link>
+            </div>
           ))}
         </div>
       )}

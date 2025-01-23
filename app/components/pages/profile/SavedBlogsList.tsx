@@ -4,12 +4,12 @@ import Image from "next/image";
 import blogWhite from "@/public/assets/blogWhite.svg";
 import blogBlack from "@/public/assets/blogBlack.svg";
 import { blogType } from "@/app/types/blogType";
-import { ImSpinner2 as Spinner } from "react-icons/im";
+
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import BlogCard from "../../ui/BlogCard";
 import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
+import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
 
 const SavedBlogsList = () => {
   const [savedBlogs, setSavedBlogs] = useState<
@@ -32,8 +32,13 @@ const SavedBlogsList = () => {
 
   if (isLoading) {
     return (
-      <div className="mt-8 flex h-[30rem] w-full items-start justify-center">
-        <Spinner className="font-extrathin size-10 animate-spin text-slate-300" />
+      <div className="mx-auto flex w-full flex-wrap justify-center gap-10 p-6">
+        <div className="w-full md:w-[40rem] lg:w-[45%]">
+          <BlogCardSkeleton />
+        </div>
+        <div className="w-full md:w-[40rem] lg:w-[45%]">
+          <BlogCardSkeleton />
+        </div>
       </div>
     );
   }
