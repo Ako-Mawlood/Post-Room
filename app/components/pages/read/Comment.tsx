@@ -1,6 +1,10 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/avatar";
 import { formatDate, getInitials } from "@/libs/utils";
 import { CommentType } from "@/app/types/commentType";
 import { EditComment } from "./EditComment";
@@ -18,7 +22,7 @@ import {
   PopoverTrigger,
 } from "@radix-ui/react-popover";
 import DeleteComment from "./DeleteComment";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 
 type Props = {
   isCommentOwner: boolean;

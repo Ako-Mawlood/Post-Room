@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import EmailSignupForm from "./EmailSignupForm";
 import { oAuthBtns } from "@/constants/OAuthBtns";
 import OAuthBtn from "./OAuthBtn";
-import { DialogTitle } from "../../ui/dialog";
+import { DialogTitle } from "@/app/components/ui/dialog";
 
 type Props = {
   isNewUser: boolean;

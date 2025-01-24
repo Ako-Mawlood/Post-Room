@@ -25,7 +25,7 @@ import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z, ZodSchema } from "zod";
-import { Textarea } from "../../ui/textarea";
+import { Textarea } from "@/app/components/ui/textarea";
 import { useQueryClient } from "@tanstack/react-query";
 
 type UserDetailEditorProps = {

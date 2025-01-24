@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import clsx from "clsx";
-import { Avatar, AvatarImage, AvatarFallback } from "../../ui/avatar";
-import { Badge } from "../../ui/badge";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from "@/app/components/ui/avatar";
+import { Badge } from "@/app/components/ui/badge";
 import { blogsConfig } from "@/constants/blogsConfig";
 import { getInitials } from "@/libs/utils";
 import { PiStarFourFill as StarIcon } from "react-icons/pi";

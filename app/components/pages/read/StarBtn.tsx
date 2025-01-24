@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { LuStar as StarIcon } from "react-icons/lu";
 import { GoStarFill as StaredIcon } from "react-icons/go";
 import axiosInstance from "@/libs/axiosInstance";

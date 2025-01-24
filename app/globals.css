@@ -84,6 +84,6 @@ iframe{
 .sticky-sidebar {
   position: fixed;
   top: 10px;
-  max-height: calc(100vh);
+  max-height: calc(100vh+20px);
   overflow-y: auto;
 }

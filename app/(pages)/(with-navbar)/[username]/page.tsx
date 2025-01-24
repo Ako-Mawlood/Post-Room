@@ -17,9 +17,8 @@ import { notFound } from "next/navigation";
 import { getCookie } from "cookies-next";
 import Link from "next/link";
 import DraftBlogList from "@/app/components/pages/profile/DraftBlogList";
-import Navbar from "../components/shared/Navbar";
 import { useContext } from "react";
-import { CurrentUserContext } from "../providers/CurrentUserProvider";
+import { CurrentUserContext } from "@/app/providers/CurrentUserProvider";
 import axiosInstance from "@/libs/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 
@@ -76,7 +75,6 @@ const ProfilePage = ({
 
   return (
     <>
-      <Navbar />
       {!isLoading && profileOwner ? (
         <>
           <section className="relative flex h-[40vh] w-full items-center border-b border-border px-6">

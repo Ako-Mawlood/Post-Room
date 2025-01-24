@@ -11,7 +11,7 @@ import { getCookie } from "cookies-next";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Link from "next/link";
 import FollowBtn from "./FollowBtn";
-import BlogCard from "../../ui/BlogCard";
+import BlogCard from "@/app/components/ui/BlogCard";
 import axiosInstance from "@/libs/axiosInstance";
 import { notFound } from "next/navigation";
 

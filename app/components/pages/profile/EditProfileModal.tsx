@@ -1,8 +1,8 @@
 "use client";
 
 import { GoArrowUpRight as GoIcon } from "react-icons/go";
-import { Button } from "../../ui/button";
-import { Textarea } from "../../ui/textarea";
+import { Button } from "@/app/components/ui/button";
+import { Textarea } from "@/app/components/ui/textarea";
 import { Input } from "@/app/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
+} from "@/app/components/ui/form";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { useState } from "react";
@@ -26,7 +26,6 @@ import { profileOwnerType } from "@/app/types/profileOwnerType";
 import ProfileImageEditor from "@/app/components/shared/ProfileImageEditor";
 import { editProfileSchema } from "@/libs/validations";
 import { X as Close } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
 type EditProfileModalType = {
@@ -36,7 +35,6 @@ type EditProfileModalType = {
 type FormDataType = z.infer<typeof editProfileSchema>;
 
 const EditProfileModal = ({ profileOwner }: EditProfileModalType) => {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false);

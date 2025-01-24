@@ -1,15 +1,15 @@
 "use client";
 
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import axios from "../../../../libs/axiosInstance";
+import axios from "@/libs/axiosInstance";
 import { useRouter } from "next/navigation";
 import { ImSpinner8 as Spinner } from "react-icons/im";
 import clsx from "clsx";
-import { Skeleton } from "../../ui/skeleton";
+import { Skeleton } from "@/app/components/ui/skeleton";
 import { currentUserType } from "@/app/types/currentUserType";
 import { getCookie } from "cookies-next";
 import { usernameValidation } from "@/libs/validations";

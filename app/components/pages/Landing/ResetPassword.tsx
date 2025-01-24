@@ -19,7 +19,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "../../ui/form";
+} from "@/app/components/ui/form";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { ImSpinner8 as Spinner } from "react-icons/im";

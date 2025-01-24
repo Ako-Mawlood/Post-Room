@@ -3,7 +3,7 @@
 import { getCookie } from "cookies-next";
 import axiosInstance from "@/libs/axiosInstance";
 import { useState, FormEvent } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { getInitials, sanitizeContent } from "@/libs/utils";
 import {
   Avatar,

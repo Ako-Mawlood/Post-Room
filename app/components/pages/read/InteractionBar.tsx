@@ -27,7 +27,7 @@ import {
 } from "@/app/components/ui/avatar";
 import CommentSideBar from "./CommentSideBar";
 import DeleteBlogBtn from "./DeleteBlogBtn";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 
 const InteractionBar = ({
   blog,
@@ -47,7 +47,6 @@ const InteractionBar = ({
   setStarCount: Dispatch<SetStateAction<number>>;
 }) => {
   const token = getCookie("token");
-  const userId = blog.author.id;
   return (
     <section className="flex flex-col gap-4 py-6 sm:flex-row sm:justify-between md:items-center">
       <div className="flex items-center gap-2">
@@ -129,7 +128,11 @@ const InteractionBar = ({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <DeleteBlogBtn blogId={blog.blogId} className="w-full" />
+                <DeleteBlogBtn
+                  blogId={blog.blogId}
+                  redirectUrl="/blogs"
+                  className="w-full"
+                />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

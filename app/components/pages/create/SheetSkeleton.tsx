@@ -1,4 +1,4 @@
-import { Skeleton } from "../../ui/skeleton";
+import { Skeleton } from "@/app/components/ui/skeleton";
 
 const SheetSkeleton = () => {
   return (

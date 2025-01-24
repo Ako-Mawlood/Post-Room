@@ -6,7 +6,7 @@ import React, {
   SetStateAction,
   FormEvent,
 } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { useQueryClient } from "@tanstack/react-query";

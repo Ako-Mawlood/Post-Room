@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext } from "react";
-import axios from "../../libs/axiosInstance";
+
 import { currentUserType } from "../types/currentUserType";
 import { getCookie } from "cookies-next";
 import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "@/libs/axiosInstance";
 
 export const CurrentUserContext = createContext<currentUserType | null>(null);
 
@@ -22,7 +23,7 @@ export const CurrentUserProvider = ({
     queryFn: async () => {
       const token = getCookie("token");
       if (!token) return null;
-      const res = await axios("/api/me", {
+      const res = await axiosInstance("/api/me", {
         headers: { Authorization: token },
       });
       return res.data;

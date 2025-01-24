@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { ImSpinner8 as Spinner } from "react-icons/im";
 import {
   AlertDialog,
@@ -12,7 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../../ui/alert-dialog";
+} from "@/app/components/ui/alert-dialog";
 import { LuTrash as DeleteIcon } from "react-icons/lu";
 import axiosInstance from "@/libs/axiosInstance";
 import { useRouter } from "next/navigation";

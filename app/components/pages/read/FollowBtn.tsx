@@ -4,7 +4,7 @@ import axiosInstance from "@/libs/axiosInstance";
 
 import { getCookie } from "cookies-next";
 import { useCallback, useState, useContext } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { FollowContext } from "@/app/providers/FollowProvider";
 
 type Props = {

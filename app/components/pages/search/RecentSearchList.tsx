@@ -1,5 +1,5 @@
 import { useEffect, Dispatch, SetStateAction, FormEvent } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { X } from "lucide-react";

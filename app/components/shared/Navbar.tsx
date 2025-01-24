@@ -2,10 +2,14 @@
 
 import { useContext } from "react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/avatar";
 import { CgEricsson as Logo } from "react-icons/cg";
-import { Button } from "../ui/button";
-import { ModeToggle } from "../ui/ModeToggle";
+import { Button } from "@/app/components/ui/button";
+import { ModeToggle } from "@/app/components/ui/ModeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +18,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "@/app/components/ui/dropdown-menu";
 import LogoutBtn from "./LogoutBtn";
 import { getMenuItems } from "@/constants/menuItems";
 import { getInitials } from "@/libs/utils";

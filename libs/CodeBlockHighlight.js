@@ -1,6 +1,6 @@
 // extensions/CodeBlockHighlight.ts
 import { Node } from '@tiptap/core';
-import hljs from '../lib/hljs'; // Import the configured highlight.js
+import hljs from '../lib/hljs'; 
 
 const CodeBlockHighlight = Node.create({
   name: 'codeBlockHighlight',

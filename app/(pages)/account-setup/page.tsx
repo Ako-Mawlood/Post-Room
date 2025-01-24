@@ -1,27 +1,20 @@
-import UsernameSetup from "../components/pages/account-setup/UsernameSetup";
-import FullNameSetup from "../components/pages/account-setup/FullNameSetup";
-import CategorySetup from "../components/pages/account-setup/CategorySetup";
+"use client";
+import UsernameSetup from "@/app/components/pages/account-setup/UsernameSetup";
+import FullNameSetup from "@/app/components/pages/account-setup/FullNameSetup";
+import CategorySetup from "@/app/components/pages/account-setup/CategorySetup";
 import { CgEricsson as Logo } from "react-icons/cg";
-import { currentUserType } from "../types/currentUserType";
-import { cookies } from "next/headers";
-import { getCookie } from "cookies-next";
-import axiosInstance from "@/libs/axiosInstance";
+import { useContext } from "react";
+import { CurrentUserContext } from "@/app/providers/CurrentUserProvider";
 
-async function getCurrentUser() {
-  const token = getCookie("token", { cookies });
-  const res = await axiosInstance("/api/me", {
-    headers: { Authorization: token },
-  });
-  return res.data;
-}
-
-const CreateAccount = async ({
+const CreateAccount = ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const currentUser: currentUserType = await getCurrentUser();
   const setupStep = searchParams.setupStep || "fullname";
+  const currentUser = useContext(CurrentUserContext);
+  console.log(currentUser);
+  console.log("hello dude ");
   if (!currentUser) return;
   return (
     <div className="flex h-screen flex-col items-center justify-center">

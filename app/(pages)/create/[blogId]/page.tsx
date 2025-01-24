@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Sheet from "../../components/pages/create/Sheet";
+import Sheet from "@/app/components/pages/create/Sheet";
 import axiosInstance from "@/libs/axiosInstance";
 import Link from "next/link";
 import { CgEricsson as Logo } from "react-icons/cg";
@@ -41,7 +41,6 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
           Authorization: getCookie("token"),
         },
       });
-      console.log(res.data.isDraft);
 
       const blogDataObj = {
         title: res.data.title,

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { LuBookmark as SaveIcon } from "react-icons/lu";
 import { IoBookmark as SavedIcon } from "react-icons/io5";
 import axiosInstance from "@/libs/axiosInstance";

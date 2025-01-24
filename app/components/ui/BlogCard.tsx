@@ -14,9 +14,8 @@ import {
 } from "@/app/components/ui/avatar";
 import { formatDate, getInitials } from "@/libs/utils";
 import { Button } from "@/app/components/ui/button";
-import SaveBtn from "../pages/read/SaveBtn";
+import SaveBtn from "@/app/components/pages/read/SaveBtn";
 import Link from "next/link";
-import BlogContent from "../shared/BlogContent";
 
 type BlogCardPropsType = {
   author: string;

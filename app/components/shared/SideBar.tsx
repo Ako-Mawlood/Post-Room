@@ -3,8 +3,7 @@
 import React, { useEffect } from "react";
 import UserCategories from "./UserCategories";
 import WhoToFollow from "./WhoToFollow";
-import Search from "../pages/search/Search";
-
+import Search from "@/app/components/pages/search/Search";
 import BlogEditorIntro from "./BlogEditorIntro";
 
 const SideBar = () => {

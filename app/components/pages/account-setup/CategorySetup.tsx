@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { IoAddOutline as AddIcon } from "react-icons/io5";
 import { IoCheckmarkSharp as TrueIcon } from "react-icons/io5";
 import { useCallback, useEffect, useState } from "react";
@@ -65,7 +65,7 @@ const CategorySetup = () => {
     <main className="flex h-full w-full flex-col md:w-7/12">
       <div className="flex flex-col gap-4 text-center">
         <h1 className="font-PT text-2xl text-primary">
-          Witch category are you intrested in ?
+          Witch category are you interested in ?
         </h1>
         <p className="text-lg">Choose three or more.</p>
         <section className="mb-20 w-full">

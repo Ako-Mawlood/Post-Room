@@ -5,7 +5,11 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
-import { Popover, PopoverTrigger, PopoverContent } from "../../ui/popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/app/components/ui/popover";
 import RecentSearchList from "./RecentSearchList";
 
 type RecentSearchesType = {

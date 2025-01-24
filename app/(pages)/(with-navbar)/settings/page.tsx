@@ -11,11 +11,10 @@ import SendRestPasswordLinkBtn from "./SendRestPasswordLinkBtn";
 import { getCookie } from "cookies-next";
 import DeleteAccount from "./DeleteAccount";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
-import UserDetailEditorSkeleton from "../components/pages/settings/UserDetailEditorSkeleton";
+import UserDetailEditorSkeleton from "@/app/components/pages/settings/UserDetailEditorSkeleton";
 import UserDetailEditor from "@/app/components/pages/settings/UserDetailEditor";
-import { CurrentUserContext } from "../providers/CurrentUserProvider";
+import { CurrentUserContext } from "@/app/providers/CurrentUserProvider";
 import axiosInstance from "@/libs/axiosInstance";
-import Navbar from "../components/shared/Navbar";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 
@@ -51,7 +50,6 @@ const Settings = () => {
 
   return (
     <>
-      <Navbar />
       <main className="my-10 flex w-full flex-col gap-8 px-4 md:mx-auto md:w-3/5 lg:w-1/2">
         <div className="mt-6 flex w-full items-center gap-2 border-b py-4 text-4xl font-semibold">
           <SettingsIcon />

@@ -12,7 +12,7 @@ const DeleteAccountPage = async ({ params }: { params: { token: string } }) => {
       redirect("/");
     })
     .catch((err) => {
-      console.log(err.response.data);
+      console.log(err.message);
     });
 };
 

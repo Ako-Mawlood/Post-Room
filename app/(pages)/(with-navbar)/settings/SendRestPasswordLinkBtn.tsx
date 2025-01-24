@@ -2,7 +2,7 @@
 
 import { Button } from "@/app/components/ui/button";
 import { useToast } from "@/app/Hooks/use-toast";
-import { currentUserType } from "../types/currentUserType";
+import { currentUserType } from "@/app/types/currentUserType";
 import axiosInstance from "@/libs/axiosInstance";
 import { useState } from "react";
 import { ImSpinner8 as Spinner } from "react-icons/im";

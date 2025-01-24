@@ -6,7 +6,7 @@ import Link from "next/link";
 import EmailSigninForm from "./EmailSigninForm";
 import OAuthBtn from "./OAuthBtn";
 import { oAuthBtns } from "@/constants/OAuthBtns";
-import { DialogTitle } from "../../ui/dialog";
+import { DialogTitle } from "@/app/components/ui/dialog";
 
 interface Props {
   isNewUser: boolean;

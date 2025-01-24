@@ -23,7 +23,6 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
       try {
         const URL = `/api/blog/category/${params.category}?skip=${skip}`;
         const fetchedBlogs: blogType[] = await getBlogs(URL);
-        console.log(fetchedBlogs);
         if (fetchedBlogs.length === 0) {
           setHasReachedEnd(true);
           if (blogs.length === 0) setIsBlogFound(false);

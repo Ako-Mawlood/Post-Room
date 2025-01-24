@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CreateBlogType } from "../types/CreateBlogType";
+import { CreateBlogType } from "@/app/types/CreateBlogType";
 
 const useDebounceBlogData = (blogData: CreateBlogType, delay: number) => {
   const [debouncedBlogData, setDebouncedBlogData] = useState(blogData);

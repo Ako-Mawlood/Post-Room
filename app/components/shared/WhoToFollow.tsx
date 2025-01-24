@@ -17,7 +17,7 @@ import {
   AvatarImage,
 } from "@/app/components/ui/avatar";
 import { Skeleton } from "@/app/components/ui/skeleton";
-import FollowBtn from "../pages/read/FollowBtn";
+import FollowBtn from "@/app/components/pages/read/FollowBtn";
 import { getInitials } from "@/libs/utils";
 import FollowProvider from "@/app/providers/FollowProvider";
 
@@ -38,7 +38,6 @@ const WhoToFollow = () => {
         const res = await axiosInstance.get("/api/user/follow", {
           headers: { Authorization: token },
         });
-        console.log(res.data);
 
         setUsersToFollow(res.data);
       } catch (err: any) {

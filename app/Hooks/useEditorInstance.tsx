@@ -9,7 +9,7 @@ import { TextStyle } from "@tiptap/extension-text-style";
 import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
 import { common, createLowlight } from "lowlight";
 import { Markdown } from "tiptap-markdown";
-import { CustomCodeBlock } from "../components/pages/create/CustomCodeBlock";
+import { CustomCodeBlock } from "@/app/components/pages/create/CustomCodeBlock";
 type UseEditorInstanceProps = {
   content: string;
   updateContent?: (editor: Editor) => void;

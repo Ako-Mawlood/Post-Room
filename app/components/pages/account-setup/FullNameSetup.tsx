@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
+} from "@/app/components/ui/form";
 import { currentUserType } from "@/app/types/currentUserType";
 import axiosInstance from "@/libs/axiosInstance";
 
@@ -33,13 +33,11 @@ type fullnameType = z.infer<typeof fullnameSchema>;
 const FullNameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
   const router = useRouter();
   const form = useForm<fullnameType>({
-    defaultValues: { fullname: currentUser.fullname },
+    defaultValues: { fullname: currentUser.fullname && currentUser.fullname },
     resolver: zodResolver(fullnameSchema),
   });
 
   async function handleSetupFullname(data: fullnameType) {
-    console.log(data);
-
     await axiosInstance
       .put("/api/user", data, {
         headers: { Authorization: getCookie("token") },

@@ -16,7 +16,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/app/Hooks/use-toast";
 import { ImSpinner8 as Spinner } from "react-icons/im";
 import { getCookie } from "cookies-next";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 
 type Props = {
   commentId: number;

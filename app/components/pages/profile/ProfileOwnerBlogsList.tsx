@@ -1,9 +1,8 @@
-import BlogCard from "../../ui/BlogCard";
+import BlogCard from "@/app/components/ui/BlogCard";
 import blogBlack from "@/public/assets/blogBlack.svg";
 import blogWhite from "@/public/assets/blogWhite.svg";
 import Image from "next/image";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
-import DeleteBlogBtn from "../read/DeleteBlogBtn";
 
 type profileOwnerBlogsListProps = {
   profileOwner: profileOwnerType;

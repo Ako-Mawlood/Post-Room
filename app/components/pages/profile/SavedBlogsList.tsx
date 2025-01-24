@@ -7,7 +7,7 @@ import { blogType } from "@/app/types/blogType";
 
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
-import BlogCard from "../../ui/BlogCard";
+import BlogCard from "@/app/components/ui/BlogCard";
 import { useEffect, useState } from "react";
 import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
 

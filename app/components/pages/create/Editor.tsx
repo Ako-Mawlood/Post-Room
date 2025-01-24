@@ -1,7 +1,7 @@
 import ToolBar from "./ToolBar";
 import { Editor as EditorType, EditorContent } from "@tiptap/react";
 import clsx from "clsx";
-import { FormMessage } from "../../ui/form";
+import { FormMessage } from "@/app/components/ui/form";
 import useEditorInstance from "@/app/Hooks/useEditorInstance";
 import { CreateBlogType } from "@/app/types/CreateBlogType";
 import { Dispatch, SetStateAction } from "react";

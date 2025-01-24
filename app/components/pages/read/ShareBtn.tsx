@@ -2,7 +2,7 @@
 
 import { RWebShare } from "react-web-share";
 import { LuShare as ShareIcon } from "react-icons/lu";
-import { Button } from "../../ui/button";
+import { Button } from "@/app/components/ui/button";
 
 const ShareBtn = ({ blogId }: { blogId: string }) => {
   return (

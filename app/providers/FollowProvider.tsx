@@ -21,7 +21,6 @@ const FollowProvider = ({ children, defaultFollowedUsers }: Props) => {
 
   const [followedUsers, setFollowedUsers] =
     useState<FollowedUsersType>(defaultFollowedUsers);
-  console.log(followedUsers);
   function handleUpdateFollowedUsers(userId: number, action: boolean) {
     setFollowedUsers((prev) => {
       return { ...prev, [userId]: action };
