@@ -19,18 +19,17 @@ const BlogEditorIntro = () => {
       className="relative flex w-full flex-col gap-6 rounded-xl bg-cover bg-center p-6 text-primary-foreground"
       style={{ backgroundImage: "url('/images/bg-card.png')" }}
     >
-      {/* Add a dark overlay */}
       <div className="absolute inset-0 rounded-xl bg-black bg-opacity-30 text-white"></div>
       <button
         onClick={handleCloseIntro}
-        className="absolute right-3 top-3 z-10 font-bold"
+        className="absolute right-3 top-3 z-10 font-bold text-white"
       >
         <X size={20} />
       </button>
-      <h1 className="z-10 font-sans text-xl font-bold">
+      <h1 className="z-10 font-sans text-xl font-bold text-white">
         Post-Room's Blog Editor!
       </h1>
-      <div className="z-10">
+      <div className="z-10 text-white">
         <h3 className="font-semibold">Create Your Own Blog in No Time</h3>
         <p className="text-sm opacity-90">
           We've made it super easy for you to write and publish your blogs with
@@ -40,7 +39,7 @@ const BlogEditorIntro = () => {
       </div>
       <button
         onClick={handleCloseIntro}
-        className="z-10 w-2/3 self-center rounded-full bg-primary-foreground bg-opacity-60 p-1 text-base font-semibold text-accent-foreground text-blue-950 backdrop-blur"
+        className="z-10 w-2/3 self-center rounded-full bg-white p-1 text-base font-semibold text-blue-950 backdrop-blur"
       >
         <Link href="/create ">Start Writing Now</Link>
       </button>
