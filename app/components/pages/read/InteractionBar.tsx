@@ -129,7 +129,7 @@ const InteractionBar = ({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <DeleteBlogBtn blogId={blog.blogId} />
+                <DeleteBlogBtn blogId={blog.blogId} className="w-full" />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -5,6 +5,8 @@ import UserCategories from "./UserCategories";
 import WhoToFollow from "./WhoToFollow";
 import Search from "../pages/search/Search";
 
+import BlogEditorIntro from "./BlogEditorIntro";
+
 const SideBar = () => {
   useEffect(() => {
     const container = document.querySelector(
@@ -45,7 +47,9 @@ const SideBar = () => {
     <aside className="sidebar order-1 hidden w-full flex-col gap-5 md:order-2 md:flex md:w-[27rem]">
       <div className="container flex w-[27rem] flex-col gap-5">
         <Search />
+        <BlogEditorIntro />
         <WhoToFollow />
+
         <UserCategories />
         <div className="h-10"></div>
       </div>
