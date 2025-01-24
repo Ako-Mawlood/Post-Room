@@ -66,7 +66,8 @@ const ProfilePage = ({
   }
 
   const isCurrentUserProfile =
-    currentUser && profileOwner && currentUser.id === profileOwner.id;
+    (currentUser && profileOwner && currentUser.id === profileOwner.id) ||
+    false;
   const validTabs = ["blogs", "saved-blogs", "drafts"];
   const tabQueryParam =
     validTabs.includes(searchParams?.tab as string) && isCurrentUserProfile
