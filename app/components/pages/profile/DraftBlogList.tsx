@@ -28,12 +28,11 @@ const DraftBlogList = () => {
   if (isLoading) {
     return (
       <div className="flex w-full flex-wrap justify-center gap-10 p-6">
-        <div className="w-full md:w-[40rem] lg:w-[45%]">
-          <BlogCardSkeleton />
-        </div>
-        <div className="w-full md:w-[40rem] lg:w-[45%]">
-          <BlogCardSkeleton />
-        </div>
+        {[0, 1, 2, 3].map((_, index) => (
+          <div key={index} className="w-full md:w-[40rem] lg:w-[45%]">
+            <BlogCardSkeleton />
+          </div>
+        ))}
       </div>
     );
   }
