@@ -15,7 +15,6 @@ const UploadWidget = ({
   return (
     <CldUploadWidget
       onSuccess={(result: any) => {
-        //setImageUrl(result.info.url);
         updateImageUrlState(result.info.url);
         if (form) {
           form.setValue("imageUrl", result.info.url);
@@ -23,22 +22,22 @@ const UploadWidget = ({
       }}
       options={{
         multiple: false,
-        sources: ["local"],
+        sources: ["local", "unsplash", "camera", "url"],
         styles: {
           palette: {
-            window: "FFFFFF",
-            sourceBg: "#FFFFFF",
-            windowBorder: "#262626",
+            window: "#111111",
+            sourceBg: "#111111",
+            windowBorder: "#333333",
             tabIcon: "#FFFFFF",
-            inactiveTabIcon: "#FFFFFF",
-            menuIcons: "#262626",
-            link: "#262626",
-            action: "#FFFFFF",
-            inProgress: "#262626",
-            complete: "#262626",
-            error: "red",
-            textDark: "#FFFFFF",
-            textLight: "#FFFFFF",
+            inactiveTabIcon: "#888888",
+            menuIcons: "#FFFFFF",
+            link: "#FFFFFF",
+            action: "#10B981",
+            inProgress: "#EAB308",
+            complete: "#10B981",
+            error: "#EF4444",
+            textDark: "#111111",
+            textLight: "#BBBBBB",
           },
         },
       }}

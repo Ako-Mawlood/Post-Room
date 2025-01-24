@@ -3,17 +3,11 @@
 import { GoArrowUpRight as GoIcon } from "react-icons/go";
 import { Button } from "../../ui/button";
 import { Textarea } from "../../ui/textarea";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
 import { Input } from "@/app/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useToast } from "@/app/Hooks/use-toast";
-
 import {
   Form,
   FormControl,
@@ -29,10 +23,12 @@ import { useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { profileOwnerType } from "@/app/types/profileOwnerType";
-import ProfileImageEditer from "@/app/components/shared/ProfileImageUpdater";
+import ProfileImageEditor from "@/app/components/shared/ProfileImageEditor";
 import { editProfileSchema } from "@/libs/validations";
 import { X as Close } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+
 type EditProfileModalType = {
   profileOwner: profileOwnerType;
 };
@@ -41,8 +37,10 @@ type FormDataType = z.infer<typeof editProfileSchema>;
 
 const EditProfileModal = ({ profileOwner }: EditProfileModalType) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
   const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false); // Animation control
   const [fullnameCharacters, setFullnameCharacters] = useState(
     profileOwner?.fullname ? profileOwner.fullname.length : 0,
   );
@@ -58,13 +56,29 @@ const EditProfileModal = ({ profileOwner }: EditProfileModalType) => {
     resolver: zodResolver(editProfileSchema),
   });
 
+  const openModal = () => {
+    setIsProfileEditModalOpen(true);
+    setTimeout(() => setIsModalVisible(true), 10); // Delay for animation
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setTimeout(() => setIsProfileEditModalOpen(false), 50); // Matches the closing animation duration
+  };
+
   async function handleSave(data: FormDataType) {
     try {
-      await axiosInstance.put("/api/user9", data, {
+      await axiosInstance.put("/api/user", data, {
         headers: { Authorization: getCookie("token") },
       });
-      router.refresh();
-      setIsProfileEditModalOpen(false);
+
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey[0] === "profileOwner" ||
+          query.queryKey[0] === "currentUser",
+      });
+
+      closeModal();
     } catch (error) {
       console.error("Failed to save profile:", error);
       toast({
@@ -74,24 +88,33 @@ const EditProfileModal = ({ profileOwner }: EditProfileModalType) => {
       });
     }
   }
+
   return (
-    <Dialog
-      open={isProfileEditModalOpen}
-      onOpenChange={setIsProfileEditModalOpen}
-    >
-      <DialogTrigger className="absolute bottom-6 right-6">
-        <Button
-          variant="outline"
-          onClick={() => setIsProfileEditModalOpen(true)}
-          className="w-full"
+    <>
+      <Button
+        variant="outline"
+        onClick={openModal}
+        className="absolute bottom-6 right-6"
+      >
+        Edit Profile
+      </Button>
+
+      {isModalVisible && (
+        <div
+          className={clsx("fixed inset-0 z-40 bg-black/50")}
+          onClick={closeModal}
+        />
+      )}
+
+      {isProfileEditModalOpen && (
+        <section
+          className={clsx(
+            "fixed left-1/2 top-1/2 z-50 flex w-full max-w-[35rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5 rounded-md bg-background p-6 text-card-foreground shadow-md transition-transform duration-300",
+            isModalVisible ? "scale-100" : "scale-[0.97]",
+          )}
         >
-          Edit Profile
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <section className="modal absolute left-1/2 top-1/2 z-10 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5 rounded-md bg-card p-6 text-card-foreground shadow-md md:w-[35rem]">
           <Close
-            onClick={() => setIsProfileEditModalOpen(false)}
+            onClick={closeModal}
             className="absolute right-3 top-3 size-5 cursor-pointer"
           />
           <h1 className="text-2xl font-semibold">Profile information</h1>
@@ -101,7 +124,7 @@ const EditProfileModal = ({ profileOwner }: EditProfileModalType) => {
               onSubmit={form.handleSubmit(handleSave)}
               className="my-10 flex w-full flex-col gap-6 text-sm"
             >
-              <ProfileImageEditer form={form} profileOwner={profileOwner} />
+              <ProfileImageEditor form={form} profileOwner={profileOwner} />
               <FormField
                 name="fullname"
                 control={form.control}
@@ -173,7 +196,7 @@ const EditProfileModal = ({ profileOwner }: EditProfileModalType) => {
               </Link>
               <div className="flex justify-end gap-3">
                 <Button
-                  onClick={() => setIsProfileEditModalOpen(false)}
+                  onClick={closeModal}
                   variant="outline"
                   type="button"
                   className="w-20 border-green-500 text-green-500 hover:bg-green-500/15 hover:text-green-500"
@@ -190,9 +213,8 @@ const EditProfileModal = ({ profileOwner }: EditProfileModalType) => {
             </form>
           </Form>
         </section>
-        <div className="-z-5f0 fixed left-0 top-0 h-screen w-screen bg-black opacity-70 dark:bg-neutral-900"></div>
-      </DialogContent>
-    </Dialog>
+      )}
+    </>
   );
 };
 

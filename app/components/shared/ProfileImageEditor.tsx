@@ -15,7 +15,7 @@ type Props = {
   form?: any;
   profileOwner: profileOwnerType;
 };
-const ProfileImageUpdater = ({ form, profileOwner }: Props) => {
+const ProfileImageEditor = ({ form, profileOwner }: Props) => {
   const [profileImage, setProfileImage] = useState(
     profileOwner?.imageUrl || "",
   );
@@ -63,4 +63,4 @@ const ProfileImageUpdater = ({ form, profileOwner }: Props) => {
   );
 };
 
-export default ProfileImageUpdater;
+export default ProfileImageEditor;

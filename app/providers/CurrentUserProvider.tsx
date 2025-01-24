@@ -1,37 +1,41 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext } from "react";
 import axios from "../../libs/axiosInstance";
 import { currentUserType } from "../types/currentUserType";
 import { getCookie } from "cookies-next";
+import { useQuery } from "@tanstack/react-query";
 
 export const CurrentUserContext = createContext<currentUserType | null>(null);
+
 export const CurrentUserProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [currentUser, setCurrentUser] = useState<currentUserType | null>(null);
-  const token = getCookie("token");
+  const {
+    data: currentUser,
+    isError,
+    error,
+  } = useQuery<currentUserType | null>({
+    queryKey: ["currentUser"],
+    queryFn: async () => {
+      const token = getCookie("token");
+      if (!token) return null;
+      const res = await axios("/api/me", {
+        headers: { Authorization: token },
+      });
+      return res.data;
+    },
+    staleTime: 1 * 60 * 1000,
+  });
 
-  async function getCurrentUser() {
-    try {
-      if (token) {
-        const res = await axios("/api/me", {
-          headers: { Authorization: token },
-        });
-
-        setCurrentUser(res.data);
-      }
-    } catch (err: any) {
-      console.error("Failed to get user data");
-    }
+  if (isError) {
+    console.error(
+      error instanceof Error ? error.message : "An unknown error occurred",
+    );
   }
-
-  useEffect(() => {
-    getCurrentUser();
-  }, [token]);
-
+  if (!currentUser) return null;
   return (
     <CurrentUserContext.Provider value={currentUser}>
       {children}

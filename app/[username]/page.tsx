@@ -44,7 +44,7 @@ const ProfilePage = ({
     isError,
     error,
   } = useQuery<profileOwnerType, { response?: { status: number } }>({
-    queryKey: ["ProfileOwner"],
+    queryKey: ["profileOwner"],
     queryFn: async () => {
       const res = await axiosInstance(
         `/api/user/${params.username.substring(3)}`,
