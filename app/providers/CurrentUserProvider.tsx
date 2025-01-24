@@ -35,9 +35,9 @@ export const CurrentUserProvider = ({
       error instanceof Error ? error.message : "An unknown error occurred",
     );
   }
-  if (!currentUser) return null;
+
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={currentUser ?? null}>
       {children}
     </CurrentUserContext.Provider>
   );

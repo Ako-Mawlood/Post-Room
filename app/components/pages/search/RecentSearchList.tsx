@@ -3,6 +3,7 @@ import { Button } from "../../ui/button";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   handleSearch: (e: FormEvent) => void;
@@ -25,6 +26,7 @@ const RecentSearchList = ({
   setIsPopoverOpen,
 }: Props) => {
   const token = getCookie("token");
+  const router = useRouter();
 
   async function handleRemoveRecentSearch(searchToRemoveId: number) {
     const updatedRecentSearches = recentSearches.filter(
@@ -63,14 +65,15 @@ const RecentSearchList = ({
                   onClick={() => {
                     setQuery(recentSearch.content);
                     setIsPopoverOpen(false);
+                    router.push(`/search/?q=${recentSearch.content}`);
                   }}
-                  type="button" // Use "button" to prevent form submission
+                  type="button"
                   className="flex-grow truncate px-0 py-2 text-start text-[15px] font-normal hover:underline"
                 >
                   {recentSearch.content}
                 </button>
                 <Button
-                  type="button" // Keep as "button" to prevent form submission
+                  type="button"
                   variant="ghost"
                   onClick={() => handleRemoveRecentSearch(recentSearch.id)}
                   className="size-8 p-1"

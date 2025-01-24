@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -27,6 +26,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z, ZodSchema } from "zod";
 import { Textarea } from "../../ui/textarea";
+import { useQueryClient } from "@tanstack/react-query";
 
 type UserDetailEditorProps = {
   label: string;
@@ -43,6 +43,7 @@ const UserDetailEditor = ({
 }: UserDetailEditorProps) => {
   const [isUserDetailModalOpen, setIsUserDetailModalOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState(defaultValue);
+  const queryClient = useQueryClient();
 
   const formSchema = z.object({
     [type]: schemaFactory(),
@@ -57,9 +58,15 @@ const UserDetailEditor = ({
         headers: { Authorization: getCookie("token") },
       });
       const updatedValue = form.getValues(type);
-      setIsUserDetailModalOpen(false);
       form.setValue(`${type}`, updatedValue);
+
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey[0] === "profileOwner" ||
+          query.queryKey[0] === "currentUser",
+      });
       setCurrentValue(updatedValue);
+      setIsUserDetailModalOpen(false);
     } catch (err) {}
   }
   useEffect(() => {
@@ -88,7 +95,7 @@ const UserDetailEditor = ({
         <DialogHeader className="text-left">
           <DialogTitle>Edit {type}</DialogTitle>
           <DialogDescription>
-            Make changes to your {} here. Click save when done.
+            Make changes to your {label} here. Click save when done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

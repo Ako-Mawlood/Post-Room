@@ -7,10 +7,19 @@ import { deleteCookie } from "cookies-next";
 
 const LogoutBtn = () => {
   const router = useRouter();
+
+  const deleteAllCookies = () => {
+    const cookies = document.cookie.split("; ");
+    cookies.forEach((cookie) => {
+      const cookieName = cookie.split("=")[0];
+      deleteCookie(cookieName);
+    });
+  };
+
   return (
     <DropdownMenuItem
       onClick={() => {
-        deleteCookie("token");
+        deleteAllCookies();
         router.push("/");
       }}
     >

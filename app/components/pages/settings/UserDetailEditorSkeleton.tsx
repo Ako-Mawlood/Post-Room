@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../../ui/button";
 import { Skeleton } from "../../ui/skeleton";
 
-const UserDetailEditorSkeleto = () => {
+const UserDetailEditorSkeleton = () => {
   return (
     <>
       <div className="flex items-center justify-between md:p-3">
@@ -38,4 +38,4 @@ const UserDetailEditorSkeleto = () => {
   );
 };
 
-export default UserDetailEditorSkeleto;
+export default UserDetailEditorSkeleton;

@@ -70,10 +70,10 @@ const Search = () => {
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-      <div className="relative mx-auto flex w-5/6 flex-col gap-2 md:mx-0 md:w-72">
+      <div className="relative mx-auto flex w-full flex-col gap-2 rounded-full border border-border bg-background md:mx-0">
         <form
           onSubmit={handleSearch}
-          className="flex w-full items-center gap-2 rounded-full bg-muted p-2"
+          className="flex w-full items-center gap-2 rounded-full p-2"
         >
           <SearchIcon size={25} />
           <PopoverTrigger asChild>

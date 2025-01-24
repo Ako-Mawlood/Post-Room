@@ -2,18 +2,20 @@
 
 import { Button } from "@/app/components/ui/button";
 import { useToast } from "@/app/Hooks/use-toast";
-
+import { currentUserType } from "../types/currentUserType";
 import axiosInstance from "@/libs/axiosInstance";
-
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { ImSpinner8 as Spinner } from "react-icons/im";
-import { CurrentUserContext } from "../providers/CurrentUserProvider";
-const SendResetLinkBtn = () => {
+
+type Props = {
+  currentUser: currentUserType;
+};
+const SendResetLinkBtn = ({ currentUser }: Props) => {
   const [isPending, setIsPending] = useState(false);
-  const currentUser = useContext(CurrentUserContext);
+
+  const { toast } = useToast();
   if (!currentUser) return null;
   const userEmail = currentUser.email;
-  const { toast } = useToast();
 
   const handleSendResetPasswordLink = async () => {
     setIsPending(true);
@@ -38,7 +40,7 @@ const SendResetLinkBtn = () => {
 
   return (
     <Button
-      className="w-24 rounded-md"
+      className="rounded-full"
       onClick={handleSendResetPasswordLink}
       disabled={isPending}
       variant="secondary"
