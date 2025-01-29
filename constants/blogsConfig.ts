@@ -20,7 +20,7 @@ export const blogsConfig: blogConfigType[] = [
     title: "The Importance of Sleep for Children's Health",
     src: "/images/blogs/children-sleep-health.webp",
     fullName: "Ehsan Zaid",
-    authorImage: "/images/authors/ehsan.jpg",
+    authorImage: "/ehsan.jpg",
     authorBio: "Doctor, Writer",
   },
   {
@@ -28,7 +28,7 @@ export const blogsConfig: blogConfigType[] = [
     title: "The Prison System: Exploring Its Impact on Society and Inmates",
     src: "/images/blogs/prison-system-impact.webp",
     fullName: "Sangar Mawlood",
-    authorImage: "/images/authors/sangar.jpg",
+    authorImage: "/sangar.jpg",
     authorBio: "Psychologist, Author",
   },
   {
@@ -52,7 +52,7 @@ export const blogsConfig: blogConfigType[] = [
     title: "The Joy of Coding and Its Endless Possibilities",
     src: "/images/blogs/joy-of-codding.webp",
     fullName: "Abdlbarry Qaisar",
-    authorImage: "/images/authors/abdulbary.jpeg",
+    authorImage: "/abdulbary.jpeg",
     authorBio: "Software Developer",
   },
 ];

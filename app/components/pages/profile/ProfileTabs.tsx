@@ -24,6 +24,7 @@ const ProfileTabs = ({
       <ul className="mt-5 flex h-7 w-full items-center justify-start gap-8 border-b border-border px-6 font-semibold text-foreground max-sm:text-sm md:mt-20">
         <li
           onClick={() =>
+            isCurrentUserProfile &&
             router.push(`/@${profileOwnerUsername}?tab=blogs`, {
               scroll: false,
             })

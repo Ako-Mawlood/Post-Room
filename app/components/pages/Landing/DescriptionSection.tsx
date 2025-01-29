@@ -18,7 +18,7 @@ const DescriptionSection = ({
       </p>
       <button
         onClick={() => handleOpenAuthModal(true)}
-        className="black-btn hidden items-center gap-3 rounded-full px-6 py-3 text-lg md:flex"
+        className="black-btn hidden items-center gap-3 rounded-full px-6 py-3 text-lg lg:flex"
       >
         Create my account
         <span

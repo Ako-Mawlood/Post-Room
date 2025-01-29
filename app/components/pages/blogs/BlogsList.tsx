@@ -12,12 +12,12 @@ type Props = {
 };
 
 const BlogsList = ({ blogs, isFetching, hasReachedEnd, setSkip }: Props) => (
-  <section className="flex w-full flex-col items-center gap-5">
+  <section className="flex min-h-[200vh] w-full flex-col items-center gap-5">
     {blogs.length === 0 && isFetching && (
       <>
         <BlogCardSkeleton />
         <BlogCardSkeleton />
-        <BlogCardSkeleton />]
+        <BlogCardSkeleton />
       </>
     )}
 

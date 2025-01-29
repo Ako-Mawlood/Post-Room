@@ -111,7 +111,10 @@ const TopBlogs = () => {
               </div>
 
               {blog.imageUrl && (
-                <div className="relative h-12 w-[100px] rounded-lg">
+                <Link
+                  href={`/read/${blog.blogId}`}
+                  className="relative h-12 w-[100px] rounded-lg"
+                >
                   <Image
                     className="h-full w-full rounded-lg object-cover"
                     src={blog.imageUrl}
@@ -119,7 +122,7 @@ const TopBlogs = () => {
                     fill
                     alt="Blog image"
                   />
-                </div>
+                </Link>
               )}
             </div>
           );

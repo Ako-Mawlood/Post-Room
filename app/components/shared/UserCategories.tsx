@@ -17,7 +17,6 @@ type Category = { category: { name: string } };
 const UserCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -26,7 +25,7 @@ const UserCategories = () => {
         const response = await axiosInstance.get("/api/user/categories", {
           headers: { Authorization: getCookie("token") },
         });
-        setCategories(response.data);
+        setCategories(response.data.slice(0, 40));
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       } finally {
@@ -37,6 +36,9 @@ const UserCategories = () => {
     fetchCategories();
   }, []);
 
+  // Generate random widths for skeletons
+  const getRandomWidth = () => `${Math.floor(Math.random() * (80 - 8) + 90)}px`;
+
   return (
     <Card className="relative w-full overflow-hidden rounded-xl bg-background pb-4">
       {!loading ? (
@@ -46,45 +48,39 @@ const UserCategories = () => {
           </CardHeader>
           <CardContent>
             <div>
-              {(showAll ? categories : categories.slice(0, 14)).map(
-                (category) => (
-                  <button
-                    key={category.category.name}
-                    className="m-1 truncate rounded-full bg-secondary px-2 py-1 text-xs"
-                  >
-                    <Link href={`/category/${category.category.name}`}>
-                      {category.category.name}
-                    </Link>
-                  </button>
-                ),
-              )}
-            </div>
-            {categories.length > 14 && !showAll && (
-              <div className="absolute bottom-0 left-0 flex h-10 w-full items-center justify-center bg-white bg-opacity-50 backdrop-blur dark:bg-black">
+              {categories.map((category) => (
                 <Button
-                  variant="link"
-                  className="w-full justify-center text-sm text-primary"
-                  onClick={() => setShowAll(true)}
+                  key={category.category.name}
+                  variant="secondary"
+                  className="m-1 text-sm"
                 >
-                  See more
+                  <Link href={`/category/${category.category.name}`}>
+                    {category.category.name}
+                  </Link>
                 </Button>
-              </div>
-            )}
+              ))}
+            </div>
           </CardContent>
         </>
       ) : (
-        <div>
-          {Array(4)
-            .fill(null)
-            .map((_, index) => (
-              <Button
-                className="m-1 w-20"
-                key={index}
-                variant="secondary"
-                size="sm"
-              />
-            ))}
-        </div>
+        <>
+          <CardHeader>
+            <CardTitle>Your Categories</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap">
+              {Array(15)
+                .fill(null)
+                .map((_, index) => (
+                  <div
+                    key={index}
+                    className="m-1 h-10 animate-pulse rounded-full bg-muted p-2"
+                    style={{ width: getRandomWidth() }}
+                  />
+                ))}
+            </div>
+          </CardContent>
+        </>
       )}
     </Card>
   );

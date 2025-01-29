@@ -19,12 +19,10 @@ const SideBar = () => {
       return;
     }
 
-    // Function to check if screen width is at least `md`
     const isMdScreen = () => window.innerWidth >= 768;
 
     const handleScroll = () => {
       if (!isMdScreen()) {
-        // Reset styles if the screen is smaller than `md`
         container.style.position = "";
         container.style.width = "";
         return;
@@ -51,7 +49,6 @@ const SideBar = () => {
 
     const handleResize = () => {
       if (!isMdScreen()) {
-        // Reset styles when resizing to smaller screens
         container.style.position = "";
         container.style.width = "";
       }
@@ -72,9 +69,9 @@ const SideBar = () => {
         <Search />
         <div className="hidden flex-col gap-5 md:flex">
           <BlogEditorIntro />
+          <UserCategories />
           <WhoToFollow />
           <TopBlogs />
-          <UserCategories />
           <div className="h-10"></div>
         </div>
       </div>
