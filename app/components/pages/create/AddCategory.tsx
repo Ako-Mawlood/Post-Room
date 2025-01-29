@@ -89,6 +89,7 @@ const AddCategory = ({
   };
 
   const handleUpdateCategory = (e: any, index: number) => {
+    e.stopPropagation();
     const updatedCategory = e.target.value.replace(/^#\s*/, "");
     if (updatedCategory.trim() !== "") {
       const updatedCategories = [...selectedCategories];
@@ -139,8 +140,8 @@ const AddCategory = ({
 
   return (
     <div className="mt-4 flex w-full flex-col items-start justify-start">
-      <div className="flex">
-        <ul className="flex flex-wrap items-center">
+      <div className="flex flex-col gap-1 md:flex-row">
+        <ul className="order-2 flex flex-wrap items-center md:order-1">
           {selectedCategories.map((category, index: number) => (
             <li key={index} className="flex items-center rounded-sm p-1">
               <div
@@ -195,7 +196,7 @@ const AddCategory = ({
                 : "Add up to 4 tags..."
             }
             className={clsx(
-              "ml-1 w-auto bg-transparent placeholder-muted-foreground outline-none",
+              "order-1 ml-1 bg-transparent placeholder-muted-foreground outline-none md:order-2",
               { hidden: selectedCategories.length >= 4 },
             )}
           />
@@ -223,10 +224,6 @@ const AddCategory = ({
                   <span className="text-violet-600">#</span>
                   <span>{category?.name}</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ratione saepe consequuntur nobis veniam, enim omnis sed{" "}
-                </p>
               </button>
             ))
           ) : (

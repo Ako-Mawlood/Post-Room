@@ -119,7 +119,8 @@ const WhoToFollow = () => {
                     <p className="text-sm text-muted-foreground">
                       @{user.username}
                     </p>
-                    <p className="line-clamp-1 text-sm text-muted-foreground">
+
+                    <p className="line-clamp-2 text-sm text-muted-foreground">
                       {user.bio}
                     </p>
                   </div>

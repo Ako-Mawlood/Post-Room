@@ -39,6 +39,7 @@
     "@tiptap/pm": "^2.4.0",
     "@tiptap/react": "^2.4.0",
     "@tiptap/starter-kit": "^2.4.0",
+    "@vercel/speed-insights": "^1.1.0",
     "axios": "^1.6.7",
     "caniuse-lite": "^1.0.30001647",
     "class-variance-authority": "^0.7.0",

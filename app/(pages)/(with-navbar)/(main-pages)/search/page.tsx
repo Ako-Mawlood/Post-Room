@@ -74,7 +74,7 @@ const SearchPage = ({
   }, [fetchedBlogs]);
 
   return (
-    <aside className="order-2 flex w-full flex-col items-start justify-start gap-5 md:order-1 md:w-[45rem]">
+    <aside className="order-2 flex min-h-[200vh] w-full flex-col items-start justify-start gap-5 md:order-1 md:w-[45rem]">
       <h1 className="text-4xl text-primary">
         {blogs.length === 0 && !isFetching ? (
           <>

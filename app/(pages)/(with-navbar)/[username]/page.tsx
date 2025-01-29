@@ -78,11 +78,11 @@ const ProfilePage = ({
       {!isLoading && profileOwner ? (
         <>
           <section className="relative flex h-[40vh] w-full items-center border-b border-border px-6">
-            <h1 className="line-clamp-2 font-PT text-7xl md:line-clamp-1 md:text-[8.5vw]">
+            <h1 className="line-clamp-2 font-PT text-6xl md:line-clamp-1 md:text-7xl md:text-[8.5vw]">
               {profileOwner.fullname}
             </h1>
             <div className="absolute bottom-4 left-6 flex items-center gap-2">
-              <Avatar className="flex size-16 items-center justify-center gap-2 font-semibold">
+              <Avatar className="flex size-12 items-center justify-center gap-2 font-semibold md:size-16">
                 <AvatarImage src={profileOwner.imageUrl} />
                 <AvatarFallback>
                   {getInitials(profileOwner.fullname)}

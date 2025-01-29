@@ -12,10 +12,12 @@ import {
   CardContent,
 } from "@/app/components/ui/card";
 
-type Category = any;
+type Category = { category: { name: string } };
+
 const UserCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -36,7 +38,7 @@ const UserCategories = () => {
   }, []);
 
   return (
-    <Card className="relative max-h-[25rem] w-full overflow-hidden rounded-xl bg-background pb-4">
+    <Card className="relative w-full overflow-hidden rounded-xl bg-background pb-4">
       {!loading ? (
         <>
           <CardHeader>
@@ -44,24 +46,27 @@ const UserCategories = () => {
           </CardHeader>
           <CardContent>
             <div>
-              {categories.map((category) => (
-                <button
-                  key={category.category.name}
-                  className="m-1 truncate rounded-full bg-secondary px-2 py-1 text-xs"
-                >
-                  <Link href={`/category/${category.category.name}`}>
-                    {category.category.name}
-                  </Link>
-                </button>
-              ))}
+              {(showAll ? categories : categories.slice(0, 14)).map(
+                (category) => (
+                  <button
+                    key={category.category.name}
+                    className="m-1 truncate rounded-full bg-secondary px-2 py-1 text-xs"
+                  >
+                    <Link href={`/category/${category.category.name}`}>
+                      {category.category.name}
+                    </Link>
+                  </button>
+                ),
+              )}
             </div>
-            {categories.length > 14 && (
+            {categories.length > 14 && !showAll && (
               <div className="absolute bottom-0 left-0 flex h-10 w-full items-center justify-center bg-white bg-opacity-50 backdrop-blur dark:bg-black">
                 <Button
                   variant="link"
                   className="w-full justify-center text-sm text-primary"
+                  onClick={() => setShowAll(true)}
                 >
-                  <Link href="/category">See more</Link>
+                  See more
                 </Button>
               </div>
             )}
@@ -77,7 +82,7 @@ const UserCategories = () => {
                 key={index}
                 variant="secondary"
                 size="sm"
-              ></Button>
+              />
             ))}
         </div>
       )}

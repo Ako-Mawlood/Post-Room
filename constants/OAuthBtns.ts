@@ -1,10 +1,10 @@
 import { FcGoogle as Google } from "react-icons/fc";
 import { IconType } from "react-icons/lib";
-import {
-  RiFacebookBoxFill as Facebook,
-  RiAppleFill as Apple,
-} from "react-icons/ri";
-import { FaXTwitter as X } from "react-icons/fa6";
+// import {
+//   RiFacebookBoxFill as Facebook,
+//   RiAppleFill as Apple,
+// } from "react-icons/ri";
+// import { FaXTwitter as X } from "react-icons/fa6";
 
 type oAuthBtnsType = {
   id: number;
@@ -22,25 +22,25 @@ export const oAuthBtns: oAuthBtnsType = [
     name: "Google",
     color: "",
   },
-  {
-    id: 2,
-    href: "/facebook",
-    icon: Facebook,
-    name: "Facebook",
-    color: "#1877F2",
-  },
-  {
-    id: 3,
-    href: `/`,
-    icon: X,
-    name: "X",
-    color: "#000000",
-  },
-  {
-    id: 4,
-    href: "/",
-    icon: Apple,
-    name: "Apple",
-    color: "#111111",
-  },
+  // {
+  //   id: 2,
+  //   href: "/facebook",
+  //   icon: Facebook,
+  //   name: "Facebook",
+  //   color: "#1877F2",
+  // },
+  // {
+  //   id: 3,
+  //   href: `/`,
+  //   icon: X,
+  //   name: "X",
+  //   color: "#000000",
+  // },
+  // {
+  //   id: 4,
+  //   href: "/",
+  //   icon: Apple,
+  //   name: "Apple",
+  //   color: "#111111",
+  // },
 ];

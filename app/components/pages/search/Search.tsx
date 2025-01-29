@@ -74,7 +74,7 @@ const Search = () => {
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-      <div className="flex w-full flex-col gap-2 rounded-full border border-border bg-background md:relative">
+      <div className="mt-3 flex w-full flex-col gap-2 rounded-full border border-border bg-background md:relative md:mt-0">
         <form
           onSubmit={handleSearch}
           className="flex w-full items-center gap-2 rounded-full p-2"

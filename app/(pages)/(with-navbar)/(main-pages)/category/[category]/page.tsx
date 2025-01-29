@@ -70,7 +70,7 @@ const BlogsPage = ({ params }: { params: { category: string } }) => {
   }, [fetchedBlogs, queryClient, fetchedBlogIds, category, skip]);
 
   return (
-    <aside className="order-2 flex w-full flex-col items-start justify-start gap-5 md:order-1 md:max-w-[45rem]">
+    <aside className="order-2 flex min-h-[200vh] w-full flex-col items-start justify-start gap-5 md:order-1 md:max-w-[45rem]">
       <h1 className="text-4xl text-primary">
         {blogs.length === 0 && !isFetching ? (
           <>
@@ -96,7 +96,7 @@ const BlogsPage = ({ params }: { params: { category: string } }) => {
         setSkip={setSkip}
       />
       {blogs.length === 0 && !isFetching && (
-        <p className="my-10 min-h-[200vh] font-sans text-lg">
+        <p className="my-10 font-sans text-lg">
           No blogs in this category. Create one, bro!
         </p>
       )}

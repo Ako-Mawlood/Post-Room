@@ -48,12 +48,18 @@ const BlogCard = ({
   const blogCard = (
     <Card className="flex h-64 w-full flex-col items-start justify-between gap-2 overflow-hidden rounded-xl bg-background p-4 sm:h-72">
       <CardHeader className="flex w-full flex-row items-center justify-start gap-2 p-0">
-        <Avatar>
-          <AvatarFallback>{getInitials(author)}</AvatarFallback>
-          <AvatarImage src={authorImageUrl || ""} />
-        </Avatar>
+        <Link href={`/@${username}`}>
+          {" "}
+          <Avatar>
+            <AvatarFallback>{getInitials(author)}</AvatarFallback>
+            <AvatarImage src={authorImageUrl || ""} />
+          </Avatar>
+        </Link>
+
         <div className="flex flex-col items-start">
-          <span className="font-semibold">{author}</span>
+          <Link href={`/@${username}`}>
+            <span className="font-semibold hover:underline">{author}</span>
+          </Link>
           <span className="text-sm text-muted-foreground">
             @{username} · {formatDate(createdAt)}
           </span>
@@ -72,7 +78,10 @@ const BlogCard = ({
           </p>
         </div>
         {blogImageUrl && (
-          <div className="relative h-24 w-52 rounded-lg">
+          <Link
+            href={`/read/${blogId}`}
+            className="relative h-24 w-52 rounded-lg"
+          >
             <Image
               className="h-full w-full rounded-lg object-cover"
               src={blogImageUrl}
@@ -80,7 +89,7 @@ const BlogCard = ({
               fill
               alt="Blog image"
             />
-          </div>
+          </Link>
         )}
       </CardContent>
 
@@ -98,7 +107,7 @@ const BlogCard = ({
               key={category.name}
               variant="secondary"
               size="sm"
-              className="truncate rounded-full py-0.5 text-[0.7rem]"
+              className="cursor-default truncate rounded-full py-0.5 text-[0.7rem]"
             >
               {category.name.length > 15
                 ? category.name.slice(0, 15) + "..."
@@ -112,7 +121,7 @@ const BlogCard = ({
               key={category.name}
               variant="secondary"
               size="sm"
-              className="truncate rounded-full py-1 text-xs"
+              className="cursor-default truncate rounded-full py-1 text-xs"
             >
               {category.name}
             </Button>
