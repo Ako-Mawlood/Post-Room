@@ -52,9 +52,19 @@ export function calculateReadingTime(content: string) {
   const minutes = Math.ceil(words / wordsPerMinute);
   return `${minutes < 1 ? 1 : minutes} min read`;
 }
-
-export const sanitizeContent = (content: string) => {
-  const MAX_NEW_LINES = 2;
-  const newlineLimitRegex = new RegExp(`(\\n){${MAX_NEW_LINES + 1},}`, "g");
-  return content.replace(newlineLimitRegex, "\n".repeat(MAX_NEW_LINES));
+export const sanitizeContent = (content: string): string => {
+  return content
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/(\*{1,2}|~{2})(.*?)\1/g, "$2")
+    .replace(/\[([^\]]+)]\([^\)]+\)/g, "$1")
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/\$+.*?\$+/g, "")
+    .replace(/^>\s+/gm, "")
+    .replace(/^([-*+]|\d+\.)\s+/gm, "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\n+/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 };

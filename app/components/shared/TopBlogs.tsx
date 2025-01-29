@@ -1,158 +1,132 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Card, CardHeader, CardContent } from "@/app/components/ui/card";
-import Image from "next/image";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/components/ui/avatar";
-import { formatDate, getInitials } from "@/libs/utils";
-import { Button } from "@/app/components/ui/button";
-import SaveBtn from "@/app/components/pages/read/SaveBtn";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-type BlogCardPropsType = {
-  blogId: string;
-};
+import axiosInstance from "@/libs/axiosInstance";
+import Image from "next/image";
+import { getCookie } from "cookies-next";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/ui/card";
+import { Skeleton } from "@/app/components/ui/skeleton";
+import { blogType } from "@/app/types/blogType";
+import { sanitizeContent } from "@/libs/utils";
 
-type BlogData = {
-  author: string;
-  username: string;
-  authorImageUrl: string | null;
-  isSaved: boolean;
-  blogImageUrl: string | null;
-  categories: { category: { name: string } }[];
-  title: string;
-  content: string;
-  createdAt: string;
-  stars: number;
-};
-
-const BlogCard = ({ blogId }: BlogCardPropsType) => {
-  const [blogData, setBlogData] = useState<BlogData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+const TopBlogs = () => {
+  const [topBlogs, setTopBlogs] = useState<blogType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBlogData = async () => {
+    const fetchTopBlogs = async () => {
       try {
-        setLoading(true);
-        setError(null);
+        const token = getCookie("token");
 
-        const response = await fetch(`/api/blogs/${blogId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch blog data.");
+        if (!token) {
+          throw new Error("Authentication token is missing.");
         }
 
-        const data: BlogData = await response.json();
-        setBlogData(data);
+        const res = await axiosInstance.get("/api/blog/top", {
+          headers: { Authorization: token },
+        });
+
+        setTopBlogs(res.data);
       } catch (err: any) {
-        setError(err.message || "An unexpected error occurred.");
+        console.error(err);
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            "Failed to fetch top blogs",
+        );
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
-    fetchBlogData();
-  }, [blogId]);
+    fetchTopBlogs();
+  }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
+  if (isLoading) {
+    return (
+      <Card className="bg-background">
+        <CardHeader>
+          <CardTitle>Top blogs</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className="mb-4 flex items-center space-x-4">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[150px]" />
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    );
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <Card className="rounded-xl bg-red-50 text-red-800">
+        <CardHeader>
+          <CardTitle>Error</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm">{error}</p>
+        </CardContent>
+      </Card>
+    );
   }
-
-  if (!blogData) {
-    return <p>No blog data available.</p>;
-  }
-
-  const {
-    author,
-    username,
-    authorImageUrl,
-    isSaved,
-    blogImageUrl,
-    categories,
-    title,
-    content,
-    createdAt,
-    stars,
-  } = blogData;
-
-  const sanitizedContent = content
-    .replace(
-      /[#*_~`>\-\+$begin:math:display$$end:math:display$$begin:math:text$$end:math:text$!]/g,
-      "",
-    )
-    .replace(/\\n|\n/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-
-  const previewContent = sanitizedContent.slice(0, 200);
 
   return (
-    <Card className="flex h-72 w-full flex-col items-start justify-between rounded-xl border border-border bg-background p-4">
-      <CardHeader className="flex w-full flex-row items-center justify-start gap-2">
-        <Avatar>
-          <AvatarFallback>{getInitials(author)}</AvatarFallback>
-          <AvatarImage src={authorImageUrl || ""} />
-        </Avatar>
-        <div className="flex flex-col items-start">
-          <span className="font-semibold">{author}</span>
-          <span className="text-sm text-muted-foreground">
-            @{username} · {formatDate(createdAt)}
-          </span>
-        </div>
+    <Card className="w-full rounded-xl bg-background text-accent-foreground">
+      <CardHeader>
+        <CardTitle>Popular blogs</CardTitle>
       </CardHeader>
+      <CardContent className="flex flex-col gap-6">
+        {topBlogs.map((blog) => {
+          const sanitizedContent = sanitizeContent(blog.content);
+          const previewContent = sanitizedContent.slice(0, 80);
 
-      <CardContent className="flex h-full w-full justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <Link href={`/read/${blogId}`}>
-            <h1 className="line-clamp-2 text-lg font-bold hover:underline">
-              {title}
-            </h1>
-          </Link>
-          <p className="line-clamp-2 text-sm text-muted-foreground">
-            {previewContent}
-          </p>
-        </div>
-        {blogImageUrl && (
-          <div className="relative h-24 w-24 rounded-lg">
-            <Image
-              className="rounded-lg object-cover"
-              src={blogImageUrl}
-              sizes="96px"
-              fill
-              alt="Blog image"
-            />
-          </div>
-        )}
-      </CardContent>
-
-      <div className="flex w-full items-center justify-between text-xs">
-        <div className="flex items-center gap-1">
-          <span>{stars}</span> Stars
-          <SaveBtn isSaved={isSaved} blogId={blogId} />
-        </div>
-        <div className="flex gap-2">
-          {categories.map((category) => (
-            <Button
-              key={category.category.name}
-              variant="secondary"
-              size="sm"
-              className="truncate rounded-full py-1 text-xs"
+          return (
+            <div
+              key={blog.blogId}
+              className="flex w-full items-center justify-between gap-2"
             >
-              {category.category.name}
-            </Button>
-          ))}
-        </div>
-      </div>
+              <div className="flex flex-col items-start justify-between">
+                <Link href={`/read/${blog.blogId}`}>
+                  <h1 className="line-clamp-2 text-lg font-bold hover:underline">
+                    {blog.title}
+                  </h1>
+                </Link>
+                <p className="line-clamp-2 w-full text-sm text-muted-foreground">
+                  {previewContent}...
+                </p>
+              </div>
+
+              {blog.imageUrl && (
+                <div className="relative h-12 w-[100px] rounded-lg">
+                  <Image
+                    className="h-full w-full rounded-lg object-cover"
+                    src={blog.imageUrl}
+                    sizes="40px"
+                    fill
+                    alt="Blog image"
+                  />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </CardContent>
     </Card>
   );
 };
 
-export default BlogCard;
+export default TopBlogs;

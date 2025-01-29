@@ -11,6 +11,7 @@ import { formatDate, getInitials } from "@/libs/utils";
 import { Button } from "@/app/components/ui/button";
 import SaveBtn from "@/app/components/pages/read/SaveBtn";
 import Link from "next/link";
+import { sanitizeContent } from "@/libs/utils";
 
 type BlogCardPropsType = {
   author: string;
@@ -42,21 +43,7 @@ const BlogCard = ({
   stars,
   isDraft,
 }: BlogCardPropsType) => {
-  const sanitizedContent = content
-    .replace(/^#{1,6}\s+/gm, "")
-    .replace(/(\*{1,2}|~{2})(.*?)\1/g, "$2")
-    .replace(/\[([^\]]+)]\([^\)]+\)/g, "$1")
-    .replace(/!\[.*?\]\(.*?\)/g, "")
-    .replace(/`([^`]+)`/g, "$1")
-    .replace(/```[\s\S]*?```/g, "")
-    .replace(/\$+.*?\$+/g, "")
-    .replace(/^>\s+/gm, "")
-    .replace(/^([-*+]|\d+\.)\s+/gm, "")
-    .replace(/<[^>]*>/g, "")
-    .replace(/\n+/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-
+  const sanitizedContent = sanitizeContent(content);
   const previewContent = sanitizedContent.slice(0, 200);
   const blogCard = (
     <Card className="flex h-64 w-full flex-col items-start justify-between gap-2 overflow-hidden rounded-xl bg-background p-4 sm:h-72">

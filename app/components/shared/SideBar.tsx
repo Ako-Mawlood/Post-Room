@@ -5,6 +5,7 @@ import UserCategories from "./UserCategories";
 import WhoToFollow from "./WhoToFollow";
 import Search from "@/app/components/pages/search/Search";
 import BlogEditorIntro from "./BlogEditorIntro";
+import TopBlogs from "./TopBlogs";
 
 const SideBar = () => {
   useEffect(() => {
@@ -72,6 +73,7 @@ const SideBar = () => {
         <div className="hidden flex-col gap-5 md:flex">
           <BlogEditorIntro />
           <WhoToFollow />
+          <TopBlogs />
           <UserCategories />
           <div className="h-10"></div>
         </div>
