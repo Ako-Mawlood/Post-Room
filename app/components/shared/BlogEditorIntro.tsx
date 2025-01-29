@@ -17,7 +17,7 @@ const BlogEditorIntro = () => {
   return (
     <div
       className="relative flex w-full flex-col gap-3 rounded-xl border border-border bg-cover bg-center p-5 text-primary-foreground"
-      style={{ backgroundImage: "url('/images/bg-card.png')" }}
+      style={{ backgroundImage: "url('/bg-card.png')" }}
     >
       <div className="absolute inset-0 rounded-xl bg-black bg-opacity-70 text-white"></div>
       <button
