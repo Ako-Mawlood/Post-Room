@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useEffect, useState, Dispatch, SetStateAction } from "react";
-import { ImSpinner8 as Spinner } from "react-icons/im";
 type triggerPropsType = {
   setSkip: Dispatch<SetStateAction<number>>;
 };
@@ -45,11 +44,7 @@ const Trigger = ({ setSkip }: triggerPropsType) => {
 
   return (
     <>
-      <div
-        ref={triggerRef}
-        className="absolute bottom-[40vh] left-1/2 mx-auto mt-20 size-10 text-5xl"
-      ></div>
-      <Spinner className="mx-auto my-32 animate-spin text-center" />
+      <div ref={triggerRef} className="mt-10 size-20"></div>
     </>
   );
 };

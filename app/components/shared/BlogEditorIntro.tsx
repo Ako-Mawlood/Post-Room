@@ -16,13 +16,13 @@ const BlogEditorIntro = () => {
 
   return (
     <div
-      className="relative flex w-full flex-col gap-3 rounded-xl bg-cover bg-center p-5 text-primary-foreground"
+      className="relative flex w-full flex-col gap-3 rounded-xl border border-border bg-cover bg-center p-5 text-primary-foreground"
       style={{ backgroundImage: "url('/images/bg-card.png')" }}
     >
-      <div className="absolute inset-0 rounded-xl bg-black bg-opacity-30 text-white"></div>
+      <div className="absolute inset-0 rounded-xl bg-black bg-opacity-70 text-white"></div>
       <button
         onClick={handleCloseIntro}
-        className="absolute right-3 top-3 z-10 font-bold text-white"
+        className="absolute right-2 top-2 z-10 font-bold text-white"
       >
         <X size={20} />
       </button>
@@ -37,11 +37,8 @@ const BlogEditorIntro = () => {
           world today!
         </p>
       </div>
-      <button
-        onClick={handleCloseIntro}
-        className="z-10 w-full self-center rounded-full bg-white p-1 text-base font-semibold text-blue-950 backdrop-blur"
-      >
-        <Link href="/create ">Start Writing Now</Link>
+      <button className="z-10 w-full self-center rounded-full bg-white p-1 text-sm font-semibold text-blue-950 backdrop-blur hover:bg-opacity-95">
+        <Link href="/create">Start Writing Now</Link>
       </button>
     </div>
   );

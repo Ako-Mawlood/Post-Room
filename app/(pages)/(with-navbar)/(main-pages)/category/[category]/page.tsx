@@ -1,97 +1,107 @@
 "use client";
 
 import { blogType } from "@/app/types/blogType";
-import React, { useEffect, useState } from "react";
-import BlogCard from "@/app/components/ui/BlogCard";
-import { getBlogs } from "@/libs/getBlogs";
-import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
-import Trigger from "@/app/components/shared/Trigger";
+import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axiosInstance from "@/libs/axiosInstance";
+import { getCookie } from "cookies-next";
+import BlogsList from "@/app/components/pages/blogs/BlogsList";
 
-const CategoryPage = ({ params }: { params: { category: string } }) => {
+const BlogsPage = ({ params }: { params: { category: string } }) => {
+  const queryClient = useQueryClient();
   const [blogs, setBlogs] = useState<blogType[]>([]);
+  const [fetchedBlogIds, setFetchedBlogIds] = useState<Set<number>>(new Set());
   const [skip, setSkip] = useState(0);
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
-  const [isBlogFound, setIsBlogFound] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const category = params.category;
+
+  // Reset state when the category changes
+  useEffect(() => {
+    setBlogs([]);
+    setFetchedBlogIds(new Set());
+    setSkip(0);
+    setHasReachedEnd(false);
+  }, [category]);
+
+  const { data: fetchedBlogs, isFetching } = useQuery({
+    queryKey: ["categoryBlogs", category, skip],
+    queryFn: async () => {
+      const URL = `/api/blog/category/${category}?skip=${skip}`;
+      const res = await axiosInstance(URL, {
+        params: { fetchedBlogIds: Array.from(fetchedBlogIds) },
+        headers: { Authorization: getCookie("token") },
+      });
+      return res.data;
+    },
+    enabled: !!category && !hasReachedEnd,
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+  });
 
   useEffect(() => {
-    async function fetchNewBlogs() {
-      if (hasReachedEnd || isLoading) return; // Prevent redundant fetches
+    if (fetchedBlogs) {
+      if (fetchedBlogs.length === 0) {
+        setHasReachedEnd(true); // No more blogs to fetch
+      } else {
+        const newFetchedBlogs = fetchedBlogs.filter(
+          (blog: blogType) => !fetchedBlogIds.has(blog.id),
+        );
 
-      setIsLoading(true);
+        if (newFetchedBlogs.length > 0) {
+          setFetchedBlogIds((prevIds) => {
+            const updatedIds = new Set(prevIds);
+            newFetchedBlogs.forEach((blog: blogType) =>
+              updatedIds.add(blog.id),
+            );
+            return updatedIds;
+          });
 
-      try {
-        const URL = `/api/blog/category/${params.category}?skip=${skip}`;
-        const fetchedBlogs: blogType[] = await getBlogs(URL);
-        if (fetchedBlogs.length === 0) {
-          setHasReachedEnd(true);
-          if (blogs.length === 0) setIsBlogFound(false);
-          return;
+          setBlogs((prevBlogs) => [...prevBlogs, ...newFetchedBlogs]);
+
+          queryClient.setQueryData(
+            ["searchBlogs", category, skip],
+            (prev: blogType[] = []) => [...prev, ...newFetchedBlogs],
+          );
         }
-
-        setBlogs((prevBlogs) => [...prevBlogs, ...fetchedBlogs]);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      } finally {
-        setIsLoading(false);
       }
     }
-
-    fetchNewBlogs();
-  }, [skip]);
-
-  if (!isBlogFound && blogs.length === 0) {
-    return (
-      <section className="relative flex w-full flex-col items-center gap-5">
-        <h1 className="text-4xl text-muted-foreground">
-          No results for <span className="text-primary">{params.category}</span>
-        </h1>
-      </section>
-    );
-  }
+  }, [fetchedBlogs, queryClient, fetchedBlogIds, category, skip]);
 
   return (
-    <aside className="order-2 flex w-full flex-col items-start justify-start md:order-1 md:w-[45rem]">
-      <h1>
-        <span className="text-4xl text-primary">
-          {params.category.replace("%20", " ")} tagged blogs
-        </span>
+    <aside className="order-2 flex w-full flex-col items-start justify-start gap-5 md:order-1 md:max-w-[45rem]">
+      <h1 className="text-4xl text-primary">
+        {blogs.length === 0 && !isFetching ? (
+          <>
+            <span className="text-4xl text-muted-foreground">
+              No blogs categorized under
+            </span>
+            <span>{category.replace("%20", " ")}</span>
+          </>
+        ) : (
+          <>
+            <span className="text-4xl text-muted-foreground">
+              Blogs categorized under{" "}
+            </span>
+            <span>{category.replace("%20", " ")}</span>
+          </>
+        )}
       </h1>
 
-      <section className="relative flex w-full flex-col items-center gap-5">
-        {blogs.map((blog) => (
-          <div key={blog.id} className="animate-strech h-52 w-full">
-            <BlogCard
-              title={blog.title}
-              author={blog.author.fullname}
-              authorImageUrl={blog.author.imageUrl}
-              blogId={blog.blogId}
-              blogImageUrl={blog.imageUrl}
-              categories={blog.categories}
-              content={blog.content}
-              createdAt={blog.createdAt}
-              stars={blog._count.stars}
-              username={blog.author.username}
-              isSaved={blog.saved}
-              isDraft={false}
-            />
-          </div>
-        ))}
-
-        {isLoading ? (
-          <>
-            <BlogCardSkeleton />
-            <BlogCardSkeleton />
-            <BlogCardSkeleton />
-          </>
-        ) : hasReachedEnd ? (
-          <p className="my-20 font-PT">🚀 Whoa, you&apos;ve reached the end!</p>
-        ) : (
-          <Trigger setSkip={setSkip} />
-        )}
-      </section>
+      <BlogsList
+        blogs={blogs}
+        isFetching={isFetching}
+        hasReachedEnd={hasReachedEnd}
+        setSkip={setSkip}
+      />
+      {blogs.length === 0 && !isFetching && (
+        <p className="my-10 min-h-[200vh] font-sans text-lg">
+          No blogs in this category. Create one, bro!
+        </p>
+      )}
     </aside>
   );
 };
 
-export default CategoryPage;
+export default BlogsPage;

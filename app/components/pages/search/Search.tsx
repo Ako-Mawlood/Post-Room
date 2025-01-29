@@ -47,7 +47,7 @@ const Search = () => {
       // Update recent searches
       setRecentSearches((prevSearches) => {
         const searchesCopy = [...prevSearches];
-        return [{ id: Date.now(), content: query }, ...searchesCopy]; // Add the new search entry
+        return [{ id: Date.now(), content: query }, ...searchesCopy];
       });
 
       // Set the URL parameter and navigate
@@ -74,7 +74,7 @@ const Search = () => {
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-      <div className="relative mx-auto flex w-full flex-col gap-2 rounded-full border border-border bg-background md:mx-0">
+      <div className="flex w-full flex-col gap-2 rounded-full border border-border bg-background md:relative">
         <form
           onSubmit={handleSearch}
           className="flex w-full items-center gap-2 rounded-full p-2"

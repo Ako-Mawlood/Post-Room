@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from "@/app/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/app/components/ui/card";
 import Image from "next/image";
 import {
   Avatar,
@@ -64,8 +59,8 @@ const BlogCard = ({
 
   const previewContent = sanitizedContent.slice(0, 200);
   const blogCard = (
-    <Card className="flex h-72 w-full flex-col items-start justify-between rounded-xl border border-border bg-background">
-      <CardHeader className="flex w-full flex-row items-center justify-start gap-2">
+    <Card className="flex h-64 w-full flex-col items-start justify-between gap-2 overflow-hidden rounded-xl bg-background p-4 sm:h-72">
+      <CardHeader className="flex w-full flex-row items-center justify-start gap-2 p-0">
         <Avatar>
           <AvatarFallback>{getInitials(author)}</AvatarFallback>
           <AvatarImage src={authorImageUrl || ""} />
@@ -78,19 +73,21 @@ const BlogCard = ({
         </div>
       </CardHeader>
 
-      <CardContent className="flex h-full w-full justify-between gap-4">
-        <div className="flex flex-col gap-2">
+      <CardContent className="flex h-full w-full items-center justify-between gap-4 p-0">
+        <div className="flex w-full flex-col gap-2">
           <Link href={isDraft ? `/create/${blogId}` : `/read/${blogId}`}>
-            <h1 className="text-lg font-bold hover:underline">{title}</h1>
+            <h1 className="line-clamp-2 text-lg font-bold hover:underline">
+              {title}
+            </h1>
           </Link>
-          <p className="line-clamp-2 text-sm text-muted-foreground">
+          <p className="line-clamp-2 w-full text-sm text-muted-foreground">
             {previewContent}
           </p>
         </div>
         {blogImageUrl && (
-          <div className="relative h-24 w-96 rounded-lg">
+          <div className="relative h-24 w-52 rounded-lg">
             <Image
-              className="w-96 rounded-lg object-cover"
+              className="h-full w-full rounded-lg object-cover"
               src={blogImageUrl}
               sizes="96px"
               fill
@@ -100,7 +97,7 @@ const BlogCard = ({
         )}
       </CardContent>
 
-      <div className="flex w-full items-center justify-between p-4 text-xs">
+      <div className="flex w-full items-center justify-between text-xs">
         {!isDraft && (
           <div className="flex items-center gap-1">
             <span>{stars}</span> Stars
@@ -108,19 +105,21 @@ const BlogCard = ({
           </div>
         )}
 
-        <div className="flex gap-2 md:hidden">
+        <div className="flex gap-2 lg:hidden">
           {categories.slice(0, 2).map(({ category }) => (
             <Button
               key={category.name}
               variant="secondary"
               size="sm"
-              className="truncate rounded-full py-1 text-xs"
+              className="truncate rounded-full py-0.5 text-[0.7rem]"
             >
-              {category.name}
+              {category.name.length > 15
+                ? category.name.slice(0, 15) + "..."
+                : category.name}
             </Button>
           ))}
         </div>
-        <div className="hidden gap-2 md:flex">
+        <div className="hidden gap-2 lg:flex">
           {categories.map(({ category }) => (
             <Button
               key={category.name}
@@ -137,10 +136,7 @@ const BlogCard = ({
   );
   return (
     <>
-      <Link className="w-full md:hidden" href={`/read/${blogId}`}>
-        {blogCard}
-      </Link>
-      <div className="hidden md:block">{blogCard}</div>
+      <div className="w-full">{blogCard}</div>
     </>
   );
 };

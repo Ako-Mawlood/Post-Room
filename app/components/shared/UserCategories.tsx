@@ -15,8 +15,8 @@ import {
 type Category = any;
 const UserCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -36,7 +36,7 @@ const UserCategories = () => {
   }, []);
 
   return (
-    <Card className="relative max-h-[25rem] w-full overflow-hidden bg-background pb-4">
+    <Card className="relative max-h-[25rem] w-full overflow-hidden rounded-xl bg-background pb-4">
       {!loading ? (
         <>
           <CardHeader>

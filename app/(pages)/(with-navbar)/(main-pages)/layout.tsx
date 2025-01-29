@@ -14,7 +14,7 @@ export default async function MainPagesLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex w-full flex-col justify-center p-8 md:flex-row md:gap-8">
+    <main className="flex w-full flex-col justify-center gap-5 p-2 md:flex-row md:gap-5 md:p-8">
       {children}
       <SideBar />
     </main>

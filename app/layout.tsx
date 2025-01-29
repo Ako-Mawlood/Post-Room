@@ -23,17 +23,17 @@ export default function RootLayout({
           ></meta>
         </head>
         <body className="bg-background text-foreground selection:bg-foreground selection:text-background">
-          <TanstackProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="light"
-              enableSystem
-              disableTransitionOnChange
-            >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TanstackProvider>
               <Toaster />
               {children}
-            </ThemeProvider>
-          </TanstackProvider>
+            </TanstackProvider>
+          </ThemeProvider>
         </body>
       </html>
     </>

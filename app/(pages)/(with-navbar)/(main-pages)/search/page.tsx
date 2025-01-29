@@ -1,50 +1,82 @@
 "use client";
 
-import BlogCard from "@/app/components/ui/BlogCard";
 import { blogType } from "@/app/types/blogType";
-import { useEffect, useState } from "react";
-import BlogCardSkeleton from "@/app/components/ui/BlogCardSekeleton";
+import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
+import BlogsList from "@/app/components/pages/blogs/BlogsList";
 
-const BlogsPage = ({
+const SearchPage = ({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) => {
-  const q = (searchParams && searchParams.q) || "";
-  const [blogs, setBlogs] = useState<blogType[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isBlogFound, setIsBlogFound] = useState(true);
-  useEffect(() => {
-    async function fetchNewBlogs() {
-      setIsLoading(true);
+  const queryClient = useQueryClient();
+  const q = searchParams?.q as string;
 
-      try {
-        setIsBlogFound(true);
-        const res = await axiosInstance(`api/search?query=${q}`, {
-          headers: { Authorization: getCookie("token") },
-        });
-        if (res.data.length === 0) {
-          setIsBlogFound(false);
+  const [blogs, setBlogs] = useState<blogType[]>([]);
+  const [fetchedBlogIds, setFetchedBlogIds] = useState<number[]>([]);
+  const [skip, setSkip] = useState(0);
+  const [hasReachedEnd, setHasReachedEnd] = useState(false);
+  const [query, setQuery] = useState<string | undefined>(q);
+
+  const {
+    data: fetchedBlogs,
+    isFetching,
+    refetch,
+  } = useQuery({
+    queryKey: ["searchBlogs", query, skip],
+    queryFn: async () => {
+      const URL = `/api/search?query=${query}&skip=${skip}`;
+      const res = await axiosInstance(URL, {
+        params: { fetchedBlogIds },
+        headers: { Authorization: getCookie("token") },
+      });
+      return res.data;
+    },
+    enabled: !!query && !hasReachedEnd,
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+  });
+
+  useEffect(() => {
+    if (q !== query) {
+      setQuery(q);
+      setSkip(0);
+      setBlogs([]);
+      setFetchedBlogIds([]);
+      setHasReachedEnd(false);
+      refetch();
+    }
+  }, [q, queryClient, refetch]);
+
+  useEffect(() => {
+    if (fetchedBlogs) {
+      if (fetchedBlogs.length === 0) {
+        setHasReachedEnd(true);
+      } else {
+        const newFetchedBlogs = fetchedBlogs.filter(
+          (blog: blogType) => !fetchedBlogIds.includes(blog.id),
+        );
+
+        if (newFetchedBlogs.length > 0) {
+          setFetchedBlogIds((prevIds) => [
+            ...prevIds,
+            ...newFetchedBlogs.map((blog: blogType) => blog.id),
+          ]);
+          setBlogs((prevBlogs) => [...prevBlogs, ...newFetchedBlogs]);
         }
-        setBlogs(res.data);
-      } catch (err) {
-        console.error("Failed to fetch blogs:", err);
-      } finally {
-        setIsLoading(false);
       }
     }
-    fetchNewBlogs();
-  }, [q]);
-  useEffect(() => {
-    setIsBlogFound(true);
-  }, []);
+  }, [fetchedBlogs]);
 
   return (
     <aside className="order-2 flex w-full flex-col items-start justify-start gap-5 md:order-1 md:w-[45rem]">
       <h1 className="text-4xl text-primary">
-        {!isBlogFound ? (
+        {blogs.length === 0 && !isFetching ? (
           <>
             <span className="text-4xl text-muted-foreground">
               No result for{" "}
@@ -53,39 +85,19 @@ const BlogsPage = ({
           </>
         ) : (
           <>
-            <span className="text-4xl text-muted-foreground">Results for </span>{" "}
+            <span className="text-4xl text-muted-foreground">Results for </span>
             <span>{q}</span>
           </>
         )}
       </h1>
-      {isLoading && (
-        <section className="relative flex w-full flex-col items-center gap-5 p-5">
-          <BlogCardSkeleton />
-          <BlogCardSkeleton />
-          <BlogCardSkeleton />
-        </section>
-      )}
-      {blogs.length !== 0 && !isLoading && (
-        <section className="flex w-full flex-col items-center gap-5 md:gap-10">
-          {blogs.map((blog: blogType) => (
-            <BlogCard
-              title={blog.title}
-              author={blog.author.fullname}
-              authorImageUrl={blog.author.imageUrl}
-              blogId={blog.blogId}
-              blogImageUrl={blog.imageUrl}
-              categories={blog.categories}
-              content={blog.content}
-              createdAt={blog.createdAt}
-              stars={blog._count.stars}
-              username={blog.author.username}
-              isSaved={blog.saved}
-              isDraft={false}
-            />
-          ))}
-        </section>
-      )}
-      {blogs.length === 0 && !isLoading && (
+      <BlogsList
+        blogs={blogs}
+        isFetching={isFetching}
+        hasReachedEnd={hasReachedEnd}
+        setSkip={setSkip}
+      />
+
+      {blogs.length === 0 && !isFetching && (
         <p className="my-10 font-sans text-lg">
           Make sure you spelled everything correctly, or try different keywords.
         </p>
@@ -94,4 +106,4 @@ const BlogsPage = ({
   );
 };
 
-export default BlogsPage;
+export default SearchPage;
