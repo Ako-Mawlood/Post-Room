@@ -17,7 +17,7 @@ type oAuthBtnsType = {
 export const oAuthBtns: oAuthBtnsType = [
   {
     id: 1,
-    href: `https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost:3000/auth/session/callback&response_type=token&client_id=1021972391921-i0n0nr2fgje2ml9fqi1ccjunel82dl3d.apps.googleusercontent.com&scope=openid%20email%20profile`,
+    href: `https://accounts.google.com/o/oauth2/auth?redirect_uri=https://post-room.vercel.app/auth/session/callback&response_type=token&client_id=1021972391921-i0n0nr2fgje2ml9fqi1ccjunel82dl3d.apps.googleusercontent.com&scope=openid%20email%20profile`,
     icon: Google,
     name: "Google",
     color: "",
