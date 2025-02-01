@@ -6,8 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/libs/axiosInstance";
 import { getCookie } from "cookies-next";
 import BlogsList from "@/app/components/pages/blogs/BlogsList";
+import { useQueryClient } from "@tanstack/react-query";
 
 const BlogsPage = () => {
+  const queryClient = useQueryClient();
   const [blogs, setBlogs] = useState<blogType[]>([]);
   const [fetchedBlogIds, setFetchedBlogIds] = useState<number[]>([]);
   const [skip, setSkip] = useState(0);
@@ -35,6 +37,7 @@ const BlogsPage = () => {
   });
 
   useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["currentUser"] });
     if (fetchedBlogs) {
       if (fetchedBlogs.length === 0) {
         setHasReachedEnd(true); // No more blogs to fetch

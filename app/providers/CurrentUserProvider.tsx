@@ -28,7 +28,7 @@ export const CurrentUserProvider = ({
       });
       return res.data;
     },
-    staleTime: 1 * 60 * 1000,
+    staleTime: 0,
   });
 
   if (isError) {
