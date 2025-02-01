@@ -27,18 +27,15 @@ const Page = ({
   if (error) {
     return (
       error && (
-        <div className="flex flex-col gap-2 text-center">
-          <span className="text-red-600">Couldn&apos;t verify...</span>
-          <span className="p-2 text-center text-xl">
-            please refresh or try again later
-          </span>
+        <div className="flex h-screen w-full flex-col items-center justify-center gap-2 text-center text-xl font-semibold text-destructive">
+          <span>{(error as any).response?.data}</span>
         </div>
       )
     );
   }
   return (
     <div className="flex h-screen w-full items-center justify-center text-3xl">
-      {isPending && <span>Verifing...</span>}
+      {isPending && <span>Verifying...</span>}
     </div>
   );
 };

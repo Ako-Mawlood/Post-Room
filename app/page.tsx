@@ -18,6 +18,7 @@ export default function LandingPage() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { sliderIndex } = useSlider(6);
   const backgroundColor = backgroundColors[sliderIndex];
+
   // Handlers for the authentication modal
   function handleOpenAuthModal(isNewUser: boolean) {
     setIsNewUser(isNewUser);
@@ -72,7 +73,7 @@ export default function LandingPage() {
 
       {/* Auth modal */}
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
-        <DialogContent className="flex h-[70vh] items-center justify-center bg-white md:max-w-[40rem]">
+        <DialogContent className="flex h-full items-center justify-center bg-white p-0 md:p-8">
           {isNewUser ? (
             <SignupModal
               isNewUser={isNewUser}

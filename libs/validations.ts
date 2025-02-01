@@ -1,6 +1,6 @@
 import z from "zod";
 
-const passwordRegex = /[^a-zA-Z0-9]/;
+const passwordRegex = /^(?=.*[@&%*$!]).+$/;
 
 export const passwordValidation = z
   .string()
@@ -12,7 +12,8 @@ export const passwordValidation = z
     message: "Password must have at least one number",
   })
   .refine((value) => passwordRegex.test(value), {
-    message: "Password must contain at least one special character",
+    message:
+      "Password must contain at least one special character (@, $, &, %, *, !)",
   });
 
 export const fullnameValidation = z

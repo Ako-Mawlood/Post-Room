@@ -25,7 +25,7 @@ const BlogShowcase = ({ handleOpenAuthModal }: Props) => {
     <main className="relative flex w-full flex-col justify-between border-b border-black bg-gray-100 md:h-[70vh] md:flex-row">
       <section
         style={{ backgroundColor: `rgb(${backgroundColors[sliderIndex]},0.3)` }}
-        className="flex h-full flex-grow flex-col items-start justify-between gap-6 p-10 py-10 md:border-r-[1px] md:border-black"
+        className="flex h-full flex-grow flex-col items-start justify-between gap-6 p-6 md:border-r-[1px] md:border-black md:p-10"
       >
         <h1 className="mt-4 font-PT text-6xl text-neutral-900 md:text-[5.5rem]">
           Your story matters
@@ -75,7 +75,7 @@ const BlogShowcase = ({ handleOpenAuthModal }: Props) => {
                 }}
                 className="relative bottom-[-2px] left-0 z-10 h-full w-full"
               >
-                <Badge className="absolute left-8 z-20 flex items-center justify-center gap-1 rounded-none bg-yellow-500 px-3 py-1.5 text-sm font-normal text-black shadow-md md:bottom-[-15px] md:rounded-full">
+                <Badge className="absolute left-6 z-20 flex items-center justify-center gap-1 rounded-none bg-yellow-500 px-3 py-1.5 text-sm font-normal text-black shadow-md md:bottom-[-15px] md:rounded-full">
                   <StarIcon size={15} />
                   Get this & many more
                 </Badge>
@@ -91,8 +91,8 @@ const BlogShowcase = ({ handleOpenAuthModal }: Props) => {
               />
             </div>
             <div className="md:px-5 md:py-7 lg:py-10">
-              <div className="absolute bottom-2 left-0 z-20 flex h-56 w-full flex-col justify-around px-10 md:px-6">
-                <h1 className="mt-2 font-PT text-3xl font-light md:line-clamp-2">
+              <div className="absolute bottom-2 left-0 z-20 flex h-56 w-full flex-col justify-around px-6">
+                <h1 className="mt-2 font-PT text-2xl font-light md:line-clamp-2 md:text-3xl">
                   {blog.title}
                 </h1>
 

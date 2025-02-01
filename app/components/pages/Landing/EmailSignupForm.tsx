@@ -74,7 +74,7 @@ const EmailSignupForm = ({
     setFocus("email");
   }, [isSignupFormVisible, setFocus]);
   return (
-    <main className="flex w-full flex-col items-center gap-12 text-gray-900 sm:w-3/5">
+    <main className="flex w-full flex-col items-center gap-12 text-gray-900">
       <div className="flex flex-col gap-6 px-4 text-center">
         <h1 className="text-4xl">Sign up with Email</h1>
         <p className="text-gray-500">
@@ -153,7 +153,7 @@ const EmailSignupForm = ({
             errors.password?.message !== undefined ||
             errors.email?.message !== undefined
           }
-          className="mt-4 flex w-3/4 justify-center rounded-full bg-black py-2 text-gray-100 duration-75 hover:opacity-80 disabled:opacity-50"
+          className="mt-4 flex w-full justify-center rounded-full bg-black py-2 text-gray-100 duration-75 hover:opacity-80 disabled:opacity-50"
         >
           {isSubmitting ? (
             <ImSpinner8 className="animate-spin" size={24} />
@@ -163,7 +163,7 @@ const EmailSignupForm = ({
         </button>
       </form>{" "}
       <button
-        className="flex items-center rounded-full px-4 py-2 duration-150 hover:bg-gray-100"
+        className="flex w-fit items-center rounded-full px-4 py-2 duration-150 hover:bg-gray-100"
         disabled={isSubmitting}
         onClick={() => setIsSignupFormVisible(false)}
       >

@@ -13,8 +13,6 @@ const CreateAccount = ({
 }) => {
   const setupStep = searchParams.setupStep || "fullname";
   const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser);
-  console.log("hello dude ");
   if (!currentUser) return;
   return (
     <div className="flex h-screen flex-col items-center justify-center">

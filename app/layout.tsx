@@ -4,6 +4,7 @@ import TanstackProvider from "./providers/TanstackProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { Toaster } from "@/app/components/ui/toaster";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import CurrentUserProvider from "./providers/CurrentUserProvider";
 
 export const metadata: Metadata = {
   title: "Welcome | Post-Room",
@@ -32,8 +33,10 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <TanstackProvider>
-              <Toaster />
-              {children}
+              <CurrentUserProvider>
+                <Toaster />
+                {children}
+              </CurrentUserProvider>
             </TanstackProvider>
           </ThemeProvider>
         </body>

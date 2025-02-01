@@ -11,7 +11,7 @@ const page = async () => {
         title: "Title",
         content: "Content",
         imageUrl: "/ImageUrl",
-        categories: ["Categoires"],
+        categories: [""],
       },
       { headers: { Authorization: getCookie("token", { cookies }) } },
     )

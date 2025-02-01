@@ -34,7 +34,7 @@ export const blogsConfig: blogConfigType[] = [
   {
     id: 3,
     title: "The Importance of Staying Calm for Better Well-being",
-    src: "/stay-calm.webp",
+    src: "/keep-calm.png",
     fullName: "Rawand Ranjdar",
     authorImage: undefined,
     authorBio: "Innovator",

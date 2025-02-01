@@ -34,7 +34,7 @@ const SignupModal = ({
 
   if (isVerifyMessageVisible) {
     return (
-      <main className="flex w-96 flex-col items-center gap-12 text-black">
+      <main className="flex w-full flex-col items-center gap-12 text-black">
         <div className="flex flex-col gap-6 px-4 text-center">
           <h1 className="text-4xl">Check your inbox.</h1>
           <p>{`Click the link we sent to ${userEmail} to complete your account set-up.`}</p>
@@ -50,7 +50,7 @@ const SignupModal = ({
   }
 
   return (
-    <main className="flex w-[30rem] flex-col items-center justify-between p-4">
+    <main className="flex w-full flex-col items-center justify-between p-4">
       <DialogTitle className="mb-10 text-4xl font-semibold text-black">
         Join Post-Room.
       </DialogTitle>

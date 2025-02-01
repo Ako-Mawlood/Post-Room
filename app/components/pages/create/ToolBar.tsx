@@ -17,7 +17,7 @@ function ToolBar({ editor }: { editor: Editor | null }) {
   return (
     <ToggleGroup
       type="multiple"
-      className="fixed left-1/2 top-14 z-40 flex w-full -translate-x-1/2 flex-wrap justify-center p-1 lg:top-3 lg:w-fit lg:flex-nowrap"
+      className="fixed left-1/2 top-14 z-40 flex w-full -translate-x-1/2 flex-wrap justify-center bg-opacity-90 p-1 backdrop-blur lg:top-3 lg:w-fit lg:flex-nowrap"
     >
       {buttons.map((button) => (
         <ToggleGroupItem

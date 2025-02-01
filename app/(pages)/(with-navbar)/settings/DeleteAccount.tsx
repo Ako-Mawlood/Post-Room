@@ -63,7 +63,7 @@ const DeleteAccount = ({ email }: Props) => {
 
       <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         {/* Updated variable name */}
-        <AlertDialogTrigger>
+        <AlertDialogTrigger asChild>
           <Button variant="destructive">Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>

@@ -16,14 +16,13 @@ const Preview = ({
 }: previewPropsType) => {
   return (
     <section className="relative min-h-[80vh] px-6">
-      <h1 className="w-full border-b-2 py-4 font-PT text-3xl text-accent-foreground">
+      <h1 className="w-full py-4 font-PT text-3xl text-accent-foreground">
         {title}
       </h1>
 
       <div className="relative h-[50vh] w-full overflow-hidden">
         <Image
-          className="my-2 rounded-lg object-cover"
-          /*Todo:Default images should come from backend*/
+          className="my-2 object-cover"
           src={
             imageUrl ||
             "https://cdn.dribbble.com/users/942818/screenshots/16384489/media/70e914e91b4ecc5765c5faee678ad5d0.jpg"

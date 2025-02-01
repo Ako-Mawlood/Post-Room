@@ -8,8 +8,8 @@ const DescriptionSection = ({
   backgroundColor,
 }: Props) => {
   return (
-    <section className="flex w-full items-center justify-between border-b border-black px-8 py-28">
-      <p className="max-w-[55rem] text-3xl">
+    <section className="flex w-full items-center justify-between border-b border-black p-6 md:px-8 md:py-28">
+      <p className="max-w-[55rem] text-2xl md:text-3xl">
         Post-Room is your space for insight into articles and meaningful
         discussions. From deep analysis to personal stories, we cover a wide
         range of topics to keep you updated, inspired, and connected. Read,

@@ -21,7 +21,7 @@ const SigninModal = ({ isNewUser, setIsNewUser }: Props) => {
   }
 
   return (
-    <div className="flex w-[30rem] flex-col items-center justify-between p-4">
+    <div className="flex w-full flex-col items-center justify-between p-4">
       <DialogTitle className="mb-10 text-4xl font-semibold text-black">
         Welcome back.
       </DialogTitle>

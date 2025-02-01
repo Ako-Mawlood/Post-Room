@@ -130,7 +130,7 @@ const ReadPage = ({ params }: Props) => {
 
       {/* Auth modal */}
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
-        <DialogContent className="flex h-full items-center justify-center bg-white md:max-w-[40rem]">
+        <DialogContent className="flex h-full items-center justify-center bg-white p-0 md:p-8">
           {isNewUser ? (
             <SignupModal
               isNewUser={isNewUser}

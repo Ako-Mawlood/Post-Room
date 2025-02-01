@@ -5,7 +5,10 @@ import { IoIosArrowRoundBack as ArrowIcon } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
 import axiosInstance from "@/libs/axiosInstance";
-import { LuEye as ShowPassword, LuEyeOff as HidePassord } from "react-icons/lu";
+import {
+  LuEye as ShowPassword,
+  LuEyeOff as HidePassword,
+} from "react-icons/lu";
 import clsx from "clsx";
 import { Input } from "@/app/components/ui/input";
 import z from "zod";
@@ -19,7 +22,7 @@ const signinSchema = z.object({
     .string()
     .min(1, "Please provide your email address")
     .email("Invalid email address"),
-  password: z.string().min(8, "Password should be at least 8 charecters"),
+  password: z.string().min(8, "Password should be at least 8 characters"),
 });
 
 type formDataType = z.infer<typeof signinSchema>;
@@ -68,7 +71,7 @@ const EmailSigninForm = ({
   }, [setFocus]);
 
   return (
-    <main className="flex w-full flex-col items-center gap-12 text-gray-900 sm:w-3/5">
+    <main className="flex w-full flex-col items-center gap-12 text-gray-900">
       <div className="x-4 flex flex-col gap-6 text-center">
         <h1 className="text-4xl">Sign in with Email</h1>
         <p className="text-gray-400">
@@ -126,7 +129,7 @@ const EmailSigninForm = ({
               })}
             />
             {isPasswordVisible ? (
-              <HidePassord
+              <HidePassword
                 className="absolute right-2 top-2 size-5 cursor-pointer"
                 onClick={() => setIsPasswordVisible(false)}
               />
@@ -146,7 +149,7 @@ const EmailSigninForm = ({
             errors.password?.message !== undefined ||
             errors.email?.message !== undefined
           }
-          className="mt-4 flex w-3/4 justify-center rounded-full bg-black py-2 text-gray-100 duration-75 hover:opacity-80 disabled:opacity-50"
+          className="mt-4 flex w-full justify-center rounded-full bg-black py-2 text-gray-100 duration-75 hover:opacity-80 disabled:opacity-50"
         >
           {isSubmitting ? (
             <ImSpinner8 className="animate-spin" size={24} />
@@ -163,7 +166,7 @@ const EmailSigninForm = ({
       <button
         disabled={isSubmitting}
         onClick={() => setIsSigninFormVisible(false)}
-        className="flex items-center rounded-full p-2 px-4 duration-75 hover:bg-gray-100"
+        className="flex w-fit items-center rounded-full p-2 px-4 duration-75 hover:bg-gray-100"
       >
         <ArrowIcon className="mr-2 size-8" />
         All sign in options

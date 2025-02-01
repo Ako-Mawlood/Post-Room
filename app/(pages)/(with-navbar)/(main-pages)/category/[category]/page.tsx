@@ -75,7 +75,7 @@ const BlogsPage = ({ params }: { params: { category: string } }) => {
         {blogs.length === 0 && !isFetching ? (
           <>
             <span className="text-4xl text-muted-foreground">
-              No blogs categorized under
+              No blogs categorized under{" "}
             </span>
             <span>{category.replace("%20", " ")}</span>
           </>

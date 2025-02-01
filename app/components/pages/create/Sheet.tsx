@@ -112,41 +112,30 @@ const Sheet = ({ blogId, blogData, setBlogData, isDraft }: sheetProps) => {
           Saved
         </span>
       )}
-      <section className="min-h-[80vh] w-full rounded-lg bg-muted px-3 py-6 lg:px-14">
+      <section className="min-h-[80vh] w-full rounded-lg px-3 py-6 shadow lg:px-14">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handlePublish)}>
             <div className="mb-4 flex gap-2">
               <UploadWidget form={form} updateImageUrlState={updateImageState}>
                 {blogData.imageUrl ? (
-                  <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
-                    <button
-                      type="button"
-                      className="flex-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
-                    >
-                      Update Cover
-                    </button>
-                  </div>
+                  <Button type="button" size="sm">
+                    Update Cover
+                  </Button>
                 ) : (
-                  <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
-                    <button
-                      type="button"
-                      className="flex-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
-                    >
-                      Upload cover
-                    </button>
-                  </div>
+                  <Button type="button" size="sm">
+                    Upload cover
+                  </Button>
                 )}
               </UploadWidget>
               {blogData.imageUrl && (
-                <div className="flex max-w-sm rounded-md bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5">
-                  <button
-                    type="button"
-                    onClick={handleRemoveCover}
-                    className="flex-1 rounded-md bg-primary-foreground px-4 py-2 text-sm font-semibold"
-                  >
-                    Remove cover
-                  </button>
-                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={handleRemoveCover}
+                >
+                  Remove cover
+                </Button>
               )}
             </div>
 
@@ -234,7 +223,7 @@ const Sheet = ({ blogId, blogData, setBlogData, isDraft }: sheetProps) => {
                 className="fixed right-3 top-4 z-50"
               >
                 <Button size="sm" className="font-semibold">
-                  Go Back to blog
+                  Go Back
                 </Button>
               </Link>
             )}

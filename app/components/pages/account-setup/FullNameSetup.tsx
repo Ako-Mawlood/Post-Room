@@ -33,7 +33,9 @@ type fullnameType = z.infer<typeof fullnameSchema>;
 const FullNameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
   const router = useRouter();
   const form = useForm<fullnameType>({
-    defaultValues: { fullname: currentUser.fullname && currentUser.fullname },
+    defaultValues: {
+      fullname: (currentUser.fullname && currentUser.fullname) || "",
+    },
     resolver: zodResolver(fullnameSchema),
   });
 

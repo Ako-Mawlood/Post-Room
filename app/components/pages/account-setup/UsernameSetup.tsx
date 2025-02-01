@@ -29,7 +29,7 @@ const UsernameSetup = ({ currentUser }: { currentUser: currentUserType }) => {
     setFocus,
     formState: { isSubmitting, errors },
   } = useForm({
-    defaultValues: { username: currentUser.username },
+    defaultValues: { username: currentUser.username || "" },
     resolver: zodResolver(usernameSchema),
   });
 

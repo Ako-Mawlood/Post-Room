@@ -99,7 +99,7 @@ const Settings = () => {
               <SendRestPasswordLinkBtn currentUser={currentUser} />
             )}
           </div>
-          {<DeleteAccount email={currentUser?.username as string} />}
+          {<DeleteAccount email={currentUser?.email as string} />}
         </section>
       </main>
     </>

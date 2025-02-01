@@ -83,7 +83,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
 
   return (
     <>
-      <nav className="fixed left-0 top-0 z-40 flex h-16 w-full items-center gap-1 bg-card px-3 font-bold text-primary">
+      <nav className="fixed left-0 top-0 z-40 flex h-16 w-full items-center gap-1 bg-card bg-opacity-90 px-3 font-bold text-primary backdrop-blur">
         <Link href="/blogs" className="sm:text-2xl">
           <Logo size={35} />
         </Link>
