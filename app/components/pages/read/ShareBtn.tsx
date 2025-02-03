@@ -9,7 +9,7 @@ const ShareBtn = ({ blogId }: { blogId: string }) => {
     <RWebShare
       data={{
         title: "Share",
-        url: `http://localhost:3000/read/${blogId}`,
+        url: `https://post-room.vercel.app/read/${blogId}`,
       }}
       sites={["copy", "mail", "facebook", "telegram", "whatsapp", "linkedin"]}
       disableNative={true}

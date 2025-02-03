@@ -74,7 +74,9 @@ const AddComment = ({ currentUser, blogId }: Props) => {
         </div>
         <textarea
           value={commentContent}
-          onChange={(e) => setCommentContent(sanitizeContent(e.target.value))}
+          onChange={(e) =>
+            setCommentContent(e.target.value.replace(/\s+/g, " "))
+          }
           placeholder="What are your thoughts?"
           className="resize-none bg-background p-2 text-sm outline-none"
           rows={4}
