@@ -5,27 +5,31 @@ export function middleware(req: NextRequest) {
   const token = getCookie("token", { req });
   const pathname = req.nextUrl.pathname;
 
+  // ✅ If user is on "/" and has a token, redirect to "/blogs"
   if (pathname === "/" && token) {
     return NextResponse.redirect(new URL("/blogs", req.url));
   }
 
-  if (!token && config.matcher.some((route) => pathname.startsWith(route))) {
+  // ✅ Only protect routes listed in `matcher`, NOT "/"
+  if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();
 }
 
+// Define only protected routes (exclude "/")
+const protectedRoutes = [
+  "/blogs",
+  "/create",
+  "/account-setup",
+  "/settings",
+  "/search",
+  "/category",
+  "/delete-account",
+  "/reset-password",
+];
+
 export const config = {
-  matcher: [
-    "/blogs",
-    "/create/:path*",
-    "/account-setup",
-    "/settings",
-    "/search",
-    "/category",
-    "/delete-account/:path*",
-    "/reset-password/:path*",
-    "/",
-  ],
+  matcher: protectedRoutes.map((route) => `${route}/:path*`),
 };
