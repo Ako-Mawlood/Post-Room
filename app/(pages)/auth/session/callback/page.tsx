@@ -21,7 +21,10 @@ const AuthCallback = () => {
             .then((res) => {
               const isAccountExist = !!res.data.username;
 
-              setCookie("token", res.headers.authorization);
+              setCookie("token", res.headers.authorization, {
+                maxAge: 60 * 60 * 24 * 30,
+                path: "/",
+              });
               if (isAccountExist) {
                 router.push("/blogs");
               } else {

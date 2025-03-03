@@ -51,7 +51,10 @@ const EmailSigninForm = ({
     await axiosInstance
       .post("/api/login", data)
       .then((res) => {
-        setCookie("token", res.headers.authorization);
+        setCookie("token", res.headers.authorization, {
+          maxAge: 60 * 60 * 24 * 30,
+          path: "/",
+        });
         router.push("/blogs");
       })
       .catch((err) => {

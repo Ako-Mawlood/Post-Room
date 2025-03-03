@@ -56,7 +56,11 @@ const EmailSignupForm = ({
         setUserEmail(getValues("email"));
         setIsSignupFormVisible(false);
         setIsVerifyMessageVisible(true);
-        setCookie("token", res.headers.authorization);
+
+        setCookie("token", res.headers.authorization, {
+          maxAge: 60 * 60 * 24 * 30,
+          path: "/",
+        });
       })
       .catch((err: any) => {
         if (err.message === "Network Error") {
