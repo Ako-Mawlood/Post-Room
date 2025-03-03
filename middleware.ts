@@ -3,8 +3,13 @@ import { getCookie } from "cookies-next";
 
 export function middleware(req: NextRequest) {
   const token = getCookie("token", { req });
+  const pathname = req.nextUrl.pathname;
 
-  if (!token) {
+  if (pathname === "/" && token) {
+    return NextResponse.redirect(new URL("/blogs", req.url));
+  }
+
+  if (!token && config.matcher.some((route) => pathname.startsWith(route))) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
@@ -21,5 +26,6 @@ export const config = {
     "/category",
     "/delete-account/:path*",
     "/reset-password/:path*",
+    "/",
   ],
 };
