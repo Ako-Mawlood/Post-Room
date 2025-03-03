@@ -72,13 +72,13 @@ const Settings = () => {
                   <UserDetailEditor
                     label="Username"
                     type="username"
-                    defaultValue={userInfo.username}
+                    defaultValue={userInfo.username || ""}
                     schemaFactory={() => validateUsername}
                   />
                   <UserDetailEditor
                     label="Bio"
                     type="bio"
-                    defaultValue={userInfo.bio}
+                    defaultValue={userInfo.bio || ""}
                     schemaFactory={() => validateBio}
                   />
                 </>
