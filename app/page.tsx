@@ -44,7 +44,7 @@ export default function LandingPage() {
 
       <section
         style={{ backgroundColor: `rgb(${backgroundColor},0.3)` }}
-        className="flex w-full flex-col items-center justify-center gap-6 border-y border-black bg-yellow-400 p-8 text-center md:mt-10 md:h-80 md:gap-14"
+        className="flex w-full flex-col items-center justify-center gap-6 border-y border-black p-8 text-center md:mt-10 md:h-80 md:gap-14"
       >
         <h1 className="font-PT text-5xl md:text-6xl">
           Learn something new everyday

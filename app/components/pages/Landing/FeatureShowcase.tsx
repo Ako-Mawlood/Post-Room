@@ -29,8 +29,8 @@ const FeatureShowcase = () => {
     });
   }, []);
   return (
-    <section className="flex h-fit flex-col justify-between gap-8 p-6 md:flex-row">
-      <div className="w-full md:w-fit">
+    <section className="flex h-fit flex-col justify-between gap-8 md:flex-row">
+      <div className="w-full p-6 md:w-fit">
         <h1 className="sticky left-4 top-[15vh] my-auto font-PT text-6xl leading-none md:text-8xl lg:text-[10rem]">
           A Hub
           <br />
@@ -44,14 +44,17 @@ const FeatureShowcase = () => {
         className="flex max-w-[45rem] flex-grow flex-col gap-10 overflow-hidden md:mt-[30rem]"
       >
         {featureConfig.map((feature, index) => (
-          <div key={index} className="relative mt-4 flex flex-col gap-3">
-            <h1 className="font-PT text-3xl md:text-4xl lg:text-5xl">
-              {feature.title}
-            </h1>
-            <p className="md:text-xl">{feature.description}</p>
-            <div className="absolute right-2 top-0 rounded-full border-2 border-black bg-white p-1.5">
-              <feature.icon />
+          <div key={index} className="relative mt-4 flex flex-col gap-3 p-6">
+            <div className="flex w-full items-center justify-between">
+              <h1 className="font-PT text-3xl md:text-4xl lg:text-5xl">
+                {feature.title}
+              </h1>
+              <div className="rounded-full border-2 border-black bg-white p-1.5">
+                <feature.icon />
+              </div>
             </div>
+
+            <p className="md:text-xl">{feature.description}</p>
           </div>
         ))}
       </div>
