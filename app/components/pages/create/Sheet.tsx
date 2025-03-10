@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createBlogSchema } from "@/libs/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/app/components/ui/button";
 import axiosInstance from "@/libs/axiosInstance";
@@ -39,6 +39,7 @@ const Sheet = ({ blogId, blogData, setBlogData, isDraft }: sheetProps) => {
   const router = useRouter();
   const [isSaved, setIsSaved] = useState(false);
   const debouncedBlogData = useDebounceBlogData(blogData, 500);
+  const [prevBlogData, setPrevBlogData] = useState(debouncedBlogData);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<formDataType>({
@@ -94,9 +95,14 @@ const Sheet = ({ blogId, blogData, setBlogData, isDraft }: sheetProps) => {
       }, 1000);
     }
   }
+
   useEffect(() => {
-    handleSaveBlog();
-  }, [blogId, debouncedBlogData]);
+    if (debouncedBlogData !== prevBlogData) {
+      handleSaveBlog();
+      setPrevBlogData(debouncedBlogData);
+    }
+  }, [debouncedBlogData]);
+
   function updateImageState(url: string) {
     setBlogData((prev) => ({ ...prev, imageUrl: url }));
   }
