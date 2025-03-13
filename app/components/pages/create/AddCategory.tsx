@@ -9,6 +9,7 @@ import { UseFormReturn } from "react-hook-form";
 import z from "zod";
 import { createBlogSchema } from "@/libs/validations";
 import { CreateBlogType } from "@/app/types/CreateBlogType";
+import { Button } from "../../ui/button";
 
 type formDataType = z.infer<typeof createBlogSchema>;
 
@@ -146,7 +147,7 @@ const AddCategory = ({
             <li key={index} className="flex items-center rounded-sm p-1">
               <div
                 onClick={() => editingInputRef.current?.focus()}
-                className="flex w-fit items-center rounded-lg border dark:border-gray-700"
+                className="flex w-fit items-center justify-between gap-2 rounded-full bg-secondary px-3 py-1.5"
               >
                 {isEditing && editingCategoryIndex === index ? (
                   <input
@@ -156,7 +157,7 @@ const AddCategory = ({
                       setEditingCategory(e.target.value.replace(/^#\s*/, ""))
                     }
                     onBlur={(e) => handleUpdateCategory(e, index)}
-                    className="text-md h-8 bg-transparent text-xs outline-none"
+                    className="w-fit bg-transparent text-xs outline-none"
                   />
                 ) : (
                   <button
@@ -166,7 +167,7 @@ const AddCategory = ({
                       setEditingCategoryIndex(index);
                     }}
                     type="button"
-                    className="h-8 rounded-lg px-1 text-xs"
+                    className="text-xs"
                   >
                     # {category}
                   </button>
@@ -174,7 +175,7 @@ const AddCategory = ({
                 <Remove
                   type="button"
                   onClick={() => handleRemoveCategory(category)}
-                  className="mr-2 size-4 cursor-pointer"
+                  className="size-4 cursor-pointer"
                 />
               </div>
             </li>

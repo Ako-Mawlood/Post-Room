@@ -84,6 +84,8 @@ const config: Config = {
       typography: {
         DEFAULT: {
           css: {
+            "code::before": { content: "none !important" },
+            "code::after": { content: "none !important" },
             color: "hsl(var(--foreground))",
             h1: {
               fontWeight: "700",
@@ -105,6 +107,13 @@ const config: Config = {
               marginTop: "0",
               fontSize: "1.2rem",
               fontWeight: "300",
+            },
+            code: {
+              background: "#F2F2F2",
+              fontSize: "15px",
+              padding: "3px 6px !important",
+              fontWeight: "400",
+              borderRadius: "5px",
             },
             "ul li::marker": {
               color: "#0071E3",
@@ -167,6 +176,14 @@ const config: Config = {
               color: "hsl(var(--foreground))",
               marginBottom: "0.5rem",
               fontFamily: "PT Serif",
+            },
+            code: {
+              background: "#3A3A3C",
+              color: "white",
+              fontSize: "15px",
+              padding: "2px 4px",
+              fontWeight: "400",
+              borderRadius: "5px",
             },
             h2: {
               color: "hsl(var(--foreground))",
