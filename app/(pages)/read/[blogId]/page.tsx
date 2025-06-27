@@ -32,7 +32,6 @@ const ReadPage = ({ params }: Props) => {
   const [isNewUser, setIsNewUser] = useState(true);
   const [isBlogStarred, setIsBlogStarred] = useState(false);
   const [starCount, setStarCount] = useState(0);
-  const [isFollowed, setIsFollowed] = useState(false);
 
   const token = useMemo(() => getCookie("token") as string | undefined, []);
 
@@ -46,7 +45,6 @@ const ReadPage = ({ params }: Props) => {
         setBlog(res.data);
         setIsBlogStarred(res.data.starred);
         setStarCount(res.data._count.stars);
-        setIsFollowed(res.data.following);
       } catch (err: any) {
         if (err.response?.status === 404) notFound();
       } finally {
@@ -100,7 +98,7 @@ const ReadPage = ({ params }: Props) => {
               setStarCount={setStarCount}
             />
 
-            <div className="relative h-[40vh] w-full overflow-hidden">
+            <div className="relative h-[40vh] w-full overflow-hidden rounded-md">
               <Image
                 src={blog.imageUrl || fallbackImageUrl}
                 alt="Blog image"
@@ -119,8 +117,6 @@ const ReadPage = ({ params }: Props) => {
               authorUsername={blog.author.username}
               handleOpenAuthModal={handleOpenAuthModal}
               isMyBLog={isMyBlog}
-              isFollowed={isFollowed}
-              setIsFollowed={setIsFollowed}
             />
           </FollowProvider>
         </main>

@@ -40,7 +40,7 @@ const FollowBtn = ({
     } finally {
       setIsPending(false);
     }
-  }, [username]);
+  }, [context, userId, username]);
 
   const handleUnFollow = useCallback(async () => {
     try {
@@ -57,7 +57,7 @@ const FollowBtn = ({
     } finally {
       setIsPending(false);
     }
-  }, [username]);
+  }, [context, userId, username]);
 
   if (isUserFollowed) {
     return (

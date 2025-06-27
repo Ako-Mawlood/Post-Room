@@ -8,7 +8,7 @@ import {
   AvatarImage,
 } from "@/app/components/ui/avatar";
 import { getCookie } from "cookies-next";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Link from "next/link";
 import FollowBtn from "./FollowBtn";
 import BlogCard from "@/app/components/ui/BlogCard";
@@ -27,16 +27,18 @@ async function getUserByUsername(username: string, token: string) {
     }
   }
 }
+
+type Props = {
+  authorUsername: string;
+  handleOpenAuthModal: (isNewUser: boolean) => void;
+  isMyBLog: boolean;
+};
+
 const AuthorInfoSection = ({
   authorUsername,
   handleOpenAuthModal,
-}: {
-  authorUsername: string;
-  handleOpenAuthModal: (isNewUser: boolean) => void;
-  isFollowed: boolean;
-  setIsFollowed: Dispatch<SetStateAction<boolean>>;
-  isMyBLog: boolean;
-}) => {
+  isMyBLog,
+}: Props) => {
   const [authorInfo, setAuthorInfo] = useState<profileOwnerType | undefined>(
     undefined,
   );
@@ -79,11 +81,14 @@ const AuthorInfoSection = ({
                   >
                     {authorInfo.fullname}
                   </Link>
-                  <FollowBtn
-                    username={authorInfo.username}
-                    userId={authorInfo.id}
-                    handleOpenAuthModal={handleOpenAuthModal}
-                  />
+
+                  {!isMyBLog && (
+                    <FollowBtn
+                      username={authorInfo.username}
+                      userId={authorInfo.id}
+                      handleOpenAuthModal={handleOpenAuthModal}
+                    />
+                  )}
                 </div>
 
                 <div className="flex items-center justify-between gap-2 text-sm">
@@ -101,7 +106,7 @@ const AuthorInfoSection = ({
             </div>
           </div>
 
-          <p className="text-muted-foregoround">{authorInfo.bio}</p>
+          <p className="text-muted-foreground">{authorInfo.bio}</p>
         </section>
         <h1 className="text-3xl text-muted-foreground">
           All from <span className="text-primary">{authorInfo.fullname}</span>
