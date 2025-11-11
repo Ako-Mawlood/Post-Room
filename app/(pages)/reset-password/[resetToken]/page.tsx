@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CgEricsson as Logo } from "react-icons/cg";
 import { ImSpinner8 as Spinner } from "react-icons/im";
 import z from "zod";
 import { passwordValidation } from "@/libs/validations";
@@ -68,7 +67,6 @@ const Page = ({ params }: { params: { resetToken: string } }) => {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-10">
       <div className="text-md flex items-center font-PT font-bold text-primary sm:text-2xl">
-        <Logo size={25} />
         <h1>Post-Room</h1>
       </div>
       <div className="mx-2 flex w-full justify-center md:w-1/2 lg:w-1/3">

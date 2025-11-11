@@ -4,7 +4,6 @@ import { useState } from "react";
 import Sheet from "@/app/components/pages/create/Sheet";
 import axiosInstance from "@/libs/axiosInstance";
 import Link from "next/link";
-import { CgEricsson as Logo } from "react-icons/cg";
 import { getCookie } from "cookies-next";
 import Preview from "@/app/components/pages/create/Preview";
 import SheetSkeleton from "@/app/components/pages/create/SheetSkeleton";
@@ -64,7 +63,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
       <>
         <nav className="fixed left-0 top-0 m-3 flex items-center gap-1 font-bold text-primary">
           <Link href="/blogs" className="text-md sm:text-2xl">
-            <Logo size={35} />
+            Pr
           </Link>
           <h1 className="text-xl">Create</h1>
         </nav>
@@ -85,7 +84,7 @@ const CreatePage = ({ params }: { params: { blogId: string } }) => {
     <>
       <nav className="fixed left-0 top-0 z-40 flex h-16 w-full items-center gap-1 bg-card bg-opacity-90 px-3 font-bold text-primary backdrop-blur">
         <Link href="/blogs" className="sm:text-2xl">
-          <Logo size={35} />
+          pr
         </Link>
         <h1 className="text-xl">Create</h1>
       </nav>

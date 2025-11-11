@@ -7,7 +7,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
-import { CgEricsson as Logo } from "react-icons/cg";
 import { Button } from "@/app/components/ui/button";
 import { ModeToggle } from "@/app/components/ui/ModeToggle";
 import {
@@ -39,7 +38,6 @@ const Navbar = () => {
         href="/blogs"
         className="text-mda flex items-center font-PT font-bold text-primary sm:text-2xl"
       >
-        <Logo size={25} />
         <h1>Post-Room</h1>
       </Link>
 
