@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CgEricsson } from "react-icons/cg";
 
 const PrivacyPage = () => {
   return (
@@ -10,7 +9,6 @@ const PrivacyPage = () => {
           href="/"
           className="m-4 flex items-center font-PT text-lg font-bold sm:text-2xl"
         >
-          <CgEricsson size={25} />
           <h1>Post-Room</h1>
         </Link>
       </nav>
